@@ -128,6 +128,5 @@ web
 
 ![](assets/4.2.1-demo-2.gif)
 
-# miaojibackend
-miaoji app wx backend
-
+# guojibackend
+guoji express backend
