@@ -51,13 +51,6 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
             ? '主张号'
             : '子帐号'}</span>,
     }, {
-      title: '订单状态',
-      dataIndex: 'status',
-      key: 'status',
-      render: (text) => <span>{text === 0
-            ? '禁用'
-            : '启用'}</span>,
-    }, {
       title: '下单时间',
       dataIndex: 'createTime',
       key: 'createTime',
