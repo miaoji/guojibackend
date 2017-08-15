@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
+import { Menu, Table, Modal, Icon, message } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -25,31 +25,37 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
-      title: '订单号',
+      title: '全部订单号',
+      dataIndex: 'did',
+      key: 'did',
+    },{
+      title: '寄件人姓名',
       dataIndex: 'wxName',
       key: 'wxName',
     }, {
       title: '中转地址',
       dataIndex: 'name',
       key: 'name',
-    }, {
+    },{
       title: '目的地',
       dataIndex: 'storename',
       key: 'storename',
     }, {
       title: '预付总金额',
-      dataIndex: 'level',
-      key: 'level',
-      render: (text) => <span>{text === 0
-            ? '主张号'
-            : '子帐号'}</span>,
+      dataIndex: 'sendCount',
+      key: 'sendCount',
+      render: (text) => <span>¥{text}</span>,
+//    render: (text) => <span>{text === 0
+//          ? '主张号'
+//          : '子帐号'}</span>,
     }, {
       title: '剩余金额',
-      dataIndex: 'level',
-      key: 'left',
-      render: (text) => <span>{text === 0
-            ? '主张号'
-            : '子帐号'}</span>,
+      dataIndex: 'pickupCount',
+      key: 'pickupCount',
+      render: (text) => <span>¥{text}</span>,
+//    render: (text) => <span>{text === 0
+//          ? '主张号'
+//          : '子帐号'}</span>,
     }, {
       title: '下单时间',
       dataIndex: 'createTime',
@@ -70,7 +76,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '确认' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '确认' }]} />
       },
     },
   ]
