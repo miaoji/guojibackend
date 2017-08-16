@@ -15,6 +15,7 @@ module.exports = {
 	apiPrefix: '/api/v1',
 	api: {
 		userLogin: `${APIV3}/login`,         
+//		userLogin: `${APIV1}/user/login`,         
 		userLogout: `${APIV1}/user/logout`,
 		userInfo: `${APIV1}/userInfo`,
 		users: `${APIV1}/users`,
@@ -26,6 +27,9 @@ module.exports = {
 		
 		ztorder: `${APIV1}/ztorder/:id`,
 		ztorders: `${APIV1}/ztorders`,//中通订单
+		
+		success: `${APIV1}/success`,
+		successs: `${APIV1}/successs`,//已完成订单
 		
 		demo: `${APIV1}/demo/:id`,
 		demos: `${APIV1}/demos`,//测试

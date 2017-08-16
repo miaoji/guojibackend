@@ -16,7 +16,7 @@ const Destination = ({ location, dispatch, destination, loading }) => {
     visible: modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['destination/update'],
-    title: `${modalType === 'create' ? '创建订单' : '更新订单'}`,
+    title: `${modalType === 'create' ? '创建目的地信息' : '修改目的地信息'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({

@@ -25,58 +25,26 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-    },{
-      title: '国家',
-      dataIndex: 'country',
-      key: 'country',
-    }, {
-      title: '省份',
-      dataIndex: 'sheng',
-      key: 'sheng',
-    },{
-      title: '市级',
-      dataIndex: 'shi',
-      key: 'shi',
-    },{
-      title: '县级',
-      dataIndex: 'xian',
-      key: 'xian',
-    },{
-      title: '详细信息',
-      dataIndex: 'xiangxi',
-      key: 'xiangxi',
-    },{
-      title: '邮编',
-      dataIndex: 'ycode',
-      key: 'ycode',
-    },{
-      title: '用户ID',
+      title: '已完成订单单号',
       dataIndex: 'did',
       key: 'did',
     },{
-      title: '发件公司名',
-      dataIndex: 'fagongsi',
-      key: 'fagongsi',
+      title: '寄件人',
+      dataIndex: 'wxName',
+      key: 'wxName',
     },{
-      title: '电话',
-      dataIndex: 'phone',
-      key: 'phone',
-    },{
-      title: '联系人',
-      dataIndex: 'cname',
-      key: 'cname',
-    },{
-      title: '证件号',
-      dataIndex: 'uid',
-      key: 'uid',
-    },{
+      title: '预付总金额',
+      dataIndex: 'sendCount',
+      key: 'sendCount',
+      render: (text) => <span>¥{text}</span>,
+//    render: (text) => <span>{text === 0
+//          ? '主张号'
+//          : '子帐号'}</span>,
+   },{
       title: '下单时间',
       dataIndex: 'createTime',
       key: 'createTime',
-    },{
+    }, {
       title: '订单状态',
       dataIndex: 'status',
       key: 'status',
@@ -89,20 +57,16 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           '4': '异常订单',
           '5': '取消订单',
         }
-        return <span>{realtext[text]}</span>
+        return <span>{realtext[0]}</span>
       }
-    },{
-      title: '备注',
-      dataIndex: 'remark',
-      key: 'remark',
-    },{
+    }, /*{
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '确认' }]} />
       },
-    },
+    },*/
   ]
 
   const getBodyWrapperProps = {
@@ -117,22 +81,27 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       <Table
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
-//      expandedRowRender={record =>
-//        <div className={classnames({ [styles.p]: true })}>
-//          <p>寄件人:  {record.wxName}</p>
-//          <p>收件人:  {record.wxName}</p>
-//          <p>证件类型:  {record.wxName}</p>
-//          <p>证件号:  {record.wxName}</p>
-//          <p>重量:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//        </div>
-//      }
+        expandedRowRender={record =>
+          <div className={classnames({ [styles.p]: true })}>
+            <p>订单号:  {record.wxName}</p>
+            <p>寄件人:  {record.wxName}</p>
+            <p>收件人:  {record.wxName}</p>
+            <p>预付总金额:  {record.wxName}</p>
+            <p>寄件人证件类型:  {record.wxName}</p>
+            <p>收件人证件类型:  {record.wxName}</p>
+            <p>产品类型:  {record.wxName}</p>
+            <p>寄件人证件号:  {record.wxName}</p>
+            <p>收件人证件号:  {record.wxName}</p>
+            <p>国内段订单号:  {record.wxName}</p>
+            <p>重量:  {record.wxName}</p>
+            <p>下单时间:  {record.wxName}</p>
+            <p>国际段订单号:  {record.wxName}</p>
+            <p>订单状态:  {record.wxName}</p>
+            <h1>寄件地址: {record.wxName}</h1>
+            <h1>中转地址: {record.wxName}</h1>
+            <h1>收件地址: {record.wxName}</h1>
+          </div>
+        }
         bordered
         scroll={{ x: 1250 }}
         columns={columns}

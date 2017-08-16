@@ -64,6 +64,13 @@ module.exports = [
     mpid: -1,
     name: '国际订单',
     router: '/fpxorder/:id',
+  },{
+    id: 34,
+    bpid: 3,
+    mpid: 3,
+    name: '已完成订单',
+    icon: 'tag-o',
+    router: '/success',
   },
   {
     id: 4,

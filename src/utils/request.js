@@ -55,8 +55,11 @@ const fetch = (options) => {
 
   switch (method.toLowerCase()) {
     case 'get':
-      return axios.get(url, {
+      return axios({
+      	url,
+      	method: 'get',
         params: cloneData,
+        timeout: 2000,
         headers: {
         	'token': window.localStorage.getItem('guojipc_token')
         }
@@ -66,7 +69,12 @@ const fetch = (options) => {
         data: cloneData,
       })
     case 'post':
-      return axios.post(url, cloneData)
+      return axios({
+      	url,
+      	method: 'post',
+      	data: cloneData,
+      	timeout: 2000
+      })
     case 'put':
       return axios.put(url, cloneData)
     case 'patch':
@@ -117,7 +125,7 @@ export default function request (options) {
       msg = data.message || statusText
     } else {
       statusCode = 600
-      msg = error.message || 'Network Error'
+      msg = '网络错误'
     }
     return { success: false, statusCode, message: msg }
   })

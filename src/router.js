@@ -126,6 +126,14 @@ const Routers = function ({ history, app }) {
             }, 'producefreight')
           },
         },{
+          path: 'success',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/success'))
+              cb(null, require('./routes/success/'))
+            }, 'success')
+          },
+        },{
           path: 'login',
           getComponent (nextState, cb) {
             require.ensure([], require => {

@@ -7,33 +7,33 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Freight = ({ location, dispatch, freight, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = freight
+const Success = ({ location, dispatch, success, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = success
   const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    maskClosable: false,
-    confirmLoading: loading.effects['freight/update'],
-    title: `${modalType === 'create' ? '创建运费信息' : '修改运费信息'}`,
+    maskClosable: true,
+    confirmLoading: loading.effects['success/update'],
+    title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `freight/${modalType}`,
+        type: `success/${modalType}`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'freight/hideModal',
+        type: 'success/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['freight/query'],
+    loading: loading.effects['success/query'],
     pagination,
     location,
     isMotion,
@@ -50,19 +50,19 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     },
     onMarkItem (id) {
       dispatch({
-        type: 'freight/markBlackList',
+        type: 'success/markBlackList',
         payload: id
       })
     },
     onDeleteItem (id) {
       dispatch({
-        type: 'freight/delete',
+        type: 'success/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'freight/showModal',
+        type: 'success/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -88,31 +88,31 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/freight',
+        pathname: '/success',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/freight',
+        pathname: '/success',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'freight/showModal',
+        type: 'success/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion () {
-      dispatch({ type: 'freight/switchIsMotion' })
+      dispatch({ type: 'success/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'freight/multiDelete',
+      type: 'success/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -139,11 +139,11 @@ const Freight = ({ location, dispatch, freight, loading }) => {
   )
 }
 
-Freight.propTypes = {
-  freight: PropTypes.object,
+Success.propTypes = {
+  success: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ freight, loading }) => ({ freight, loading }))(Freight)
+export default connect(({ success, loading }) => ({ success, loading }))(Success)

@@ -46,95 +46,137 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="帐号" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('accounts', {
-            initialValue: item.accounts,
+        <FormItem label="国家" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('country', {
+            initialValue: item.country,
             rules: [
               {
                 required: true,
-                pattern: /^1[34578]\d{9}$/,
-                message: '请输入帐号!',
+                message: '请输入国家名!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="密码" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('pwd', {
-            initialValue: item.pwd,
+        <FormItem label="省份" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('sheng', {
+            initialValue: item.sheng,
             rules: [
               {
                 required: true,
-                pattern: /^1[34578]\d{9}$/,
-                message: '请输入密码!',
+                message: '请输入省份名!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="经营者姓名" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name', {
-            initialValue: item.name,
+        <FormItem label="市级" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('shi', {
+            initialValue: item.shi,
             rules: [
               {
                 required: true,
-                message: '请输入经营者姓名!',
+                message: '请输入市级!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="店铺名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('storename', {
-            initialValue: item.storename,
+        <FormItem label="县级" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('xian', {
+            initialValue: item.xian,
             rules: [
               {
                 required: true,
-                message: '请输入店铺名称!',
+                message: '请输入县级!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="店铺级别" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('level', {
-            initialValue: item.level,
+        <FormItem label="详细地址" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('xiangxi', {
+            initialValue: item.xiangxi,
             rules: [
               {
                 required: true,
-                type: 'number',
-                message: '请选择店铺级别!',
-              },
-            ],
-          })(
-            <Radio.Group>
-              <Radio value={1}>主张号</Radio>
-              <Radio value={0}>子帐号</Radio>
-            </Radio.Group>
-          )}
-        </FormItem>
-        <FormItem label="所属上级" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('superior', {
-            initialValue: item.superior,
-            rules: [
-              {
-                required: (Number(item.superior) === 1),
-                pattern: /^1[34578]\d{9}$/,
-                message: '请输入所属上级!',
+                message: '请输入详细地址!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="地址" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('address', {
-            initialValue: item.address && item.address.split(' '),
+        <FormItem label="邮编" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('ycode', {
+            initialValue: item.ycode,
             rules: [
               {
                 required: true,
+                message: '请输入邮编!',
               },
             ],
-          })(<Cascader
-            size="large"
-            style={{ width: '100%' }}
-            options={city}
-            placeholder="选择一个地址"
-          />)}
+          })(<Input />)}
+        </FormItem>
+        <FormItem label="用户ID" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('did', {
+            initialValue: item.did,
+            rules: [
+              {
+                required: true,
+                message: '请输入用户ID!',
+              },
+            ],
+          })(<Input />)}
+        </FormItem>
+        <FormItem label="发件公司" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('fagongsi', {
+            initialValue: item.fagongsi,
+            rules: [
+              {
+                required: true,
+                message: '请输入发件公司!',
+              },
+            ],
+          })(<Input />)}
+        </FormItem>
+        <FormItem label="电话" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('phone', {
+            initialValue: item.phone,
+            rules: [
+              {
+                required: true,
+                message: '请输入电话!',
+              },
+            ],
+          })(<Input />)}
+        </FormItem>
+        <FormItem label="联系人" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('cname', {
+            initialValue: item.cname,
+            rules: [
+              {
+                required: true,
+                message: '请输入联系人!',
+              },
+            ],
+          })(<Input />)}
+        </FormItem>
+        <FormItem label="证件号" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('uid', {
+            initialValue: item.uid,
+            rules: [
+              {
+                required: true,
+                message: '请输入证件号!',
+              },
+            ],
+          })(<Input />)}
+        </FormItem>
+        <FormItem label="备注" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('remark', {
+            initialValue: item.remark,
+            rules: [
+              {
+                required: true,
+                message: '请输入备注信息!',
+              },
+            ],
+          })(<Input />)}
         </FormItem>
       </Form>
     </Modal>

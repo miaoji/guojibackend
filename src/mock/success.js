@@ -3,32 +3,23 @@ const Mock = require('mockjs')
 const config = require('../utils/config')
 const { apiPrefix } = config
 
-let destinationsListData = Mock.mock({
+let successsListData = Mock.mock({
   'data|40-50': [
     {
-      'id|+1':10001,
-      uid:"@id",
+      id: '@id',
       did:/^\d{8}$/,
-      ycode:/^\d{6}$/,
-      cname:"@cname",
-      fagongsi:"国际快递",
       wxName: '@cname',
+      'name|1':['上海','北京','广东','深圳','安徽','江西'],
       'storename|1':['上海','北京','广东','深圳','安徽','江西'],
-      'country|1':['中国','中国','美国','英国','印度','韩国'],
       nickName: '@cname',
-      sheng:"空",
-      shi:"空",
-      xian:"空",
-      xiangxi:"空",
-      remark:"暂无",
       phone: /^1[34578]\d{9}$/,
       belongStore: '@county',
-      'maxweight|1-99': 1,
-      'minweight|1-99': 1,
+      'sendCount|1-999': 1,
+      'pickupCount|1-999': 1,
       'status|0-5': 1,
       'blacklist|0-1': 1,
       'consume|0-999': 1,
-      createTime: '@time',
+      createTime: '@datetime',
       avatar () {
         return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.nickName.substr(0, 1))
       },
@@ -36,7 +27,7 @@ let destinationsListData = Mock.mock({
   ],
 })
 
-let database = destinationsListData.data
+let database = successsListData.data
 
 const queryArray = (array, key, keyAlias = 'key') => {
   if (!(array instanceof Array)) {
@@ -64,7 +55,7 @@ const NOTFOUND = {
 
 module.exports = {
 
-  [`GET ${apiPrefix}/destinations`] (req, res) {
+  [`GET ${apiPrefix}/successs`] (req, res) {
     const { query } = req
     let { pageSize, page, ...other } = query
     pageSize = pageSize || 10
@@ -100,7 +91,7 @@ module.exports = {
     })
   },
 
-  [`GET ${apiPrefix}/destination/:id`] (req, res) {
+  [`GET ${apiPrefix}/success/:id`] (req, res) {
     const { id } = req.params
     const data = queryArray(database, id, 'id')
     if (data) {
@@ -110,7 +101,7 @@ module.exports = {
     }
   },
 
-  [`PATCH ${apiPrefix}/destination/:id`] (req, res) {
+  [`PATCH ${apiPrefix}/success/:id`] (req, res) {
     const { id } = req.params
     const editItem = req.body
     let isExist = false
