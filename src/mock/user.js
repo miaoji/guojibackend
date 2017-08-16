@@ -47,7 +47,7 @@ const adminUsers = [
     permissions: userPermission.DEFAULT,
   }, {
     id: 2,
-    username: '吴彦祖',
+    username: 'winnerwly',
     password: '123456',
     permissions: userPermission.DEVELOPER,
   },

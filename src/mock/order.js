@@ -4,16 +4,19 @@ const config = require('../utils/config')
 const { apiPrefix } = config
 
 let ordersListData = Mock.mock({
-  'data|80-100': [
+  'data|40-50': [
     {
       id: '@id',
+      did:/^\d{8}$/,
       wxName: '@cname',
+      'name|1':['上海','北京','广东','深圳','安徽','江西'],
+      'storename|1':['上海','北京','广东','深圳','安徽','江西'],
       nickName: '@cname',
       phone: /^1[34578]\d{9}$/,
       belongStore: '@county',
       'sendCount|1-999': 1,
       'pickupCount|1-999': 1,
-      'status|0-1': 1,
+      'status|0-5': 1,
       'blacklist|0-1': 1,
       'consume|0-999': 1,
       createTime: '@datetime',

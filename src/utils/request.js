@@ -5,6 +5,7 @@ import jsonp from 'jsonp'
 import lodash from 'lodash'
 import pathToRegexp from 'path-to-regexp'
 import { message } from 'antd'
+import { browserHistory } from 'dva/router'
 
 const fetch = (options) => {
   let {
@@ -54,15 +55,26 @@ const fetch = (options) => {
 
   switch (method.toLowerCase()) {
     case 'get':
-      return axios.get(url, {
+      return axios({
+      	url,
+      	method: 'get',
         params: cloneData,
+        timeout: 2000,
+        headers: {
+        	'token': window.localStorage.getItem('guojipc_token')
+        }
       })
     case 'delete':
       return axios.delete(url, {
         data: cloneData,
       })
     case 'post':
-      return axios.post(url, cloneData)
+      return axios({
+      	url,
+      	method: 'post',
+      	data: cloneData,
+      	timeout: 2000
+      })
     case 'put':
       return axios.put(url, cloneData)
     case 'patch':
@@ -73,18 +85,26 @@ const fetch = (options) => {
 }
 
 export default function request (options) {
-  if (options.url && options.url.indexOf('//') > -1) {
-    const origin = `${options.url.split('//')[0]}//${options.url.split('//')[1].split('/')[0]}`
-    if (window.location.origin !== origin) {
-      if (CORS && CORS.indexOf(origin) > -1) {
-        options.fetchType = 'CORS'
-      } else if (YQL && YQL.indexOf(origin) > -1) {
-        options.fetchType = 'YQL'
-      } else {
-        options.fetchType = 'JSONP'
-      }
-    }
+//if (options.url && options.url.indexOf('//') > -1) {
+//  const origin = `${options.url.split('//')[0]}//${options.url.split('//')[1].split('/')[0]}`
+//  if (window.location.origin !== origin) {
+//    if (CORS && CORS.indexOf(origin) > -1) {
+//      options.fetchType = 'CORS'
+//    } else if (YQL && YQL.indexOf(origin) > -1) {
+//      options.fetchType = 'YQL'
+//    } else {
+//      options.fetchType = 'JSONP'
+//    }
+//  }
+//}
+//判断如果不是登陆页 在localStorage 中没有token的话  就跳转到login页面上
+//----------------------//
+  if (window.location.pathname !== '/login') {
+    const token = window.localStorage.getItem('guojipc_token')
+    if(!token||token === '')
+    return browserHistory.push('/login')  	
   }
+//----------------------//
 
   return fetch(options).then((response) => {
     const { statusText, status } = response
@@ -105,7 +125,7 @@ export default function request (options) {
       msg = data.message || statusText
     } else {
       statusCode = 600
-      msg = error.message || 'Network Error'
+      msg = '网络错误'
     }
     return { success: false, statusCode, message: msg }
   })

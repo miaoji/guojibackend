@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
+import { Menu, Table, Modal, Icon, message } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -11,57 +11,56 @@ const confirm = Modal.confirm
 
 const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
-    if (e.key === '1') {
-      onEditItem(record)
-    } else if (e.key === '2') {
-      confirm({
-        title: '确定要发送这一条订单吗?',
-        onOk () {
-          onDeleteItem(record.id)
-        },
-      })
+    switch (e.key) {
+      case '1':
+        onEditItem(record)
+        break
+      case '2':
+        confirm({
+          title: '确定要发送这一条订单吗?',
+          onOk () {
+            onDeleteItem(record.id)
+          }
+        })
+        break
+      case '3':
+        onEditItem(record)
+        break
+      default:
+        break
     }
   }
 
   const columns = [
     {
-      title: '订单号',
+      title: '全部订单号',
+      dataIndex: 'did',
+      key: 'did',
+    },{
+      title: '寄件人',
       dataIndex: 'wxName',
       key: 'wxName',
-    }, {
-      title: '中转地址',
-      dataIndex: 'name',
-      key: 'name',
-    }, {
-      title: '目的地',
-      dataIndex: 'storename',
-      key: 'storename',
-    }, {
+    },{
       title: '预付总金额',
-      dataIndex: 'level',
-      key: 'level',
-      render: (text) => <span>{text === 0
-            ? '主张号'
-            : '子帐号'}</span>,
-    }, {
-      title: '剩余金额',
-      dataIndex: 'level',
-      key: 'left',
-      render: (text) => <span>{text === 0
-            ? '主张号'
-            : '子帐号'}</span>,
-    }, {
+      dataIndex: 'sendCount',
+      key: 'sendCount',
+      render: (text) => <span>¥{text}</span>,
+   },{
       title: '下单时间',
       dataIndex: 'createTime',
       key: 'createTime',
     }, {
       title: '订单状态',
-      dataIndex: 'blacklist',
-      key: 'blacklist',
+      dataIndex: 'status',
+      key: 'status',
       render: (text) => {
         const realtext = {
-          '0': '否',
-          '1': '是',
+          '1': '下单完成',
+          '2': '付款完成',
+          '3': '中通完成',
+          '0': 'fpx完成',
+          '4': '异常订单',
+          '5': '取消订单',
         }
         return <span>{realtext[text]}</span>
       }
@@ -70,7 +69,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '确认' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '改价'}, { key: '2', name: '确认' }]} />
       },
     },
   ]
@@ -89,18 +88,23 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
+            <p>订单号:  {record.wxName}</p>
             <p>寄件人:  {record.wxName}</p>
             <p>收件人:  {record.wxName}</p>
-            <p>证件类型:  {record.wxName}</p>
-            <p>证件号:  {record.wxName}</p>
+            <p>预付总金额:  {record.wxName}</p>
+            <p>寄件人证件类型:  {record.wxName}</p>
+            <p>收件人证件类型:  {record.wxName}</p>
+            <p>产品类型:  {record.wxName}</p>
+            <p>寄件人证件号:  {record.wxName}</p>
+            <p>收件人证件号:  {record.wxName}</p>
+            <p>国内段订单号:  {record.wxName}</p>
             <p>重量:  {record.wxName}</p>
-            <p>体积:  {record.wxName}</p>
-            <p>体积:  {record.wxName}</p>
-            <p>体积:  {record.wxName}</p>
-            <p>体积:  {record.wxName}</p>
-            <p>体积:  {record.wxName}</p>
-            <p>体积:  {record.wxName}</p>
-            <p>体积:  {record.wxName}</p>
+            <p>下单时间:  {record.wxName}</p>
+            <p>国际段订单号:  {record.wxName}</p>
+            <p>订单状态:  {record.wxName}</p>
+            <h1>寄件地址: {record.wxName}</h1>
+            <h1>中转地址: {record.wxName}</h1>
+            <h1>收件地址: {record.wxName}</h1>
           </div>
         }
         bordered

@@ -15,9 +15,11 @@ export default {
       yield put({ type: 'showLoginLoading' })
       const data = yield call(login, payload)
       yield put({ type: 'hideLoginLoading' })
-      if (data.success) {
+      console.log("data",data)
+      if (data.status === 1) {
+      	// 将 token 保存在本地localStorage
+      	window.localStorage.setItem('guojipc_token', data.token)
         const from = queryURL('from')
-        yield put({ type: 'app/query' })
         if (from) {
           yield put(routerRedux.push(from))
         } else {

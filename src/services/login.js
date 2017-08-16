@@ -5,7 +5,14 @@ const { userLogin } = api
 export async function login (data) {
   return request({
     url: userLogin,
-    method: 'post',
+    method: 'get',
     data,
   })
 }
+//export async function login (data) {
+//return request({
+//  url: userLogin,
+//  method: 'post',
+//  data,
+//})
+//}

@@ -14,9 +14,9 @@ const Order = ({ location, dispatch, order, loading }) => {
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    maskClosable: false,
+    maskClosable: true,
     confirmLoading: loading.effects['order/update'],
-    title: `${modalType === 'create' ? '创建门店' : '更新门店'}`,
+    title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
