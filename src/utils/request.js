@@ -89,7 +89,6 @@ export default function request (options) {
 //    }
 //  }
 //}
-
 //判断如果不是登陆页 在localStorage 中没有token的话  就跳转到login页面上
 //----------------------//
   if (window.location.pathname !== '/login') {

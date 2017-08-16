@@ -1,6 +1,5 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
-//const APIV3 = 'http://192.168.0.125:8066'
 const APIV3 = 'http://api.didalive.net/DHL'
 
 module.exports = {
@@ -15,8 +14,7 @@ module.exports = {
 	openPages: ['/login'],
 	apiPrefix: '/api/v1',
 	api: {
-//		userLogin: `${APIV1}/user/login`,
-		userLogin: `${APIV3}/login`,               
+		userLogin: `${APIV3}/login`,         
 		userLogout: `${APIV1}/user/logout`,
 		userInfo: `${APIV1}/userInfo`,
 		users: `${APIV1}/users`,

@@ -40,7 +40,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 //    render: (text) => <span>{text === 0
 //          ? '主张号'
 //          : '子帐号'}</span>,
-    },{
+   },{
       title: '下单时间',
       dataIndex: 'createTime',
       key: 'createTime',
