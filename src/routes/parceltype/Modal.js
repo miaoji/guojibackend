@@ -79,6 +79,28 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
+        <FormItem label="最小重量(kg)" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('minweight', {
+            initialValue: item.minweight,
+            rules: [
+              {
+                required: true,
+                message: '请输入最小重量!',
+              },
+            ],
+          })(<Input />)}
+        </FormItem>
+        <FormItem label="最大重量(kg)" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('maxweight', {
+            initialValue: item.maxweight,
+            rules: [
+              {
+                required: true,
+                message: '请输入最大重量!',
+              },
+            ],
+          })(<Input />)}
+        </FormItem>
         <FormItem label="备注" hasFeedback {...formItemLayout}>
           {getFieldDecorator('remark', {
             initialValue: item.remark,

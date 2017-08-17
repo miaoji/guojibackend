@@ -16,7 +16,7 @@ const Producefreight = ({ location, dispatch, producefreight, loading }) => {
     visible: modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['producefreight/update'],
-    title: `${modalType === 'create' ? '创建订单' : '更新订单'}`,
+    title: `${modalType === 'create' ? '新增生产运费信息' : '修改生产运费信息'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({

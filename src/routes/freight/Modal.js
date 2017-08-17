@@ -33,8 +33,10 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      data.address = data.address.join(' ')
+//    data.address = data.address.join(' ')
+console.log('data',data)
       onOk(data)
+      
     })
   }
 
@@ -47,8 +49,8 @@ const modal = ({
     <Modal {...modalOpts}>
       <Form layout="horizontal">
         <FormItem label="目的地国家" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('mddgj', {
-            initialValue: item.mddgj,
+          {getFieldDecorator('destctry', {
+            initialValue: item.destCtry,
             rules: [
               {
                 required: true,
@@ -58,20 +60,19 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="物品类型" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('wplx', {
-            initialValue: item.wplx,
+          {getFieldDecorator('cargotype', {
+            initialValue: item.cargotype,
             rules: [
               {
                 required: true,
-//              pattern: /^1[34578]\d{9}$/,
                 message: '请输入物品类型!',
               },
             ],
           })(<Input />)}
         </FormItem>
         <FormItem label="产品类型" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('cplx', {
-            initialValue: item.cplx,
+          {getFieldDecorator('producttypeid', {
+            initialValue: item.producttypeid,
             rules: [
               {
                 required: true,
@@ -81,8 +82,8 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="首重价格" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('newmoney', {
-            initialValue: item.newmoney,
+          {getFieldDecorator('initialprice', {
+            initialValue: item.initialprice,
             rules: [
               {
                 required: true,
@@ -92,8 +93,8 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="首重重量" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('sz', {
-            initialValue: item.sz,
+          {getFieldDecorator('ykgweight', {
+            initialValue: item.ykgweight,
             rules: [
               {
                 required: true,
@@ -103,8 +104,8 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="续重价格" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('xz', {
-            initialValue: item.xz,
+          {getFieldDecorator('continuedheavyprice', {
+            initialValue: item.continuedheavyprice,
             rules: [
               {
                 required: true,
@@ -114,8 +115,8 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="步进重量" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('bj', {
-            initialValue: item.bj,
+          {getFieldDecorator('stepping', {
+            initialValue: item.stepping,
             rules: [
               {
                 required: true,
@@ -125,8 +126,8 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="燃油附加费" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('myc', {
-            initialValue: item.myc,
+          {getFieldDecorator('fuelcharge', {
+            initialValue: item.fuelcharge,
             rules: [
               {
                 required: true,
@@ -136,23 +137,12 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="邮编段" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('yb', {
-            initialValue: item.yb,
+          {getFieldDecorator('zipcodesegment', {
+            initialValue: item.zipcodesegment,
             rules: [
               {
                 required: true,
                 message: '请输入邮编段!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="备注" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('remark', {
-            initialValue: item.remark,
-            rules: [
-              {
-                required: true,
-                message: '请输入备注信息!',
               },
             ],
           })(<Input />)}

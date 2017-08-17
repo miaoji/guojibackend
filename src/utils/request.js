@@ -11,6 +11,7 @@ const fetch = (options) => {
   let {
     method = 'get',
     data,
+    params,
     fetchType,
     url,
   } = options
@@ -73,6 +74,7 @@ const fetch = (options) => {
       	url,
       	method: 'post',
       	data: cloneData,
+      	params,
       	timeout: 2000
       })
     case 'put':
