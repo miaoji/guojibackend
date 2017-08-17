@@ -1,8 +1,14 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
-const APIV3 = 'http://api.didalive.net/DHL'
+// 线上
+let APIV3 = 'http://api.didalive.net/DHL'
 
-// console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+// 仝舟
+// let APIV3 = 'http://192.168.0.125:8066'
+
+if (process.env.NODE_ENV !== 'development') {
+	APIV3 = 'http://api.didalive.net/DHL'
+}
 
 module.exports = {
 	name: '国际快递后台管理系统',
@@ -17,7 +23,7 @@ module.exports = {
 	apiPrefix: '/api/v1',
 	api: {
 		userLogin: `${APIV3}/login`,         
-//		userLogin: `${APIV1}/user/login`,
+    // userLogin: `${APIV1}/user/login`,
 		userLogout: `${APIV1}/user/logout`,
 		userInfo: `${APIV1}/userInfo`,
 		users: `${APIV1}/users`,
@@ -25,7 +31,7 @@ module.exports = {
 		wxuser: `${APIV1}/wxuser/:id`,
 		wxusers: `${APIV1}/wxusers`,
 		order: `${APIV1}/order/:id`,
-		orders: `${APIV1}/orders`,//全部订单
+		orders: `${APIV3}/wx/OrderInfo/getOrderInfo`,//全部订单
 		
 		ztorder: `${APIV1}/ztorder/:id`,
 		ztorders: `${APIV1}/ztorders`,//中通订单

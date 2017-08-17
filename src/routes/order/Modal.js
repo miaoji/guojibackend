@@ -46,9 +46,9 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="订单号" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('orderNumber', {
-            initialValue: item.orderNumber,
+        <FormItem label="订单号" disabled hasFeedback {...formItemLayout}>
+          {getFieldDecorator('did', {
+            initialValue: item.did,
             rules: [
               {
                 required: true,
@@ -56,33 +56,11 @@ const modal = ({
                 message: '请输入订单号!',
               },
             ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="寄件人" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('sender', {
-            initialValue: item.sender,
-            rules: [
-              {
-                required: true,
-                message: '请输入寄件人!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="寄件地址" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('mailingAddress', {
-            initialValue: item.mailingAddress,
-            rules: [
-              {
-                required: true,
-                message: '请输入寄件地址!',
-              },
-            ],
-          })(<Input />)}
+          })(<Input disabled />)}
         </FormItem>
         <FormItem label="中转地址" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('transitAddress', {
-            initialValue: item.transitAddress,
+          {getFieldDecorator('wxName', {
+            initialValue: item.wxName,
             rules: [
               {
                 required: true,

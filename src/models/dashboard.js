@@ -4,6 +4,12 @@ import { parse } from 'qs'
 // zuimei 摘自 http://www.zuimeitianqi.com/res/js/index.js
 let zuimei = {
   parseActualData (actual) {
+    actual = {
+      wea: '',
+      actual: '',
+      tmp: '',
+      PTm: ''
+    }
     let weather = {
       icon: `http://www.zuimeitianqi.com/res/icon/${zuimei.getIconName(actual.wea, 'big')}`,
       name: zuimei.getWeatherName(actual.wea),
@@ -206,7 +212,7 @@ export default {
     }, { call, put }) {
       const myCityResult = yield call(myCity, { flg: 0 })
       const result = yield call(queryWeather, { cityCode: myCityResult.selectCityCode })
-      const weather = zuimei.parseActualData(result.data.actual)
+      const weather = zuimei.parseActualData(result.data.actual || '')
       weather.city = myCityResult.selectCityName
       yield put({ type: 'queryWeatherSuccess', payload: {
         weather,

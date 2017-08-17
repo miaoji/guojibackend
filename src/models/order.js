@@ -24,7 +24,10 @@ export default modelExtend(pageModel, {
         if (location.pathname === '/order') {
           dispatch({
             type: 'query',
-            payload: location.query,
+            payload: location.query.page ? location.query : {
+              page: 1,
+              rows: 10
+            },
           })
         }
       })
@@ -33,16 +36,17 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query ({ payload = { page: 1, rows: 10 } }, { call, put }) {
       const data = yield call(query, payload)
       if (data) {
+        console.log('data', data)
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list: data.obj,
             pagination: {
-              current: Number(payload.page) || 1,
-              pageSize: Number(payload.pageSize) || 10,
+              page: Number(payload.page) || 1,
+              rows: Number(payload.rows) || 10,
               total: data.total,
             },
           },

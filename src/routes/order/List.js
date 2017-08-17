@@ -17,7 +17,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         break
       case '2':
         confirm({
-          title: '确定要发送这一条订单吗?',
+          title: '确定要发送订单给中通吗?',
           onOk () {
             onDeleteItem(record.id)
           }
@@ -34,28 +34,32 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: '全部订单号',
-      dataIndex: 'did',
-      key: 'did',
+      dataIndex: 'serialnumber',
+      key: 'serialnumber',
     },{
       title: '寄件人',
-      dataIndex: 'wxName',
-      key: 'wxName',
+      dataIndex: 'senderName',
+      key: 'senderName',
+    },{
+      title: '收件人',
+      dataIndex: 'buyerName',
+      key: 'buyerName'
     },{
       title: '预付总金额',
-      dataIndex: 'sendCount',
-      key: 'sendCount',
+      dataIndex: 'total_fee',
+      key: 'total_fee',
       render: (text) => <span>¥{text}</span>,
    },{
       title: '下单时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      dataIndex: 'endtime',
+      key: 'endtime',
     }, {
       title: '订单状态',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'starte',
+      key: 'starte',
       render: (text) => {
         const realtext = {
-          '1': '下单完成',
+          '1': '代付款',
           '2': '付款完成',
           '3': '中通完成',
           '0': 'fpx完成',
@@ -69,7 +73,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '改价'}, { key: '2', name: '确认' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '改价'}, { key: '2', name: '预报信息' }]} />
       },
     },
   ]
