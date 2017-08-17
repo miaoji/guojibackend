@@ -60,7 +60,7 @@ const fetch = (options) => {
       	url,
       	method: 'get',
         params: cloneData,
-        timeout: 2000,
+        timeout: 5000,
         headers: {
         	'token': window.localStorage.getItem('guojipc_token')
         }
@@ -75,7 +75,10 @@ const fetch = (options) => {
       	method: 'post',
       	data: cloneData,
         params,
-      	timeout: 2000
+      	timeout: 5000,
+        headers: {
+          'token': window.localStorage.getItem('guojipc_token')
+        }
       })
     case 'put':
       return axios.put(url, cloneData)

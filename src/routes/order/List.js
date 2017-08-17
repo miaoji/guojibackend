@@ -9,7 +9,16 @@ import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 
-const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
+const realtext = {
+  '1': '代付款',
+  '2': '付款完成',
+  '3': '中通完成',
+  '0': 'fpx完成',
+  '4': '异常订单',
+  '5': '取消订单',
+}
+
+const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -24,7 +33,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         })
         break
       case '3':
-        onEditItem(record)
+        addBoot(record)
         break
       default:
         break
@@ -41,9 +50,17 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'senderName',
       key: 'senderName',
     },{
+      title: '寄件人手机',
+      dataIndex: 'senderPhone',
+      key: 'senderPhone'
+    },{
       title: '收件人',
       dataIndex: 'buyerName',
       key: 'buyerName'
+    },{
+      title: '收件人手机',
+      dataIndex: 'buyerPhone',
+      key: 'buyerPhone'
     },{
       title: '预付总金额',
       dataIndex: 'total_fee',
@@ -58,14 +75,6 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'starte',
       key: 'starte',
       render: (text) => {
-        const realtext = {
-          '1': '代付款',
-          '2': '付款完成',
-          '3': '中通完成',
-          '0': 'fpx完成',
-          '4': '异常订单',
-          '5': '取消订单',
-        }
         return <span>{realtext[text]}</span>
       }
     }, {
@@ -92,23 +101,20 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
-            <p>订单号:  {record.wxName}</p>
-            <p>寄件人:  {record.wxName}</p>
-            <p>收件人:  {record.wxName}</p>
-            <p>预付总金额:  {record.wxName}</p>
-            <p>寄件人证件类型:  {record.wxName}</p>
-            <p>收件人证件类型:  {record.wxName}</p>
-            <p>产品类型:  {record.wxName}</p>
-            <p>寄件人证件号:  {record.wxName}</p>
-            <p>收件人证件号:  {record.wxName}</p>
-            <p>国内段订单号:  {record.wxName}</p>
-            <p>重量:  {record.wxName}</p>
-            <p>下单时间:  {record.wxName}</p>
-            <p>国际段订单号:  {record.wxName}</p>
-            <p>订单状态:  {record.wxName}</p>
-            <h1>寄件地址: {record.wxName}</h1>
-            <h1>中转地址: {record.wxName}</h1>
-            <h1>收件地址: {record.wxName}</h1>
+            <p>订单号:  {record.serialnumber}</p>
+            <p>寄件人:  {record.senderName}</p>
+            <p>收件人:  {record.buyerName}</p>
+            <p>预付总金额:  {record.total_fee}</p>
+            <p>产品类型:  {record.producttypeid}</p>
+            <p>收件人证件号:  {record.buyerIDCard}</p>
+            <p>国内段订单号:  {record.ZTONO}</p>
+            <p>国际段订单号:  {record.FPXNO}</p>
+            <p>重量:  {record.bearload}</p>
+            <p>寄件地址: {record.senderAddr}</p>
+            <p>中转地址: {record.transferAddr}</p>
+            <p>收件地址: {record.buyerAddr}</p>
+            <p>下单时间:  {record.endtime}</p>
+            <p>订单状态:  {realtext[record.starte]}</p>
           </div>
         }
         bordered
@@ -125,6 +131,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
+  addBoot: PropTypes.func,
   isMotion: PropTypes.bool,
   location: PropTypes.object,
 }

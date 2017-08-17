@@ -1,6 +1,6 @@
 import { request, config } from '../utils'
 const { api } = config
-const { order } = api
+const { order, updateOrder } = api
 
 export async function query (params) {
   return request({
@@ -28,8 +28,8 @@ export async function remove (params) {
 
 export async function update (params) {
   return request({
-    url: order,
-    method: 'patch',
-    data: params,
+    url: updateOrder,
+    method: 'post',
+    params,
   })
 }

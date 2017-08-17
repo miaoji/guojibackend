@@ -7,33 +7,33 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Freight = ({ location, dispatch, freight, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = freight
+const Boot = ({ location, dispatch, boot, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = boot
   const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: false,
-    confirmLoading: loading.effects['freight/update'],
+    confirmLoading: loading.effects['boot/update'],
     title: `${modalType === 'create' ? '新增运费信息' : '修改运费信息'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `freight/${modalType}`,
+        type: `boot/${modalType}`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'freight/hideModal',
+        type: 'boot/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['freight/query'],
+    loading: loading.effects['boot/query'],
     pagination,
     location,
     isMotion,
@@ -50,19 +50,19 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     },
     onMarkItem (id) {
       dispatch({
-        type: 'freight/markBlackList',
+        type: 'boot/markBlackList',
         payload: id
       })
     },
     onDeleteItem (id) {
       dispatch({
-        type: 'freight/delete',
+        type: 'boot/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'freight/showModal',
+        type: 'boot/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -88,31 +88,31 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/freight',
+        pathname: '/boot',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/freight',
+        pathname: '/boot',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'freight/showModal',
+        type: 'boot/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion () {
-      dispatch({ type: 'freight/switchIsMotion' })
+      dispatch({ type: 'boot/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'freight/multiDelete',
+      type: 'boot/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -139,11 +139,11 @@ const Freight = ({ location, dispatch, freight, loading }) => {
   )
 }
 
-Freight.propTypes = {
-  freight: PropTypes.object,
+Boot.propTypes = {
+  boot: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ freight, loading }) => ({ freight, loading }))(Freight)
+export default connect(({ boot, loading }) => ({ boot, loading }))(Boot)

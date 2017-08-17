@@ -6,12 +6,14 @@ import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
+import BootModal from './bootModal'
 
 const Order = ({ location, dispatch, order, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = order
+  const { list, pagination, currentItem, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys } = order
   const { pageSize } = pagination
 
   const modalProps = {
+    type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: true,
@@ -19,6 +21,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
+      console.log('update data', data)
       dispatch({
         type: `order/${modalType}`,
         payload: data,
@@ -27,6 +30,27 @@ const Order = ({ location, dispatch, order, loading }) => {
     onCancel () {
       dispatch({
         type: 'order/hideModal',
+      })
+    },
+  }
+
+  const bootModalProps = {
+    type: modalType,
+    item: currentItem,
+    visible: bootModalVisible,
+    confirmLoading: loading.effects['order/update'],
+    title: '提交补价',
+    wrapClassName: 'vertical-center-modal',
+    onOk (data) {
+      console.log('update data', data)
+      dispatch({
+        type: `order/addBoot`,
+        payload: data,
+      })
+    },
+    onCancel () {
+      dispatch({
+        type: 'order/hideBootModal',
       })
     },
   }
@@ -65,6 +89,14 @@ const Order = ({ location, dispatch, order, loading }) => {
         type: 'order/showModal',
         payload: {
           modalType: 'update',
+          currentItem: item,
+        },
+      })
+    },
+    addBoot (item) {
+      dispatch({
+        type: 'order/showBootModal',
+        payload: {
           currentItem: item,
         },
       })
@@ -135,6 +167,7 @@ const Order = ({ location, dispatch, order, loading }) => {
       }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
+      {bootModalVisible && <BootModal {...bootModalProps} />}
     </div>
   )
 }

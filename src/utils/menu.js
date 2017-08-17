@@ -24,7 +24,6 @@ module.exports = [
     bpid: 1,
     name: '订单',
     icon: 'tags-o',
-//  router: '/order',
   },{
     id: 31,
     bpid: 3,
@@ -120,5 +119,11 @@ module.exports = [
     name: '测试用',
     icon: 'api',
     router: '/demo',
+  },{
+    id: 5,
+    bpid: 1,
+    name: '补价管理',
+    icon: 'api',
+    router: '/boot',
   },
 ]

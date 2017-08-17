@@ -1,5 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { create, remove, update, markBlack } from '../services/order'
+import { create as addBoot } from '../services/boot'
 import * as ordersService from '../services/orders'
 import { pageModel } from './common'
 import { config } from '../utils'
@@ -14,6 +15,7 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    bootModalVisible: false,
     selectedRowKeys: [],
     isMotion: false,
   },
@@ -24,10 +26,7 @@ export default modelExtend(pageModel, {
         if (location.pathname === '/order') {
           dispatch({
             type: 'query',
-            payload: location.query.page ? location.query : {
-              page: 1,
-              rows: 10
-            },
+            payload: location.query
           })
         }
       })
@@ -36,17 +35,16 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = { page: 1, rows: 10 } }, { call, put }) {
+    *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data) {
-        console.log('data', data)
         yield put({
           type: 'querySuccess',
           payload: {
             list: data.obj,
             pagination: {
-              page: Number(payload.page) || 1,
-              rows: Number(payload.rows) || 10,
+              current: Number(payload.page) || 1,
+              pageSize: Number(payload.pageSize) || 10,
               total: data.total,
             },
           },
@@ -97,14 +95,35 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ wxUser }) => wxUser.currentItem.id)
-      const newWxUser = { ...payload, id }
-      const data = yield call(update, newWxUser)
+      const id = yield select(({ order }) => order.currentItem.id)
+      const newOrder = { ...payload, id }
+      console.log('newOrder', newOrder)
+      const data = yield call(update, newOrder)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
         throw data
+      }
+    },
+
+    *addBoot ({ payload }, { call, put }) {
+      const other = {
+        'createUser': JSON.parse(window.localStorage.getItem('guojipc_user'))['userId'],
+        'createTime': new Date().getTime(),
+        'status': 1
+      }
+      const data = yield call(addBoot, {
+        boot: Number(payload.boot)*100,
+        serialNumber: payload.serialnumber,
+        reason: payload.reason,
+        ...other
+      })
+      if (data.success && data.code === 200) {
+        yield put({ type: 'hideBootModal' })
+        yield put({ type: 'query' })
+      } else {
+        throw data.mess
       }
     },
 
@@ -118,6 +137,14 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false }
+    },
+
+    showBootModal (state, { payload }) {
+      return { ...state, ...payload, bootModalVisible: true }
+    },
+
+    hideBootModal (state) {
+      return { ...state, bootModalVisible: false }
     }
 
   },

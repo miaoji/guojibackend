@@ -99,6 +99,21 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
   return result
 }
 
+/**
+ * 对网络请求的params做处理，针对分页
+ * @param   {params} Object
+ * @return  {params} Object
+ */
+const pageParams = function (params) {
+      params = params ? params : {
+        page: 1,
+        rows: 10
+      }
+      params.page = params.page || 1
+      params.rows = params.pageSize || 10
+      return params
+}
+
 module.exports = {
   config,
   menu,
@@ -108,4 +123,5 @@ module.exports = {
   queryURL,
   queryArray,
   arrayToTree,
+  pageParams
 }
