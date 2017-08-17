@@ -1,10 +1,11 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
 // 线上
-let APIV3 = 'http://api.didalive.net/DHL'
-
+// let APIV3 = 'http://api.didalive.net/DHL'
 // 仝舟
-// let APIV3 = 'http://192.168.0.125:8066'
+let APIV3 = 'http://192.168.0.125:8066'
+// 董浩伟
+// let APIV3 = 'http://192.168.0.225:8080/DHL'
 
 if (process.env.NODE_ENV !== 'development') {
 	APIV3 = 'http://api.didalive.net/DHL'
@@ -36,25 +37,29 @@ module.exports = {
 		ztorder: `${APIV1}/ztorder/:id`,
 		ztorders: `${APIV1}/ztorders`,//中通订单
 		
+		fpxorder: `${APIV1}/fpxorder/:id`,
+		fpxorders: `${APIV1}/fpxorders`,//4PX订单
+		
 		success: `${APIV1}/success`,
 		successs: `${APIV1}/successs`,//已完成订单
 		
 		demo: `${APIV1}/demo/:id`,
 		demos: `${APIV1}/demos`,//测试
 		
-		fpxorder: `${APIV1}/fpxorder/:id`,
-		fpxorders: `${APIV1}/fpxorders`,//4PX订单
-		
 		parceltype: `${APIV1}/parceltype/:id`,//包裹类型管理
 		parceltypes: `${APIV1}/parceltypes`,//包裹类型管理
 		
-		product: `${APIV1}/product/:id`,//产品类型管理
+		product: `${APIV1}/product/:id`,
 		products: `${APIV1}/products`,//产品类型管理
 		
 		destination: `${APIV1}/destination/:id`,//目的地管理
 		destinations: `${APIV1}/destinations`,//目的地管理
 		
-		freights: `${APIV1}/freights`,//运费管理
+//		freights: `${APIV1}/freights`,//运费管理
+		freights: `${APIV3}/Internationalprice/ShowInternational`,//运费管理
+		freightadd: `${APIV3}/Internationalprice/InsertInternationalprice`,//新增运费管理
+		freightup: `${APIV3}/Internationalprice/UpadteInternationalprice`,//新增运费管理
+		
 		producefreights: `${APIV1}/producefreights`,//生产运费管理
 		
 		dashboard: `${APIV1}/dashboard`,

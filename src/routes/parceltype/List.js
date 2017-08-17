@@ -29,10 +29,6 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'did',
       key: 'did',
     },{
-      title: '货物类型代码',
-      dataIndex: 'hid',
-      key: 'hid',
-    },{
       title: '中文名',
       dataIndex: 'cname',
       key: 'cname',
@@ -40,6 +36,25 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '英文名',
       dataIndex: 'ename',
       key: 'ename',
+    },{
+      title: '最小重量',
+      dataIndex: 'minweight',
+      key: 'minweight',
+      render: (text) => <span>{text}kg</span>,
+    },{
+      title: '最大重量',
+      dataIndex: 'maxweight',
+      key: 'maxweight',
+      render: (text) => <span>{text}kg</span>,
+    },{
+      title: '目的地',
+      dataIndex: 'maxweight',
+      key: 'maxweight',
+      render: (text) => <span>{text}kg</span>,
+    },{
+      title: '货物类型代码',
+      dataIndex: 'hid',
+      key: 'hid',
     },{
       title: '备注',
       dataIndex: 'remark',
@@ -67,22 +82,6 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       <Table
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
-//      expandedRowRender={record =>
-//        <div className={classnames({ [styles.p]: true })}>
-//          <p>寄件人:  {record.wxName}</p>
-//          <p>收件人:  {record.wxName}</p>
-//          <p>证件类型:  {record.wxName}</p>
-//          <p>证件号:  {record.wxName}</p>
-//          <p>重量:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//        </div>
-//      }
         bordered
         scroll={{ x: 1250 }}
         columns={columns}

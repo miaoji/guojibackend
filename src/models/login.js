@@ -19,6 +19,7 @@ export default {
       if (data.status === 1) {
       	// 将 token 保存在本地localStorage
       	window.localStorage.setItem('guojipc_token', data.token)
+      	window.localStorage.setItem('guojipc_user', JSON.stringify(data.user))   
         const from = queryURL('from')
         if (from) {
           yield put(routerRedux.push(from))

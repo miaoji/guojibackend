@@ -3,6 +3,7 @@ import { create, remove, update, markBlack } from '../services/freight'
 import * as freightsService from '../services/freights'
 import { pageModel } from './common'
 import { config } from '../utils'
+import { gettimes } from '../utils/time'
 
 const { query } = freightsService
 const { prefix } = config
@@ -22,9 +23,14 @@ export default modelExtend(pageModel, {
     setup ({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/freight') {
+        	const query = {
+        		page: 1,
+        		rows: 10
+        	}
+          console.log('location', location.query)
           dispatch({
             type: 'query',
-            payload: location.query,
+            payload: location.query.page ? location.query : query,
           })
         }
       })
@@ -33,16 +39,17 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query ({ payload = {page: 1, rows: 10} }, { call, put }) {
       const data = yield call(query, payload)
       if (data) {
+				gettimes("time",data.obj) //将13位的时间戳转换成常见时间格式    	
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list: data.obj,
             pagination: {
-              current: Number(payload.page) || 1,
-              pageSize: Number(payload.pageSize) || 10,
+              page: Number(payload.page) || 1,
+              rows: Number(payload.pageSize) || 10,
               total: data.total,
             },
           },
@@ -83,7 +90,12 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      const data = yield call(create, payload)
+    	const time = new Date().getTime()
+    	const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
+    	const confirmor = username
+      const newFreight = {...payload, time, confirmor}
+    	
+      const data = yield call(create, newFreight)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
@@ -93,9 +105,13 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ wxUser }) => wxUser.currentItem.id)
-      const newWxUser = { ...payload, id }
-      const data = yield call(update, newWxUser)
+      const id = yield select(({ freight }) => freight.currentItem.id)
+      const time = new Date().getTime()
+      const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
+      const confirmor = username
+      const newFreight = {...payload, id, time, confirmor}
+      
+      const data = yield call(update, newFreight)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })

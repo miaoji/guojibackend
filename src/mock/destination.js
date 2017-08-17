@@ -11,6 +11,7 @@ let destinationsListData = Mock.mock({
       did:/^\d{8}$/,
       ycode:/^\d{6}$/,
       cname:"@cname",
+      'confirmor|1':["张小明","李玉","金辉","汪帆"],
       fagongsi:"国际快递",
       wxName: '@cname',
       'storename|1':['上海','北京','广东','深圳','安徽','江西'],

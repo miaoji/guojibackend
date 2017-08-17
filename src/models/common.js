@@ -19,7 +19,7 @@ const pageModel = modelExtend(model, {
       showSizeChanger: true,
       showQuickJumper: true,
       showTotal: total => `共 ${total} 条`,
-      current: 1,
+      page: 1,
       total: 0,
     },
   },

@@ -33,36 +33,34 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'storename',
       key: 'storename',
     },{
+      title: '包裹类型',
+      dataIndex: 'a',
+      key: 'a',
+    },{
       title: '产品名称',
-      dataIndex: '',
-      key: '',
-      render:(text) => <span>暂时未定义</span>,
-    },{
+      dataIndex: 'productname',
+      key: 'productname',
+      render:(text) => <span>{text}</span>,
+    },/*{
       title: '产品属性',
-      dataIndex: 'blacklist',
-      key: 'blacklist',
-      render: (text) => {
-        const realtext = {
-          '0': '否',
-          '1': '是',
-        }
-        return <span>{realtext[text]}</span>
-      }
-    },{
+      dataIndex: 'productattr',
+      key: 'productattr',
+      render:(text) => <span>{text}</span>,
+    },*/{
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
     },{
       title: '备注',
-      dataIndex: '',
-      key: '',
-      render:(text) => <span>空</span>,
+      dataIndex: 'remark',
+      key: 'remark',
+      render:(text) => <span>{text}</span>,
     },{
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '确认' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '确认' }]} />
       },
     },
   ]

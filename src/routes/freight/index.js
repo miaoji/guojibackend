@@ -16,7 +16,7 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     visible: modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['freight/update'],
-    title: `${modalType === 'create' ? '创建运费信息' : '修改运费信息'}`,
+    title: `${modalType === 'create' ? '新增运费信息' : '修改运费信息'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
@@ -44,7 +44,7 @@ const Freight = ({ location, dispatch, freight, loading }) => {
         query: {
           ...query,
           page: page.current,
-          pageSize: page.pageSize,
+          rows: page.pageSize,
         },
       }))
     },
@@ -82,7 +82,7 @@ const Freight = ({ location, dispatch, freight, loading }) => {
         query: {
           ...value,
           page: 1,
-          pageSize,
+          rows: 10,
         },
       }))
     },

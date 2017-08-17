@@ -45,49 +45,25 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'xian',
       key: 'xian',
     },{
-      title: '详细信息',
-      dataIndex: 'xiangxi',
-      key: 'xiangxi',
+      title: '操作人',
+      dataIndex: 'confirmor ',
+      key: 'confirmor ',
     },{
-      title: '邮编',
-      dataIndex: 'ycode',
-      key: 'ycode',
-    },{
-      title: '用户ID',
-      dataIndex: 'did',
-      key: 'did',
-    },{
-      title: '发件公司名',
-      dataIndex: 'fagongsi',
-      key: 'fagongsi',
-    },{
-      title: '电话',
-      dataIndex: 'phone',
-      key: 'phone',
-    },{
-      title: '联系人',
-      dataIndex: 'cname',
-      key: 'cname',
-    },{
-      title: '证件号',
-      dataIndex: 'uid',
-      key: 'uid',
-    },{
-      title: '下单时间',
+      title: '操作时间',
       dataIndex: 'createTime',
       key: 'createTime',
     },{
-      title: '订单状态',
+      title: '状态',
       dataIndex: 'status',
       key: 'status',
       render: (text) => {
         const realtext = {
-          '1': '下单完成',
-          '2': '付款完成',
-          '3': '中通完成',
-          '0': 'fpx完成',
-          '4': '异常订单',
-          '5': '取消订单',
+          '1': '禁用',
+          '2': '生效',
+          '3': '生效',
+          '0': '禁用',
+          '4': '生效',
+          '5': '禁用',
         }
         return <span>{realtext[text]}</span>
       }

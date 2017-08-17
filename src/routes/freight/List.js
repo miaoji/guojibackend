@@ -26,58 +26,67 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: 'ID',
-      dataIndex: 'did',
-      key: 'did',
+      dataIndex: 'id',
+      key: 'id',
     }, {
       title: '目的地国家',
-      dataIndex: 'mddgj',
-      key: 'mddgj',
+      dataIndex: 'destCtry',
+      key: 'destctry',
     }, {
       title: '物品类型',
-      dataIndex: 'wplx',
-      key: 'wplx',
+      dataIndex: 'cargotype',
+      key: 'cargotype',
+      render: (text) => {
+        const realtext = {
+          '0': '其他',
+          '1': '其他',
+          '2': '包裹',
+        }
+        return <span>{realtext[text]}</span>
+      }
     }, {
       title: '产品类型',
-      dataIndex: 'cplx',
-      key: 'cplx',
+      dataIndex: 'producttypeid',
+      key: 'producttypeid',
     }, {
       title: '首重价格',
-      dataIndex: 'newmoney',
-      key: 'newmoney',
+      dataIndex: 'initialprice',
+      key: 'initialprice',
       render:(text) => <span>¥{text}</span>,
     }, {
       title: '首重重量',
-      dataIndex: 'sz',
-      key: 'sz',
+      dataIndex: 'ykgweight',
+      key: 'ykgweight',
       render: (text) => <span>{text}kg</span>,
     },{
       title: '续重价格',
-      dataIndex: 'xz',
-      key: 'xz',
+      dataIndex: 'continuedheavyprice',
+      key: 'continuedheavyprice',
       render: (text) => <span>¥{text}</span>,
     },{
       title: '步进重量',
-      dataIndex: 'bj',
-      key: 'bj',
+      dataIndex: 'stepping',
+      key: 'stepping',
       render: (text) => <span>{text}kg</span>,
     },{
       title: '燃油附加费',
-      dataIndex: 'myc',
-      key: 'myc',
+      dataIndex: 'fuelcharge',
+      key: 'fuelcharge',
       render: (text) => <span>¥{text}</span>,
     },{
       title: '邮编段',
-      dataIndex: 'yb',
-      key: 'yb',
+      dataIndex: 'zipcodesegment',
+      key: 'zipcodesegment',
       render: (text) => <span>{text}</span>,
     },{
       title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      dataIndex: 'time',
+      key: 'time',
     },{
       title: '操作人',
-      dataIndex: 'czr',
-      key: 'czr',
+      dataIndex: 'confirmor',
+      key: 'confirmor',
+      
     },{
       title: '备注',
       dataIndex: 'remark',
@@ -87,14 +96,14 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '确认' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' },]} />
       },
     },
   ]
 
   const getBodyWrapperProps = {
     page: location.query.page,
-    current: tableProps.pagination.current,
+    rows: tableProps.pagination.rows,
   }
 
   const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
