@@ -103,7 +103,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const getBodyWrapperProps = {
     page: location.query.page,
-    rows: tableProps.pagination.rows,
+    current: tableProps.pagination.current,
   }
 
   const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }

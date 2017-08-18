@@ -1,5 +1,7 @@
 import modelExtend from 'dva-model-extend'
+import { message } from 'antd'
 import { create, remove, update, markBlack } from '../services/order'
+import { create as createZtorder } from '../services/ztorder'
 import { create as addBoot } from '../services/boot'
 import * as ordersService from '../services/orders'
 import { pageModel } from './common'
@@ -37,7 +39,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data) {
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -49,6 +51,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      } else {
+        throw data.mess
       }
     },
 
@@ -57,27 +61,6 @@ export default modelExtend(pageModel, {
       const { selectedRowKeys } = yield select(_ => _.user)
       if (data.success) {
         yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *'multiDelete' ({ payload }, { call, put }) {
-      const data = yield call(wxusersService.remove, payload)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *'markBlackList' ({ payload }, { call, put, select }) {
-      const newWxUser = payload
-      const data = yield call(update, newWxUser)
-      if (data.success) {
-        yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
         throw data
@@ -97,7 +80,6 @@ export default modelExtend(pageModel, {
     *update ({ payload }, { select, call, put }) {
       const id = yield select(({ order }) => order.currentItem.id)
       const newOrder = { ...payload, id }
-      console.log('newOrder', newOrder)
       const data = yield call(update, newOrder)
       if (data.success) {
         yield put({ type: 'hideModal' })
@@ -110,7 +92,6 @@ export default modelExtend(pageModel, {
     *addBoot ({ payload }, { call, put }) {
       const other = {
         'createUser': JSON.parse(window.localStorage.getItem('guojipc_user'))['userId'],
-        'createTime': new Date().getTime(),
         'status': 1
       }
       const data = yield call(addBoot, {
@@ -120,6 +101,18 @@ export default modelExtend(pageModel, {
         ...other
       })
       if (data.success && data.code === 200) {
+        message.success(data.mess)
+        yield put({ type: 'hideBootModal' })
+        yield put({ type: 'query' })
+      } else {
+        throw data.mess
+      }
+    },
+
+    *createZtorder ({ payload }, { call, put }) {
+      const data = yield call(createZtorder, {...payload})
+      if (data.success && data.code === 200) {
+        message.success(data.mess)
         yield put({ type: 'hideBootModal' })
         yield put({ type: 'query' })
       } else {

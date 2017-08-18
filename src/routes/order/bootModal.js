@@ -55,7 +55,7 @@ const bootModal = ({
             ],
           })(<Input disabled />)}
         </FormItem>
-        <FormItem label="补价金额" hasFeedback {...formItemLayout}>
+        <FormItem label="补价金额(单位/元)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('boot', {
             initialValue: item.boot,
             rules: [
@@ -64,7 +64,7 @@ const bootModal = ({
                 message: '请输入补价金额!',
               },
             ],
-          })(<Input />)}
+          })(<Input type="number" />)}
         </FormItem>
         <FormItem label="补价原因" hasFeedback {...formItemLayout}>
           {getFieldDecorator('reason', {

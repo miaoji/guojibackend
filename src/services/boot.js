@@ -1,12 +1,21 @@
 import { request, config } from '../utils'
 const { api } = config
-const { addBoot, updateBoot } = api
+const { boot, addBoot, updateBoot } = api
+
+export async function query (params) {
+  return request({
+    url: boot,
+    method: 'get',
+    data: params,
+  })
+}
 
 export async function create (params) {
+  console.log('params', params)
   return request({
     url: addBoot,
     method: 'post',
-    data: params,
+    params,
   })
 }
 

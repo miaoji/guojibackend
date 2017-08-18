@@ -5,21 +5,15 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { Link } from 'dva/router'
+import { browserHistory } from 'dva/router'
 
 const confirm = Modal.confirm
 
-const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({  isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
-      onEditItem(record)
-    } else if (e.key === '2') {
-      confirm({
-        title: '确定要发送这一条订单吗?',
-        onOk () {
-          onDeleteItem(record.id)
-        },
-      })
+      browserHistory.push(`/boot/${record.serialnumber}`)
+      return
     }
   }
 
@@ -29,23 +23,46 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'serialnumber',
       key: 'serialnumber',
     }, {
-      title: '补价金额',
-      dataIndex: 'boot',
-      key: 'boot',
+      title: '收件人',
+      dataIndex: 'buyerName',
+      key: 'buyerName',
     }, {
-      title: '原因',
-      dataIndex: 'reason',
-      key: 'reason',
-    },{
-      title: '创建时间',
-      dataIndex: 'time',
-      key: 'time',
-    },{
+      title: '收件地址',
+      dataIndex: 'detaliedinformation',
+      key: 'detaliedinformation',
+      width: '200'
+    }, {
+      title: '收件人手机',
+      dataIndex: 'iphone',
+      key: 'iphone'
+    }, {
+      title: '产品类型',
+      dataIndex: 'type',
+      key: 'type',
+    }, {
+      title: '重量',
+      dataIndex: 'bearload',
+      key: 'bearload',
+    }, {
+      title: '体积重',
+      dataIndex: 'v',
+      key: 'v',
+      render: (text) => {
+        return <span>{text}cm³</span>
+      }
+    }, {
+      title: '改动金额',
+      dataIndex: 'bootSum',
+      key: 'bootSum',
+      render: (text) => {
+        return <span>￥{text ? text/100 : 0}</span>
+      }
+    }, {
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' },]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '历史记录' },]} />
       },
     },
   ]
