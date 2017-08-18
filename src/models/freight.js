@@ -37,7 +37,6 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data) {
-				gettimes('time', data.obj) //将13位的时间戳转换成常见时间格式    	
         yield put({
           type: 'querySuccess',
           payload: {

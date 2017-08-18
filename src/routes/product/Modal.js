@@ -57,9 +57,9 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="产品名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('productname', {
-            initialValue: item.productname,
+        <FormItem label="包裹类型" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('product', {
+            initialValue: item.product,
             rules: [
               {
                 required: true,
@@ -68,13 +68,13 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="产品属性" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('productattr', {
-            initialValue: item.productattr,
+        <FormItem label="产品名称" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('productname', {
+            initialValue: item.productname,
             rules: [
               {
                 required: true,
-                message: '请输入产品属性!',
+                message: '请输入产品名称!',
               },
             ],
           })(<Input />)}

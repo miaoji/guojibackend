@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { Link } from 'dva/router'
+import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
@@ -82,6 +83,10 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '创建时间',
       dataIndex: 'time',
       key: 'time',
+      render: (text) => {
+      	const createtime =time.gettimes(text)
+      	return <span>{createtime}</span>
+      }
     },{
       title: '操作人',
       dataIndex: 'confirmor',
@@ -103,7 +108,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const getBodyWrapperProps = {
     page: location.query.page,
-    rows: tableProps.pagination.rows,
+    current: tableProps.pagination.current,
   }
 
   const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }

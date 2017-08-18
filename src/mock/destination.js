@@ -4,7 +4,7 @@ const config = require('../utils/config')
 const { apiPrefix } = config
 
 let destinationsListData = Mock.mock({
-  'data|40-50': [
+  'data|5': [
     {
       'id|+1':10001,
       uid:"@id",

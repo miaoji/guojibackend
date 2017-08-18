@@ -29,13 +29,14 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'did',
       key: 'did',
     },{
-      title: '中文名',
+      title: '目的地',
+      dataIndex: 'mdd',
+      key: 'mdd',
+      render: (text) => <span>{text}</span>,
+    },{
+      title: '包裹类型名称',
       dataIndex: 'cname',
       key: 'cname',
-    },{
-      title: '英文名',
-      dataIndex: 'ename',
-      key: 'ename',
     },{
       title: '最小重量',
       dataIndex: 'minweight',
@@ -46,16 +47,11 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'maxweight',
       key: 'maxweight',
       render: (text) => <span>{text}kg</span>,
-    },{
-      title: '目的地',
-      dataIndex: 'maxweight',
-      key: 'maxweight',
-      render: (text) => <span>{text}kg</span>,
-    },{
+    },/*{
       title: '货物类型代码',
       dataIndex: 'hid',
       key: 'hid',
-    },{
+    },*/{
       title: '备注',
       dataIndex: 'remark',
       key: 'remark',

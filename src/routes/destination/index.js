@@ -30,6 +30,29 @@ const Destination = ({ location, dispatch, destination, loading }) => {
       })
     },
   }
+  
+  
+  
+//  const bootModalProps = {
+//  type: modalType,
+//  item: currentItem,
+//  visible: bootModalVisible,
+//  confirmLoading: loading.effects['order/update'],
+//  title: '提交补价',
+//  wrapClassName: 'vertical-center-modal',
+//  onOk (data) {
+//    console.log('update data', data)
+//    dispatch({
+//      type: `order/addBoot`,
+//      payload: data,
+//    })
+//  },
+//  onCancel () {
+//    dispatch({
+//      type: 'order/hideBootModal',
+//    })
+//  },
+//}
 
   const listProps = {
     dataSource: list,
@@ -65,6 +88,14 @@ const Destination = ({ location, dispatch, destination, loading }) => {
         type: 'destination/showModal',
         payload: {
           modalType: 'update',
+          currentItem: item,
+        },
+      })
+    },
+    addBoot (item) {
+      dispatch({
+        type: 'order/showBootModal',
+        payload: {
           currentItem: item,
         },
       })

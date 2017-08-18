@@ -52,14 +52,15 @@ module.exports = {
 		demo: `${APIV1}/demo/:id`,
 		demos: `${APIV1}/demos`,//测试
 		
-		parceltype: `${APIV1}/parceltype/:id`,//包裹类型管理
+		parceltype: `${APIV1}/parceltype/:id`,
 		parceltypes: `${APIV1}/parceltypes`,//包裹类型管理
 		
 		product: `${APIV1}/product/:id`,
 		products: `${APIV1}/products`,//产品类型管理
 		
-		destination: `${APIV1}/destination/:id`,//目的地管理
-		destinations: `${APIV1}/destinations`,//目的地管理
+		destination: `${APIV1}/destination/:id`,
+//		destinations: `${APIV1}/destinations`,//目的地管理
+		destinations: `${APIV3}/wx/Country/ShowCountry`,
 		
 //		freights: `${APIV1}/freights`,//运费管理
 		freights: `${APIV3}/Internationalprice/ShowInternational`,//运费管理
@@ -67,6 +68,11 @@ module.exports = {
 		freightup: `${APIV3}/Internationalprice/UpadteInternationalprice`,//新增运费管理
 		
 		producefreights: `${APIV1}/producefreights`,//生产运费管理
+		
+		ShowCountry: `${APIV3}/wx/Country/ShowCountry`,//查看国家
+		ShowProvinceid: `${APIV3}/wx/Province/ShowProvinceid`,//查看省份
+		ShowCityid: `${APIV3}/wx/City/ShowCityid`,//查看市级
+		ShowCountyid: `${APIV3}/wx/County/ShowCountyid`,//查看县级
 		
 		dashboard: `${APIV1}/dashboard`,
 		v1test: `${APIV1}/test`,

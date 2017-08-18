@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message } from 'antd'
+import { Menu, Table, Modal, Button, Icon, message } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -9,7 +9,7 @@ import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 
-const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
       onEditItem(record)
@@ -20,6 +20,8 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           onDeleteItem(record.id)
         },
       })
+    }else if(e.key === '3'){
+    	addBoot(record)
     }
   }
 
@@ -30,12 +32,15 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'id',
     },{
       title: '国家',
-      dataIndex: 'country',
-      key: 'country',
+      dataIndex: 'name',
+      key: 'name',
     }, {
       title: '省份',
       dataIndex: 'sheng',
       key: 'sheng',
+      render: (text) => {
+        return <Button>查看</Button>
+      },
     },{
       title: '市级',
       dataIndex: 'shi',
@@ -76,7 +81,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '确认' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '确认' },{key:'3', name:'查找'}]} />
       },
     },
   ]
@@ -123,6 +128,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
+  addBoot: PropTypes.func,
   isMotion: PropTypes.bool,
   location: PropTypes.object,
 }

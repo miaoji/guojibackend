@@ -34,6 +34,10 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'storename',
     },{
       title: '包裹类型',
+      dataIndex: 'b',
+      key: 'b',
+    },{
+      title: '产品类型',
       dataIndex: 'a',
       key: 'a',
     },{

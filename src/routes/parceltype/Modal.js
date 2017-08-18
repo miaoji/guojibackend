@@ -46,24 +46,24 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="货物类型代码" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('hid', {
-            initialValue: item.hid,
+      	<FormItem label="目的地" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('mdd', {
+            initialValue: item.mdd,
             rules: [
               {
                 required: true,
-                message: '请输入货物类型代码!',
+                message: '请输入目的地!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="中文名称" hasFeedback {...formItemLayout}>
+        <FormItem label="包裹类型名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('cname', {
             initialValue: item.cname,
             rules: [
               {
                 required: true,
-                message: '请输入中文名称!',
+                message: '请输入包裹类型名称!',
               },
             ],
           })(<Input />)}
@@ -79,6 +79,7 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
+        
         <FormItem label="最小重量(kg)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('minweight', {
             initialValue: item.minweight,
