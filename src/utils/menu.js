@@ -24,54 +24,14 @@ module.exports = [
     bpid: 1,
     name: '订单',
     icon: 'tags-o',
+    router: '/order',
   },{
     id: 31,
     bpid: 3,
-    mpid: 3,
-    name: '全部订单',
-    icon: 'tags',
-    router: '/order',
-  },{
-    id: 311,
-    bpid: 3,
     mpid: -1,
-    name: '订单详细',
-    router: '/order/:id'
+    name: '补价详细',
+    router: '/orderboot/:id'
   },{
-    id: 32,
-    bpid: 3,
-    mpid: 3,
-    name: '中通订单',
-    icon: 'tag-o',
-    router: '/ztorder',
-  },{
-    id: 321,
-    bpid: 3,
-    mpid: -1,
-    name: '中通订单详细',
-    router: '/ztorder/:id',
-  },{
-    id: 33,
-    bpid: 3,
-    mpid: 3,
-    name: '国际订单',
-    icon: 'tag',
-    router: '/fpxorder',
-  },{
-    id: 331,
-    bpid: 3,
-    mpid: -1,
-    name: '国际订单',
-    router: '/fpxorder/:id',
-  },{
-    id: 34,
-    bpid: 3,
-    mpid: 3,
-    name: '已完成订单',
-    icon: 'tag-o',
-    router: '/success',
-  },
-  {
     id: 4,
     bpid: 1,
     name: '类型管理',

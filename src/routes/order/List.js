@@ -36,7 +36,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateZ
         addBoot(record)
         break
       case '4':
-        browserHistory.push(`/boot/${record.serialnumber}`)
+        browserHistory.push(`/orderboot/${record.serialnumber}`)
         break
       default:
         break

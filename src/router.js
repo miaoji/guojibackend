@@ -54,12 +54,12 @@ const Routers = function ({ history, app }) {
             }, 'order')
           },
         },{
-          path: 'order/:id',
+          path: 'orderboot/:id',
           getComponent (nextState, cb) {
             require.ensure([], require => {
-              registerModel(app, require('./models/order/detail'))
-              cb(null, require('./routes/order/detail/'))
-            }, 'order-detail')
+              registerModel(app, require('./models/order/boot'))
+              cb(null, require('./routes/order/boot/'))
+            }, 'orderboot-detail')
           },
         }, {
           path: 'boot',
