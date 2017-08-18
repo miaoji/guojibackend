@@ -104,7 +104,7 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="国内段单号" hasFeedback {...formItemLayout}>
+        <FormItem label="国内段单号" hasFeedback {...formItemLayout} className={classnames({ [styles.hide]: inputDisabled })}>
           {getFieldDecorator('ZTONO', {
             initialValue: item.ZTONO,
             rules: [

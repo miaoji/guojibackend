@@ -1,10 +1,11 @@
 import config from './config'
 import menu from './menu'
 import request from './request'
+import * as time from './time'
+import storage from './storage'
 import classnames from 'classnames'
 import { color } from './theme'
 import lodash from 'lodash'
-import * as time from './time'
 
 // 连字符转驼峰
 String.prototype.hyphenToHump = function () {
@@ -115,10 +116,13 @@ const pageParams = function (params) {
       return params
 }
 
+
 module.exports = {
   config,
   menu,
   request,
+  storage,
+  time,
   color,
   classnames,
   queryURL,

@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message } from 'antd'
+import { Menu, Table, Modal, Icon, message, Button } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { Link } from 'dva/router'
+import { browserHistory } from 'dva/router'
 
 const confirm = Modal.confirm
 
 const realtext = {
-  '1': '代付款',
+  '1': '待付款',
   '2': '付款完成',
   '3': '中通完成',
   '0': 'fpx完成',
@@ -18,7 +18,7 @@ const realtext = {
   '5': '取消订单',
 }
 
-const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, ...tableProps }) => {
+const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateZtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -26,7 +26,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, ...tableP
         break
       case '2':
         confirm({
-          title: '确定要发送订单给中通吗?',
+          title: '确定要删除订单吗?',
           onOk () {
             onDeleteItem(record.id)
           }
@@ -35,9 +35,21 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, ...tableP
       case '3':
         addBoot(record)
         break
+      case '4':
+        browserHistory.push(`/boot/${record.serialnumber}`)
+        break
       default:
         break
     }
+  }
+
+  const handleCreateZtorder = (record) => {
+    confirm({
+      title: '确定要发送中通订单吗?',
+      onOk () {
+        onCreateZtorder(record)
+      }
+    })
   }
 
   const columns = [
@@ -65,7 +77,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, ...tableP
       title: '预付总金额',
       dataIndex: 'total_fee',
       key: 'total_fee',
-      render: (text) => <span>¥{text}</span>,
+      render: (text) => <span>{Number(text)/100}元</span>,
    },{
       title: '下单时间',
       dataIndex: 'endtime',
@@ -77,12 +89,28 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, ...tableP
       render: (text) => {
         return <span>{realtext[text]}</span>
       }
-    }, {
+    },{
+      title: '预报消息',
+      key: 'createztorder',
+      width: 100,
+      render: (text, record) => {
+        const starte = record.starte
+        if (starte === 2) {
+          return <Button type="primary" size="default" ghost onClick={e => handleCreateZtorder(record, e)}>
+            发送
+          </Button>
+        } else {
+          return <Button type="primary" size="default" ghost disabled>
+            发送
+          </Button>
+        }
+      },
+    },{
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '改价'}, { key: '2', name: '预报信息' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '改价'}, { key: '4', name: '改价记录' }, { key: '2', name: '删除' }]} />
       },
     },
   ]

@@ -76,7 +76,6 @@ module.exports = [
     bpid: 1,
     name: '类型管理',
     icon: 'setting',
-//  router: '/parceltype',
   },{
     id: 41,
     bpid: 4,
@@ -125,5 +124,11 @@ module.exports = [
     name: '补价管理',
     icon: 'api',
     router: '/boot',
+  }, {
+    id: 51,
+    bpid: 5,
+    mpid: -1,
+    name: '补价详情',
+    router: '/boot/:id',
   },
 ]

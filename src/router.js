@@ -70,6 +70,14 @@ const Routers = function ({ history, app }) {
             }, 'boot')
           },
         }, {
+          path: 'boot/:id',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/boot/detail'))
+              cb(null, require('./routes/boot/detail'))
+            }, 'boot-detail')
+          },
+        }, {
           path: 'demo',
           getComponent (nextState, cb) {
             require.ensure([], require => {

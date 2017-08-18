@@ -1,39 +1,70 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
+import { time } from '../../../utils'
 import styles from './index.less'
 
+const { formatTime } = time
+
 const detailCN = {
-  info: '用户列表中信息',
-  address: '地址',
-  superior: '所属上级',
-  officehours: '营业时间',
-  consultPhone: '咨询电话',
-  applicantIDCardNum: '申请人身份证号',
-  businessLicenseImg: '营业执照照片',
-  doorImg: '门头照片',
-  serviceBarImg: '服务台照片',
-  shelfImg: '货架照片',
+  boot: '补价金额',
+  reason: '补价原因',
+  status: '状态',
+  createTime: '创建时间',
+  serialNumber: '订单号'
 }
 
-const Detail = ({ storeUserDetail }) => {
-  const { data } = storeUserDetail
+const statusGroup = {
+  '0': '默认未补价',
+  '1': '补价中',
+  '2': '补价完成',
+  '3': '模板消息推送失败'
+}
+
+const Detail = ({ bootDetail }) => {
+  const { data } = bootDetail
+  if (data.length === 0) {
+    return (<div className="content-inner">
+      <div className={styles.content}>
+        暂无补价记录
+      </div>
+    </div>)
+  }
+  const detailData = data
   const detail = []
-  const detailData = data.detail
-  for (let key in detailData) {
-    if ({}.hasOwnProperty.call(detailData, key)) {
-      let content
-      if (String(detailData[key]).match(/png/g)) {
-        content = (<div>
-                    <img src={String(detailData[key])} alt={detailCN[key]} />
-                  </div>)
-      } else {
-        content = (<div>{String(detailData[key])}</div>)
+  for (let i = 0; i < detailData.length; i++) {
+    let item = detailData[i]
+    detail.push(<h3 className={styles.item}>第{i +1}条记录</h3>)
+    for (let key in item) {
+      if ({}.hasOwnProperty.call(item, key)) {
+        let content
+        switch (key) {
+          case 'createUser':
+          case 'id':
+            content = ''
+            break
+          case 'status':
+            content = (<div>{String(statusGroup[item[key]])}</div>)
+            break
+          case 'boot':
+            content = (<div>{item[key]/100}元</div>)
+            break
+          case 'createTime':
+            content = (<div>{formatTime(item[key])}</div>)
+            break
+          default:
+            if (String(item[key]).match(/png/g)) {
+              content = (<div><img src={String(item[key])} alt={detailCN[key]} /></div>)
+            } else {
+              content = (<div>{String(item[key])}</div>)
+            }
+            break
+        }
+        detail.push(<div key={i+ key} className={styles.item}>
+          <div>{detailCN[key]}</div>
+          {content}
+        </div>)
       }
-      detail.push(<div key={key} className={styles.item}>
-        <div>{detailCN[key]}</div>
-        {content}
-      </div>)
     }
   }
 
@@ -45,8 +76,8 @@ const Detail = ({ storeUserDetail }) => {
 }
 
 Detail.propTypes = {
-  storeUserDetail: PropTypes.object,
+  bootDetail: PropTypes.object,
   loading: PropTypes.bool,
 }
 
-export default connect(({ storeUserDetail, loading }) => ({ storeUserDetail, loading: loading.models.storeUserDetail }))(Detail)
+export default connect(({ bootDetail, loading }) => ({ bootDetail, loading: loading.models.bootDetail }))(Detail)

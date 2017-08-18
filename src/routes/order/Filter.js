@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch } from 'antd'
+import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Select } from 'antd'
 import city from '../../utils/city'
 
 const Search = Input.Search
@@ -89,6 +89,18 @@ const Filter = ({
             <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
           )}
         </FilterItem>
+      </Col>
+      <Col {...TwoColProps} xl={{ span: 3 }} md={{ span: 10 }} sm={{ span: 10 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div >
+             <Select defaultValue="6" style={{ width: 120 }} onChange={handleSubmit}>
+                <Option value="6">全部</Option>
+                <Option value="3">国内</Option>
+                <Option value="0">国际</Option>
+                <Option value="4">异常</Option>
+              </Select>
+          </div>
+        </div>
       </Col>
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>

@@ -100,6 +100,15 @@ const Order = ({ location, dispatch, order, loading }) => {
           currentItem: item,
         },
       })
+    },
+    onCreateZtorder (item) {
+      dispatch({
+        type: 'order/createZtorder',
+        payload: {
+          id: item.id,
+          serialNumber: item.serialnumber
+        },
+      })
     }
   }
 

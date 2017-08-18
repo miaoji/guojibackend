@@ -1,6 +1,6 @@
 import { request, config } from '../utils'
 const { api } = config
-const { ztorder } = api
+const { ztorder, createZtorder } = api
 
 export async function query (params) {
   return request({
@@ -12,9 +12,9 @@ export async function query (params) {
 
 export async function create (params) {
   return request({
-    url: ztorder.replace('/:id', ''),
+    url: createZtorder,
     method: 'post',
-    data: params,
+    params,
   })
 }
 
