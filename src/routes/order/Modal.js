@@ -49,17 +49,6 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="订单号" hasFeedback {...formItemLayout} className={classnames({ [styles.hide]: inputDisabled })}>
-          {getFieldDecorator('serialnumber', {
-            initialValue: item.serialnumber,
-            rules: [
-              {
-                required: true,
-                message: '请输入订单号!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
         <FormItem label="收件人" hasFeedback {...formItemLayout} className={classnames({ [styles.hide]: inputDisabled })}>
           {getFieldDecorator('buyerName', {
             initialValue: item.buyerName,
@@ -71,46 +60,90 @@ const modal = ({
             ],
           })(<Input disabled={inputDisabled} />)}
         </FormItem>
-        <FormItem label="中转地址" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('transferAddr', {
-            initialValue: item.transferAddr,
-            rules: [
-              {
-                required: true,
-                message: '请输入中转地址!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="收件地址" hasFeedback {...formItemLayout}  className={classnames({ [styles.hide]: inputDisabled })}>
+        <FormItem label="收件详细地址" hasFeedback {...formItemLayout} className={classnames({ [styles.hide]: inputDisabled })}>
           {getFieldDecorator('buyerAddr', {
             initialValue: item.buyerAddr,
             rules: [
               {
                 required: true,
-                message: '请输入收件地址!',
+                message: '请输入收件详细地址!',
+              },
+            ],
+          })(<Input disabled={inputDisabled} />)}
+        </FormItem>
+        <FormItem label="收件人证件号" hasFeedback {...formItemLayout} className={classnames({ [styles.hide]: inputDisabled })}>
+          {getFieldDecorator('buyerIDCard', {
+            initialValue: item.buyerIDCard,
+            rules: [
+              {
+                required: true,
+                message: '请输入收件人证件号!',
+              },
+            ],
+          })(<Input disabled={inputDisabled} />)}
+        </FormItem>
+        <FormItem label="收件人电话" hasFeedback {...formItemLayout} className={classnames({ [styles.hide]: inputDisabled })}>
+          {getFieldDecorator('buyerPhone', {
+            initialValue: item.buyerPhone,
+            rules: [
+              {
+                required: true,
+                message: '请输入收件人电话!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="产品类型" hasFeedback {...formItemLayout} className={classnames({ [styles.hide]: inputDisabled })}>
-          {getFieldDecorator('producttypeid', {
-            initialValue: item.producttypeid,
+        <FormItem label="寄件人" hasFeedback {...formItemLayout} className={classnames({ [styles.hide]: inputDisabled })}>
+          {getFieldDecorator('senderName', {
+            initialValue: item.senderName,
             rules: [
               {
                 required: true,
-                message: '请输入产品类型!',
+                message: '请输入寄件人!',
               },
             ],
-          })(<Input />)}
+          })(<Input disabled={inputDisabled} />)}
         </FormItem>
-        <FormItem label="国内段单号" hasFeedback {...formItemLayout} className={classnames({ [styles.hide]: inputDisabled })}>
-          {getFieldDecorator('ZTONO', {
-            initialValue: item.ZTONO,
+        <FormItem label="寄件人电话" hasFeedback {...formItemLayout} className={classnames({ [styles.hide]: inputDisabled })}>
+          {getFieldDecorator('senderPhone', {
+            initialValue: item.senderPhone,
             rules: [
               {
                 required: true,
-                message: '请输入国内段单号!',
+                message: '请输入寄件人电话!',
+              },
+            ],
+          })(<Input disabled={inputDisabled} />)}
+        </FormItem>
+        <FormItem label="寄件人地址" hasFeedback {...formItemLayout} className={classnames({ [styles.hide]: inputDisabled })}>
+          {getFieldDecorator('senderAddr', {
+            initialValue: item.senderAddr,
+            rules: [
+              {
+                required: true,
+                message: '请输入寄件人地址!',
+              },
+            ],
+          })(<Input disabled={inputDisabled} />)}
+        </FormItem>
+        <FormItem label="负重" hasFeedback {...formItemLayout} className={classnames({ [styles.hide]: inputDisabled })}>
+          {getFieldDecorator('bearload', {
+            initialValue: item.bearload,
+            rules: [
+              {
+                required: true,
+                message: '请输入寄件人地址!',
+              },
+            ],
+          })(<Input disabled={inputDisabled} />)}
+        </FormItem>
+        <FormItem label="中转地址" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('transferAddr', {
+            initialValue: item.transferAddr || '泰虹路168弄万科时一区1号楼302室',
+            rules: [
+              {
+                required: true,
+                message: '请输入中转地址!',
               },
             ],
           })(<Input />)}

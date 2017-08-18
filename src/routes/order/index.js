@@ -21,7 +21,6 @@ const Order = ({ location, dispatch, order, loading }) => {
     title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
-      console.log('update data', data)
       dispatch({
         type: `order/${modalType}`,
         payload: data,

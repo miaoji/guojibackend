@@ -5,14 +5,13 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { browserHistory } from 'dva/router'
 
 const confirm = Modal.confirm
 
 const List = ({  isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
-      browserHistory.push(`/boot/${record.serialnumber}`)
+      window.open(`/boot/${record.serialnumber}`)
       return
     }
   }

@@ -22,7 +22,7 @@ const statusGroup = {
 }
 
 const Detail = ({ orderbootDetail }) => {
-  const { data } = orderbootDetail
+  const { data, serialnumber } = orderbootDetail
   if (data.length === 0) {
     return (<div className="content-inner">
       <div className={styles.content}>
@@ -32,6 +32,7 @@ const Detail = ({ orderbootDetail }) => {
   }
   const detailData = data
   const detail = []
+  detail.push(<h2 className={styles.item}>订单{serialnumber}改价记录</h2>)
   for (let i = 0; i < detailData.length; i++) {
     let item = detailData[i]
     detail.push(<h3 className={styles.item}>第{i +1}条记录</h3>)

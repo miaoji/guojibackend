@@ -2,10 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Select } from 'antd'
+import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Radio } from 'antd'
 import city from '../../utils/city'
 
 const Search = Input.Search
+const RadioButton = Radio.Button
+const RadioGroup = Radio.Group
 const { RangePicker } = DatePicker
 
 const ColProps = {
@@ -68,7 +70,19 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-  const { name, address } = filter
+
+  const onChangeRadio = (e) => {
+    const newStarte = e.target.value
+    let fields = getFieldsValue()
+    fields = handleFields(fields)
+    fields['starte'] = newStarte
+    if (Number(newStarte) === 6) {
+      delete fields['starte']
+    }
+    onFilterChange(fields)
+  }
+
+  const { name, starte } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -90,19 +104,18 @@ const Filter = ({
           )}
         </FilterItem>
       </Col>
-      <Col {...TwoColProps} xl={{ span: 3 }} md={{ span: 10 }} sm={{ span: 10 }}>
+      <Col {...TwoColProps} xl={{ span: 5 }} md={{ span: 10 }} sm={{ span: 10 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div >
-             <Select defaultValue="6" style={{ width: 120 }} onChange={handleSubmit}>
-                <Option value="6">全部</Option>
-                <Option value="3">国内</Option>
-                <Option value="0">国际</Option>
-                <Option value="4">异常</Option>
-              </Select>
-          </div>
+          {getFieldDecorator('starte', { initialValue: "6" })(
+            <RadioGroup onChange={onChangeRadio}>
+              <RadioButton value="6">全部</RadioButton>
+              <RadioButton value="3">国内</RadioButton>
+              <RadioButton value="0">国际</RadioButton>
+              <RadioButton value="4">异常</RadioButton>
+            </RadioGroup>)}
         </div>
       </Col>
-      <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 5 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>

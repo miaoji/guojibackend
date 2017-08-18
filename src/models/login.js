@@ -20,6 +20,7 @@ export default {
       	window.localStorage.setItem('guojipc_token', data.token)
       	window.localStorage.setItem('guojipc_user', JSON.stringify(data.user))   
         const from = queryURL('from')
+        yield put({ type: 'app/query' })
         if (from) {
           yield put(routerRedux.push(from))
         } else {

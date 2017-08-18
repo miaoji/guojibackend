@@ -5,7 +5,6 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { browserHistory } from 'dva/router'
 
 const confirm = Modal.confirm
 
@@ -36,7 +35,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateZ
         addBoot(record)
         break
       case '4':
-        browserHistory.push(`/orderboot/${record.serialnumber}`)
+        window.open(`/orderboot/${record.serialnumber}`)
         break
       default:
         break
@@ -77,7 +76,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateZ
       title: '预付总金额',
       dataIndex: 'total_fee',
       key: 'total_fee',
-      render: (text) => <span>{Number(text)/100}元</span>,
+      render: (text) => <span>{text ? Number(text)/100 : 0}元</span>,
    },{
       title: '下单时间',
       dataIndex: 'endtime',

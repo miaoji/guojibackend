@@ -7,6 +7,7 @@ export default {
 
   state: {
     data: {},
+    serialnumber: ''
   },
 
   subscriptions: {
@@ -31,6 +32,7 @@ export default {
           type: 'querySuccess',
           payload: {
             data: obj,
+            serialnumber: payload.serialnumber
           },
         })
       } else {
@@ -41,10 +43,11 @@ export default {
 
   reducers: {
     querySuccess (state, { payload }) {
-      const { data } = payload
+      const { data, serialnumber } = payload
       return {
         ...state,
         data,
+        serialnumber
       }
     },
   },

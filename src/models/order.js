@@ -68,12 +68,14 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
+      payload['serialnumber'] = 'DHL' + new Date().getTime()
       const data = yield call(create, payload)
-      if (data.success) {
+      if (data.code === 200) {
         yield put({ type: 'hideModal' })
+        message.success(data.mess)
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.mess
       }
     },
 

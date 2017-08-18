@@ -16,7 +16,7 @@ if (process.env.NODE_ENV !== 'development') {
 module.exports = {
 	name: '国际快递后台管理系统',
 	prefix: '国际快递后台',
-	localPrefix: 'guoji_',
+	localPrefix: 'guojipc_',
 	footerText: '国际快递 后台 © 2017 圈嘀科技',
 	logo: '/logo.png',
 	iconFontCSS: '/iconfont.css',
@@ -35,6 +35,7 @@ module.exports = {
 		wxuser: `${APIV1}/wxuser/:id`,
 		wxusers: `${APIV1}/wxusers`,
 		order: `${APIV1}/order/:id`,
+		addOrder: `${APIV3}/wx/OrderInfo/addOrderInfo`,//创建订单
 		orders: `${APIV3}/wx/OrderInfo/getOrderInfo`,//全部订单
 		updateOrder: `${APIV3}/wx/OrderInfo/modOrderInfo`,// 根据id更新订单
 		
