@@ -104,11 +104,13 @@ const Filter = ({
           )}
         </FilterItem>
       </Col>
-      <Col {...TwoColProps} xl={{ span: 5 }} md={{ span: 10 }} sm={{ span: 10 }}>
+      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           {getFieldDecorator('starte', { initialValue: "6" })(
             <RadioGroup onChange={onChangeRadio}>
               <RadioButton value="6">全部</RadioButton>
+              <RadioButton value="1">待付款</RadioButton>
+              <RadioButton value="2">已付款</RadioButton>
               <RadioButton value="3">国内</RadioButton>
               <RadioButton value="0">国际</RadioButton>
               <RadioButton value="4">异常</RadioButton>

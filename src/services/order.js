@@ -14,7 +14,7 @@ export async function create (params) {
   return request({
     url: addOrder,
     method: 'post',
-    data: params,
+    params,
   })
 }
 

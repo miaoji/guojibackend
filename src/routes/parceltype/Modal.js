@@ -33,7 +33,8 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      data.address = data.address.join(' ')
+//    data.address = data.address.join(' ')
+//    不需要的方法
       onOk(data)
     })
   }
@@ -46,43 +47,43 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-      	<FormItem label="目的地" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('mdd', {
-            initialValue: item.mdd,
+      	<FormItem label="目的地国家" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('nation', {
+            initialValue: item.nation,
             rules: [
               {
                 required: true,
-                message: '请输入目的地!',
+                message: '请输入目的地国家!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="包裹类型名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('cname', {
-            initialValue: item.cname,
+        <FormItem label="包裹类型中文名称" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('name_ch', {
+            initialValue: item.name_ch,
             rules: [
               {
                 required: true,
-                message: '请输入包裹类型名称!',
+                message: '请输入包裹类型中文名称!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="英文名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('ename', {
-            initialValue: item.ename,
+        <FormItem label="包裹类型英文名称" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('name_en', {
+            initialValue: item.name_en,
             rules: [
               {
                 required: true,
-                message: '请输入英文名称!',
+                message: '请输入包裹类型英文名称!',
               },
             ],
           })(<Input />)}
         </FormItem>
         
         <FormItem label="最小重量(kg)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('minweight', {
-            initialValue: item.minweight,
+          {getFieldDecorator('min_range', {
+            initialValue: item.min_range,
             rules: [
               {
                 required: true,
@@ -92,8 +93,8 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="最大重量(kg)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('maxweight', {
-            initialValue: item.maxweight,
+          {getFieldDecorator('max_range', {
+            initialValue: item.max_range,
             rules: [
               {
                 required: true,

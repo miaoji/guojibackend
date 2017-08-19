@@ -26,26 +26,30 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: 'ID',
-      dataIndex: 'did',
-      key: 'did',
+      dataIndex: 'id',
+      key: 'id',
     },{
-      title: '目的地',
-      dataIndex: 'mdd',
-      key: 'mdd',
+      title: '目的地国家',
+      dataIndex: 'nation',
+      key: 'nation',
       render: (text) => <span>{text}</span>,
     },{
       title: '包裹类型名称',
-      dataIndex: 'cname',
-      key: 'cname',
+      dataIndex: 'name_ch',
+      key: 'name_ch',
+    },{
+      title: '包裹类型英文名',
+      dataIndex: 'name_en',
+      key: 'name_en',
     },{
       title: '最小重量',
-      dataIndex: 'minweight',
-      key: 'minweight',
+      dataIndex: 'min_range',
+      key: 'min_range',
       render: (text) => <span>{text}kg</span>,
     },{
       title: '最大重量',
-      dataIndex: 'maxweight',
-      key: 'maxweight',
+      dataIndex: 'max_range',
+      key: 'max_range',
       render: (text) => <span>{text}kg</span>,
     },/*{
       title: '货物类型代码',

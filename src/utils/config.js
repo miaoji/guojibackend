@@ -57,14 +57,16 @@ module.exports = {
 		demo: `${APIV1}/demo/:id`,
 		demos: `${APIV1}/demos`,//测试
 		
-		parceltype: `${APIV1}/parceltype/:id`,
 //		parceltypes: `${APIV1}/parceltypes`,//包裹类型管理
 		parceltypes: `${APIV3}/wx/PackageType/ShowPackageType`,
+		parceltypesadd: `${APIV3}/wx/PackageType/AddPackageType`,
+		parceltypesup: `${APIV3}/wx/PackageType/updatePackageType`,
 		
-		product: `${APIV1}/product/:id`,
-		products: `${APIV1}/products`,//产品类型管理
+//		products: `${APIV1}/products`,//产品类型管理
+		products: `${APIV3}/wx/ProductType/ShowProvince`,
+		productadd: `${APIV3}/wx/ProductType/AddPackageType`,
+		productup: `${APIV3}/wx/ProductType/updateProductType`,
 		
-//		destination: `${APIV1}/destination/:id`,
 //		destinations: `${APIV1}/destinations`,//目的地管理
 		destinations: `${APIV3}/wx/Country/ShowCountry`,
 		

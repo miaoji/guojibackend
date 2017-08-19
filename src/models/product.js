@@ -36,10 +36,11 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data) {
+      	console.log('aadata',data)
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list: data.obj,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
@@ -83,7 +84,14 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      const data = yield call(create, payload)
+    	console.log(payload)
+    	const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
+    	const productCode = Math.floor(Math.random())*600000
+    	const productName = payload.product_name
+    	const packageType = payload.producttypeid
+    	const newWxUser = { ...payload, createUser, productCode,  productName, packageType,}
+    	
+      const data = yield call(create, newWxUser)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
@@ -93,8 +101,13 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ wxUser }) => wxUser.currentItem.id)
-      const newWxUser = { ...payload, id }
+      const id = yield select(({ product }) => product.currentItem.id)
+      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
+    	const productCode = Math.floor(Math.random()*600000)
+    	const productName = payload.product_name
+      const packageType = payload.producttypeid
+    	const newWxUser = { ...payload, id, createUser, productCode,  productName, packageType,}
+    	
       const data = yield call(update, newWxUser)
       if (data.success) {
         yield put({ type: 'hideModal' })

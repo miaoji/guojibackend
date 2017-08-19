@@ -33,7 +33,8 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      data.address = data.address.join(' ')
+//    data.address = data.address.join(' ')
+//		不需要的参数
       onOk(data)
     })
   }
@@ -46,31 +47,20 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="目的地" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('storename', {
-            initialValue: item.storename,
+        <FormItem label="包裹类型编码" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('producttypeid', {
+            initialValue: item.producttypeid,
             rules: [
               {
                 required: true,
-                message: '请输入目的地!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="包裹类型" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('product', {
-            initialValue: item.product,
-            rules: [
-              {
-                required: true,
-                message: '请输入产品名称!',
+                message: '请输入包裹类型编码!',
               },
             ],
           })(<Input />)}
         </FormItem>
         <FormItem label="产品名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('productname', {
-            initialValue: item.productname,
+          {getFieldDecorator('product_name', {
+            initialValue: item.product_name,
             rules: [
               {
                 required: true,
@@ -78,6 +68,23 @@ const modal = ({
               },
             ],
           })(<Input />)}
+        </FormItem>
+        <FormItem label="状态" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('state', {
+            initialValue: item.state,
+            rules: [
+              {
+                required: true,
+                type: 'number',
+                message: '请选择状态!',
+              },
+            ],
+          })(
+            <Radio.Group>
+              <Radio value={1}>生效</Radio>
+              <Radio value={2}>失效</Radio>
+            </Radio.Group>
+          )}
         </FormItem>
         <FormItem label="备注" hasFeedback {...formItemLayout}>
           {getFieldDecorator('remark', {

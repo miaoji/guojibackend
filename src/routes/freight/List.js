@@ -91,7 +91,6 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '操作人',
       dataIndex: 'confirmor',
       key: 'confirmor',
-      
     },{
       title: '备注',
       dataIndex: 'remark',

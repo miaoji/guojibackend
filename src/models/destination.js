@@ -34,6 +34,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
+    	console.log('ssd',payload)
       const data = yield call(query, payload)
       if (data) {
         yield put({

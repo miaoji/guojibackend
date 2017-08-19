@@ -1,6 +1,6 @@
 import { request, config } from '../utils'
 const { api } = config
-const { product } = api
+const { product, productadd, productup } = api
 
 export async function query (params) {
   return request({
@@ -12,9 +12,9 @@ export async function query (params) {
 
 export async function create (params) {
   return request({
-    url: product.replace('/:id', ''),
+    url: productadd,
     method: 'post',
-    data: params,
+    params,
   })
 }
 
@@ -28,8 +28,8 @@ export async function remove (params) {
 
 export async function update (params) {
   return request({
-    url: product,
-    method: 'patch',
-    data: params,
+    url: productup,
+    method: 'post',
+    params,
   })
 }

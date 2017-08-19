@@ -88,8 +88,9 @@ export default modelExtend(pageModel, {
     	const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
     	const confirmor = username
       const newFreight = {...payload, time, confirmor}
-    	
+    	console.log('newFreight',newFreight)
       const data = yield call(create, newFreight)
+      console.log('data',data)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })

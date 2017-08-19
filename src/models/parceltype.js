@@ -1,4 +1,5 @@
 import modelExtend from 'dva-model-extend'
+import { message } from 'antd'
 import { create, remove, update, markBlack } from '../services/parceltype'
 import * as parceltypesService from '../services/parceltypes'
 import { pageModel } from './common'
@@ -35,11 +36,12 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data) {
+      if (data.code === 200) {
+//    	message.success(data.mess)
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list: data.obj,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
@@ -47,6 +49,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      } else {
+      	throw data.mess
       }
     },
 
@@ -83,7 +87,16 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      const data = yield call(create, payload)
+      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName 
+      const destNation = payload.nation
+      const maxRange = payload.max_range
+      const minRange = payload.min_range
+      const nameCh = payload.name_ch
+      const nameEn = payload.name_en
+      const newFreight = {...payload, createUser, destNation, maxRange, minRange, nameCh, nameEn}
+      
+      const data = yield call(create, newFreight)
+      console.log('data',data)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
@@ -93,9 +106,21 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ wxUser }) => wxUser.currentItem.id)
-      const newWxUser = { ...payload, id }
-      const data = yield call(update, newWxUser)
+      const id = yield select(({ parceltype }) => parceltype.currentItem.id)
+      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName 
+      const destNation = payload.nation
+      const maxRange = payload.max_range
+      const minRange = payload.min_range
+      const nameCh = payload.name_ch
+      const nameEn = payload.name_en
+      const newFreight = {...payload, id, createUser, destNation, maxRange, minRange, nameCh, nameEn}
+      
+      console.log(payload)
+      console.log(newFreight)
+      
+//    const newWxUser = { ...payload, id }
+      const data = yield call(update, newFreight)
+      console.log(data)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })

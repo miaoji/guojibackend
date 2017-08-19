@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { Link } from 'dva/router'
+import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
@@ -25,46 +26,55 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },{
       title: '产品名称编号',
-      dataIndex: 'did',
-      key: 'did',
+      dataIndex: 'product_code',
+      key: 'product_code',
     },{
       title: '目的地',
-      dataIndex: 'storename',
-      key: 'storename',
+      dataIndex: 'nation',
+      key: 'nation',
     },{
       title: '包裹类型',
-      dataIndex: 'b',
-      key: 'b',
+      dataIndex: 'name_ch',
+      key: 'name_ch',
     },{
       title: '产品类型',
-      dataIndex: 'a',
-      key: 'a',
+      dataIndex: 'product_name',
+      key: 'product_name',
     },{
-      title: '产品名称',
-      dataIndex: 'productname',
-      key: 'productname',
-      render:(text) => <span>{text}</span>,
-    },/*{
-      title: '产品属性',
-      dataIndex: 'productattr',
-      key: 'productattr',
-      render:(text) => <span>{text}</span>,
-    },*/{
       title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      dataIndex: 'create_time',
+      key: 'create_time',
+      render: (text) => {
+      	const createtime =time.formatTime(text)
+      	return <span>{createtime}</span>
+      }
     },{
       title: '备注',
       dataIndex: 'remark',
       key: 'remark',
       render:(text) => <span>{text}</span>,
     },{
+      title: '状态',
+      dataIndex: 'state',
+      key: 'state',
+      render: (text) => {
+        const realtext = {
+          '2': '失效',
+          '1': '生效',
+        }
+        return <span>{realtext[text]}</span>
+      }
+    },{
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '确认' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改类型' }]} />
       },
     },
   ]
