@@ -89,7 +89,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateZ
         return <span>{realtext[text]}</span>
       }
     },{
-      title: '预报消息',
+      title: '预报信息',
       key: 'createztorder',
       width: 100,
       render: (text, record) => {
