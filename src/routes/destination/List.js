@@ -58,25 +58,6 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, ...tableP
       dataIndex: 'createTime',
       key: 'createTime',
     },{
-      title: '状态',
-      dataIndex: 'status',
-      key: 'status',
-      render: (text) => {
-        const realtext = {
-          '1': '禁用',
-          '2': '生效',
-          '3': '生效',
-          '0': '禁用',
-          '4': '生效',
-          '5': '禁用',
-        }
-        return <span>{realtext[text]}</span>
-      }
-    },{
-      title: '备注',
-      dataIndex: 'remark',
-      key: 'remark',
-    },{
       title: '操作',
       key: 'operation',
       width: 100,

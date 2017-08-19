@@ -84,7 +84,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'time',
       key: 'time',
       render: (text) => {
-      	const createtime =time.gettimes(text)
+      	const createtime =time.formatTime(text)
       	return <span>{createtime}</span>
       }
     },{

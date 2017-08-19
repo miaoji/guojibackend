@@ -2,11 +2,11 @@ const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
 let APIV3 = ''
 // 线上
-APIV3 = 'http://api.didalive.net/DHL'
+//APIV3 = 'http://api.didalive.net/DHL'
 // 仝舟
 // APIV3 = 'http://192.168.0.127:8066'
 // 董浩伟
-// APIV3 = 'http://192.168.0.225:8080/DHL'
+   APIV3 = 'http://192.168.0.225:8080/DHL'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -58,12 +58,13 @@ module.exports = {
 		demos: `${APIV1}/demos`,//测试
 		
 		parceltype: `${APIV1}/parceltype/:id`,
-		parceltypes: `${APIV1}/parceltypes`,//包裹类型管理
+//		parceltypes: `${APIV1}/parceltypes`,//包裹类型管理
+		parceltypes: `${APIV3}/wx/PackageType/ShowPackageType`,
 		
 		product: `${APIV1}/product/:id`,
 		products: `${APIV1}/products`,//产品类型管理
 		
-		destination: `${APIV1}/destination/:id`,
+//		destination: `${APIV1}/destination/:id`,
 //		destinations: `${APIV1}/destinations`,//目的地管理
 		destinations: `${APIV3}/wx/Country/ShowCountry`,
 		
