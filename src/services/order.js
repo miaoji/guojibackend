@@ -1,6 +1,15 @@
 import { request, config } from '../utils'
 const { api } = config
-const { order, updateOrder, addOrder } = api
+const { order, modOrder, addOrder } = api
+
+const statusGroup = {
+  '待付款': '1',
+  '付款完成': '2',
+  '中通完成': '3',
+  'fpx完成': '0',
+  '异常订单': '4',
+  '取消订单': '5',
+}
 
 export async function query (params) {
   return request({
@@ -27,9 +36,14 @@ export async function remove (params) {
 }
 
 export async function update (params) {
+  const newParams = {
+    id: params.id,
+    starte: statusGroup[params.starte] ? statusGroup[params.starte] : params.starte,
+    fpxno: params.FPXNO,
+  }
   return request({
-    url: updateOrder,
+    url: modOrder,
     method: 'post',
-    params,
+    params: newParams,
   })
 }

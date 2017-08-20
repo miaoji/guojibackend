@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, InputNumber, Modal } from 'antd'
+import styles from './bootModal.less'
+import classnames from 'classnames'
 
 const FormItem = Form.Item
 
@@ -55,7 +57,7 @@ const bootModal = ({
             ],
           })(<Input disabled />)}
         </FormItem>
-        <FormItem label="补价金额(单位/元)" hasFeedback {...formItemLayout}>
+        <FormItem label="补价金额" hasFeedback {...formItemLayout}>
           {getFieldDecorator('boot', {
             initialValue: item.boot,
             rules: [
@@ -64,7 +66,12 @@ const bootModal = ({
                 message: '请输入补价金额!',
               },
             ],
-          })(<Input type="number" />)}
+          })(<InputNumber
+            min={0}
+            className={classnames({ [styles.width]: true })}
+            formatter={value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            parser={value => value.replace(/\￥\s?|(,*)/g, '')}
+          />)}
         </FormItem>
         <FormItem label="补价原因" hasFeedback {...formItemLayout}>
           {getFieldDecorator('reason', {

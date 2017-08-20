@@ -38,6 +38,7 @@ module.exports = {
 		addOrder: `${APIV3}/wx/OrderInfo/addOrderInfo`,//创建订单
 		orders: `${APIV3}/wx/OrderInfo/getOrderInfo`,//全部订单
 		updateOrder: `${APIV3}/wx/OrderInfo/modOrderInfo`,// 根据id更新订单
+		modOrder: `${APIV3}/wx/OrderInfo/modOrderById`,// 根据id更新订单 仝周
 		
 		boot: `${APIV3}/wx/boot/getBootInfo`,// 根据单号查询差价信息
 		boots: `${APIV3}/wx/boot/getBootAll`,// 查询所有差价(补价)信息

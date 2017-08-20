@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message, Button } from 'antd'
+import { Menu, Table, Modal, Button } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -74,8 +74,8 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateZ
       key: 'buyerPhone'
     },{
       title: '预付总金额',
-      dataIndex: 'total_fee',
-      key: 'total_fee',
+      dataIndex: 'totalfee',
+      key: 'totalfee',
       render: (text) => <span>{text ? Number(text)/100 : 0}元</span>,
    },{
       title: '下单时间',
@@ -131,7 +131,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateZ
             <p>订单号:  {record.serialnumber}</p>
             <p>寄件人:  {record.senderName}</p>
             <p>收件人:  {record.buyerName}</p>
-            <p>预付总金额:  {record.total_fee}</p>
+            <p>预付总金额:  {record.totalfee/100}元</p>
             <p>产品类型:  {record.producttypeid}</p>
             <p>收件人证件号:  {record.buyerIDCard}</p>
             <p>国内段订单号:  {record.ZTONO}</p>
