@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import modelExtend from 'dva-model-extend'
 import { create, remove, update, markBlack } from '../services/freight'
 import * as freightsService from '../services/freights'
@@ -88,14 +89,13 @@ export default modelExtend(pageModel, {
     	const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
     	const confirmor = username
       const newFreight = {...payload, time, confirmor}
-    	console.log('newFreight',newFreight)
       const data = yield call(create, newFreight)
-      console.log('data',data)
       if (data.success) {
         yield put({ type: 'hideModal' })
+        message.success(data.mess)
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.mess || data
       }
     },
 

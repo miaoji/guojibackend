@@ -6,7 +6,6 @@ import { Form, Input, InputNumber, Modal, Select } from 'antd'
 import city from '../../utils/city'
 
 const FormItem = Form.Item
-
 const Option = Select.Option
 
 const statusGroup = {

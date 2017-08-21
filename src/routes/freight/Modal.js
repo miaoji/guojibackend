@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
+import { Form, Input, Modal, Select } from 'antd'
 import city from '../../utils/city'
 
 const FormItem = Form.Item
+const Option = Select.Option
 
 const formItemLayout = {
   labelCol: {
@@ -33,9 +34,7 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-//    data.address = data.address.join(' ')
       onOk(data)
-      
     })
   }
 
@@ -58,7 +57,7 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="物品类型" hasFeedback {...formItemLayout}>
+        <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('cargotype', {
             initialValue: item.cargotype,
             rules: [
@@ -67,7 +66,10 @@ const modal = ({
                 message: '请输入物品类型!',
               },
             ],
-          })(<Input />)}
+          })(<Select defaultValue="1" style={{ width: 120 }}>
+            <Option value="1">文件</Option>
+            <Option value="2">包裹</Option>
+          </Select>)}
         </FormItem>
         <FormItem label="产品类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('producttypeid', {
