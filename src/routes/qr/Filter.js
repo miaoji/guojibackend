@@ -23,8 +23,6 @@ const TwoColProps = {
 
 const Filter = ({
   onAdd,
-  isMotion,
-  switchIsMotion,
   onFilterChange,
   filter,
   form: {
@@ -96,6 +94,9 @@ const Filter = ({
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
+          <div>
+            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
+          </div>
         </div>
       </Col>
     </Row>
@@ -104,7 +105,6 @@ const Filter = ({
 
 Filter.propTypes = {
   onAdd: PropTypes.func,
-  isMotion: PropTypes.bool,
   switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,

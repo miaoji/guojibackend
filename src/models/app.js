@@ -37,7 +37,6 @@ export default {
       if (token && token.length > 0) {
         let user = storage({key: 'user'})
         user = typeof user === 'string' && JSON.parse(user)
-//      console.log('user', user)
         yield put({
           type: 'querySuccess',
           payload: user,
@@ -56,7 +55,7 @@ export default {
     *logout ({
       payload,
     }, { put }) {
-      storage({key: 'token', type: 'remove'})
+      storage({type: 'clear'})
       yield put({ type: 'query' })
     },
 

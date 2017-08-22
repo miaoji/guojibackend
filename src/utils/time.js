@@ -14,5 +14,4 @@ export const formatTime = function (val) {
         let s = date.getSeconds()
         return (y+"/"+m+"/"+d+" "+h+":"+mm+":"+s)
 	}
-
 }
