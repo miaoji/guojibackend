@@ -1,12 +1,15 @@
 import modelExtend from 'dva-model-extend'
-import { message } from 'antd'
+import { message, Select } from 'antd'
 import { create, remove, update, markBlack } from '../services/parceltype'
 import * as parceltypesService from '../services/parceltypes'
+import * as countriesService from '../services/countries'
 import { pageModel } from './common'
 import { config } from '../utils'
 
 const { query } = parceltypesService
+const contryQuery = countriesService.query
 const { prefix } = config
+const Option = Select.Option
 
 export default modelExtend(pageModel, {
   namespace: 'parceltype',
@@ -17,6 +20,7 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: false,
+    selectNation:[],
   },
 
   subscriptions: {
@@ -51,6 +55,26 @@ export default modelExtend(pageModel, {
         })
       } else {
       	throw data.mess
+      }
+    },
+
+     *getNation ({ payload = {} }, { call, put }) {
+      const data = yield call(contryQuery)
+      if (data) {
+        let obj = data.obj
+        let children = []
+        for (let i = 0; i < obj.length; i++) {
+          let item = obj[i]
+          children.push(<Option key={item.name}>{item.name}</Option>);
+        }
+        yield put({
+          type: 'setNation',
+          payload: {
+            selectNation: children,
+          },
+        })
+      } else {
+        throw data.mess
       }
     },
 
@@ -96,7 +120,6 @@ export default modelExtend(pageModel, {
       const newFreight = {...payload, createUser, destNation, maxRange, minRange, nameCh, nameEn}
       
       const data = yield call(create, newFreight)
-      console.log('data',data)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
@@ -115,12 +138,9 @@ export default modelExtend(pageModel, {
       const nameEn = payload.name_en
       const newFreight = {...payload, id, createUser, destNation, maxRange, minRange, nameCh, nameEn}
       
-      console.log(payload)
-      console.log(newFreight)
       
 //    const newWxUser = { ...payload, id }
       const data = yield call(update, newFreight)
-      console.log(data)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
@@ -132,6 +152,10 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+
+    setNation (state, { payload }) {
+      return { ...state, ...payload }
+    },
 
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }

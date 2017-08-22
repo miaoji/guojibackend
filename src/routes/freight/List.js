@@ -40,7 +40,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       render: (text) => {
         const realtext = {
           '0': '其他',
-          '1': '其他',
+          '1': '文件',
           '2': '包裹',
         }
         return <span>{realtext[text]}</span>
@@ -91,11 +91,11 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '操作人',
       dataIndex: 'confirmor',
       key: 'confirmor',
-    },{
+    },/*{
       title: '备注',
       dataIndex: 'remark',
       key: 'remark',
-    },{
+    },*/{
       title: '操作',
       key: 'operation',
       width: 100,

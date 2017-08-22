@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Parceltype = ({ location, dispatch, parceltype, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = parceltype
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectNation } = parceltype
   const { pageSize } = pagination
 
   const modalProps = {
@@ -18,10 +18,16 @@ const Parceltype = ({ location, dispatch, parceltype, loading }) => {
     confirmLoading: loading.effects['parceltype/update'],
     title: `${modalType === 'create' ? '新增包裹类型' : '修改包裹类型'}`,
     wrapClassName: 'vertical-center-modal',
+    selectNation: selectNation,
     onOk (data) {
       dispatch({
         type: `parceltype/${modalType}`,
         payload: data,
+      })
+    },
+    getNation(data){
+      dispatch({
+        type:`parceltype/getNation`
       })
     },
     onCancel () {
