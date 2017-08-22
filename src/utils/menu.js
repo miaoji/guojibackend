@@ -64,7 +64,7 @@ module.exports = [
     name: '运费',
     icon: 'pay-circle-o',
     router: '/freight',
-  },{
+  },/*{
     id: 45,
     bpid: 4,
     mpid: 4,
@@ -78,7 +78,7 @@ module.exports = [
     name: '测试用',
     icon: 'api',
     router: '/demo',
-  },{
+  },*/{
     id: 5,
     bpid: 1,
     name: '补价管理',

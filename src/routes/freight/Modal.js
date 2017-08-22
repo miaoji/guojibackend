@@ -66,7 +66,7 @@ const modal = ({
                 message: '请输入物品类型!',
               },
             ],
-          })(<Select defaultValue="1" style={{ width: 120 }}>
+          })(<Select defaultValue="1" style={{ width: 130 }}>
             <Option value="1">文件</Option>
             <Option value="2">包裹</Option>
           </Select>)}

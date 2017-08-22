@@ -86,7 +86,7 @@ export default modelExtend(pageModel, {
     *create ({ payload }, { call, put }) {
     	console.log(payload)
     	const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
-    	const productCode = Math.floor(Math.random())*600000
+    	const productCode = Math.floor(Math.random()*600000)
     	const productName = payload.product_name
     	const packageType = payload.producttypeid
     	const newWxUser = { ...payload, createUser, productCode,  productName, packageType,}
@@ -103,7 +103,7 @@ export default modelExtend(pageModel, {
     *update ({ payload }, { select, call, put }) {
       const id = yield select(({ product }) => product.currentItem.id)
       const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
-    	const productCode = Math.floor(Math.random()*600000)
+    	const productCode = yield select(({ product }) => product.currentItem.product_code)
     	const productName = payload.product_name
       const packageType = payload.producttypeid
     	const newWxUser = { ...payload, id, createUser, productCode,  productName, packageType,}
