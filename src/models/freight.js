@@ -58,7 +58,6 @@ export default modelExtend(pageModel, {
 
     *getPackage ({ payload = {} }, { call, put }) {
       const data = yield call(contryQuery)
-      console.log('dataaa', data.obj)
       if (data) {
         let obj = data.obj
         let children = []

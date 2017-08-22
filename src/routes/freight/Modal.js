@@ -43,7 +43,6 @@ const modal = ({
   const handleClick= async function() {
     // 处理selectPackage 放入 option中
     await getPackage()
-    console.log('model selectPackage', selectPackage)
   }
 
   const modalOpts = {
