@@ -23,6 +23,7 @@ export default function storage ({key, val, prefix = true, type = 'get'}) {
 		  break
 		case 'remove':
 		  localStorage.removeItem(key)
+		  break
 		case 'clear':
 		  localStorage.clear()
 		  break
