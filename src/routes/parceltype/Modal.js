@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
+import { Form, Input, InputNumber, Radio, Modal, Cascader, Select } from 'antd'
 import city from '../../utils/city'
 
 const FormItem = Form.Item
@@ -17,6 +17,8 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
+  selectNation,
+  getNation,
   form: {
     getFieldDecorator,
     validateFields,
@@ -39,6 +41,11 @@ const modal = ({
     })
   }
 
+  const handleClick= async function() {
+    // 处理selectPackage 放入 option中
+    await getNation()
+  }
+
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,
@@ -56,7 +63,7 @@ const modal = ({
                 message: '请输入目的地国家!',
               },
             ],
-          })(<Input />)}
+          })(<Select defaultValue="1" onFocus={handleClick}>{selectNation}</Select>)}
         </FormItem>
         <FormItem label="包裹类型中文名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name_ch', {
@@ -123,7 +130,9 @@ modal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
   item: PropTypes.object,
-  onOk: PropTypes.func,
+  selectPackage: PropTypes.object,
+  getPackage: PropTypes.func,
+  onOk: PropTypes.func
 }
 
 export default Form.create()(modal)

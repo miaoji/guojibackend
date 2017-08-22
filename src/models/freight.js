@@ -1,13 +1,16 @@
-import { message } from 'antd'
+import { message, Select } from 'antd'
 import modelExtend from 'dva-model-extend'
 import { create, remove, update, markBlack } from '../services/freight'
 import * as freightsService from '../services/freights'
+import * as countriesService from '../services/countries'
 import { pageModel } from './common'
 import { config } from '../utils'
 import { gettimes } from '../utils/time'
 
 const { query } = freightsService
+const contryQuery = countriesService.query
 const { prefix } = config
+const Option = Select.Option
 
 export default modelExtend(pageModel, {
   namespace: 'freight',
@@ -18,6 +21,7 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: false,
+    selectPackage: [],
   },
 
   subscriptions: {
@@ -49,6 +53,27 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      }
+    },
+
+    *getPackage ({ payload = {} }, { call, put }) {
+      const data = yield call(contryQuery)
+      console.log('dataaa', data.obj)
+      if (data) {
+        let obj = data.obj
+        let children = []
+        for (let i = 0; i < obj.length; i++) {
+          let item = obj[i]
+          children.push(<Option key={item.name}>{item.name}</Option>);
+        }
+        yield put({
+          type: 'setPackage',
+          payload: {
+            selectPackage: children,
+          },
+        })
+      } else {
+        throw data.mess
       }
     },
 
@@ -118,6 +143,11 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+
+    setPackage (state, { payload }) {
+      console.log('dataaa payload', payload)
+      return { ...state, ...payload }
+    },
 
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }

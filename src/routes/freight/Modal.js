@@ -18,6 +18,8 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
+  selectPackage,
+  getPackage,
   form: {
     getFieldDecorator,
     validateFields,
@@ -38,6 +40,12 @@ const modal = ({
     })
   }
 
+  const handleClick= async function() {
+    // 处理selectPackage 放入 option中
+    await getPackage()
+    console.log('model selectPackage', selectPackage)
+  }
+
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,
@@ -55,7 +63,7 @@ const modal = ({
                 message: '请输入目的地国家!',
               },
             ],
-          })(<Input />)}
+          })(<Select defaultValue="1" onFocus={handleClick}>{selectPackage}</Select>)}
         </FormItem>
         <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('cargotype', {
@@ -66,7 +74,7 @@ const modal = ({
                 message: '请输入物品类型!',
               },
             ],
-          })(<Select defaultValue="1" style={{ width: 130 }}>
+          })(<Select defaultValue="1">
             <Option value="1">文件</Option>
             <Option value="2">包裹</Option>
           </Select>)}
@@ -82,7 +90,7 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="首重价格" hasFeedback {...formItemLayout}>
+        <FormItem label="首重价格(¥)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('initialprice', {
             initialValue: item.initialprice,
             rules: [
@@ -93,7 +101,7 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="首重重量" hasFeedback {...formItemLayout}>
+        <FormItem label="首重重量(kg)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('ykgweight', {
             initialValue: item.ykgweight,
             rules: [
@@ -104,7 +112,7 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="续重价格" hasFeedback {...formItemLayout}>
+        <FormItem label="续重价格(¥)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('continuedheavyprice', {
             initialValue: item.continuedheavyprice,
             rules: [
@@ -115,7 +123,7 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="步进重量" hasFeedback {...formItemLayout}>
+        <FormItem label="步进重量(kg)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('stepping', {
             initialValue: item.stepping,
             rules: [
@@ -126,7 +134,7 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="燃油附加费" hasFeedback {...formItemLayout}>
+        <FormItem label="燃油附加费(¥)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('fuelcharge', {
             initialValue: item.fuelcharge,
             rules: [
@@ -157,7 +165,9 @@ modal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
   item: PropTypes.object,
-  onOk: PropTypes.func,
+  selectPackage: PropTypes.object,
+  getPackage: PropTypes.func,
+  onOk: PropTypes.func
 }
 
 export default Form.create()(modal)
