@@ -2,11 +2,11 @@ const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
 let APIV3 = ''
 // 线上
-// APIV3 = 'http://api.didalive.net/DHL'
+APIV3 = 'http://api.didalive.net/DHL'
 // 仝舟
 // APIV3 = 'http://192.168.0.127:8066'
 // 董浩伟
-APIV3 = 'http://192.168.0.225:8080/DHL'
+// APIV3 = 'http://192.168.0.225:8080/DHL'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -80,27 +80,39 @@ module.exports = {
 		
 		//查看国家
 		ShowCountry: `${APIV3}/wx/Country/ShowCountry`,
-
 		//查看省份
 		ShowProvinceid: `${APIV3}/wx/Province/ShowProvinceid`,
-
 		//查看市级
 		ShowCityid: `${APIV3}/wx/City/ShowCityid`,
-
 		//查看县级
 		ShowCountyid: `${APIV3}/wx/County/ShowCountyid`,
-		
-
+        // 国家api
+		country: {
+		  show: `${APIV3}/wx/Country/ShowCountry`,
+		  create: `${APIV3}/wx/Country/AddCountry`,
+		},
+		// 省份/州api
+		province: {
+		  show: `${APIV3}/wx/Province/ShowProvinceid`,
+		  create: `${APIV3}/wx/Country/AddCountry`
+		},
+		// 市级api
+		city: {
+		  show: `${APIV3}/wx/City/ShowCityid`,
+		  create: `${APIV3}/wx/City/AddCity`
+		},
+		// 区县api
+		county: {
+		  show: `${APIV3}/wx/County/ShowCountyid`,
+		  create: `${APIV3}/wx/County/AddCounty`
+		},
 		//根据国家查询包裹类型
 		showPTypeByCounId: `${APIV3}/wx/PackageType/selectPtype`,
-
 		//根据包裹类型id获取对应的产品类型
 		showproductName: `${APIV3}/wx/ProductType/selectproductName`,
-
 		dashboard: `${APIV1}/dashboard`,
 		v1test: `${APIV1}/test`,
 		v2test: `${APIV2}/test`,
-
 		// 二维码推广接口
 		qr: {
 	      create: `${APIV3}/wx/createQr`,

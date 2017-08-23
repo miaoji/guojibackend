@@ -8,14 +8,12 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Destination = ({ location, dispatch, destination, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = destination
+  const { list, pagination, currentItem, modalVisible, modalType } = destination
   const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    maskClosable: false,
-    confirmLoading: loading.effects['destination/update'],
     title: `${modalType === 'create' ? '创建目的地信息' : '修改目的地信息'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
@@ -30,36 +28,12 @@ const Destination = ({ location, dispatch, destination, loading }) => {
       })
     },
   }
-  
-  
-  
-//  const bootModalProps = {
-//  type: modalType,
-//  item: currentItem,
-//  visible: bootModalVisible,
-//  confirmLoading: loading.effects['order/update'],
-//  title: '提交补价',
-//  wrapClassName: 'vertical-center-modal',
-//  onOk (data) {
-//    console.log('update data', data)
-//    dispatch({
-//      type: `order/addBoot`,
-//      payload: data,
-//    })
-//  },
-//  onCancel () {
-//    dispatch({
-//      type: 'order/hideBootModal',
-//    })
-//  },
-//}
 
   const listProps = {
     dataSource: list,
     loading: loading.effects['destination/query'],
     pagination,
     location,
-    isMotion,
     onChange (page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
@@ -70,18 +44,6 @@ const Destination = ({ location, dispatch, destination, loading }) => {
           pageSize: page.pageSize,
         },
       }))
-    },
-    onMarkItem (id) {
-      dispatch({
-        type: 'destination/markBlackList',
-        payload: id
-      })
-    },
-    onDeleteItem (id) {
-      dispatch({
-        type: 'destination/delete',
-        payload: id,
-      })
     },
     onEditItem (item) {
       dispatch({
@@ -103,7 +65,6 @@ const Destination = ({ location, dispatch, destination, loading }) => {
   }
 
   const filterProps = {
-    isMotion,
     filter: {
       ...location.query,
     },
@@ -135,35 +96,12 @@ const Destination = ({ location, dispatch, destination, loading }) => {
           modalType: 'create',
         },
       })
-    },
-    switchIsMotion () {
-      dispatch({ type: 'destination/switchIsMotion' })
-    },
-  }
-
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'destination/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
+    }
   }
 
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
-      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
     </div>

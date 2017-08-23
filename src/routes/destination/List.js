@@ -9,7 +9,7 @@ import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 
-const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, ...tableProps }) => {
+const List = ({ onDeleteItem, onEditItem, addBoot, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
       onEditItem(record)
@@ -46,17 +46,9 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, ...tableP
       dataIndex: 'shi',
       key: 'shi',
     },{
-      title: '县级',
+      title: '区县级',
       dataIndex: 'xian',
       key: 'xian',
-    },{
-      title: '操作人',
-      dataIndex: 'confirmor ',
-      key: 'confirmor ',
-    },{
-      title: '操作时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
     },{
       title: '操作',
       key: 'operation',
@@ -72,29 +64,13 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, ...tableP
     current: tableProps.pagination.current,
   }
 
-  const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
+  const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
-//      expandedRowRender={record =>
-//        <div className={classnames({ [styles.p]: true })}>
-//          <p>寄件人:  {record.wxName}</p>
-//          <p>收件人:  {record.wxName}</p>
-//          <p>证件类型:  {record.wxName}</p>
-//          <p>证件号:  {record.wxName}</p>
-//          <p>重量:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//        </div>
-//      }
+        className={classnames({ [styles.table]: true })}
         bordered
         scroll={{ x: 1250 }}
         columns={columns}
