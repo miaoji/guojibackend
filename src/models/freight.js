@@ -22,6 +22,7 @@ export default modelExtend(pageModel, {
     selectedRowKeys: [],
     isMotion: false,
     selectPackage: [],
+    productDis:true,
   },
 
   subscriptions: {
@@ -148,12 +149,16 @@ export default modelExtend(pageModel, {
       return { ...state, ...payload }
     },
 
+    setParcelType (state, { payload }) {
+      return { ...state, ...payload, productDis: false }
+    },
+
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
     hideModal (state) {
-      return { ...state, modalVisible: false }
+      return { ...state, modalVisible: false, productDis: true }
     }
 
   },

@@ -21,6 +21,7 @@ const modal = ({
   getNation,
   selectParcelType,
   getParcelType,
+  productDis,
   form: {
     getFieldDecorator,
     validateFields,
@@ -42,7 +43,6 @@ const modal = ({
       onOk(data)
     })
   }
-  let state = false
   const handleClick= async function() {
     // 处理selectPackage 放入 option中
     await getNation()
@@ -53,9 +53,7 @@ const modal = ({
     //通过目的地查询包裹类型
     // alert(2)
     // console.log(data)
-    state = true
-
-    console.log('state',state)
+    console.log('productDis', productDis)
     await getParcelType(data)
     console.log("selectParcelType",selectParcelType)
   }
@@ -88,7 +86,7 @@ const modal = ({
                 message: '请输入包裹类型!',
               },
             ],
-          })(<Select defaultValue="1">{selectParcelType}</Select>)}
+          })(<Select defaultValue="1" disabled={productDis}>{selectParcelType}</Select>)}
         </FormItem>
         <FormItem label="产品名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('product_name', {
@@ -137,6 +135,7 @@ const modal = ({
 modal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
+  productDis: PropTypes.Blooean,
   item: PropTypes.object,
   selectNation: PropTypes.object,
   getNation: PropTypes.func,

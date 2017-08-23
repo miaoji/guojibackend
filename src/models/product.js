@@ -24,6 +24,7 @@ export default modelExtend(pageModel, {
     isMotion: false,
     selectNation:[],
     selectParcelType:[],
+    productDis: true
   },
 
   subscriptions: {
@@ -160,6 +161,7 @@ export default modelExtend(pageModel, {
     	const productCode = yield select(({ product }) => product.currentItem.product_code)
     	const productName = payload.product_name
       const packageType = payload.producttypeid
+      console.log(packageType)
     	const newWxUser = { ...payload, id, createUser, productCode,  productName, packageType,}
     	
       const data = yield call(update, newWxUser)
@@ -180,7 +182,7 @@ export default modelExtend(pageModel, {
     },
     
     setParcelType (state, { payload }) {
-      return { ...state, ...payload }
+      return { ...state, ...payload, productDis: false }
     },
 
     showModal (state, { payload }) {
@@ -188,7 +190,7 @@ export default modelExtend(pageModel, {
     },
 
     hideModal (state) {
-      return { ...state, modalVisible: false }
+      return { ...state, modalVisible: false, productDis: true }
     }
 
   },
