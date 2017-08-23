@@ -4,6 +4,7 @@ import { create, remove, update, markBlack } from '../services/freight'
 import * as freightsService from '../services/freights'
 import * as countriesService from '../services/countries'
 import * as showPTypeByCounIdsService from '../services/showPTypeByCounIds'
+import * as showproductNamesService from '../services/showproductNames'
 import { pageModel } from './common'
 import { config } from '../utils'
 import { gettimes } from '../utils/time'
@@ -11,6 +12,7 @@ import { gettimes } from '../utils/time'
 const { query } = freightsService
 const contryQuery = countriesService.query
 const parceltypeQuery = showPTypeByCounIdsService.query
+const producttypeQuery = showproductNamesService.query
 const { prefix } = config
 const Option = Select.Option
 
@@ -25,7 +27,10 @@ export default modelExtend(pageModel, {
     isMotion: false,
     selectPackage: [],
     selectParcelType: [],
+    selectProductType: [],
     productDis:true,
+    freightDis:true,
+    ifPackageJson: false
   },
 
   subscriptions: {
@@ -80,24 +85,30 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getParcelType ({ payload = {} }, { call, put }) {
+    *getParcelType ({ payload = {} }, { select, call, put }) {
       const destNation={destNation:payload}
-      console.log('payload22',destNation)
-
+      let currentItem = yield select(({ freight }) => freight.currentItem)
+      console.log('currentItem', currentItem)
+      currentItem.cargotype = null
+      currentItem.producttypeid = null
       const data = yield call(parceltypeQuery,destNation)
-      console.log("data2222",data)
 
       if (data) {
         let obj = data.obj
         let children = []
         for (let i = 0; i < obj.length; i++) {
           let item = obj[i]
-          children.push(<Option key={item.nameCh}>{item.nameCh}</Option>);
+          let str = JSON.stringify({
+            id: item.id,
+            name: item.nameCh
+          })
+          children.push(<Option key={str}>{item.nameCh}</Option>);
         }
         yield put({
           type: 'setParcelType',
           payload: {
             selectParcelType: children,
+            currentItem: currentItem
           },
         })
       } else {
@@ -105,6 +116,34 @@ export default modelExtend(pageModel, {
       }
     },
 
+    *getProductType ({ payload = {} }, { select, call, put }) {
+      const packageType={packageType:payload}
+      let currentItem = yield select(({ freight }) => freight.currentItem)
+      currentItem.producttypeid = null
+
+      const data = yield call(producttypeQuery,packageType)
+
+      console.log('productdata',data)
+
+      if (data) {
+        let obj = data.obj
+        let children = []
+        for (let i = 0; i < obj.length; i++) {
+          let item = obj[i]
+          children.push(<Option key={item.productName}>{item.productName}</Option>);
+        }
+        console.log('children',children)
+        yield put({
+          type: 'setProductType',
+          payload: {
+            selectProductType: children,
+            currentItem: currentItem,
+          },
+        })
+      } else {
+        throw data.mess
+      }
+    },
 
     *'delete' ({ payload }, { call, put, select }) {
       const data = yield call(remove, { id: payload })
@@ -142,7 +181,8 @@ export default modelExtend(pageModel, {
     	const time = new Date().getTime()
     	const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
     	const confirmor = username
-      const newFreight = {...payload, time, confirmor}
+      let newFreight = {...payload, time, confirmor}
+      newFreight.cargotype = JSON.parse(newFreight.cargotype).name
       const data = yield call(create, newFreight)
       if (data.success) {
         yield put({ type: 'hideModal' })
@@ -155,11 +195,14 @@ export default modelExtend(pageModel, {
 
     *update ({ payload }, { select, call, put }) {
       const id = yield select(({ freight }) => freight.currentItem.id)
+      const ifPackageJson = yield select(({ freight }) => freight.ifPackageJson)
       const time = new Date().getTime()
       const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
       const confirmor = username
-      const newFreight = {...payload, id, time, confirmor}
-      
+      let newFreight = {...payload, id, time, confirmor}
+      console.log('payload.cargotype',payload.cargotype)
+      newFreight.cargotype = ifPackageJson ? JSON.parse(payload.cargotype).name : payload.cargotype
+      console.log('newFreight',newFreight)
       const data = yield call(update, newFreight)
       if (data.success) {
         yield put({ type: 'hideModal' })
@@ -174,7 +217,6 @@ export default modelExtend(pageModel, {
   reducers: {
 
     setPackage (state, { payload }) {
-      console.log('dataaa payload', payload)
       return { ...state, ...payload }
     },
 
@@ -182,12 +224,16 @@ export default modelExtend(pageModel, {
       return { ...state, ...payload, productDis: false }
     },
 
+    setProductType (state, { payload }) {
+      return { ...state, ...payload, ifPackageJson: true,freightDis:false, }
+    },
+
     showModal (state, { payload }) {
-      return { ...state, ...payload, modalVisible: true }
+      return { ...state, ...payload, modalVisible: true,ifPackageJson:false  }
     },
 
     hideModal (state) {
-      return { ...state, modalVisible: false, productDis: true }
+      return { ...state, modalVisible: false, productDis: true,ifPackageJson:true,freightDis:true, }
     }
 
   },

@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Freight = ({ location, dispatch, freight, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectPackage, selectParcelType } = freight
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectPackage, selectParcelType, selectProductType, productDis, freightDis, } = freight
   const { pageSize } = pagination
 
   const modalProps = {
@@ -20,6 +20,9 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     wrapClassName: 'vertical-center-modal',
     selectPackage: selectPackage,
     selectParcelType: selectParcelType,
+    selectProductType: selectProductType,
+    productDis:productDis,
+    freightDis:freightDis,
     onOk (data) {
       dispatch({
         type: `freight/${modalType}`,
@@ -34,6 +37,12 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     getParcelType (data) {
       dispatch({
         type: `freight/getParcelType`,
+        payload:data
+      })
+    },
+    getProductType (data) {
+      dispatch({
+        type: `freight/getProductType`,
         payload:data
       })
     },

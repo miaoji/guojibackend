@@ -95,7 +95,7 @@ module.exports = {
 		showPTypeByCounId: `${APIV3}/wx/PackageType/selectPtype`,
 
 		//根据包裹类型id获取对应的产品类型
-		// showP
+		showproductName: `${APIV3}/wx/ProductType/selectproductName`,
 
 		dashboard: `${APIV1}/dashboard`,
 		v1test: `${APIV1}/test`,

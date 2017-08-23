@@ -22,6 +22,10 @@ const modal = ({
   getPackage,
   selectParcelType,
   getParcelType,
+  selectProductType,
+  getProductType,
+  productDis,
+  freightDis,
   form: {
     getFieldDecorator,
     validateFields,
@@ -45,14 +49,17 @@ const modal = ({
   const handleClick= async function() {
     // 处理selectPackage 放入 option中
     await getPackage()
+
   }
 
   const handleChange=async function(data){
     //通过目的地查询包裹类型
     await getParcelType(data)
-    // alert(data)
   }
 
+  const productChange=async function(data){
+    await getProductType(JSON.parse(data).id)
+  }
 
   const modalOpts = {
     ...modalProps,
@@ -68,7 +75,7 @@ const modal = ({
             rules: [
               {
                 required: true,
-                message: '请输入目的地国家!',
+                message: '请选择目的地国家!',
               },
             ],
           })(<Select defaultValue="1" onChange={handleChange} onFocus={handleClick}>{selectPackage}</Select>)}
@@ -79,10 +86,10 @@ const modal = ({
             rules: [
               {
                 required: true,
-                message: '请输入物品类型!',
+                message: '请选择物品类型!',
               },
             ],
-          })(<Select defaultValue="1">{selectParcelType}</Select>)}
+          })(<Select defaultValue='' onChange={productChange} disabled={productDis}>{selectParcelType}</Select>)}
         </FormItem>
         <FormItem label="产品类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('producttypeid', {
@@ -90,10 +97,10 @@ const modal = ({
             rules: [
               {
                 required: true,
-                message: '请输入产品类型!',
+                message: '请选择产品类型!',
               },
             ],
-          })(<Input />)}
+          })(<Select defaultValue="" disabled={freightDis}>{selectProductType}</Select>)}
         </FormItem>
         <FormItem label="首重价格(¥)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('initialprice', {
@@ -171,6 +178,7 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   productDis: PropTypes.Blooean,
+  freightDis: PropTypes.Blooean,
   selectPackage: PropTypes.object,
   getPackage: PropTypes.func,
   onOk: PropTypes.func

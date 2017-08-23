@@ -83,8 +83,6 @@ export default modelExtend(pageModel, {
     
     *getParcelType ({ payload = {} }, { call, put }) {
       const destNation={destNation:payload}
-      // console.log('payload22',destNation)
-      
       const data = yield call(parceltypeQuery,destNation)
       console.log("data2222",data)
 
@@ -161,9 +159,10 @@ export default modelExtend(pageModel, {
     	const productCode = yield select(({ product }) => product.currentItem.product_code)
     	const productName = payload.product_name
       const packageType = payload.producttypeid
-      console.log(packageType)
     	const newWxUser = { ...payload, id, createUser, productCode,  productName, packageType,}
     	
+      console.log('newWxUser',newWxUser)
+      // return
       const data = yield call(update, newWxUser)
       if (data.success) {
         yield put({ type: 'hideModal' })
