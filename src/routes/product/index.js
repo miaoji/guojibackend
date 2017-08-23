@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Product = ({ location, dispatch, product, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = product
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectNation, selectParcelType } = product
   const { pageSize } = pagination
 
   const modalProps = {
@@ -18,10 +18,23 @@ const Product = ({ location, dispatch, product, loading }) => {
     confirmLoading: loading.effects['product/update'],
     title: `${modalType === 'create' ? '新增产品类型' : '修改产品类型'}`,
     wrapClassName: 'vertical-center-modal',
+    selectNation: selectNation,
+    selectParcelType: selectParcelType,
     onOk (data) {
       dispatch({
         type: `product/${modalType}`,
         payload: data,
+      })
+    },
+    getNation(data){
+      dispatch({
+        type:`product/getNation`
+      })
+    },
+    getParcelType(data){
+      dispatch({
+        type:`product/getParcelType`,
+        payload: data
       })
     },
     onCancel () {

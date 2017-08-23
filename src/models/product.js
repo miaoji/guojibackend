@@ -1,11 +1,17 @@
+import { message, Select } from 'antd'
 import modelExtend from 'dva-model-extend'
 import { create, remove, update, markBlack } from '../services/product'
 import * as productsService from '../services/products'
+import * as countriesService from '../services/countries'
+import * as showPTypeByCounIdsService from '../services/showPTypeByCounIds'
 import { pageModel } from './common'
 import { config } from '../utils'
 
 const { query } = productsService
 const { prefix } = config
+const contryQuery = countriesService.query
+const parceltypeQuery = showPTypeByCounIdsService.query
+const Option = Select.Option
 
 export default modelExtend(pageModel, {
   namespace: 'product',
@@ -16,6 +22,8 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: false,
+    selectNation:[],
+    selectParcelType:[],
   },
 
   subscriptions: {
@@ -48,6 +56,52 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      }
+    },
+
+     *getNation ({ payload }, { select, call, put }) {
+      const data = yield call(contryQuery)
+      console.log("data",data)
+      if (data) {
+        let obj = data.obj
+        let children = []
+        for (let i = 0; i < obj.length; i++) {
+          let item = obj[i]
+          children.push(<Option key={item.name}>{item.name}</Option>);
+        }
+        yield put({
+          type: 'setNation',
+          payload: {
+            selectNation: children,
+          },
+        })
+      } else {
+        throw data.mess
+      }
+    },
+    
+    *getParcelType ({ payload = {} }, { call, put }) {
+      const destNation={destNation:payload}
+      // console.log('payload22',destNation)
+      
+      const data = yield call(parceltypeQuery,destNation)
+      console.log("data2222",data)
+
+      if (data) {
+        let obj = data.obj
+        let children = []
+        for (let i = 0; i < obj.length; i++) {
+          let item = obj[i]
+          children.push(<Option key={item.id}>{item.nameCh}</Option>);
+        }
+        yield put({
+          type: 'setParcelType',
+          payload: {
+            selectParcelType: children,
+          },
+        })
+      } else {
+        throw data.mess
       }
     },
 
@@ -120,6 +174,14 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+
+    setNation (state, { payload }) {
+      return { ...state, ...payload }
+    },
+    
+    setParcelType (state, { payload }) {
+      return { ...state, ...payload }
+    },
 
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }

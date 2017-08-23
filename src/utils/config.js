@@ -2,11 +2,11 @@ const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
 let APIV3 = ''
 // 线上
-APIV3 = 'http://api.didalive.net/DHL'
+// APIV3 = 'http://api.didalive.net/DHL'
 // 仝舟
 // APIV3 = 'http://192.168.0.127:8066'
 // 董浩伟
-// APIV3 = 'http://192.168.0.225:8080/DHL'
+APIV3 = 'http://192.168.0.225:8080/DHL'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -90,6 +90,10 @@ module.exports = {
 		//查看县级
 		ShowCountyid: `${APIV3}/wx/County/ShowCountyid`,
 		
+
+		//根据国家查询包裹类型
+		showPTypeByCounId: `${APIV3}/wx/PackageType/selectPtype`,
+
 		dashboard: `${APIV1}/dashboard`,
 		v1test: `${APIV1}/test`,
 		v2test: `${APIV2}/test`,

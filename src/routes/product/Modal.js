@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
+import { Form, Input, InputNumber, Radio, Modal, Cascader, Select } from 'antd'
 import city from '../../utils/city'
 
 const FormItem = Form.Item
@@ -17,6 +17,10 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
+  selectNation,
+  getNation,
+  selectParcelType,
+  getParcelType,
   form: {
     getFieldDecorator,
     validateFields,
@@ -38,6 +42,23 @@ const modal = ({
       onOk(data)
     })
   }
+  let state = false
+  const handleClick= async function() {
+    // 处理selectPackage 放入 option中
+    await getNation()
+    // console.log("selectNation",selectNation)
+  }
+
+  const handleChange= async function(data){
+    //通过目的地查询包裹类型
+    // alert(2)
+    // console.log(data)
+    state = true
+
+    console.log('state',state)
+    await getParcelType(data)
+    console.log("selectParcelType",selectParcelType)
+  }
 
   const modalOpts = {
     ...modalProps,
@@ -47,16 +68,27 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="包裹类型编码" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('producttypeid', {
-            initialValue: item.producttypeid,
+      <FormItem label="目的地国家" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('nation', {
+            initialValue: item.nation,
             rules: [
               {
                 required: true,
-                message: '请输入包裹类型编码!',
+                message: '请输入目的地国家!',
               },
             ],
-          })(<Input />)}
+          })(<Select defaultValue="1" onChange={handleChange} onFocus={handleClick}>{selectNation}</Select>)}
+        </FormItem>
+        <FormItem label="包裹类型" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('producttypeid', {
+            initialValue: item.name_ch,
+            rules: [
+              {
+                required: true,
+                message: '请输入包裹类型!',
+              },
+            ],
+          })(<Select defaultValue="1">{selectParcelType}</Select>)}
         </FormItem>
         <FormItem label="产品名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('product_name', {
@@ -106,7 +138,9 @@ modal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
   item: PropTypes.object,
-  onOk: PropTypes.func,
+  selectNation: PropTypes.object,
+  getNation: PropTypes.func,
+  onOk: PropTypes.func
 }
 
 export default Form.create()(modal)
