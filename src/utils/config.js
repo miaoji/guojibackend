@@ -94,6 +94,9 @@ module.exports = {
 		//根据国家查询包裹类型
 		showPTypeByCounId: `${APIV3}/wx/PackageType/selectPtype`,
 
+		//根据包裹类型id获取对应的产品类型
+		// showP
+
 		dashboard: `${APIV1}/dashboard`,
 		v1test: `${APIV1}/test`,
 		v2test: `${APIV2}/test`,

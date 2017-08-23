@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Freight = ({ location, dispatch, freight, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectPackage } = freight
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectPackage, selectParcelType } = freight
   const { pageSize } = pagination
 
   const modalProps = {
@@ -19,6 +19,7 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     title: `${modalType === 'create' ? '新增运费信息' : '修改运费信息'}`,
     wrapClassName: 'vertical-center-modal',
     selectPackage: selectPackage,
+    selectParcelType: selectParcelType,
     onOk (data) {
       dispatch({
         type: `freight/${modalType}`,
@@ -28,6 +29,12 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     getPackage (data) {
       dispatch({
         type: `freight/getPackage`
+      })
+    },
+    getParcelType (data) {
+      dispatch({
+        type: `freight/getParcelType`,
+        payload:data
       })
     },
     onCancel () {

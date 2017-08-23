@@ -34,17 +34,9 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'destCtry',
       key: 'destctry',
     }, {
-      title: '物品类型',
+      title: '包裹类型',
       dataIndex: 'cargotype',
       key: 'cargotype',
-      render: (text) => {
-        const realtext = {
-          '0': '其他',
-          '1': '文件',
-          '2': '包裹',
-        }
-        return <span>{realtext[text]}</span>
-      }
     }, {
       title: '产品类型',
       dataIndex: 'producttypeid',

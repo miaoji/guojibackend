@@ -20,6 +20,8 @@ const modal = ({
   onOk,
   selectPackage,
   getPackage,
+  selectParcelType,
+  getParcelType,
   form: {
     getFieldDecorator,
     validateFields,
@@ -45,6 +47,13 @@ const modal = ({
     await getPackage()
   }
 
+  const handleChange=async function(data){
+    //通过目的地查询包裹类型
+    await getParcelType(data)
+    // alert(data)
+  }
+
+
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,
@@ -62,7 +71,7 @@ const modal = ({
                 message: '请输入目的地国家!',
               },
             ],
-          })(<Select defaultValue="1" onFocus={handleClick}>{selectPackage}</Select>)}
+          })(<Select defaultValue="1" onChange={handleChange} onFocus={handleClick}>{selectPackage}</Select>)}
         </FormItem>
         <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('cargotype', {
@@ -73,10 +82,7 @@ const modal = ({
                 message: '请输入物品类型!',
               },
             ],
-          })(<Select defaultValue="1">
-            <Option value="1">文件</Option>
-            <Option value="2">包裹</Option>
-          </Select>)}
+          })(<Select defaultValue="1">{selectParcelType}</Select>)}
         </FormItem>
         <FormItem label="产品类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('producttypeid', {
@@ -164,6 +170,7 @@ modal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
   item: PropTypes.object,
+  productDis: PropTypes.Blooean,
   selectPackage: PropTypes.object,
   getPackage: PropTypes.func,
   onOk: PropTypes.func

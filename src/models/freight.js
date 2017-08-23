@@ -3,12 +3,14 @@ import modelExtend from 'dva-model-extend'
 import { create, remove, update, markBlack } from '../services/freight'
 import * as freightsService from '../services/freights'
 import * as countriesService from '../services/countries'
+import * as showPTypeByCounIdsService from '../services/showPTypeByCounIds'
 import { pageModel } from './common'
 import { config } from '../utils'
 import { gettimes } from '../utils/time'
 
 const { query } = freightsService
 const contryQuery = countriesService.query
+const parceltypeQuery = showPTypeByCounIdsService.query
 const { prefix } = config
 const Option = Select.Option
 
@@ -22,6 +24,7 @@ export default modelExtend(pageModel, {
     selectedRowKeys: [],
     isMotion: false,
     selectPackage: [],
+    selectParcelType: [],
     productDis:true,
   },
 
@@ -76,6 +79,32 @@ export default modelExtend(pageModel, {
         throw data.mess
       }
     },
+
+    *getParcelType ({ payload = {} }, { call, put }) {
+      const destNation={destNation:payload}
+      console.log('payload22',destNation)
+
+      const data = yield call(parceltypeQuery,destNation)
+      console.log("data2222",data)
+
+      if (data) {
+        let obj = data.obj
+        let children = []
+        for (let i = 0; i < obj.length; i++) {
+          let item = obj[i]
+          children.push(<Option key={item.nameCh}>{item.nameCh}</Option>);
+        }
+        yield put({
+          type: 'setParcelType',
+          payload: {
+            selectParcelType: children,
+          },
+        })
+      } else {
+        throw data.mess
+      }
+    },
+
 
     *'delete' ({ payload }, { call, put, select }) {
       const data = yield call(remove, { id: payload })
