@@ -90,5 +90,11 @@ module.exports = [
     mpid: -1,
     name: '补价详情',
     router: '/boot/:id',
+  },{
+    id: 6,
+    bpid: 1,
+    name: '推广管理',
+    icon: 'api',
+    router: '/qr',
   },
 ]

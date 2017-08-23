@@ -97,5 +97,14 @@ module.exports = {
 		dashboard: `${APIV1}/dashboard`,
 		v1test: `${APIV1}/test`,
 		v2test: `${APIV2}/test`,
+
+		// 二维码推广接口
+		qr: {
+	      create: `${APIV3}/wx/createQr`,
+	      all: `${APIV3}/wx/getQrAll`,
+	      show: `${APIV3}/wx/selectQrById`,
+	      update: `${APIV3}/wx/updateQrById`,
+	      del: `${APIV3}/wx/delQrById`
+		}
 	},
 }
