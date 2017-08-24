@@ -154,15 +154,28 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
+      //获取对应的id
       const id = yield select(({ product }) => product.currentItem.id)
+      //获取对应的包裹类型的中文名称
+      const name_ch = yield select(({ product }) => product.currentItem.name_ch)
+      //获取包裹类型的id
+      const pid = yield select(({ product }) => product.currentItem.producttypeid)
+
       const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
     	const productCode = yield select(({ product }) => product.currentItem.product_code)
     	const productName = payload.product_name
-      const packageType = payload.producttypeid
+      
+      //判断提交的包裹类型是否被修改..相同则提交之前查询到的包裹类型的id..不同则提交表单传输过来的id
+      let packageType = payload.producttypeid
+      if (packageType===name_ch) {
+        packageType = pid
+      }else{
+        packageType = payload.producttypeid
+      }
+
     	const newWxUser = { ...payload, id, createUser, productCode,  productName, packageType,}
     	
       console.log('newWxUser',newWxUser)
-      // return
       const data = yield call(update, newWxUser)
       if (data.success) {
         yield put({ type: 'hideModal' })
