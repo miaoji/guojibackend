@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal } from 'antd'
-import city from '../../utils/city'
+import { Form, Input, InputNumber, Modal } from 'antd'
 
 const FormItem = Form.Item
 
@@ -14,7 +13,7 @@ const formItemLayout = {
   },
 }
 
-const modal = ({
+const cityModal = ({
   item = {},
   onOk,
   form: {
@@ -74,11 +73,11 @@ const modal = ({
   )
 }
 
-modal.propTypes = {
+cityModal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
 }
 
-export default Form.create()(modal)
+export default Form.create()(cityModal)

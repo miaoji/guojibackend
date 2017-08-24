@@ -36,19 +36,22 @@ const List = ({ onDeleteItem, onEditItem, addBoot, location, ...tableProps }) =>
       key: 'name',
     },{
       title: '省份',
-      dataIndex: 'sheng',
-      key: 'sheng',
+      key: 'province',
       render: (text) => {
-        return <Button>查看</Button>
+        return <Button type="primary">编辑</Button>
       },
     },{
       title: '市级',
-      dataIndex: 'shi',
-      key: 'shi',
+      key: 'city',
+      render: (text) => {
+        return <Button type="primary">编辑</Button>
+      }
     },{
       title: '区县级',
-      dataIndex: 'xian',
-      key: 'xian',
+      key: 'county',
+      render: (text) => {
+        return <Button type="primary">编辑</Button>
+      }
     },{
       title: '操作',
       key: 'operation',

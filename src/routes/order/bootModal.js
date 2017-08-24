@@ -69,8 +69,7 @@ const bootModal = ({
           })(<InputNumber
             min={0}
             className={classnames({ [styles.width]: true })}
-            formatter={value => `￥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={value => value.replace(/\￥\s?|(,*)/g, '')}
+            formatter={value => `￥ ${value}`}
           />)}
         </FormItem>
         <FormItem label="补价原因" hasFeedback {...formItemLayout}>

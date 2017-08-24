@@ -1,11 +1,13 @@
+/**
+ * 目的地model
+ */
 import modelExtend from 'dva-model-extend'
+import { message } from 'antd'
 import { create } from '../services/destination'
 import * as destinationsService from '../services/destinations'
 import { pageModel } from './common'
-import { config } from '../utils'
 
 const { query } = destinationsService
-const { prefix } = config
 
 export default modelExtend(pageModel, {
   namespace: 'destination',
