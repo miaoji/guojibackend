@@ -165,7 +165,7 @@ export default modelExtend(pageModel, {
     	const productCode = yield select(({ product }) => product.currentItem.product_code)
     	const productName = payload.product_name
       
-      //判断提交的包裹类型是否被修改..相同则提交之前查询到的包裹类型的id..不同则提交表单传输过来的id
+      //判断提交的包裹类型是否被修改..相同则提交之前查询到的包裹类型的id..不同则提交表单传输过来的id 
       let packageType = payload.producttypeid
       if (packageType===name_ch) {
         packageType = pid

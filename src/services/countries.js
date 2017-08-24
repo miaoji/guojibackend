@@ -7,5 +7,5 @@ export async function query (params) {
     url: ShowCountry,
     method: 'get',
     data: params,
-  })
-}
+  }
+)}

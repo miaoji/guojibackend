@@ -88,7 +88,6 @@ export default modelExtend(pageModel, {
     *getParcelType ({ payload = {} }, { select, call, put }) {
       const destNation={destNation:payload}
       let currentItem = yield select(({ freight }) => freight.currentItem)
-      console.log('currentItem', currentItem)
       currentItem.cargotype = null
       currentItem.producttypeid = null
       const data = yield call(parceltypeQuery,destNation)
@@ -123,7 +122,6 @@ export default modelExtend(pageModel, {
 
       const data = yield call(producttypeQuery,packageType)
 
-      console.log('productdata',data)
 
       if (data) {
         let obj = data.obj
@@ -132,7 +130,6 @@ export default modelExtend(pageModel, {
           let item = obj[i]
           children.push(<Option key={item.productName}>{item.productName}</Option>);
         }
-        console.log('children',children)
         yield put({
           type: 'setProductType',
           payload: {
@@ -200,9 +197,7 @@ export default modelExtend(pageModel, {
       const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
       const confirmor = username
       let newFreight = {...payload, id, time, confirmor}
-      console.log('payload.cargotype',payload.cargotype)
       newFreight.cargotype = ifPackageJson ? JSON.parse(payload.cargotype).name : payload.cargotype
-      console.log('newFreight',newFreight)
       const data = yield call(update, newFreight)
       if (data.success) {
         yield put({ type: 'hideModal' })

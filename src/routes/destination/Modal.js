@@ -51,7 +51,8 @@ const modal = ({
             rules: [
               {
                 required: true,
-                message: '请输入国家中文名!',
+                pattern: /^[\u4e00-\u9fa5]{0,}$/,
+                message: '请输入中文国家中文名称!',
               },
             ],
           })(<Input />)}
@@ -62,6 +63,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /[A-Za-z\s]/,
                 message: '请输入国家英文名!',
               },
             ],

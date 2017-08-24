@@ -34,7 +34,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, location, ...tableProps }) =>
       title: '国家',
       dataIndex: 'name',
       key: 'name',
-    }, {
+    },{
       title: '省份',
       dataIndex: 'sheng',
       key: 'sheng',
@@ -54,7 +54,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, location, ...tableProps }) =>
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '确认' },{key:'3', name:'查找'}]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' },/* { key: '2', name: '确认' }*/]} />
       },
     },
   ]
