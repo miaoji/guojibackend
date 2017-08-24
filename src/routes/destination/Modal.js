@@ -33,7 +33,6 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      data.address = data.address.join(' ')
       onOk(data)
     })
   }
@@ -46,24 +45,24 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="国家" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('country', {
-            initialValue: item.country,
+        <FormItem label="国家中文名" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('name', {
+            initialValue: item.name,
             rules: [
               {
                 required: true,
-                message: '请输入国家名!',
+                message: '请输入国家中文名!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="邮编" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('ycode', {
-            initialValue: item.ycode,
+        <FormItem label="国家英文名" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('englishname', {
+            initialValue: item.englishname,
             rules: [
               {
                 required: true,
-                message: '请输入邮编!',
+                message: '请输入国家英文名!',
               },
             ],
           })(<Input />)}
