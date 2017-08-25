@@ -41,8 +41,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'name',
     }, {
       title: '扫描关注人数',
-      dataIndex: 'sourceNumber',
-      key: 'sourceNumber',
+      dataIndex: 'source_number',
+      key: 'source_number',
     }, {
       title: '二维码参数',
       dataIndex: 'parameter',
@@ -55,10 +55,14 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         const href = wx_qr_prefix + text
         return <a href={href} target="_blank">点击查看</a>
       }
+    },{
+      title: '下单量',
+      dataIndex: 'orderCount',
+      key: 'orderCount'
     }, {
       title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      dataIndex: 'create_time',
+      key: 'create_time',
       render: (text) => {
         const createtime = time.formatTime(text)
         return <span>{createtime}</span>
