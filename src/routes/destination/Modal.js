@@ -52,7 +52,7 @@ const modal = ({
               {
                 required: true,
                 pattern: /^[\u4e00-\u9fa5]{0,}$/,
-                message: '请输入中文国家中文名称!',
+                message: '请输入国家中文名称!',
               },
             ],
           })(<Input />)}
@@ -64,7 +64,7 @@ const modal = ({
               {
                 required: true,
                 pattern: /[A-Za-z\s]/,
-                message: '请输入国家英文名!',
+                message: '请输入国家英文名称!',
               },
             ],
           })(<Input />)}
