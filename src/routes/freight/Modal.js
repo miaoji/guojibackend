@@ -108,6 +108,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入首重价格!',
               },
             ],
@@ -119,6 +120,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入首重重量!',
               },
             ],
@@ -130,6 +132,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入续重价格!',
               },
             ],
@@ -141,6 +144,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入步进重量!',
               },
             ],
@@ -152,6 +156,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入燃油附加费!',
               },
             ],
@@ -163,6 +168,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{6}$/,
                 message: '请输入邮编段!',
               },
             ],

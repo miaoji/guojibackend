@@ -63,7 +63,7 @@ const modal = ({
             rules: [
               {
                 required: true,
-                pattern: /^[A-Za-z\s]{0,}$/,
+                pattern: /^[A-Za-z]{0,}([\s]{1}[A-Za-z]{1,}){0,}$/,
                 message: '请输入国家英文名!',
               },
             ],
