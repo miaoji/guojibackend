@@ -76,6 +76,7 @@ const modal = ({
             rules: [
               {
                 required: false,
+                pattern: /^[A-Za-z0-9]{0,}$/,
                 message: '请输入国际段单号!',
               },
             ],

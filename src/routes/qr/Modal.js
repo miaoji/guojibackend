@@ -55,6 +55,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[\u4e00-\u9fa5]{0,}$/,
                 message: '请输入推广人姓名!',
               },
             ],
@@ -66,6 +67,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[A-Za-z0-9]{0,}$/,
                 message: '请输入二维码参数!',
               },
             ],

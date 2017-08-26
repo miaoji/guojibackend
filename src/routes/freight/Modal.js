@@ -78,7 +78,7 @@ const modal = ({
                 message: '请选择目的地国家!',
               },
             ],
-          })(<Select defaultValue="1" onChange={handleChange} onFocus={handleClick}>{selectPackage}</Select>)}
+          })(<Select defaultValue="1" onSelect={handleChange} onFocus={handleClick}>{selectPackage}</Select>)}
         </FormItem>
         <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('cargotype', {
@@ -108,6 +108,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入首重价格!',
               },
             ],
@@ -119,6 +120,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入首重重量!',
               },
             ],
@@ -130,6 +132,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入续重价格!',
               },
             ],
@@ -141,6 +144,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入步进重量!',
               },
             ],
@@ -152,6 +156,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入燃油附加费!',
               },
             ],
@@ -163,6 +168,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{6}$/,
                 message: '请输入邮编段!',
               },
             ],

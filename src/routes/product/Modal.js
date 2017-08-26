@@ -94,6 +94,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[\u4e00-\u9fa5]{0,}$/,
                 message: '请输入产品名称!',
               },
             ],

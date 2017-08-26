@@ -71,6 +71,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[\u4e00-\u9fa5]{0,}$/,
                 message: '请输入包裹类型中文名称!',
               },
             ],
@@ -82,6 +83,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[A-Za-z]{0,}([\s]{1}[A-Za-z]{1,}){0,}$/,
                 message: '请输入包裹类型英文名称!',
               },
             ],
@@ -94,6 +96,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入最小重量!',
               },
             ],
@@ -105,6 +108,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入最大重量!',
               },
             ],
