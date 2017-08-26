@@ -16,12 +16,14 @@ const formItemLayout = {
 const provinceModal = ({
   item = {},
   onOk,
+  query,
+  list,
   form: {
     getFieldDecorator,
     validateFields,
     getFieldsValue,
   },
-  ...modalProps
+  ...provinceModalProps
 }) => {
   const handleOk = () => {
     validateFields((errors) => {
@@ -37,16 +39,15 @@ const provinceModal = ({
   }
 
   const modalOpts = {
-    ...modalProps,
+    ...provinceModalProps,
     onOk: handleOk,
   }
 
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="国家中文名" hasFeedback {...formItemLayout}>
+        <FormItem label="省份/州中文名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
-            initialValue: item.name,
             rules: [
               {
                 required: true,
@@ -54,21 +55,22 @@ const provinceModal = ({
                 message: '请输入中文名称!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder='新建省份/州, 输入名称后按确定键' />)}
         </FormItem>
-        <FormItem label="国家英文名" hasFeedback {...formItemLayout}>
+        <FormItem label="省份/州英文名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('englishname', {
-            initialValue: item.englishname,
             rules: [
               {
                 required: true,
                 pattern: /^[A-Za-z\s]{0,}$/,
-                message: '请输入国家英文名!',
+                message: '请输入英文名称!',
               },
             ],
           })(<Input />)}
         </FormItem>
       </Form>
+      <h3>已有省份</h3>
+      {list}
     </Modal>
   )
 }
@@ -78,6 +80,8 @@ provinceModal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  query: PropTypes.func,
+  list: PropTypes.array
 }
 
 export default Form.create()(provinceModal)

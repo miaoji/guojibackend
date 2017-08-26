@@ -86,7 +86,7 @@ module.exports = {
 		ShowCityid: `${APIV3}/wx/City/ShowCityid`,
 		//查看县级
 		ShowCountyid: `${APIV3}/wx/County/ShowCountyid`,
-        // 国家api
+    // 国家api
 		country: {
 		  show: `${APIV3}/wx/Country/ShowCountry`,
 		  create: `${APIV3}/wx/Country/AddCountry`,
@@ -94,7 +94,7 @@ module.exports = {
 		// 省份/州api
 		province: {
 		  show: `${APIV3}/wx/Province/ShowProvinceid`,
-		  create: `${APIV3}/wx/Country/AddCountry`
+		  create: `${APIV3}/wx/Province/AddProvince`
 		},
 		// 市级api
 		city: {

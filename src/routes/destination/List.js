@@ -9,19 +9,10 @@ import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 
-const List = ({ onDeleteItem, onEditItem, addBoot, location, ...tableProps }) => {
+const List = ({ onDeleteItem, onEditItem, showModal, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
       onEditItem(record)
-    } else if (e.key === '2') {
-      confirm({
-        title: '确定要发送这一条订单吗?',
-        onOk () {
-          onDeleteItem(record.id)
-        },
-      })
-    }else if(e.key === '3'){
-    	addBoot(record)
     }
   }
 
@@ -37,8 +28,8 @@ const List = ({ onDeleteItem, onEditItem, addBoot, location, ...tableProps }) =>
     },{
       title: '省份',
       key: 'province',
-      render: (text) => {
-        return <Button type="primary">编辑</Button>
+      render: (text, record) => {
+        return <Button type="primary" onClick={e => showModal(record, 'province', e)}>编辑</Button>
       },
     },{
       title: '市级',
@@ -57,7 +48,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, location, ...tableProps }) =>
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' },/* { key: '2', name: '确认' }*/]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }]} />
       },
     },
   ]
@@ -88,7 +79,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, location, ...tableProps }) =>
 List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
-  addBoot: PropTypes.func,
+  showModal: PropTypes.func,
   isMotion: PropTypes.bool,
   location: PropTypes.object,
 }

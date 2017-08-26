@@ -2,12 +2,15 @@
  * 目的地model
  */
 import modelExtend from 'dva-model-extend'
-import { message } from 'antd'
+import { message, Row, Col } from 'antd'
 import { create } from '../services/destination'
 import * as destinationsService from '../services/destinations'
+import * as locationService from '../services/location'
 import { pageModel } from './common'
 
 const { query } = destinationsService
+const queryLocation = locationService.query
+const createLocation = locationService.create
 
 export default modelExtend(pageModel, {
   namespace: 'destination',
@@ -15,7 +18,12 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
-    modalType: 'create'
+    modalType: 'create',
+    province: [],
+    locationData: [],
+    provinceModalVisible: false,
+    cityModalVisible: false,
+    countyModalVisible: false,
   },
 
   subscriptions: {
@@ -47,6 +55,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      } else {
+        throw data.mess || data
       }
     },
 
@@ -57,6 +67,45 @@ export default modelExtend(pageModel, {
         yield put({ type: 'query' })
       } else {
         throw data
+      }
+    },
+
+    *queryLocation ({ payload = {} }, { select, call, put }) {
+      const countryId = payload.currentItem.id
+      const params = {countryid: countryId}
+      const data = yield call(queryLocation, {params, type: 'province'})
+      if (data) {
+        yield put({
+          type: 'showLocationModal',
+          payload: {
+            locationData: data.obj,
+            currentItem: payload.currentItem,
+            type: payload.type
+          },
+        })
+      } else {
+        throw data.mess || data
+      }
+    },
+
+    *createProvince ({ payload = {} }, { select, call, put }) {
+      const currentItem = yield select(({ destination }) => destination.currentItem)
+      const countryId = currentItem.id
+      const params = {countryid: countryId, name: payload.name, englishname: payload.englishname}
+      const data = yield call(createLocation, {params, type: 'province'})
+      if (data.success && data.code === 200) {
+        const queryData = yield call(queryLocation, {params: {countryid: countryId}, type: 'province'})
+        if (!queryData.success) throw queryData.mess
+        yield put({
+          type: 'showLocationModal',
+          payload: {
+            locationData: queryData.obj,
+            currentItem,
+            type: payload.type
+          },
+        })
+      } else {
+        throw data.mess || data
       }
     }
 
@@ -70,6 +119,32 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false }
+    },
+
+    showLocationModal (state, { payload }) {
+      let { currentItem, locationData, type } = payload
+      const visible = type + 'ModalVisible'
+      locationData = locationData.map(function(elem) {
+        return <Row gutter={16}>
+                <Col className="gutter-row" span={8}>
+                  <div className="gutter-box">{elem['id']}</div>
+                </Col>
+                <Col className="gutter-row" span={8}>
+                  <div className="gutter-box">{elem['name']}</div>
+                </Col>
+              </Row>;
+      })
+      let res = { ...state, currentItem, locationData }
+      res[visible] = true
+      return res
+    },
+
+    hideLocationModal (state, { payload }) {
+      const { type } = payload
+      const visible = type + 'ModalVisible'
+      let res = { ...state }
+      res[visible] = false
+      return res
     }
 
   },

@@ -6,9 +6,10 @@ import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
+import ProvinceModal from './ProvinceModal'
 
 const Destination = ({ location, dispatch, destination, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType } = destination
+  const { list, pagination, currentItem, modalVisible, modalType, provinceModalVisible, locationData } = destination
   const { pageSize } = pagination
 
   const modalProps = {
@@ -25,6 +26,29 @@ const Destination = ({ location, dispatch, destination, loading }) => {
     onCancel () {
       dispatch({
         type: 'destination/hideModal',
+      })
+    },
+  }
+
+  const provinceModalProps = {
+    item: currentItem,
+    list: locationData,
+    visible: provinceModalVisible,
+    title: `编辑${currentItem.name}省份信息`,
+    wrapClassName: 'vertical-center-modal',
+    onOk (data) {
+      console.log('data', data)
+      dispatch({
+        type: `destination/createProvince`,
+        payload: data,
+      })
+    },
+    onCancel () {
+      dispatch({
+        type: 'destination/hideLocationModal',
+        payload: {
+          type: 'province'
+        }
       })
     },
   }
@@ -54,11 +78,12 @@ const Destination = ({ location, dispatch, destination, loading }) => {
         },
       })
     },
-    addBoot (item) {
+    showModal (item, type) {
       dispatch({
-        type: 'order/showBootModal',
+        type: 'destination/queryLocation',
         payload: {
           currentItem: item,
+          type
         },
       })
     }
@@ -104,6 +129,7 @@ const Destination = ({ location, dispatch, destination, loading }) => {
       <Filter {...filterProps} />
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
+      {provinceModalVisible && <ProvinceModal {...provinceModalProps} />}
     </div>
   )
 }
