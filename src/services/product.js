@@ -1,10 +1,10 @@
 import { request, config } from '../utils'
 const { api } = config
-const { product, productadd, productup } = api
+const { product } = api
 
 export async function query (params) {
   return request({
-    url: product,
+    url: product.show,
     method: 'get',
     data: params,
   })
@@ -12,7 +12,7 @@ export async function query (params) {
 
 export async function create (params) {
   return request({
-    url: productadd,
+    url: product.create,
     method: 'post',
     params,
   })
@@ -20,15 +20,15 @@ export async function create (params) {
 
 export async function remove (params) {
   return request({
-    url: product,
-    method: 'delete',
-    data: params,
+    url: product.hide,
+    method: 'post',
+    params
   })
 }
 
 export async function update (params) {
   return request({
-    url: productup,
+    url: product.update,
     method: 'post',
     params,
   })

@@ -1,10 +1,10 @@
 import { request, config } from '../utils'
 const { api } = config
-const { parceltype, parceltypesadd, parceltypesup } = api
+const { parceltype } = api
 
 export async function query (params) {
   return request({
-    url: parceltype,
+    url: parceltype.show,
     method: 'get',
     data: params,
   })
@@ -12,7 +12,7 @@ export async function query (params) {
 
 export async function create (params) {
   return request({
-    url: parceltypesadd,
+    url: parceltype.create,
     method: 'post',
     params,
   })
@@ -20,15 +20,15 @@ export async function create (params) {
 
 export async function remove (params) {
   return request({
-    url: parceltype,
-    method: 'delete',
-    data: params,
+    url: parceltype.hide,
+    method: 'post',
+    params
   })
 }
 
 export async function update (params) {
   return request({
-    url: parceltypesup,
+    url: parceltype.update,
     method: 'post',
     params,
   })

@@ -1,6 +1,6 @@
 import { request, config } from '../utils'
 const { api } = config
-const { order, modOrder, addOrder } = api
+const { order } = api
 
 const statusGroup = {
   '待付款': '1',
@@ -13,7 +13,7 @@ const statusGroup = {
 
 export async function query (params) {
   return request({
-    url: order,
+    url: order.show,
     method: 'get',
     data: params,
   })
@@ -21,7 +21,7 @@ export async function query (params) {
 
 export async function create (params) {
   return request({
-    url: addOrder,
+    url: order.create,
     method: 'post',
     params,
   })
@@ -29,9 +29,9 @@ export async function create (params) {
 
 export async function remove (params) {
   return request({
-    url: order,
-    method: 'delete',
-    data: params,
+    url: order.hide,
+    method: 'post',
+    params
   })
 }
 
@@ -42,7 +42,7 @@ export async function update (params) {
     fpxno: params.FPXNO,
   }
   return request({
-    url: modOrder,
+    url: order.mod,
     method: 'post',
     params: newParams,
   })

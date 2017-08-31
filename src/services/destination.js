@@ -20,9 +20,9 @@ export async function create (params) {
 
 export async function remove (params) {
   return request({
-    url: country,
-    method: 'delete',
-    data: params,
+    url: country.hide,
+    method: 'post',
+    params
   })
 }
 

@@ -25,7 +25,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateZ
         break
       case '2':
         confirm({
-          title: '确定要删除订单吗?',
+          title: '确定要删除这一订单吗?',
           onOk () {
             onDeleteItem(record.id)
           }

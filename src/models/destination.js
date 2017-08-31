@@ -3,7 +3,7 @@
  */
 import modelExtend from 'dva-model-extend'
 import { message, Row, Col } from 'antd'
-import { create } from '../services/destination'
+import { create, remove } from '../services/destination'
 import * as destinationsService from '../services/destinations'
 import * as locationService from '../services/location'
 import { pageModel } from './common'
@@ -67,6 +67,28 @@ export default modelExtend(pageModel, {
         yield put({ type: 'query' })
       } else {
         throw data
+      }
+    },
+
+    *update ({ payload }, { select, call, put }) {
+      const id = yield select(({ destination }) => destination.currentItem.id)
+      const newDestination = { ...payload, id }
+      const data = yield call(update, newDestination)
+      if (data.success) {
+        yield put({ type: 'hideModal' })
+        yield put({ type: 'query' })
+      } else {
+        throw data
+      }
+    },
+
+    *'delete' ({ payload }, { call, put }) {
+      const data = yield call(remove, { ids: payload.toString() })
+      if (data.success && data.code === 200) {
+        message.success(data.mess)
+        yield put({ type: 'query' })
+      } else {
+        throw data.mess
       }
     },
 

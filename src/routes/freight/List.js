@@ -16,7 +16,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       onEditItem(record)
     } else if (e.key === '2') {
       confirm({
-        title: '确定要发送这一条订单吗?',
+        title: '确定要删除这一条运费吗?',
         onOk () {
           onDeleteItem(record.id)
         },
@@ -26,10 +26,6 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-    }, {
       title: '目的地国家',
       dataIndex: 'destCtry',
       key: 'destctry',
@@ -83,16 +79,12 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '操作人',
       dataIndex: 'confirmor',
       key: 'confirmor',
-    },/*{
-      title: '备注',
-      dataIndex: 'remark',
-      key: 'remark',
-    },*/{
+    },{
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' },]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },
     },
   ]

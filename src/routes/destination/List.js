@@ -11,17 +11,25 @@ const confirm = Modal.confirm
 
 const List = ({ onDeleteItem, onEditItem, showModal, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
-    if (e.key === '1') {
-      onEditItem(record)
+    switch (e.key) {
+      case '1':
+        onEditItem(record)
+        break
+      case '2':
+        confirm({
+          title: '确定要删除这目的地吗?',
+          onOk () {
+            onDeleteItem(record.id)
+          }
+        })
+        break
+      default:
+        break
     }
   }
 
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-    },{
       title: '国家',
       dataIndex: 'name',
       key: 'name',
@@ -48,7 +56,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, ...tableProps }) 
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },
     },
   ]

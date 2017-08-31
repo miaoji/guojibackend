@@ -78,6 +78,12 @@ const Destination = ({ location, dispatch, destination, loading }) => {
         },
       })
     },
+    onDeleteItem (id) {
+      dispatch({
+        type: 'destination/delete',
+        payload: id,
+      })
+    },
     showModal (item, type) {
       dispatch({
         type: 'destination/queryLocation',

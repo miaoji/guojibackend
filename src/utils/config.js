@@ -33,12 +33,14 @@ module.exports = {
 		user: `${APIV1}/user/:id`,
 		wxuser: `${APIV1}/wxuser/:id`,
 		wxusers: `${APIV1}/wxusers`,
-		order: `${APIV1}/order/:id`,
-		addOrder: `${APIV3}/wx/OrderInfo/addOrderInfo`,//创建订单
-		orders: `${APIV3}/wx/OrderInfo/getOrderInfo`,//全部订单
-		updateOrder: `${APIV3}/wx/OrderInfo/modOrderInfo`,// 根据id更新订单
-		modOrder: `${APIV3}/wx/OrderInfo/modOrderById`,// 根据id更新订单 仝周
-		
+		order: {
+			all: `${APIV3}/wx/OrderInfo/getOrderInfo`,//全部订单
+			show: `${APIV1}/order/:id`,
+			create: `${APIV3}/wx/OrderInfo/addOrderInfo`,//创建订单
+			update: `${APIV3}/wx/OrderInfo/modOrderInfo`,// 根据id更新订单
+			mod: `${APIV3}/wx/OrderInfo/modOrderById`,// 根据id更新订单 仝周
+			hide: `${APIV3}/wx/OrderInfo/delOrderById`,// 根据id更新订单 仝周
+		},
 		boot: `${APIV3}/wx/boot/getBootInfo`,// 根据单号查询差价信息
 		boots: `${APIV3}/wx/boot/getBootAll`,// 查询所有差价(补价)信息
 		addBoot: `${APIV3}/wx/boot/addBoot`,// 新增差价(补价)信息
@@ -58,26 +60,35 @@ module.exports = {
 		demos: `${APIV1}/demos`,//测试
 		
 		//包裹类型管理
-		parceltypes: `${APIV3}/wx/PackageType/ShowPackageType`,
-		parceltypesadd: `${APIV3}/wx/PackageType/AddPackageType`,
-		parceltypesup: `${APIV3}/wx/PackageType/updatePackageType`,
-		
+		parceltype: {
+			all: `${APIV3}/wx/PackageType/ShowPackageType`,
+			show: `${APIV3}/wx/PackageType/ShowPackageTypeById`,
+			create: `${APIV3}/wx/PackageType/AddPackageType`,
+			update: `${APIV3}/wx/PackageType/updatePackageType`,
+			hide: `${APIV3}/wx/PackageType/delPackageById`
+		},
 		//产品类型管理
-		products: `${APIV3}/wx/ProductType/ShowProvince`,
-		productadd: `${APIV3}/wx/ProductType/AddPackageType`,
-		productup: `${APIV3}/wx/ProductType/updateProductType`,
-		
+		product: {
+			all: `${APIV3}/wx/ProductType/ShowProvince`,
+			show: `${APIV3}/wx/ProductType/ShowProvinceById`,
+			create: `${APIV3}/wx/ProductType/AddPackageType`,
+			update: `${APIV3}/wx/ProductType/updateProductType`,
+			hide: `${APIV3}/wx/ProductType/delProductById`
+		},
 		//目的地管理
-		destinations: `${APIV3}/wx/Country/ShowCountry`,
-		
+		destination: {
+			all: `${APIV3}/wx/Country/ShowCountry`
+		},
 		//运费管理
-		freights: `${APIV3}/Internationalprice/ShowInternational`,
-		freightadd: `${APIV3}/Internationalprice/InsertInternationalprice`,
-		freightup: `${APIV3}/Internationalprice/UpadteInternationalprice`,
-		
+		freight: {
+			all: `${APIV3}/Internationalprice/ShowInternational`,
+			show: `${APIV3}/Internationalprice/ShowInternationalById`,
+			create: `${APIV3}/Internationalprice/InsertInternationalprice`,
+			update: `${APIV3}/Internationalprice/UpadteInternationalprice`,
+			hide: `${APIV3}/wx/Internationalprice/delPriceById`
+		},
 		//生产运费管理
 		producefreights: `${APIV1}/producefreights`,
-		
 		//查看国家
 		ShowCountry: `${APIV3}/wx/Country/ShowCountry`,
 		//查看省份
@@ -90,6 +101,7 @@ module.exports = {
 		country: {
 		  show: `${APIV3}/wx/Country/ShowCountry`,
 		  create: `${APIV3}/wx/Country/AddCountry`,
+		  hide: `${APIV3}/wx/Country/delCountryById`
 		},
 		// 省份/州api
 		province: {
@@ -115,11 +127,11 @@ module.exports = {
 		v2test: `${APIV2}/test`,
 		// 二维码推广接口
 		qr: {
-	      create: `${APIV3}/wx/createQr`,
-	      all: `${APIV3}/wx/getQrAll`,
-	      show: `${APIV3}/wx/selectQrById`,
-	      update: `${APIV3}/wx/updateQrById`,
-	      del: `${APIV3}/wx/delQrById`
+      create: `${APIV3}/wx/createQr`,
+      all: `${APIV3}/wx/getQrAll`,
+      show: `${APIV3}/wx/selectQrById`,
+      update: `${APIV3}/wx/updateQrById`,
+      del: `${APIV3}/wx/delQrById`
 		}
 	},
 }

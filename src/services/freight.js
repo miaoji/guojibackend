@@ -1,10 +1,10 @@
 import { request, config } from '../utils'
 const { api } = config
-const { freight,freightadd, freightup } = api
+const { freight } = api
 
 export async function query (params) {
   return request({
-    url: freight,
+    url: freight.show,
     method: 'get',
     data: params,
   })
@@ -12,7 +12,7 @@ export async function query (params) {
 
 export async function create (params) {
   return request({
-    url: freightadd,
+    url: freight.create,
     method: 'post',
     params
   })
@@ -20,15 +20,15 @@ export async function create (params) {
 
 export async function remove (params) {
   return request({
-    url: freight,
-    method: 'delete',
-    data: params,
+    url: freight.hide,
+    method: 'post',
+    params
   })
 }
 
 export async function update (params) {
   return request({
-    url: freightup,
+    url: freight.update,
     method: 'post',
     params,
   })

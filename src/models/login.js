@@ -27,7 +27,7 @@ export default {
           yield put(routerRedux.push('/dashboard'))
         }
       } else {
-        throw data
+        throw data.msg || data
       }
     },
   },
