@@ -70,6 +70,26 @@ const modal = ({
             ],
           })(<Input disabled />)}
         </FormItem>
+        <FormItem label="国际段快递公司" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('national_express_com', {
+            initialValue: item.national_express_com,
+            rules: [
+              {
+                required: false,
+                message: '请选择快递公司名!',
+              },
+            ],
+          })(<Select defaultValue="dhlen" style={{ width: 286 }}>
+            <Option value="youzhengguonei">邮政包裹/平邮</Option>
+            <Option value="youzhengguoji">国际包裹</Option>
+            <Option value="ems">EMS</Option>
+            <Option value="emsguoji">EMS-国际件(只能查部份从中国寄出或寄往中国的件)</Option>
+            <Option value="emsinten">EMS-国际件-英文结果</Option>
+            <Option value="dhlen">DHL全球件</Option>
+            <Option value="dhl">DHL</Option>
+            <Option value="dhlde">DHL-德国</Option>
+          </Select>)}
+        </FormItem>
         <FormItem label="国际段单号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('FPXNO', {
             initialValue: item.FPXNO,

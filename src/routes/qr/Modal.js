@@ -68,7 +68,7 @@ const modal = ({
               {
                 required: true,
                 pattern: /^[A-Za-z0-9]{0,}$/,
-                message: '请输入二维码参数!',
+                message: '请输入二维码参数!'
               },
             ],
           })(<Input disabled={paramDisabled} />)}
