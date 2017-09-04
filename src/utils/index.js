@@ -128,7 +128,7 @@ const pageParams = function (params) {
  */
 export const storage = function ({key, val, prefix = true, type = 'get'}) {
   let typeCheck = type === 'get'
-  if (prefix && typeCheck) {
+  if (prefix) {
     key = localPrefix + key
   }
   let res = ''

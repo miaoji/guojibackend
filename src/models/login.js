@@ -1,6 +1,6 @@
 import { login } from '../services/login'
 import { routerRedux } from 'dva/router'
-import { queryURL } from '../utils'
+import { queryURL, storage } from '../utils'
 
 export default {
   namespace: 'login',
@@ -17,8 +17,16 @@ export default {
       yield put({ type: 'hideLoginLoading' })
       if (data.status === 1) {
       	// 将 token 保存在本地localStorage
-      	window.localStorage.setItem('guojipc_token', data.token)
-      	window.localStorage.setItem('guojipc_user', JSON.stringify(data.user))   
+        storage({
+          key: 'token',
+          val: data.token,
+          type: 'set'
+        })
+        storage({
+          key: 'user',
+          val: JSON.stringify(data.user),
+          type: 'set'
+        })
         const from = queryURL('from')
         yield put({ type: 'app/query' })
         if (from) {
