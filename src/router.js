@@ -37,14 +37,6 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/wxuser/'))
             }, 'wxuser')
           },
-        },{
-          path: 'wxuser/:id',
-          getComponent (nextState, cb) {
-            require.ensure([], require => {
-              registerModel(app, require('./models/wxuser/detail'))
-              cb(null, require('./routes/wxuser/detail/'))
-            }, 'wxuser-detail')
-          },
         }, {
           path: 'order',
           getComponent (nextState, cb) {

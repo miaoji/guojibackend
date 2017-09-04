@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Layout } from '../components'
-import { classnames, config, menu } from '../utils'
+import { classnames, config, menu, storage } from '../utils'
 import { Helmet } from 'react-helmet'
 import '../themes/index.less'
 import './app.less'
@@ -56,7 +56,11 @@ const App = ({ children, location, dispatch, app, loading }) => {
       dispatch({ type: 'app/switchTheme' })
     },
     changeOpenKeys (openKeys) {
-      localStorage.setItem(`${prefix}navOpenKeys`, JSON.stringify(openKeys))
+      storage({
+        key: 'navOpenKeys',
+        val: JSON.stringify(openKeys),
+        type: 'set'
+      })
       dispatch({ type: 'app/handleNavOpenKeys', payload: { navOpenKeys: openKeys } })
     },
   }

@@ -1,3 +1,3 @@
 # guojibackend
 
-guoji express backend
+guoji backend

@@ -9,10 +9,10 @@ export default {
   state: {
     user: {},
     menuPopoverVisible: false,
-    siderFold: localStorage.getItem(`${prefix}siderFold`) === 'true',
-    darkTheme: localStorage.getItem(`${prefix}darkTheme`) === 'true',
+    siderFold: storage({ key: 'siderFold' }) === 'true',
+    darkTheme: storage({ key: 'darkTheme' }) === 'true',
     isNavbar: document.body.clientWidth < 769,
-    navOpenKeys: JSON.parse(localStorage.getItem(`${prefix}navOpenKeys`)) || [],
+    navOpenKeys: JSON.parse(storage({ key: 'navOpenKeys' })) || [],
   },
   subscriptions: {
 
@@ -79,7 +79,11 @@ export default {
     },
 
     switchSider (state) {
-      localStorage.setItem(`${prefix}siderFold`, !state.siderFold)
+      storage({
+        key: 'siderFold',
+        val: !state.siderFold,
+        type: 'set'
+      })
       return {
         ...state,
         siderFold: !state.siderFold,
@@ -87,7 +91,11 @@ export default {
     },
 
     switchTheme (state) {
-      localStorage.setItem(`${prefix}darkTheme`, !state.darkTheme)
+      storage({
+        key: 'darkTheme',
+        val: !state.darkTheme,
+        type: 'set'
+      })
       return {
         ...state,
         darkTheme: !state.darkTheme,
