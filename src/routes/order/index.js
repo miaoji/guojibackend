@@ -100,9 +100,9 @@ const Order = ({ location, dispatch, order, loading }) => {
         },
       })
     },
-    onCreateZtorder (item) {
+    onCreateCtorder (item) {
       dispatch({
-        type: 'order/createZtorder',
+        type: 'order/createChinaOrder',
         payload: {
           id: item.id,
           serialNumber: item.serialnumber

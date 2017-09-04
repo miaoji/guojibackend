@@ -1,7 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, remove, update, markBlack } from '../services/order'
-import { create as createZtorder } from '../services/ztorder'
+import { create, remove, update, markBlack, createChinaOrder } from '../services/order'
 import { create as addBoot } from '../services/boot'
 import * as ordersService from '../services/orders'
 import { pageModel } from './common'
@@ -67,7 +66,7 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      payload['serialnumber'] = 'DHL' + new Date().getTime()
+      payload['serialnumber'] = 'MZ' + new Date().getTime()
       const data = yield call(create, payload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -82,11 +81,12 @@ export default modelExtend(pageModel, {
       const id = yield select(({ order }) => order.currentItem.id)
       const newOrder = { ...payload, id }
       const data = yield call(update, newOrder)
-      if (data.success) {
+      if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
+        message.success(data.mess)
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.mess || data
       }
     },
 
@@ -110,8 +110,8 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *createZtorder ({ payload }, { call, put }) {
-      const data = yield call(createZtorder, {...payload})
+    *createChinaOrder ({ payload }, { call, put }) {
+      const data = yield call(createChinaOrder, {...payload})
       if (data.success && data.code === 200) {
         message.success(data.mess)
         yield put({ type: 'hideBootModal' })

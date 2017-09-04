@@ -11,7 +11,7 @@ const confirm = Modal.confirm
 const List = ({  isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
-      window.open(`/boot/${record.serialnumber}`)
+      window.open(`/bootdetail?serialnumber=${record.serialnumber}`)
       return
     }
   }

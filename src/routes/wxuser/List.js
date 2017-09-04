@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { Link } from 'dva/router'
+import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
@@ -25,45 +26,51 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
 
   const columns = [
     {
-      title: '微信名',
-      dataIndex: 'wxName',
-      key: 'wxName',
-      render: (text, record) => <Link to={`wxuser/${record.id}`}>{text}</Link>,
+      title: '头像',
+      dataIndex: 'headimgurl',
+      key: 'headimgurl',
+      width: 64,
+      className: styles.avatar,
+      render: (text) => <img alt={'avatar'} width={24} src={text} />,
     }, {
-      title: '手机',
-      dataIndex: 'phone',
-      key: 'phone',
+      title: '微信名',
+      dataIndex: 'nickname',
+      key: 'nickname',
+      // render: (text, record) => <Link to={`wxuser/${record.id}`}>{text}</Link>,
+    }, {
+      title: '手机号',
+      dataIndex: 'mobile',
+      key: 'mobile',
       render: (text) => {
         const str = text.toString()
-        let encryptNum = str.substr(0, 5) + '****' + str.substr(9, 10)
-        return <span>{encryptNum}</span>
+        if (str === '') {
+          return <span>未绑定手机号</span>
+        } else {
+          let encryptNum = str.substr(0, 3) + '***' + str.substr(7, 10)
+          return <span>{encryptNum}</span>
+        }
       }
     }, {
-      title: '地理所属店铺',
-      dataIndex: 'belongStore',
-      key: 'belongStore'
-    }, {
-      title: '寄件次数',
-      dataIndex: 'sendCount',
-      key: 'sendCount',
-    }, {
-      title: '收件次数',
-      dataIndex: 'pickupCount',
-      key: 'pickupCount',
-    }, {
-      title: '消费金额',
-      dataIndex: 'consume',
-      key: 'consume',
-      render: text => <span>￥{text}</span>
+      title: '性别',
+      dataIndex: 'sex',
+      key: 'sex',
+      render: (text) => {
+        const realtext = {
+          '0': '未知',
+          '1': '男',
+          '2': '女',
+        }
+        return <span>{realtext[text]}</span>
+      }
     }, {
       title: '关注状态',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'subscribe',
+      key: 'subscribe',
       filters: [
         { text: '关注', value: '1' },
         { text: '取消关注', value: '0' }
       ],
-      onFilter: (value, record) => Number(record.status) === Number(value),
+      onFilter: (value, record) => Number(record.subscribe) === Number(value),
       render: (text) => {
         const realtext = {
           '0': '取消关注',
@@ -71,23 +78,15 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         }
         return <span>{realtext[text]}</span>
       }
-    }, {
-      title: '是否黑名单',
-      dataIndex: 'blacklist',
-      key: 'blacklist',
-      filters: [
-        { text: '否', value: '0' },
-        { text: '是', value: '1' }
-      ],
-      onFilter: (value, record) => Number(record.blacklist) === Number(value),
+    },{
+      title: '关注时间',
+      dataIndex: 'subscribe_time',
+      key: 'subscribe_time',
       render: (text) => {
-        const realtext = {
-          '0': '否',
-          '1': '是',
-        }
-        return <span>{realtext[text]}</span>
+        const renderTime = time.formatTime(text)
+        return <span>{renderTime}</span>
       }
-    }, {
+    },{
       title: '操作',
       key: 'operation',
       width: 100,
@@ -110,6 +109,13 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         bordered
+        expandedRowRender={record =>
+          <div className={classnames({ [styles.p]: true })}>
+            <p>openid:  {record.openid}</p>
+            <p>手机号:  {record.mobile}</p>
+            <p>证件号:  {record.IDcard}</p>
+          </div>
+        }
         scroll={{ x: 1250 }}
         columns={columns}
         simple

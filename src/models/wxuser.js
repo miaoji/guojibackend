@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update, markBlack } from '../services/wxuser'
+import { create, remove, update } from '../services/wxuser'
 import * as wxusersService from '../services/wxusers'
 import { pageModel } from './common'
 import { config } from '../utils'
@@ -35,11 +35,11 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data) {
+      if (data.success && data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list: data.obj,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
@@ -47,6 +47,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      } else {
+        throw data.mess || data
       }
     },
 

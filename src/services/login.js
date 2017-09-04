@@ -9,10 +9,3 @@ export async function login (data) {
     data,
   })
 }
-//export async function login (data) {
-//return request({
-//  url: userLogin,
-//  method: 'post',
-//  data,
-//})
-//}

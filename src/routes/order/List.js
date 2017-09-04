@@ -17,7 +17,7 @@ const realtext = {
   '5': '取消订单',
 }
 
-const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateZtorder, ztorderLoading, ...tableProps }) => {
+const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -35,7 +35,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateZ
         addBoot(record)
         break
       case '4':
-        window.open(`/orderboot/${record.serialnumber}`)
+        window.open(`/bootdetail?serialnumber=${record.serialnumber}`)
         break
       default:
         break
@@ -46,7 +46,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateZ
     confirm({
       title: '确定要发送中通订单吗?',
       onOk () {
-        onCreateZtorder(record)
+        onCreateCtorder(record)
       }
     })
   }

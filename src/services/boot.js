@@ -1,19 +1,18 @@
 import { request, config } from '../utils'
 const { api } = config
-const { boot, addBoot, updateBoot } = api
+const { boot } = api
 
 export async function query (params) {
   return request({
-    url: boot,
+    url: boot.show,
     method: 'get',
     data: params,
   })
 }
 
 export async function create (params) {
-  console.log('params', params)
   return request({
-    url: addBoot,
+    url: boot.add,
     method: 'post',
     params,
   })
@@ -21,7 +20,7 @@ export async function create (params) {
 
 export async function update (params) {
   return request({
-    url: updateBoot,
+    url: boot.update,
     method: 'post',
     params,
   })

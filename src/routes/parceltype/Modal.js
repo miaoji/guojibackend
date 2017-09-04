@@ -35,14 +35,11 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-//    data.address = data.address.join(' ')
-//    不需要的方法
       onOk(data)
     })
   }
 
   const handleClick= async function() {
-    // 处理selectPackage 放入 option中
     await getNation()
   }
 

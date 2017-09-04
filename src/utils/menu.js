@@ -25,13 +25,7 @@ module.exports = [
     name: '订单',
     icon: 'tags-o',
     router: '/order',
-  },{
-    id: 31,
-    bpid: 3,
-    mpid: -1,
-    name: '补价详细',
-    router: '/orderboot/:id'
-  },{
+  }, {
     id: 4,
     bpid: 1,
     name: '类型管理',
@@ -64,33 +58,19 @@ module.exports = [
     name: '运费',
     icon: 'pay-circle-o',
     router: '/freight',
-  },/*{
-    id: 45,
-    bpid: 4,
-    mpid: 4,
-    name: '生产运费',
-    icon: 'pay-circle',
-    router: '/producefreight',
   },{
-    id: 46,
-    bpid: 4,
-    mpid: 4,
-    name: '测试用',
-    icon: 'api',
-    router: '/demo',
-  },*/{
     id: 5,
     bpid: 1,
     name: '补价管理',
     icon: 'api',
     router: '/boot',
   }, {
-    id: 51,
+    id: 52,
     bpid: 5,
     mpid: -1,
     name: '补价详情',
-    router: '/boot/:id',
-  },{
+    router: '/bootdetail',
+  }, {
     id: 6,
     bpid: 1,
     name: '推广管理',

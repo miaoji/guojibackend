@@ -71,8 +71,8 @@ const modal = ({
           })(<Input disabled />)}
         </FormItem>
         <FormItem label="国际段快递公司" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('national_express_com', {
-            initialValue: item.national_express_com,
+          {getFieldDecorator('nation_express_com', {
+            initialValue: item.nation_express_com,
             rules: [
               {
                 required: false,

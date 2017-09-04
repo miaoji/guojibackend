@@ -1,11 +1,11 @@
 import { request, config, pageParams } from '../utils'
 const { api } = config
-const { boots } = api
+const { boot } = api
 
 export async function query (params) {
   params = pageParams(params)
   return request({
-    url: boots,
+    url: boot.all,
     method: 'get',
     data: params,
   })

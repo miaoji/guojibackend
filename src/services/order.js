@@ -40,10 +40,19 @@ export async function update (params) {
     id: params.id,
     starte: statusGroup[params.starte] ? statusGroup[params.starte] : params.starte,
     fpxno: params.FPXNO,
+    nation_express_com: params.nation_express_com
   }
   return request({
     url: order.mod,
     method: 'post',
     params: newParams,
+  })
+}
+
+export async function createChinaOrder (params) {
+  return request({
+    url: order.createChinaOrder,
+    method: 'post',
+    params,
   })
 }

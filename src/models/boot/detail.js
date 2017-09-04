@@ -1,4 +1,3 @@
-import pathToRegexp from 'path-to-regexp'
 import { query } from '../../services/boot'
 
 export default {
@@ -12,7 +11,7 @@ export default {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(() => {
-        const match = pathToRegexp('/boot/:id').exec(location.pathname)
+        const match = location.search.split('?serialnumber=')
         if (match) {
           dispatch({ type: 'query', payload: { serialnumber : match[1] } })
         }

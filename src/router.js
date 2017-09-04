@@ -70,36 +70,12 @@ const Routers = function ({ history, app }) {
             }, 'boot')
           },
         }, {
-          path: 'boot/:id',
+          path: 'bootdetail',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/boot/detail'))
               cb(null, require('./routes/boot/detail'))
             }, 'boot-detail')
-          },
-        }, {
-          path: 'demo',
-          getComponent (nextState, cb) {
-            require.ensure([], require => {
-              registerModel(app, require('./models/demo'))
-              cb(null, require('./routes/demo/'))
-            }, 'demo')
-          },
-        },{
-          path: 'ztorder',
-          getComponent (nextState, cb) {
-            require.ensure([], require => {
-              registerModel(app, require('./models/ztorder'))
-              cb(null, require('./routes/ztorder/'))
-            }, 'ztorder')
-          },
-        },{
-          path: 'fpxorder',
-          getComponent (nextState, cb) {
-            require.ensure([], require => {
-              registerModel(app, require('./models/fpxorder'))
-              cb(null, require('./routes/fpxorder/'))
-            }, 'fpxorder')
           },
         },{
           path: 'parceltype',
@@ -148,14 +124,6 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/producefreight'))
               cb(null, require('./routes/producefreight/'))
             }, 'producefreight')
-          },
-        },{
-          path: 'success',
-          getComponent (nextState, cb) {
-            require.ensure([], require => {
-              registerModel(app, require('./models/success'))
-              cb(null, require('./routes/success/'))
-            }, 'success')
           },
         },{
           path: 'login',

@@ -1,10 +1,10 @@
 import { request, config } from '../utils'
 const { api } = config
-const { ShowCountry } = api
+const { country } = api
 
 export async function query (params) {
   return request({
-    url: ShowCountry,
+    url: country.show,
     method: 'get',
     data: params,
   }

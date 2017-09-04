@@ -38,24 +38,17 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-//    data.address = data.address.join(' ')
-//		不需要的参数
       onOk(data)
     })
   }
   const handleClick= async function() {
     // 处理selectPackage 放入 option中
     await getNation()
-    // console.log("selectNation",selectNation)
   }
 
   const handleChange= async function(data){
     //通过目的地查询包裹类型
-    // alert(2)
-    // console.log(data)
-    console.log('productDis', productDis)
     await getParcelType(data)
-    console.log("selectParcelType",selectParcelType)
   }
 
   const modalOpts = {
@@ -94,7 +87,6 @@ const modal = ({
             rules: [
               {
                 required: true,
-                pattern: /^[\u4e00-\u9fa5]{0,}$/,
                 message: '请输入产品名称!',
               },
             ],

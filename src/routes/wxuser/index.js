@@ -16,7 +16,7 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
     visible: modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['wxUser/update'],
-    title: `${modalType === 'create' ? '创建微信用户' : '更新微信用户--'}${currentItem.wxName}`,
+    title: `${modalType === 'create' ? '创建微信用户' : '更新微信用户--'}${currentItem.nickname}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({

@@ -10,14 +10,6 @@ export async function query (params) {
   })
 }
 
-export async function create (params) {
-  return request({
-    url: wxuser.replace('/:id', ''),
-    method: 'post',
-    data: params,
-  })
-}
-
 export async function remove (params) {
   return request({
     url: wxuser,

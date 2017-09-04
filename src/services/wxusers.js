@@ -1,11 +1,12 @@
-import { request, config } from '../utils'
+import { request, config, pageParams } from '../utils'
 const { api } = config
-const { wxusers } = api
+const { wxuser } = api
 
 export async function query (params) {
+	params = pageParams(params)
   return request({
-    url: wxusers,
-    method: 'get',
-    data: params,
+    url: wxuser.all,
+    method: 'post',
+    params
   })
 }
