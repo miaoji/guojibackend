@@ -13,13 +13,6 @@ module.exports = [
     router: '/wxuser',
   },
   {
-    id: 21,
-    bpid: 2,
-    mpid: -1,
-    name: '微信用户详细',
-    router: '/wxuser/:id'
-  },
-  {
     id: 3,
     bpid: 1,
     name: '订单',
@@ -35,7 +28,7 @@ module.exports = [
     bpid: 4,
     mpid: 4,
     name: '目的地管理',
-    icon: 'api',
+    icon: 'flag',
     router: '/destination',
   },{
     id: 42,
@@ -74,7 +67,7 @@ module.exports = [
     id: 6,
     bpid: 1,
     name: '推广管理',
-    icon: 'api',
+    icon: 'global',
     router: '/qr',
   },
 ]
