@@ -19,7 +19,7 @@ module.exports = {
 	name: '国际快递后台管理系统',
 	prefix: '国际快递后台',
 	localPrefix: 'guojipc_',
-	footerText: '国际快递 后台 © 2017 圈嘀科技',
+	footerText: '国际快递 后台 © 2017 明彰科技',
 	logo: '/logo.png',
 	iconFontCSS: '/iconfont.css',
 	iconFontJS: '/iconfont.js',
