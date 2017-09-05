@@ -7,7 +7,7 @@ export default {
   state: {
     sales: [],
     quote: {
-      name: '圈嘀',
+      name: '明彰',
       title: '名言',
       content: '逆水行舟，不进则退',
       avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',

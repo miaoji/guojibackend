@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message } from 'antd'
+import { Menu, Table, Modal, Icon, message, Button } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -10,10 +10,8 @@ const confirm = Modal.confirm
 
 const List = ({  isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
-    if (e.key === '1') {
-      window.open(`/bootdetail?serialnumber=${record.serialnumber}`)
-      return
-    }
+    window.open(`/bootdetail?serialnumber=${record.serialnumber}`)
+    return
   }
 
   const columns = [
@@ -42,6 +40,9 @@ const List = ({  isMotion, location, ...tableProps }) => {
       title: '重量',
       dataIndex: 'bearload',
       key: 'bearload',
+      render: (text) => {
+        return <span>{text}kg</span>
+      }
     }, {
       title: '体积重',
       dataIndex: 'v',
@@ -50,7 +51,11 @@ const List = ({  isMotion, location, ...tableProps }) => {
         return <span>{text}cm³</span>
       }
     }, {
-      title: '改动金额',
+      title: '补价次数',
+      dataIndex: 'count',
+      key: 'count'
+    }, {
+      title: '补价总金额',
       dataIndex: 'bootSum',
       key: 'bootSum',
       render: (text) => {
@@ -61,7 +66,7 @@ const List = ({  isMotion, location, ...tableProps }) => {
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '历史记录' },]} />
+        return <Button type="primary" onClick={e => handleMenuClick(record, e)}>历史记录</Button>
       },
     },
   ]

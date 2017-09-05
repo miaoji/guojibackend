@@ -45,7 +45,6 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data) {
-      	console.log('aadata',data)
         yield put({
           type: 'querySuccess',
           payload: {
@@ -62,7 +61,6 @@ export default modelExtend(pageModel, {
 
      *getNation ({ payload }, { select, call, put }) {
       const data = yield call(contryQuery)
-      console.log("data",data)
       if (data) {
         let obj = data.obj
         let children = []
@@ -135,7 +133,6 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-    	console.log(payload)
     	const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
     	const productCode = Math.floor(Math.random()*600000)
     	const productName = payload.product_name

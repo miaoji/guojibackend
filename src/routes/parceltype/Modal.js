@@ -64,15 +64,19 @@ const modal = ({
         </FormItem>
         <FormItem label="包裹类型中文名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name_ch', {
-            initialValue: item.name_ch,
+            initialValue: item.name_ch || '包裹',
             rules: [
               {
                 required: true,
-                pattern: /^[\u4e00-\u9fa5]{0,}$/,
                 message: '请输入包裹类型中文名称!',
               },
             ],
-          })(<Input />)}
+          })(
+            <Radio.Group defaultValue={'包裹'}>
+              <Radio value={'包裹'}>包裹</Radio>
+              <Radio value={'文件'}>文件</Radio>
+            </Radio.Group>
+          )}
         </FormItem>
         <FormItem label="包裹类型英文名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name_en', {
@@ -113,10 +117,10 @@ const modal = ({
         </FormItem>
         <FormItem label="备注" hasFeedback {...formItemLayout}>
           {getFieldDecorator('remark', {
-            initialValue: item.remark,
+            initialValue: item.remark || '',
             rules: [
               {
-                required: true,
+                required: false,
                 message: '请输入备注信息!',
               },
             ],

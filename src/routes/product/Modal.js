@@ -94,7 +94,7 @@ const modal = ({
         </FormItem>
         <FormItem label="状态" hasFeedback {...formItemLayout}>
           {getFieldDecorator('state', {
-            initialValue: item.state,
+            initialValue: item.state || 1,
             rules: [
               {
                 required: true,
@@ -103,7 +103,7 @@ const modal = ({
               },
             ],
           })(
-            <Radio.Group>
+            <Radio.Group defaultValue={1}>
               <Radio value={1}>生效</Radio>
               <Radio value={2}>失效</Radio>
             </Radio.Group>
@@ -111,10 +111,10 @@ const modal = ({
         </FormItem>
         <FormItem label="备注" hasFeedback {...formItemLayout}>
           {getFieldDecorator('remark', {
-            initialValue: item.remark,
+            initialValue: item.remark || '',
             rules: [
               {
-                required: true,
+                required: false,
                 message: '请输入备注信息!',
               },
             ],

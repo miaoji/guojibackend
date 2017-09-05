@@ -2,9 +2,9 @@ const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
 let APIV3 = ''
 // 测试线上
-APIV3 = 'http://api.didalive.net/DHL'
+// APIV3 = 'http://api.didalive.net/DHL'
 // 正式线上
-// APIV3 = 'http://api.mingz-tech.com/DHL'
+APIV3 = 'http://api.mingz-tech.com/DHL'
 // 仝舟
 // APIV3 = 'http://192.168.0.134:8066'
 // 董浩伟

@@ -163,10 +163,10 @@ const modal = ({
         </FormItem>
         <FormItem label="邮编段" hasFeedback {...formItemLayout}>
           {getFieldDecorator('zipcodesegment', {
-            initialValue: item.zipcodesegment,
+            initialValue: item.zipcodesegment || '',
             rules: [
               {
-                required: true,
+                required: false,
                 pattern: /^[0-9]{6}$/,
                 message: '请输入邮编段!',
               },
