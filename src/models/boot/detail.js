@@ -11,9 +11,11 @@ export default {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(() => {
-        const match = location.search.split('?serialnumber=')
-        if (match) {
-          dispatch({ type: 'query', payload: { serialnumber : match[1] } })
+        if (location.pathname === '/bootdetail') {
+          const match = location.search.split('?serialnumber=')
+          if (match) {
+            dispatch({ type: 'query', payload: { serialnumber : match[1] } })
+          }
         }
       })
     },

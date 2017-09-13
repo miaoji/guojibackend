@@ -90,7 +90,7 @@ const Filter = ({
             size="large"
             style={{ width: '100%' }}
             options={city}
-            placeholder="地理所属门店"
+            placeholder="所属渠道"
             onChange={handleChange.bind(null, 'address')}
           />)}
       </Col>

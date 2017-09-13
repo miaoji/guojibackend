@@ -100,7 +100,15 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/qr'))
               cb(null, require('./routes/qr/'))
             }, 'qr')
-          },
+          }
+        },{
+          path: 'qrdetail',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/qr/detail'))
+              cb(null, require('./routes/qr/detail'))
+            }, 'qr-detail')
+          }
         },{
           path: 'producefreight',
           getComponent (nextState, cb) {
@@ -125,8 +133,8 @@ const Routers = function ({ history, app }) {
             }, 'error')
           },
         },
-      ],
-    },
+      ]
+    }
   ]
 
   return <Router history={history} routes={routes} />

@@ -8,7 +8,7 @@ import { DropOption } from '../../components'
 import { time } from '../../utils'
 
 const confirm = Modal.confirm
-const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
+// const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
 
 const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
@@ -30,7 +30,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   }
 
   const copyUrl = (record, e) => {
-    const href = wx_qr_prefix + record.ticket
+    const href = 'http://control.mingz-tech.com/qrdetail?ticket=' + record.ticket + '&name=' + record.name + '&parameter=' + record.parameter
     window.prompt('使用Ctrl+C复制到剪切板', href)
   }
 
@@ -51,8 +51,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '二维码图片',
       dataIndex: 'ticket',
       key: 'ticket',
-      render: (text) => {
-        const href = wx_qr_prefix + text
+      render: (text, record) => {
+        const href = '/qrdetail?ticket=' + text + '&name=' + record.name + '&parameter=' + record.parameter
         return <a href={href} target="_blank">点击查看</a>
       }
     },{

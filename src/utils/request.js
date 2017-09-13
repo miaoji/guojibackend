@@ -59,7 +59,7 @@ const fetch = (options) => {
       return axios({
       	url,
       	method: 'get',
-        params: cloneData,
+        params: cloneData || params,
         timeout: 5000,
         headers: {
         	'token': window.localStorage.getItem('guojipc_token')
@@ -90,35 +90,20 @@ const fetch = (options) => {
 }
 
 export default function request (options) {
-//if (options.url && options.url.indexOf('//') > -1) {
-//  const origin = `${options.url.split('//')[0]}//${options.url.split('//')[1].split('/')[0]}`
-//  if (window.location.origin !== origin) {
-//    if (CORS && CORS.indexOf(origin) > -1) {
-//      options.fetchType = 'CORS'
-//    } else if (YQL && YQL.indexOf(origin) > -1) {
-//      options.fetchType = 'YQL'
-//    } else {
-//      options.fetchType = 'JSONP'
-//    }
-//  }
-//}
-//判断如果不是登陆页 在localStorage 中没有token的话  就跳转到login页面上
-//----------------------//
+  //判断如果不是登陆页 在localStorage 中没有token的话  就跳转到login页面上
   if (window.location.pathname !== '/login') {
     const token = window.localStorage.getItem('guojipc_token')
     if(!token||token === '')
     return browserHistory.push('/login')  	
   }
-//----------------------//
-
   return fetch(options).then((response) => {
     const { statusText, status } = response
-    let data = options.fetchType === 'YQL' ? response.data.query.results.json : response.data
+    let data = response.data
     return {
       success: true,
       message: statusText,
       statusCode: status,
-      ...data,
+      ...data
     }
   }).catch((error) => {
     const { response } = error

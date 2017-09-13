@@ -6,7 +6,7 @@ let APIV3 = ''
 // 正式线上
 APIV3 = 'http://api.mingz-tech.com/DHL'
 // 仝舟
-// APIV3 = 'http://192.168.0.134:8066'
+// APIV3 = 'http://192.168.1.111:8066'
 // 董浩伟
 // APIV3 = 'http://192.168.0.225:8080/DHL'
 // 生产环境时api固定为线上url
@@ -33,7 +33,12 @@ module.exports = {
 		showPTypeByCounId: `${APIV3}/wx/PackageType/selectPtype`,
 		//根据包裹类型id获取对应的产品类型
 		showproductName: `${APIV3}/wx/ProductType/selectproductName`,
-		userLogin: `${APIV3}/login`,
+		login: {
+			accountLogin: `${APIV3}/login`,
+			getVerifyImage: `${APIV3}/login/imageCode`,
+			getMobileCode: `${APIV3}/login/sendCode`,
+			mobileLogin: `${APIV3}/login/loginByCode`
+		},
 		wxuser: {
 			all: `${APIV3}/wx/User/selectWxUser`,
 		},

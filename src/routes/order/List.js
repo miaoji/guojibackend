@@ -138,7 +138,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
             <p>国际段订单号:  {record.FPXNO}</p>
             <p>重量:  {record.bearload}</p>
             <p>寄件地址: {record.senderAddr}</p>
-            <p>中转地址: {record.transferAddr}</p>
+            <p>中转地址: {record.transferAddress}</p>
             <p>收件地址: {record.buyerAddr}</p>
             <p>下单时间:  {record.endtime}</p>
             <p>订单状态:  {realtext[record.starte]}</p>
