@@ -1,21 +1,28 @@
-import pathToRegexp from 'path-to-regexp'
-import { query } from '../../services/boot'
+import { query } from '../../services/qr'
+import { queryURL } from '../../utils'
 
 export default {
 
-  namespace: 'orderbootDetail',
+  namespace: 'qrDetail',
 
   state: {
-    data: {},
-    serialnumber: ''
+    name: '',
+    ticket: '',
+    parameter: ''
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(() => {
-        const match = pathToRegexp('/orderboot/:id').exec(location.pathname)
-        if (match) {
-          dispatch({ type: 'query', payload: { serialnumber : match[1] } })
+        if (location.pathname === '/qrdetail') {
+          const name = queryURL('name')
+          const ticket = queryURL('ticket')
+          const parameter = queryURL('parameter')
+          dispatch({ type: 'querySuccess', payload: { 
+            name,
+            ticket,
+            parameter
+          }})
         }
       })
     },
@@ -32,7 +39,6 @@ export default {
           type: 'querySuccess',
           payload: {
             data: obj,
-            serialnumber: payload.serialnumber
           },
         })
       } else {
@@ -43,11 +49,10 @@ export default {
 
   reducers: {
     querySuccess (state, { payload }) {
-      const { data, serialnumber } = payload
+      const { data } = payload
       return {
         ...state,
-        data,
-        serialnumber
+        ...payload,
       }
     },
   },

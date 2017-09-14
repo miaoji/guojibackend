@@ -5,13 +5,24 @@
   z-index: -100;
 }
 
+.switch {
+  text-align: right;
+  font-size: 12px;
+  color: #333;
+  padding-bottom: 6px;
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+
 .form {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin: -160px 0 0 -160px;
+  margin: -260px 0 0 -160px;
   width: 320px;
-  height: 320px;
   padding: 36px;
   box-shadow: 0 0 100px rgba(0,0,0,.08);
 
@@ -51,6 +62,16 @@
     text-transform: uppercase;
     display: inline-block;
   }
+}
+
+.imgcontainer {
+  display: flex;
+  align-items: center;
+}
+
+.verifyimage {
+  width: 150px;
+  height: 64px; 
 }
 
 .ant-spin-container,

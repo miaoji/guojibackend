@@ -69,5 +69,11 @@ module.exports = [
     name: '推广管理',
     icon: 'global',
     router: '/qr',
+  }, {
+    id: 61,
+    bpid: 6,
+    mpid: -1,
+    name: '二维码图片',
+    router: '/qrdetail',
   },
 ]
