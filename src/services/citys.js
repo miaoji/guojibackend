@@ -6,7 +6,7 @@ export async function query (params) {
 	params = pageParams(params)
   return request({
     url: city.show,
-    method: 'post',
+    method: 'get',
     params
   })
 }

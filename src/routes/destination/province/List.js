@@ -30,7 +30,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
   }
 
   const clickSeeProvince = ( record ) => {
-    window.open(`/city?countryid=${record.id}`)
+//  window.open(`/city?provinceid=${record.id}`)
   }
 
   return (
@@ -38,7 +38,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
       <ul className={styles.list}>
         {list.map(item => (<li key={item.name}>
           <Button size="large" onClick={e => clickSeeProvince(item)}>
-            <span>{item.name}</span>
+            <Link to={`/city?provinceid=${item.id}`}>{item.name}</Link>
             <DropOption onMenuClick={e => handleMenuClick(item, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
           </Button>
         </li>))}

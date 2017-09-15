@@ -7,8 +7,8 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Citys = ({ location, dispatch, citys, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, citysModalVisible, locationData } = citys
+const City = ({ location, dispatch, city, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, provinceModalVisible, locationData } = city
   const { pageSize } = pagination
 
   const modalProps = {
@@ -18,42 +18,42 @@ const Citys = ({ location, dispatch, citys, loading }) => {
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `citys/${modalType}`,
+        type: `city/${modalType}`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'citys/hideModal',
+        type: 'city/hideModal',
       })
     },
   }
 
-  const citysModalProps = {
+  const provinceModalProps = {
     item: currentItem,
     list: locationData,
-    visible: citysModalVisible,
+    visible: provinceModalVisible,
     title: `编辑${currentItem.name}省份信息`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       console.log('data', data)
       dispatch({
-        type: `citys/createcitys`,
+        type: `city/createProvince`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'citys/hideLocationModal',
+        type: 'city/hideLocationModal',
         payload: {
-          type: 'citys'
+          type: 'province'
         }
       })
     },
   }
 
   const listProps = {
-    loading: loading.effects['citys/query'],
+    loading: loading.effects['city/query'],
     list,
     pagination,
     location,
@@ -68,7 +68,7 @@ const Citys = ({ location, dispatch, citys, loading }) => {
     },
     onEditItem (item) {
       dispatch({
-        type: 'citys/showModal',
+        type: 'city/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -77,13 +77,13 @@ const Citys = ({ location, dispatch, citys, loading }) => {
     },
     onDeleteItem (id) {
       dispatch({
-        type: 'citys/delete',
+        type: 'city/delete',
         payload: id,
       })
     },
     showModal (item, type) {
       dispatch({
-        type: 'citys/queryLocation',
+        type: 'city/queryLocation',
         payload: {
           currentItem: item,
           type
@@ -106,18 +106,18 @@ const Citys = ({ location, dispatch, citys, loading }) => {
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/citys',
+        pathname: '/city',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/citys',
+        pathname: '/city',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'citys/showModal',
+        type: 'city/showModal',
         payload: {
           modalType: 'create',
         },
@@ -130,16 +130,16 @@ const Citys = ({ location, dispatch, citys, loading }) => {
       <Filter {...filterProps} />
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
-      {citysModalVisible && <citysModal {...citysModalProps} />}
+      {provinceModalVisible && <ProvinceModal {...provinceModalProps} />}
     </div>
   )
 }
 
-Citys.propTypes = {
-  citys: PropTypes.object,
+City.propTypes = {
+  city: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ citys, loading }) => ({ citys, loading }))(Citys)
+export default connect(({ city, loading }) => ({ city, loading }))(City)

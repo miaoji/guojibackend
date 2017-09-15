@@ -4,11 +4,11 @@ const config = require('../utils/config')
 const { apiPrefix } = config
 
 let demosListData = Mock.mock({
-  'data|40-50': [
+  'data|20-30': [
     {
       id: '@id',
       did:/^\d{8}$/,
-      wxName: '@cname',
+      name: '@cname',
       'storename|1':['上海','北京','广东','深圳','安徽','江西'],
       nickName: '@cname',
       phone: /^1[34578]\d{9}$/,

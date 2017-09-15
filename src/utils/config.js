@@ -108,11 +108,11 @@ module.exports = {
 		},
 		// 二维码推广接口
 		qr: {
-      create: `${APIV3}/wx/createQr`,
-      all: `${APIV3}/wx/getQrAll`,
-      show: `${APIV3}/wx/selectQrById`,
-      update: `${APIV3}/wx/updateQrById`,
-      del: `${APIV3}/wx/delQrById`
+	      create: `${APIV3}/wx/createQr`,
+	      all: `${APIV3}/wx/getQrAll`,
+	      show: `${APIV3}/wx/selectQrById`,
+	      update: `${APIV3}/wx/updateQrById`,
+	      del: `${APIV3}/wx/delQrById`
 		}
 	},
 }

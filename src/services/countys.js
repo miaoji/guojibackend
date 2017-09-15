@@ -6,7 +6,7 @@ export async function query (params) {
 	params = pageParams(params)
   return request({
     url: county.show,
-    method: 'post',
+    method: 'get',
     params
   })
 }

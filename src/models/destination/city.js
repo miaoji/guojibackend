@@ -1,27 +1,35 @@
+/**
+ * 目的地model
+ */
 import modelExtend from 'dva-model-extend'
-//import { create, remove, update } from '../services/province'
+import { message, Row, Col } from 'antd'
+//import { create, remove } from '../services/city'
 import * as citysService from '../../services/citys'
+import * as locationService from '../../services/location'
 import { pageModel } from '../common'
-import { config } from '../../utils'
 
 const { query } = citysService
-const { prefix } = config
+const queryLocation = locationService.query
+const createLocation = locationService.create
 
 export default modelExtend(pageModel, {
-  namespace: 'province',
+  namespace: 'city',
 
   state: {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
-    selectedRowKeys: [],
-    isMotion: false,
+    province: [],
+    locationData: [],
+    provinceModalVisible: false,
+    cityModalVisible: false,
+    countyModalVisible: false,
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/province') {
+        if (location.pathname === '/city') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -35,8 +43,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      console.log('data', data)
-      if (data.success && data.code === 200) {
+      if (data) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -53,38 +60,6 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { id: payload })
-      const { selectedRowKeys } = yield select(_ => _.user)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *'multiDelete' ({ payload }, { call, put }) {
-      const data = yield call(citysService.remove, payload)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *'markBlackList' ({ payload }, { call, put, select }) {
-      const newprovince = payload
-      const data = yield call(update, newprovince)
-      if (data.success) {
-        yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
     *create ({ payload }, { call, put }) {
       const data = yield call(create, payload)
       if (data.success) {
@@ -96,9 +71,9 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ province }) => province.currentItem.id)
-      const newprovince = { ...payload, id }
-      const data = yield call(update, newprovince)
+      const id = yield select(({ city }) => city.currentItem.id)
+      const newcity = { ...payload, id }
+      const data = yield call(update, newcity)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
@@ -106,6 +81,55 @@ export default modelExtend(pageModel, {
         throw data
       }
     },
+
+    *'delete' ({ payload }, { call, put }) {
+      const data = yield call(remove, { ids: payload.toString() })
+      if (data.success && data.code === 200) {
+        message.success(data.mess)
+        yield put({ type: 'query' })
+      } else {
+        throw data.mess
+      }
+    },
+
+    *queryLocation ({ payload = {} }, { select, call, put }) {
+      const countryId = payload.currentItem.id
+      const params = {countryid: countryId}
+      const data = yield call(queryLocation, {params, type: 'province'})
+      if (data) {
+        yield put({
+          type: 'showLocationModal',
+          payload: {
+            locationData: data.obj,
+            currentItem: payload.currentItem,
+            type: payload.type
+          },
+        })
+      } else {
+        throw data.mess || data
+      }
+    },
+
+    *createProvince ({ payload = {} }, { select, call, put }) {
+      const currentItem = yield select(({ city }) => city.currentItem)
+      const countryId = currentItem.id
+      const params = {countryid: countryId, name: payload.name, englishname: payload.englishname}
+      const data = yield call(createLocation, {params, type: 'province'})
+      if (data.success && data.code === 200) {
+        const queryData = yield call(queryLocation, {params: {countryid: countryId}, type: 'province'})
+        if (!queryData.success) throw queryData.mess
+        yield put({
+          type: 'showLocationModal',
+          payload: {
+            locationData: queryData.obj,
+            currentItem,
+            type: payload.type
+          },
+        })
+      } else {
+        throw data.mess || data
+      }
+    }
 
   },
 
@@ -119,10 +143,31 @@ export default modelExtend(pageModel, {
       return { ...state, modalVisible: false }
     },
 
-    switchIsMotion (state) {
-      localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
-      return { ...state, isMotion: !state.isMotion }
+    showLocationModal (state, { payload }) {
+      let { currentItem, locationData, type } = payload
+      const visible = type + 'ModalVisible'
+      locationData = locationData.map(function(elem) {
+        return <Row gutter={16}>
+                <Col className="gutter-row" span={8}>
+                  <div className="gutter-box">{elem['id']}</div>
+                </Col>
+                <Col className="gutter-row" span={8}>
+                  <div className="gutter-box">{elem['name']}</div>
+                </Col>
+              </Row>;
+      })
+      let res = { ...state, currentItem, locationData }
+      res[visible] = true
+      return res
     },
+
+    hideLocationModal (state, { payload }) {
+      const { type } = payload
+      const visible = type + 'ModalVisible'
+      let res = { ...state }
+      res[visible] = false
+      return res
+    }
 
   },
 })

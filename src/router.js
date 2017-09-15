@@ -101,7 +101,8 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/destination/city'))
             }, 'city')
           },
-        },{
+        },
+        {
           path: 'county',
           getComponent (nextState, cb) {
             require.ensure([], require => {
@@ -109,7 +110,8 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/destination/county'))
             }, 'county')
           },
-        },{
+        },
+        {
           path: 'freight',
           getComponent (nextState, cb) {
             require.ensure([], require => {

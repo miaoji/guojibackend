@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const County = ({ location, dispatch, county, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, countyModalVisible, locationData } = county
+  const { list, pagination, currentItem, modalVisible, modalType, provinceModalVisible, locationData } = county
   const { pageSize } = pagination
 
   const modalProps = {
@@ -29,16 +29,16 @@ const County = ({ location, dispatch, county, loading }) => {
     },
   }
 
-  const countyModalProps = {
+  const provinceModalProps = {
     item: currentItem,
     list: locationData,
-    visible: countyModalVisible,
+    visible: provinceModalVisible,
     title: `编辑${currentItem.name}省份信息`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       console.log('data', data)
       dispatch({
-        type: `county/createcounty`,
+        type: `county/createProvince`,
         payload: data,
       })
     },
@@ -46,7 +46,7 @@ const County = ({ location, dispatch, county, loading }) => {
       dispatch({
         type: 'county/hideLocationModal',
         payload: {
-          type: 'county'
+          type: 'province'
         }
       })
     },
@@ -130,7 +130,7 @@ const County = ({ location, dispatch, county, loading }) => {
       <Filter {...filterProps} />
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
-      {countyModalVisible && <countyModal {...countyModalProps} />}
+      {provinceModalVisible && <ProvinceModal {...provinceModalProps} />}
     </div>
   )
 }

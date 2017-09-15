@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Menu, Table, Modal, Button, Icon, message } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
-// import AnimTableBody from '../../components/DataTable/AnimTableBody'
+//import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
 import { Link } from 'dva/router'
 
@@ -30,7 +30,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
   }
 
   const clickSeeProvince = ( record ) => {
-    window.open(`/province?countryid=${record.id}`)
+//  window.open(`/county?cityid=${record.id}`)
   }
 
   return (
@@ -38,7 +38,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
       <ul className={styles.list}>
         {list.map(item => (<li key={item.name}>
           <Button size="large" onClick={e => clickSeeProvince(item)}>
-            <span>{item.name}</span>
+            <Link to={`/county?cityid=${item.id}`}>{item.name}</Link>
             <DropOption onMenuClick={e => handleMenuClick(item, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
           </Button>
         </li>))}
