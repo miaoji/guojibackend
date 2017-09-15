@@ -9,8 +9,7 @@ import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 
-
-const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tableProps }) => {
+const List = ({ onDeleteItem, onEditItem, showModal, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -28,11 +27,6 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
         break
     }
   }
-
-  const clickSeeProvince = ( record ) => {
-    window.open(`/province?userId=${record.id}`)
-  }
-
 
   const columns = [
     {
@@ -67,25 +61,30 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
     },
   ]
 
+  const getBodyWrapperProps = {
+    page: location.query.page,
+    current: tableProps.pagination.current,
+  }
+
   const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (
     <div>
-      <ul className={styles.list}>
-        {list.map(item => (<li key={item.name}>
-          <Button size="large" onClick={e => clickSeeProvince(item)}>
-            <span>{item.name}</span>
-            <DropOption onMenuClick={e => handleMenuClick(item, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
-          </Button>
-        </li>))}
-      </ul>
+      <Table
+        {...tableProps}
+        className={classnames({ [styles.table]: true })}
+        bordered
+        scroll={{ x: 1250 }}
+        columns={columns}
+        simple
+        rowKey={record => record.id}
+        getBodyWrapper={getBodyWrapper}
+      />
     </div>
   )
 }
 
-
 List.propTypes = {
-  list: PropTypes.object,
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   showModal: PropTypes.func,

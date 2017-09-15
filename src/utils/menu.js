@@ -27,9 +27,16 @@ module.exports = [
     id: 41,
     bpid: 4,
     mpid: 4,
-    name: '目的地管理',
+    name: '目的地国家管理',
     icon: 'flag',
     router: '/destination',
+  },{
+    id: 411,
+    bpid:41,
+    mpid:-1,
+    name:'目的地省份管理',
+    icon:'flag',
+    router: '/province',
   },{
     id: 42,
     bpid: 4,
