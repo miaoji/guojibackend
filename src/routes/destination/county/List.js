@@ -30,7 +30,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
   }
 
   const clickSeeProvince = ( record ) => {
-    window.open(`/city?countryid=${record.id}`)
+    window.open(`/province?countryid=${record.id}`)
   }
 
   return (

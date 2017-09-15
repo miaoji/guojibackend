@@ -38,6 +38,20 @@ module.exports = [
     icon:'flag',
     router: '/province',
   },{
+    id: 412,
+    bpid:41,
+    mpid:-1,
+    name:'目的地市级管理',
+    icon:'flag',
+    router: '/city',
+  },{
+    id: 413,
+    bpid:41,
+    mpid:-1,
+    name:'目的地县区管理',
+    icon:'flag',
+    router: '/county',
+  },{
     id: 42,
     bpid: 4,
     mpid: 4,

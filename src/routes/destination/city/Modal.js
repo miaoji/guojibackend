@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Modal } from 'antd'
+import { Form, Input, InputNumber, Radio, Modal } from 'antd'
+import city from '../../../utils/city'
 
 const FormItem = Form.Item
 
@@ -13,17 +14,15 @@ const formItemLayout = {
   },
 }
 
-const provinceModal = ({
+const modal = ({
   item = {},
   onOk,
-  query,
-  list,
   form: {
     getFieldDecorator,
     validateFields,
     getFieldsValue,
   },
-  ...provinceModalProps
+  ...modalProps
 }) => {
   const handleOk = () => {
     validateFields((errors) => {
@@ -39,15 +38,16 @@ const provinceModal = ({
   }
 
   const modalOpts = {
-    ...provinceModalProps,
+    ...modalProps,
     onOk: handleOk,
   }
 
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="省份/州中文名称" hasFeedback {...formItemLayout}>
+        <FormItem label="国家中文名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
+            initialValue: item.name,
             rules: [
               {
                 required: true,
@@ -55,33 +55,30 @@ const provinceModal = ({
                 message: '请输入中文名称!',
               },
             ],
-          })(<Input placeholder='新建省份/州, 输入名称后按确定键' />)}
+          })(<Input />)}
         </FormItem>
-        <FormItem label="省份/州英文名称" hasFeedback {...formItemLayout}>
+        <FormItem label="国家英文名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('englishname', {
+            initialValue: item.englishname,
             rules: [
               {
                 required: true,
-                pattern: /^[A-Za-z\s]{0,}$/,
-                message: '请输入英文名称!',
+                pattern: /^[A-Za-z]{0,}([\s]{1}[A-Za-z]{1,}){0,}$/,
+                message: '请输入国家英文名!',
               },
             ],
           })(<Input />)}
         </FormItem>
       </Form>
-      <h3>已有省份</h3>
-      {list}
     </Modal>
   )
 }
 
-provinceModal.propTypes = {
+modal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
-  query: PropTypes.func,
-  list: PropTypes.array
 }
 
-export default Form.create()(provinceModal)
+export default Form.create()(modal)

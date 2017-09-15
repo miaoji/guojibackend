@@ -7,8 +7,8 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Province = ({ location, dispatch, province, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, provinceModalVisible, locationData } = province
+const County = ({ location, dispatch, county, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, countyModalVisible, locationData } = county
   const { pageSize } = pagination
 
   const modalProps = {
@@ -18,42 +18,42 @@ const Province = ({ location, dispatch, province, loading }) => {
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `province/${modalType}`,
+        type: `county/${modalType}`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'province/hideModal',
+        type: 'county/hideModal',
       })
     },
   }
 
-  const provinceModalProps = {
+  const countyModalProps = {
     item: currentItem,
     list: locationData,
-    visible: provinceModalVisible,
+    visible: countyModalVisible,
     title: `编辑${currentItem.name}省份信息`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       console.log('data', data)
       dispatch({
-        type: `province/createProvince`,
+        type: `county/createcounty`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'province/hideLocationModal',
+        type: 'county/hideLocationModal',
         payload: {
-          type: 'province'
+          type: 'county'
         }
       })
     },
   }
 
   const listProps = {
-    loading: loading.effects['province/query'],
+    loading: loading.effects['county/query'],
     list,
     pagination,
     location,
@@ -68,7 +68,7 @@ const Province = ({ location, dispatch, province, loading }) => {
     },
     onEditItem (item) {
       dispatch({
-        type: 'province/showModal',
+        type: 'county/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -77,13 +77,13 @@ const Province = ({ location, dispatch, province, loading }) => {
     },
     onDeleteItem (id) {
       dispatch({
-        type: 'province/delete',
+        type: 'county/delete',
         payload: id,
       })
     },
     showModal (item, type) {
       dispatch({
-        type: 'province/queryLocation',
+        type: 'county/queryLocation',
         payload: {
           currentItem: item,
           type
@@ -106,18 +106,18 @@ const Province = ({ location, dispatch, province, loading }) => {
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/province',
+        pathname: '/county',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/province',
+        pathname: '/county',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'province/showModal',
+        type: 'county/showModal',
         payload: {
           modalType: 'create',
         },
@@ -130,16 +130,16 @@ const Province = ({ location, dispatch, province, loading }) => {
       <Filter {...filterProps} />
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
-      {provinceModalVisible && <ProvinceModal {...provinceModalProps} />}
+      {countyModalVisible && <countyModal {...countyModalProps} />}
     </div>
   )
 }
 
-Province.propTypes = {
-  province: PropTypes.object,
+County.propTypes = {
+  county: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ province, loading }) => ({ province, loading }))(Province)
+export default connect(({ county, loading }) => ({ county, loading }))(County)

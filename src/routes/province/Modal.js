@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Modal } from 'antd'
+import { Form, Input, InputNumber, Radio, Modal } from 'antd'
+import city from '../../utils/city'
 
 const FormItem = Form.Item
 
@@ -13,7 +14,7 @@ const formItemLayout = {
   },
 }
 
-const cityModal = ({
+const modal = ({
   item = {},
   onOk,
   form: {
@@ -62,7 +63,7 @@ const cityModal = ({
             rules: [
               {
                 required: true,
-                pattern: /^[A-Za-z\s]{0,}$/,
+                pattern: /^[A-Za-z]{0,}([\s]{1}[A-Za-z]{1,}){0,}$/,
                 message: '请输入国家英文名!',
               },
             ],
@@ -73,11 +74,11 @@ const cityModal = ({
   )
 }
 
-cityModal.propTypes = {
+modal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
 }
 
-export default Form.create()(cityModal)
+export default Form.create()(modal)

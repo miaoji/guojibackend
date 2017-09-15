@@ -86,6 +86,30 @@ const Routers = function ({ history, app }) {
             }, 'destination')
           },
         },{
+          path: 'province',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/destination/province'))
+              cb(null, require('./routes/destination/province'))
+            }, 'province')
+          },
+        },{
+          path: 'city',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/destination/city'))
+              cb(null, require('./routes/destination/city'))
+            }, 'city')
+          },
+        },{
+          path: 'county',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/destination/county'))
+              cb(null, require('./routes/destination/county'))
+            }, 'county')
+          },
+        },{
           path: 'freight',
           getComponent (nextState, cb) {
             require.ensure([], require => {
