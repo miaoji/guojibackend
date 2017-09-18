@@ -35,7 +35,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
   return (
     <div>
       <ul className={styles.list}>
-        {list.show?<li><h1>{list.name}</h1></li>:list.map(item => (<li key={item.name}>
+        {list.show?<li>{list.name}</li>:list.map(item => (<li key={item.name}>
           <Button size="large" onClick={e => clickSeeProvince(item)}>
             <Link title={item.name} to={`/city?provinceid=${item.id}`}>{item.name}</Link>
           </Button>

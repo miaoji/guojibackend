@@ -7,7 +7,7 @@ import { message, Row, Col } from 'antd'
 import * as countysService from '../../services/countys'
 import * as locationService from '../../services/location'
 import { pageModel } from '../common'
-import { queryURL } from '../../utils'
+import { queryURL, storage, } from '../../utils'
 
 const { query, create, } = countysService
 const queryLocation = locationService.query
@@ -25,12 +25,17 @@ export default modelExtend(pageModel, {
     provinceModalVisible: false,
     countyModalVisible: false,
     countyModalVisible: false,
+    list: []
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/county') {
+          //清空module原有的数据
+          dispatch({
+            type: 'setListEmpty'
+          })
           dispatch({
             type: 'query',
             payload: location.query,
@@ -41,10 +46,26 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
-
+// 当前跳转的时候获得cityid ,如果获取了 cityid 则跟新本地存储
+// 如果没有 则从 localStorage 获取
     *query ({ payload = {} }, { call, put }) {
+      if(payload.cityid){
+        storage({
+          key:'cityid',
+          val:payload.cityid,
+          type:'set'
+        })
+      }else{
+        payload.cityid=storage({
+          key:'cityid',
+          type:'get'
+        })
+      }
       const data = yield call(query, payload)
       if (data.code=="200") {
+        if(data.obj.length<1){
+          data.obj={show:true, name: "暂无该城市的信息"}
+        }
         yield put({
           type: 'querySuccess',
           payload: {
@@ -139,6 +160,9 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+    setListEmpty (state) {
+      return { ...state, list: [] }
+    },
 
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }

@@ -16,12 +16,17 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: false,
+    list: [],
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/province') {
+          //清空module原有的数据
+          dispatch({
+            type: 'setListEmpty'
+          })
           dispatch({
             type: 'query',
             payload: location.query,
@@ -50,7 +55,7 @@ export default modelExtend(pageModel, {
       console.log('data', data)
       if (data.code=='200') {
       	if(data.obj.length<1){
-      		data.obj={show:true, name: "无该城市的信息"}
+      		data.obj={show:true, name: "暂无该城市的信息"}
       	}
         yield put({
           type: 'querySuccess',
@@ -129,6 +134,9 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+    setListEmpty (state) {
+      return { ...state, list: [] }
+    },
 
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
