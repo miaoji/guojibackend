@@ -7,8 +7,9 @@ import { message, Row, Col } from 'antd'
 import * as countysService from '../../services/countys'
 import * as locationService from '../../services/location'
 import { pageModel } from '../common'
+import { queryURL } from '../../utils'
 
-const { query } = countysService
+const { query, create, } = countysService
 const queryLocation = locationService.query
 const createLocation = locationService.create
 
@@ -61,6 +62,10 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
+      const cityid=queryURL('cityid')
+      console.log('cityid', cityid)
+      payload.cityid=queryURL('cityid')
+      console.log('location.pathname', payload)
       const data = yield call(create, payload)
       if (data.success) {
         yield put({ type: 'hideModal' })

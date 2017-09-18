@@ -45,7 +45,7 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="国家中文名" hasFeedback {...formItemLayout}>
+        <FormItem label="省份中文名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
             initialValue: item.name,
             rules: [
@@ -57,14 +57,14 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="国家英文名" hasFeedback {...formItemLayout}>
+        <FormItem label="省份英文名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('englishname', {
             initialValue: item.englishname,
             rules: [
               {
                 required: true,
                 pattern: /^[A-Za-z]{0,}([\s]{1}[A-Za-z]{1,}){0,}$/,
-                message: '请输入国家英文名!',
+                message: '请输入英文名称!',
               },
             ],
           })(<Input />)}

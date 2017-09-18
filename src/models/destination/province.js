@@ -1,12 +1,12 @@
 import modelExtend from 'dva-model-extend'
-//import { create, remove, update } from '../services/province'
+// import { create, remove, update } from '../services/province'
 import * as provincesService from '../../services/provinces'
 import { pageModel } from '../common'
 import { config, storage, } from '../../utils'
 
-const { query } = provincesService
+const { query, create, } = provincesService
 const { prefix } = config
-
+let countryid= ""
 export default modelExtend(pageModel, {
   namespace: 'province',
 
@@ -101,6 +101,10 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
+      payload.countryid=storage({
+          key:'countryid',
+          type:'get'
+        })
       const data = yield call(create, payload)
       if (data.success) {
         yield put({ type: 'hideModal' })

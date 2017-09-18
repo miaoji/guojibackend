@@ -10,3 +10,11 @@ export async function query (params) {
     params
   })
 }
+
+export async function create (params) {
+	return request({
+		url: city.create,
+		method: 'post',
+		params
+	})
+}

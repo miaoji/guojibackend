@@ -9,7 +9,7 @@ import * as locationService from '../../services/location'
 import { pageModel } from '../common'
 import { config, storage, } from '../../utils'
 
-const { query } = citysService
+const { query, create, } = citysService
 const { prefix } = config
 
 const queryLocation = locationService.query
@@ -76,6 +76,10 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
+      payload.provinceid=storage({
+          key:'provinceid',
+          type:'get'
+        })
       const data = yield call(create, payload)
       if (data.success) {
         yield put({ type: 'hideModal' })

@@ -14,7 +14,7 @@ const City = ({ location, dispatch, city, loading }) => {
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    title: `${modalType === 'create' ? '创建目的地信息' : '修改目的地信息'}`,
+    title: `${modalType === 'create' ? '创建市级信息' : '修改市级信息'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({

@@ -6,7 +6,6 @@ import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
-import ProvinceModal from './ProvinceModal'
 
 const Destination = ({ location, dispatch, destination, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, provinceModalVisible, locationData } = destination
@@ -15,7 +14,7 @@ const Destination = ({ location, dispatch, destination, loading }) => {
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    title: `${modalType === 'create' ? '创建目的地信息' : '修改目的地信息'}`,
+    title: `${modalType === 'create' ? '创建国家信息' : '修改国家信息'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
