@@ -27,12 +27,16 @@ export default modelExtend(pageModel, {
     provinceModalVisible: false,
     cityModalVisible: false,
     countyModalVisible: false,
+    list: [],
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/city') {
+          dispatch({
+            type: 'setListEmpty',
+          })
           dispatch({
             type: 'query',
             payload: location.query,
@@ -59,6 +63,9 @@ export default modelExtend(pageModel, {
     	}
       const data = yield call(query, payload)
       if (data.code=="200") {
+        if(data.obj.length<1){
+          data.obj={show:true, name: "暂无该城市的信息"}
+        }
         yield put({
           type: 'querySuccess',
           payload: {
@@ -153,6 +160,9 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+    setListEmpty (state) {
+      return { ...state, list: [] }
+    },
 
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }

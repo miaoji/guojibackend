@@ -9,7 +9,6 @@ import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 
-
 const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
@@ -32,7 +31,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
   return (
     <div>
       <ul className={styles.list}>
-        {list.map(item => (<li key={item.name}>
+        {list.show?<li>{list.name}</li>:list.map(item => (<li key={item.name}>
           <div>
             {item.name}
           </div>
