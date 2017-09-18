@@ -7,8 +7,11 @@ import { message, Row, Col } from 'antd'
 import * as citysService from '../../services/citys'
 import * as locationService from '../../services/location'
 import { pageModel } from '../common'
+import { config, storage, } from '../../utils'
 
 const { query } = citysService
+const { prefix } = config
+
 const queryLocation = locationService.query
 const createLocation = locationService.create
 
@@ -42,8 +45,20 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
+    	if(payload.provinceid){
+    		storage({
+    			key:'provinceid',
+    			val:payload.provinceid,
+    			type:'set'
+    		})
+    	}else{
+    		payload.provinceid=storage({
+    			key:'provinceid',
+    			type:'get'
+    		})
+    	}
       const data = yield call(query, payload)
-      if (data) {
+      if (data.code=="200") {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -56,7 +71,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || data
+        throw data.mess || "网络错误"
       }
     },
 

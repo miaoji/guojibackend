@@ -43,7 +43,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data) {
+      if (data.code=='200') {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -56,7 +56,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || data
+        throw data.mess || "网络错误"
       }
     },
 
@@ -106,7 +106,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || data
+        throw data.mess || "连接失败!"
       }
     },
 

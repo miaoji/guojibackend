@@ -2,7 +2,7 @@ import modelExtend from 'dva-model-extend'
 //import { create, remove, update } from '../services/province'
 import * as provincesService from '../../services/provinces'
 import { pageModel } from '../common'
-import { config } from '../../utils'
+import { config, storage, } from '../../utils'
 
 const { query } = provincesService
 const { prefix } = config
@@ -34,10 +34,24 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
+    	if(payload.countryid){
+    		storage({
+    			key:'countryid',
+    			val:Number(payload.countryid),
+    			type:"set"
+    		})
+    	}else{
+    		payload.countryid=storage({
+    			key:'countryid',
+    			type:'get'
+    		})
+    	}
       const data = yield call(query, payload)
       console.log('data', data)
-      if (data) {
-      	console.log('data', data)
+      if (data.code=='200') {
+      	if(data.obj.length<1){
+      		data.obj={show:true, name: "无该城市的信息"}
+      	}
         yield put({
           type: 'querySuccess',
           payload: {
