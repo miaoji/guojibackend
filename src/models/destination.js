@@ -3,7 +3,7 @@
  */
 import modelExtend from 'dva-model-extend'
 import { message, Row, Col } from 'antd'
-import { create, remove } from '../services/destination'
+import { create, remove, update } from '../services/destination'
 import * as destinationsService from '../services/destinations'
 import * as locationService from '../services/location'
 import { pageModel } from './common'

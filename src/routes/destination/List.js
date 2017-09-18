@@ -9,7 +9,6 @@ import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 
-
 const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
@@ -34,7 +33,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
       <ul className={styles.list}>
         {list.map(item => (<li key={item.name}>
           <Button title={item.name} size="large">
-            <Link to={`/province?countryid=${item.id}`}><span>{item.name}</span></Link>
+            <Link to={`/province?countryid=${item.id}`}><span>{item.name} - {item.sort || 0}</span></Link>
             <DropOption onMenuClick={e => handleMenuClick(item, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
           </Button>
         </li>))}

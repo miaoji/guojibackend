@@ -69,6 +69,17 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
+        <FormItem label="排序" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('sort', {
+            initialValue: item.sort || 0,
+            rules: [
+              {
+                required: true,
+                message: '请输入排序!',
+              },
+            ],
+          })(<Input type="number" />)}
+        </FormItem>
       </Form>
     </Modal>
   )

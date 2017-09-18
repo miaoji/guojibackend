@@ -28,8 +28,8 @@ export async function remove (params) {
 
 export async function update (params) {
   return request({
-    url: country,
-    method: 'patch',
-    data: params,
+    url: country.update,
+    method: 'post',
+    params
   })
 }

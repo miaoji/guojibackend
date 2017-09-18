@@ -6,7 +6,7 @@ let APIV3 = ''
 // 正式线上
 APIV3 = 'http://api.mingz-tech.com/DHL'
 // 仝舟
-// APIV3 = 'http://192.168.1.111:8066'
+// APIV3 = 'http://192.168.1.111:8080'
 // 董浩伟
 // APIV3 = 'http://192.168.0.225:8080/DHL'
 // 生产环境时api固定为线上url
@@ -89,7 +89,8 @@ module.exports = {
 		country: {
 		  show: `${APIV3}/wx/Country/ShowCountry`,
 		  create: `${APIV3}/wx/Country/AddCountry`,
-		  hide: `${APIV3}/wx/Country/delCountryById`
+		  hide: `${APIV3}/wx/Country/delCountryById`,
+		  update: `${APIV3}/wx/Country/updateCountryById`
 		},
 		// 省份/州api
 		province: {
