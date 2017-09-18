@@ -43,7 +43,6 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
   )
 }
 
-
 List.propTypes = {
   list: PropTypes.object,
   onDeleteItem: PropTypes.func,
