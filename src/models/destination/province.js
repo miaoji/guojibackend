@@ -6,7 +6,7 @@ import { config, storage, } from '../../utils'
 
 const { query, create, } = provincesService
 const { prefix } = config
-let countryid= ""
+
 export default modelExtend(pageModel, {
   namespace: 'province',
 

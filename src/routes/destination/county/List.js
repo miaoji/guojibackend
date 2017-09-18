@@ -29,17 +29,13 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
     }
   }
 
-  const clickSeeProvince = ( record ) => {
-//  window.open(`/province?countryid=${record.id}`)
-  }
-
   return (
     <div>
       <ul className={styles.list}>
         {list.map(item => (<li key={item.name}>
-          <Button size="large" onClick={e => clickSeeProvince(item)}>
-            <span>{item.name}</span>
-          </Button>
+          <div>
+            {item.name}
+          </div>
         </li>))}
       </ul>
     </div>
