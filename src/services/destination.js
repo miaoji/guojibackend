@@ -9,23 +9,24 @@ export async function query (params) {
     data: params,
   })
 }
-
+// 新增国家
 export async function create (params) {
+  console.log('params', params)
   return request({
     url: country.create,
     method: 'post',
     params,
   })
 }
-
+// 删除国家
 export async function remove (params) {
   return request({
     url: country.hide,
-    method: 'post',
+    method: 'delete',
     params
   })
 }
-
+//修改国家
 export async function update (params) {
   return request({
     url: country.update,

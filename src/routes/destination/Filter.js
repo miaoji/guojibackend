@@ -33,9 +33,9 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime.length) {
-      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
-    }
+    // if (createTime.length) {
+    //   fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+    // }
     return fields
   }
 
@@ -78,17 +78,10 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按国家名搜索" size="large" onSearch={handleSubmit} />)}
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}   sm={{ span: 24 }}>
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按省名搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
-      <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
-        <FilterItem label="创建时间">
-          {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
-          )}
-        </FilterItem>
-      </Col>
-      <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 10 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>

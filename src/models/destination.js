@@ -44,6 +44,9 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data.code=='200') {
+        if (data.obj==null) {
+          data.obj={show:true, name: "暂无该城市的信息"}
+        }
         yield put({
           type: 'querySuccess',
           payload: {
@@ -56,11 +59,12 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || "网络错误"
+        throw data.mess || "网络延迟!!!"
       }
     },
 
     *create ({ payload }, { call, put }) {
+      console.log('payload', payload)
       const data = yield call(create, payload)
       if (data.success) {
         yield put({ type: 'hideModal' })
@@ -84,11 +88,13 @@ export default modelExtend(pageModel, {
 
     *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload.toString() })
+      console.log('data id', data)
+      console.log('data id', data.msg)
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 

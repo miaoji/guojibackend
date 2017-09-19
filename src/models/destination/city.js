@@ -1,15 +1,14 @@
 /**
- * 目的地model
+ * 目的地 市级model
  */
 import modelExtend from 'dva-model-extend'
 import { message, Row, Col } from 'antd'
-//import { create, remove } from '../services/city'
 import * as citysService from '../../services/citys'
 import * as locationService from '../../services/location'
 import { pageModel } from '../common'
 import { config, storage, } from '../../utils'
 
-const { query, create, } = citysService
+const { query, create, update, remove, } = citysService
 const { prefix } = config
 
 const queryLocation = locationService.query
@@ -49,21 +48,21 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-    	if(payload.provinceid){
+    	if(payload.provinceCode){
     		storage({
-    			key:'provinceid',
-    			val:payload.provinceid,
+    			key:'provinceCode',
+    			val:payload.provinceCode,
     			type:'set'
     		})
     	}else{
-    		payload.provinceid=storage({
-    			key:'provinceid',
+    		payload.provinceCode=storage({
+    			key:'provinceCode',
     			type:'get'
     		})
     	}
       const data = yield call(query, payload)
-      if (data.code=="200") {
-        if(data.obj.length<1){
+      if (data.code=="200"||data.code=='500') {
+        if(data.code=='500'||data.obj==null){
           data.obj={show:true, name: "暂无该城市的信息"}
         }
         yield put({
@@ -83,12 +82,13 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      payload.provinceid=storage({
-          key:'provinceid',
+      payload.provinceCode=storage({
+          key:'provinceCode',
           type:'get'
         })
       const data = yield call(create, payload)
       if (data.success) {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
@@ -101,6 +101,7 @@ export default modelExtend(pageModel, {
       const newcity = { ...payload, id }
       const data = yield call(update, newcity)
       if (data.success) {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
@@ -111,7 +112,7 @@ export default modelExtend(pageModel, {
     *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
         throw data.mess

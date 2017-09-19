@@ -1,9 +1,19 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
 let APIV3 = ''
-
-// 重构API
-APIV3 = 'http://192.168.1.111:8080/api'
+// 测试线上
+// APIV3 = 'http://api.didalive.net/DHL'
+// 正式线上
+APIV3 = 'http://api.mingz-tech.com/DHL'
+// 仝舟
+// APIV3 = 'http://192.168.1.111:8080'
+// 董浩伟
+// APIV3 = 'http://192.168.0.225:8080/DHL'
+// 生产环境时api固定为线上url
+if (process.env.NODE_ENV !== 'development') {
+	// APIV3 = 'http://api.didalive.net/DHL'
+	APIV3 = 'http://api.mingz-tech.com/DHL'
+}
 
 module.exports = {
 	name: '国际快递后台管理系统',
@@ -30,7 +40,7 @@ module.exports = {
 			mobileLogin: `${APIV3}/login/loginByCode`
 		},
 		wxuser: {
-			all: `${APIV3}/wxUser/index`,
+			all: `${APIV3}/wx/User/selectWxUser`,
 		},
 		order: {
 			all: `${APIV3}/wx/OrderInfo/getOrderInfo`,//全部订单
@@ -75,33 +85,27 @@ module.exports = {
 			update: `${APIV3}/Internationalprice/UpadteInternationalprice`,
 			hide: `${APIV3}/wx/Internationalprice/delPriceById`
 		},
-    	// 国家api
+    // 国家api
 		country: {
-		  show: `${APIV3}/country/index`,
-		  create: `${APIV3}/country/add`,
-		  update: `${APIV3}/country/modCountryById`,
-		  hide: `${APIV3}/country/delCountryById`
+		  show: `${APIV3}/wx/Country/ShowCountry`,
+		  create: `${APIV3}/wx/Country/AddCountry`,
+		  hide: `${APIV3}/wx/Country/delCountryById`,
+		  update: `${APIV3}/wx/Country/updateCountryById`
 		},
 		// 省份/州api
 		province: {
-		  show: `${APIV3}/provinces/index`,
-		  create: `${APIV3}/provinces/add`,
-		  update: `${APIV3}/provinces/modProvincesById`,
-		  hide: `${APIV3}/provinces/delProvincesById`,
+		  show: `${APIV3}/wx/Province/ShowProvinceid`,
+		  create: `${APIV3}/wx/Province/AddProvince`
 		},
 		// 市级api
 		city: {
-		  show: `${APIV3}/cities/index`,
-		  create: `${APIV3}/cities/add`,
-		  update: `${APIV3}/cities/modCitiesById`,
-		  hide: `${APIV3}/cities/delCitiesById`,
+		  show: `${APIV3}/wx/City/ShowCityid`,
+		  create: `${APIV3}/wx/City/AddCity`
 		},
 		// 区县api
 		county: {
-		  show: `${APIV3}/districts/index`,
-		  create: `${APIV3}/districts/add`,
-		  update: `${APIV3}/districts/modDistrictsById`,
-		  hide: `${APIV3}/districts/delDistrictsById`,
+		  show: `${APIV3}/wx/County/ShowCountyid`,
+		  create: `${APIV3}/wx/County/AddCounty`
 		},
 		// 二维码推广接口
 		qr: {
