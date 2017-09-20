@@ -27,7 +27,7 @@ const Product = ({ location, dispatch, product, loading }) => {
         payload: data,
       })
     },
-    getNation(data){
+    getNation(){
       dispatch({
         type:`product/getNation`
       })

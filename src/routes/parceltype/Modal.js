@@ -52,8 +52,8 @@ const modal = ({
     <Modal {...modalOpts}>
       <Form layout="horizontal">
       	<FormItem label="目的地国家" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('nation', {
-            initialValue: item.nation,
+          {getFieldDecorator('destination', {
+            initialValue: item.country_cn,
             rules: [
               {
                 required: true,
@@ -63,8 +63,8 @@ const modal = ({
           })(<Select defaultValue="1" onFocus={handleClick}>{selectNation}</Select>)}
         </FormItem>
         <FormItem label="包裹类型中文名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name_ch', {
-            initialValue: item.name_ch || '包裹',
+          {getFieldDecorator('nameCn', {
+            initialValue: item.NAME_CN || '包裹',
             rules: [
               {
                 required: true,
@@ -78,22 +78,9 @@ const modal = ({
             </Radio.Group>
           )}
         </FormItem>
-        <FormItem label="包裹类型英文名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name_en', {
-            initialValue: item.name_en,
-            rules: [
-              {
-                required: true,
-                pattern: /^[A-Za-z]{0,}([\s]{1}[A-Za-z]{1,}){0,}$/,
-                message: '请输入包裹类型英文名称!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        
         <FormItem label="最小重量(kg)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('min_range', {
-            initialValue: item.min_range,
+          {getFieldDecorator('minRange', {
+            initialValue: item.MIN_RANGE,
             rules: [
               {
                 required: true,
@@ -104,8 +91,8 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="最大重量(kg)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('max_range', {
-            initialValue: item.max_range,
+          {getFieldDecorator('maxRange', {
+            initialValue: item.MAX_RANGE,
             rules: [
               {
                 required: true,
@@ -117,7 +104,7 @@ const modal = ({
         </FormItem>
         <FormItem label="备注" hasFeedback {...formItemLayout}>
           {getFieldDecorator('remark', {
-            initialValue: item.remark || '',
+            initialValue: item.REMARK,
             rules: [
               {
                 required: false,

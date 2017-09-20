@@ -40,7 +40,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data.code === 200) {
+      if (data.code === 200 && data.success) {
         console.log('total', data)
         yield put({
           type: 'querySuccess',
@@ -61,11 +61,14 @@ export default modelExtend(pageModel, {
      *getNation ({ payload = {} }, { call, put }) {
       const data = yield call(contryQuery)
       if (data) {
+        console.log('data', data)
         let obj = data.obj
         let children = []
-        for (let i = 0; i < obj.length; i++) {
-          let item = obj[i]
-          children.push(<Option key={item.name}>{item.name}</Option>);
+        if (data.obj) {
+          for (let i = 0; i < obj.length; i++) {
+            let item = obj[i]
+            children.push(<Option key={item.id}>{item.country_cn}</Option>);
+          }
         }
         yield put({
           type: 'setNation',
@@ -74,17 +77,17 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 
     *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.msg || data
       }
     },
 
@@ -110,16 +113,20 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName 
-      const destNation = payload.nation
-      const maxRange = payload.max_range
-      const minRange = payload.min_range
-      const nameCh = payload.name_ch
-      const nameEn = payload.name_en
-      const newFreight = {...payload, createUser, destNation, maxRange, minRange, nameCh, nameEn}
-      
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).userId 
+      // 用nameCn 来判断 nameEn 的值
+      let nameEn = ''
+      if (payload.nameCn=='包裹') {
+        nameEn = "P"
+      }else if (payload.nameCn=="文件") {
+        nameEn = "D"
+      }else{
+        nameEn = "*"
+      }
+      const newFreight = {...payload, createUserId, nameEn, }
       const data = yield call(create, newFreight)
-      if (data.success) {
+      if (data.success && data.code == '200') {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
@@ -128,23 +135,31 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ parceltype }) => parceltype.currentItem.id)
-      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName 
-      const destNation = payload.nation
-      const maxRange = payload.max_range
-      const minRange = payload.min_range
-      const nameCh = payload.name_ch
-      const nameEn = payload.name_en
-      const newFreight = {...payload, id, createUser, destNation, maxRange, minRange, nameCh, nameEn}
-      
-      
-//    const newWxUser = { ...payload, id }
+      const id = yield select(({ parceltype }) => parceltype.currentItem.ID)
+      const country_cn = yield select(({ parceltype }) => parceltype.currentItem.country_cn)
+      const DESTINATION = yield select(({ parceltype }) => parceltype.currentItem.DESTINATION)
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).userId 
+      let nameEn = ''
+      // 判断修改是输入的目的地国家的值有没有变化,没有变化则返回它本身的DESTINATION
+      if (payload.destination==country_cn) {
+        payload.destination = DESTINATION
+      }
+      if (payload.nameCn=='包裹') {
+        nameEn = "P"
+      }else if (payload.nameCn=="文件") {
+        nameEn = "D"
+      }else{
+        nameEn = "*"
+      }
+      const newFreight = {...payload, id, createUserId, nameEn, }
+      console.log('newFreight', newFreight)
       const data = yield call(update, newFreight)
       if (data.success) {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 

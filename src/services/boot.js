@@ -6,7 +6,7 @@ export async function query (params) {
   return request({
     url: boot.show,
     method: 'get',
-    data: params,
+    params,
   })
 }
 

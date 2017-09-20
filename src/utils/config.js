@@ -20,9 +20,9 @@ module.exports = {
 	api: {
 		dashboard: `${APIV1}/dashboard`,
 		//根据国家查询包裹类型
-		showPTypeByCounId: `${APIV3}/wx/PackageType/selectPtype`,
+		showPTypeByCounId: `${APIV3}/packageType/getPackageTypeByCountry`,
 		//根据包裹类型id获取对应的产品类型
-		showproductName: `${APIV3}/wx/ProductType/selectproductName`,
+		showproductName: `${APIV3}/productType/getProductByPackage`,
 		login: {
 			accountLogin: `${APIV3}/login`,
 			getVerifyImage: `${APIV3}/login/imageCode`,
@@ -42,26 +42,27 @@ module.exports = {
 			createChinaOrder: `${APIV3}/wx/order/createOrder`,// 新增国内(中通)订单	
 		},
 		boot: {
-			all: `${APIV3}/wx/boot/getBootAll`,// 查询所有差价(补价)信息
-			show: `${APIV3}/wx/boot/getBootInfo`,// 根据单号查询差价信息
-			add: `${APIV3}/wx/boot/addBoot`,// 新增差价(补价)信息
-			update: `${APIV3}/wx/boot/modBoot`,// 更新差价(补价)信息
+			all: `${APIV3}/closingPrice/index`,// 查询所有差价(补价)信息
+			show: `${APIV3}/closingPrice/getByOrderNo`,// 根据单号查询差价信息
+			add: `${APIV3}/closingPrice/add`,// 新增差价(补价)信息
+			update: `${APIV3}/closingPrice/modClosingPriceById`,// 更新差价(补价)信息
+			hide: `${APIV3}/closingPrice/delClosingPriceById`
 		},
 		//包裹类型管理
 		parceltype: {
-			all: `${APIV3}/wx/PackageType/ShowPackageType`,
-			show: `${APIV3}/wx/PackageType/ShowPackageTypeById`,
-			create: `${APIV3}/wx/PackageType/AddPackageType`,
-			update: `${APIV3}/wx/PackageType/updatePackageType`,
-			hide: `${APIV3}/wx/PackageType/delPackageById`
+			all: `${APIV3}/packageType/index`,
+			show: `${APIV3}/packageType/getPackageTypeById`,
+			create: `${APIV3}/packageType/add`,
+			update: `${APIV3}/packageType/modPackageTypeById`,
+			hide: `${APIV3}/packageType/delPackageTypeById`
 		},
 		//产品类型管理
 		product: {
-			all: `${APIV3}/wx/ProductType/ShowProvince`,
-			show: `${APIV3}/wx/ProductType/ShowProvinceById`,
-			create: `${APIV3}/wx/ProductType/AddPackageType`,
-			update: `${APIV3}/wx/ProductType/updateProductType`,
-			hide: `${APIV3}/wx/ProductType/delProductById`
+			all: `${APIV3}/productType/index`,
+			show: `${APIV3}/productType/getProductTypeById`,
+			create: `${APIV3}/productType/add`,
+			update: `${APIV3}/productType/modProductTypeById`,
+			hide: `${APIV3}/productType/delProductTypeById`
 		},
 		//目的地管理
 		destination: {
@@ -69,11 +70,11 @@ module.exports = {
 		},
 		//运费管理
 		freight: {
-			all: `${APIV3}/Internationalprice/ShowInternational`,
-			show: `${APIV3}/Internationalprice/ShowInternationalById`,
-			create: `${APIV3}/Internationalprice/InsertInternationalprice`,
-			update: `${APIV3}/Internationalprice/UpadteInternationalprice`,
-			hide: `${APIV3}/wx/Internationalprice/delPriceById`
+			all: `${APIV3}/intlPrice/index`,
+			show: `${APIV3}intlPrice/getIntlPriceById`,
+			create: `${APIV3}/intlPrice/add`,
+			update: `${APIV3}/intlPrice/modIntlPriceById`,
+			hide: `${APIV3}/intlPrice/delIntlPriceById`
 		},
     	// 国家api
 		country: {

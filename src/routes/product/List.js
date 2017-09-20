@@ -18,7 +18,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       confirm({
         title: '确定要删除这一条产品类型吗?',
         onOk () {
-          onDeleteItem(record.id)
+          onDeleteItem(record.ID)
         },
       })
     }
@@ -27,44 +27,33 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
    {
       title: '产品名称编号',
-      dataIndex: 'product_code',
-      key: 'product_code',
+      dataIndex: 'PRODUCT_CODE',
+      key: 'PRODUCT_CODE',
     },{
       title: '目的地',
-      dataIndex: 'nation',
-      key: 'nation',
+      dataIndex: 'country_cn',
+      key: 'country_cn',
     },{
       title: '包裹类型',
-      dataIndex: 'name_ch',
-      key: 'name_ch',
+      dataIndex: 'NAME_CN',
+      key: 'NAME_CN',
     },{
       title: '产品类型',
-      dataIndex: 'product_name',
-      key: 'product_name',
+      dataIndex: 'PRODUCT_NAME',
+      key: 'PRODUCT_NAME',
     },{
       title: '创建时间',
-      dataIndex: 'create_time',
-      key: 'create_time',
+      dataIndex: 'CREATE_TIME',
+      key: 'CREATE_TIME',
       render: (text) => {
       	const createtime =time.formatTime(text)
       	return <span>{createtime}</span>
       }
     },{
       title: '备注',
-      dataIndex: 'remark',
-      key: 'remark',
+      dataIndex: 'REMARK',
+      key: 'REMARK',
       render:(text) => <span>{text}</span>,
-    },{
-      title: '状态',
-      dataIndex: 'state',
-      key: 'state',
-      render: (text) => {
-        const realtext = {
-          '2': '失效',
-          '1': '生效',
-        }
-        return <span>{realtext[text]}</span>
-      }
     },{
       title: '操作',
       key: 'operation',

@@ -10,36 +10,36 @@ const confirm = Modal.confirm
 
 const List = ({  isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
-    window.open(`/bootdetail?serialnumber=${record.serialnumber}`)
+    window.open(`/bootdetail?orderNo=${record.order_no}`)
     return
   }
 
   const columns = [
     {
       title: '订单号',
-      dataIndex: 'serialnumber',
-      key: 'serialnumber',
+      dataIndex: 'order_no',
+      key: 'order_no',
     }, {
       title: '收件人',
-      dataIndex: 'buyerName',
-      key: 'buyerName',
+      dataIndex: 'receiver_name',
+      key: 'receiver_name',
     }, {
       title: '收件地址',
-      dataIndex: 'detaliedinformation',
-      key: 'detaliedinformation',
+      dataIndex: 'receiver_address',
+      key: 'receiver_address',
       width: '200'
     }, {
       title: '收件人手机',
-      dataIndex: 'iphone',
-      key: 'iphone'
-    }, {
+      dataIndex: 'receiver_mobile',
+      key: 'receiver_mobile'
+    },/* {
       title: '产品类型',
       dataIndex: 'type',
       key: 'type',
-    }, {
+    }, */{
       title: '重量',
-      dataIndex: 'bearload',
-      key: 'bearload',
+      dataIndex: 'weight',
+      key: 'weight',
       render: (text) => {
         return <span>{text}kg</span>
       }

@@ -18,7 +18,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       confirm({
         title: '确定要删除这一条运费吗?',
         onOk () {
-          onDeleteItem(record.id)
+          onDeleteItem(record.ID)
         },
       })
     }
@@ -27,58 +27,62 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: '目的地国家',
-      dataIndex: 'destCtry',
-      key: 'destctry',
+      dataIndex: 'country_cn',
+      key: 'country_cn',
     }, {
       title: '包裹类型',
-      dataIndex: 'cargotype',
-      key: 'cargotype',
+      dataIndex: 'name_cn',
+      key: 'name_cn',
     }, {
       title: '产品类型',
-      dataIndex: 'producttypeid',
-      key: 'producttypeid',
+      dataIndex: 'product_name',
+      key: 'product_name',
     }, {
       title: '首重价格',
-      dataIndex: 'initialprice',
-      key: 'initialprice',
+      dataIndex: 'INIT_PRICE',
+      key: 'INIT_PRICE',
       render:(text) => <span>¥{text}</span>,
     }, {
       title: '首重重量',
-      dataIndex: 'ykgweight',
-      key: 'ykgweight',
+      dataIndex: 'INIT_WEIGHT',
+      key: 'INIT_WEIGHT',
       render: (text) => <span>{text}kg</span>,
     },{
       title: '续重价格',
-      dataIndex: 'continuedheavyprice',
-      key: 'continuedheavyprice',
+      dataIndex: 'STEPPING_PRICE',
+      key: 'STEPPING_PRICE',
       render: (text) => <span>¥{text}</span>,
     },{
       title: '步进重量',
-      dataIndex: 'stepping',
-      key: 'stepping',
+      dataIndex: 'STEPPING_WEIGHT',
+      key: 'STEPPING_WEIGHT',
       render: (text) => <span>{text}kg</span>,
     },{
       title: '燃油附加费',
-      dataIndex: 'fuelcharge',
-      key: 'fuelcharge',
+      dataIndex: 'FUEL_CHARGE',
+      key: 'FUEL_CHARGE',
       render: (text) => <span>¥{text}</span>,
     },{
       title: '邮编段',
-      dataIndex: 'zipcodesegment',
-      key: 'zipcodesegment',
+      dataIndex: 'POSTCODE',
+      key: 'POSTCODE',
       render: (text) => <span>{text}</span>,
     },{
       title: '创建时间',
-      dataIndex: 'time',
-      key: 'time',
+      dataIndex: 'CREATE_TIME',
+      key: 'CREATE_TIME',
       render: (text) => {
       	const createtime =time.formatTime(text)
       	return <span>{createtime}</span>
       }
     },{
       title: '操作人',
-      dataIndex: 'confirmor',
-      key: 'confirmor',
+      dataIndex: 'CREATE_USER_ID',
+      key: 'CREATE_USER_ID',
+    },{
+      title: '备注',
+      dataIndex: 'REMARK',
+      key: 'REMARK',
     },{
       title: '操作',
       key: 'operation',

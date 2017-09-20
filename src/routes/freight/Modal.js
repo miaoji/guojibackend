@@ -69,8 +69,8 @@ const modal = ({
     <Modal {...modalOpts}>
       <Form layout="horizontal">
         <FormItem label="目的地国家" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('destctry', {
-            initialValue: item.destCtry,
+          {getFieldDecorator('destination', {
+            initialValue: item.country_cn,
             rules: [
               {
                 required: true,
@@ -80,8 +80,8 @@ const modal = ({
           })(<Select defaultValue="1" onSelect={handleChange} onFocus={handleClick}>{selectPackage}</Select>)}
         </FormItem>
         <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('cargotype', {
-            initialValue: item.cargotype,
+          {getFieldDecorator('packageType', {
+            initialValue: item.name_cn,
             rules: [
               {
                 required: true,
@@ -91,8 +91,8 @@ const modal = ({
           })(<Select defaultValue='' onChange={productChange} disabled={productDis}>{selectParcelType}</Select>)}
         </FormItem>
         <FormItem label="产品类型" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('producttypeid', {
-            initialValue: item.producttypeid,
+          {getFieldDecorator('productType', {
+            initialValue: item.product_name,
             rules: [
               {
                 required: true,
@@ -102,8 +102,8 @@ const modal = ({
           })(<Select defaultValue="" disabled={freightDis}>{selectProductType}</Select>)}
         </FormItem>
         <FormItem label="首重价格(¥)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('initialprice', {
-            initialValue: item.initialprice,
+          {getFieldDecorator('initPrice', {
+            initialValue: item.INIT_PRICE,
             rules: [
               {
                 required: true,
@@ -114,8 +114,8 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="首重重量(kg)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('ykgweight', {
-            initialValue: item.ykgweight,
+          {getFieldDecorator('initWeight', {
+            initialValue: item.INIT_WEIGHT,
             rules: [
               {
                 required: true,
@@ -126,8 +126,8 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="续重价格(¥)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('continuedheavyprice', {
-            initialValue: item.continuedheavyprice,
+          {getFieldDecorator('steppingPrice', {
+            initialValue: item.STEPPING_PRICE,
             rules: [
               {
                 required: true,
@@ -138,8 +138,8 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="步进重量(kg)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('stepping', {
-            initialValue: item.stepping,
+          {getFieldDecorator('steppingWeight', {
+            initialValue: item.STEPPING_WEIGHT,
             rules: [
               {
                 required: true,
@@ -150,8 +150,8 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="燃油附加费(¥)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('fuelcharge', {
-            initialValue: item.fuelcharge,
+          {getFieldDecorator('fuelCharge', {
+            initialValue: item.FUEL_CHARGE,
             rules: [
               {
                 required: true,
@@ -162,13 +162,24 @@ const modal = ({
           })(<Input />)}
         </FormItem>
         <FormItem label="邮编段" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('zipcodesegment', {
-            initialValue: item.zipcodesegment || '',
+          {getFieldDecorator('postcode', {
+            initialValue: item.POSTCODE || '',
             rules: [
               {
                 required: false,
                 pattern: /^[0-9]{6}$/,
                 message: '请输入邮编段!',
+              },
+            ],
+          })(<Input />)}
+        </FormItem>
+        <FormItem label="备注" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('remark', {
+            initialValue: item.REMARK || '',
+            rules: [
+              {
+                required: false,
+                message: '请输入备注信息!',
               },
             ],
           })(<Input />)}

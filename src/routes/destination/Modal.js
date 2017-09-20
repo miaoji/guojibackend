@@ -62,7 +62,7 @@ const modal = ({
             initialValue: item.pinyin,
             rules: [
               {
-                required: true,
+                required: false,
                 pattern: /^[A-Za-z]{0,}([\s]{1}[A-Za-z]{1,}){0,}$/,
                 message: '请输入中文名称的拼音!',
               },
