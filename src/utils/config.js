@@ -4,11 +4,9 @@ let APIV3 = ''
 // 测试线上
 // APIV3 = 'http://api.didalive.net/DHL'
 // 正式线上
-APIV3 = 'http://api.mingz-tech.com/DHL'
+// APIV3 = 'http://api.mingz-tech.com/DHL'
 // 仝舟
-// APIV3 = 'http://192.168.1.111:8080'
-// 董浩伟
-// APIV3 = 'http://192.168.0.225:8080/DHL'
+APIV3 = 'http://192.168.1.111:8080'
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
 	// APIV3 = 'http://api.didalive.net/DHL'

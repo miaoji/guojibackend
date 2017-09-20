@@ -59,7 +59,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-     *getNation ({ payload }, { select, call, put }) {
+    *getNation ({ payload }, { select, call, put }) {
       const data = yield call(contryQuery)
       if (data) {
         let obj = data.obj
@@ -133,11 +133,11 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-    	const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
+    	const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0
     	const productCode = Math.floor(Math.random()*600000)
     	const productName = payload.product_name
     	const packageType = payload.producttypeid
-    	const newWxUser = { ...payload, createUser, productCode,  productName, packageType,}
+    	const newWxUser = { ...payload, createUser, productCode,  productName, packageType }
     	
       const data = yield call(create, newWxUser)
       if (data.success) {
@@ -149,7 +149,7 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      //获取对应的id
+      // 获取对应的id
       const id = yield select(({ product }) => product.currentItem.id)
       //获取对应的包裹类型的中文名称
       const name_ch = yield select(({ product }) => product.currentItem.name_ch)
