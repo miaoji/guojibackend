@@ -7,14 +7,15 @@ import styles from './index.less'
 const { formatTime } = time
 
 const detailCN = {
-  boot: '补价金额',
-  reason: '补价原因',
-  status: '状态',
+  priceSpread: '补价金额',
   createTime: '创建时间',
-  serialNumber: '订单号'
+  reason: '补价原因',
+  orderNo: '订单号',
+  status: '状态',
 }
 
 const statusGroup = {
+  '-1': '补价状态信息未获取',
   '0': '默认未补价',
   '1': '补价中',
   '2': '补价完成',
@@ -39,14 +40,17 @@ const Detail = ({ bootDetail }) => {
       if ({}.hasOwnProperty.call(item, key)) {
         let content
         switch (key) {
-          case 'createUser':
+          case 'createUserId':
+          case 'hiddenStatus':
           case 'id':
             content = ''
             break
           case 'status':
+          // 如果传过来的 status 是null 则转换成 -1 用‘不加状态信息未获取’ 提示用户
+            if (!item[key]) {item[key]='-1'}
             content = (<div>{String(statusGroup[item[key]])}</div>)
             break
-          case 'boot':
+          case 'priceSpread':
             content = (<div>{item[key]/100}元</div>)
             break
           case 'createTime':

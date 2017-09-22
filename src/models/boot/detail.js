@@ -12,9 +12,9 @@ export default {
     setup ({ dispatch, history }) {
       history.listen(() => {
         if (location.pathname === '/bootdetail') {
-          const match = location.search.split('?serialnumber=')
+          const match = location.search.split('?orderNo=')
           if (match) {
-            dispatch({ type: 'query', payload: { serialnumber : match[1] } })
+            dispatch({ type: 'query', payload: { orderNo : match[1] } })
           }
         }
       })
@@ -26,7 +26,9 @@ export default {
       payload,
     }, { call, put }) {
       const data = yield call(query, payload)
-      const { code, obj, mess } = data
+      console.log('payload', payload)
+      console.log('data', data)
+      const { code, obj, msg } = data
       if (code === 200) {
         yield put({
           type: 'querySuccess',
@@ -35,7 +37,7 @@ export default {
           },
         })
       } else {
-        throw mess
+        throw msg
       }
     },
   },

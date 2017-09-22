@@ -27,15 +27,15 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
   const columns = [
     {
       title: '头像',
-      dataIndex: 'headimgurl',
-      key: 'headimgurl',
+      dataIndex: 'headurl',
+      key: 'headurl',
       width: 64,
       className: styles.avatar,
       render: (text) => <img alt={'avatar'} width={24} src={text} />,
     }, {
       title: '微信名',
-      dataIndex: 'nickname',
-      key: 'nickname',
+      dataIndex: 'nick_name',
+      key: 'nick_name',
       // render: (text, record) => <Link to={`wxuser/${record.id}`}>{text}</Link>,
     }, {
       title: '手机号',
@@ -64,8 +64,8 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       }
     }, {
       title: '关注状态',
-      dataIndex: 'subscribe',
-      key: 'subscribe',
+      dataIndex: 'hidden_status',
+      key: 'hidden_status',
       filters: [
         { text: '关注', value: '1' },
         { text: '取消关注', value: '0' }
@@ -111,9 +111,9 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         bordered
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
-            <p>openid:  {record.openid}</p>
+            <p>openid:  {record.id}</p>
             <p>手机号:  {record.mobile}</p>
-            <p>证件号:  {record.IDcard}</p>
+            <p>证件号:  {record.id_card}</p>
           </div>
         }
         scroll={{ x: 1250 }}

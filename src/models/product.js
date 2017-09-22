@@ -82,8 +82,8 @@ export default modelExtend(pageModel, {
     },
     
     *getParcelType ({ payload = {} }, { call, put }) {
-      const destNation={countryId:payload}
-      const data = yield call(parceltypeQuery,destNation)
+      const destNation={ countryId:payload }
+      const data = yield call(parceltypeQuery, destNation)
 
       if (data) {
         let obj = data.obj
