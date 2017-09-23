@@ -3,7 +3,7 @@ const APIV2 = '/api/v2'
 let APIV3 = ''
 
 // 重构API
-APIV3 = 'http://192.168.1.111:8080/api'
+APIV3 = 'http://192.168.1.111:8080'
 
 module.exports = {
 	name: '国际快递后台管理系统',
@@ -20,9 +20,9 @@ module.exports = {
 	api: {
 		dashboard: `${APIV1}/dashboard`,
 		//根据国家查询包裹类型
-		showPTypeByCounId: `${APIV3}/packageType/getPackageTypeByCountry`,
+		showPTypeByCounId: `${APIV3}/api/packageType/getPackageTypeByCountry`,
 		//根据包裹类型id获取对应的产品类型
-		showproductName: `${APIV3}/productType/getProductByPackage`,
+		showproductName: `${APIV3}/api/productType/getProductByPackage`,
 		login: {
 			accountLogin: `${APIV3}/login`,
 			getVerifyImage: `${APIV3}/login/imageCode`,
@@ -30,10 +30,10 @@ module.exports = {
 			mobileLogin: `${APIV3}/login/loginByCode`
 		},
 		wxuser: {
-			all: `${APIV3}/wxUser/index`,
+			all: `${APIV3}/api/wxUser/index`,
 		},
 		order: {
-			all: `${APIV3}/wx/OrderInfo/getOrderInfo`,//全部订单
+			all: `${APIV3}/api/orderInfo/index`,//全部订单
 			show: `${APIV1}/order/:id`,
 			create: `${APIV3}/wx/OrderInfo/addOrderInfo`,//创建订单
 			update: `${APIV3}/wx/OrderInfo/modOrderInfo`,// 根据id更新订单
@@ -42,27 +42,27 @@ module.exports = {
 			createChinaOrder: `${APIV3}/wx/order/createOrder`,// 新增国内(中通)订单	
 		},
 		boot: {
-			all: `${APIV3}/closingPrice/index`,// 查询所有差价(补价)信息
-			show: `${APIV3}/closingPrice/getByOrderNo`,// 根据单号查询差价信息
-			add: `${APIV3}/closingPrice/add`,// 新增差价(补价)信息
-			update: `${APIV3}/closingPrice/modClosingPriceById`,// 更新差价(补价)信息
-			hide: `${APIV3}/closingPrice/delClosingPriceById`
+			all: `${APIV3}/api/closingPrice/index`,// 查询所有差价(补价)信息
+			show: `${APIV3}/api/closingPrice/getByOrderNo`,// 根据单号查询差价信息
+			add: `${APIV3}/api/closingPrice/add`,// 新增差价(补价)信息
+			update: `${APIV3}/api/closingPrice/modClosingPriceById`,// 更新差价(补价)信息
+			hide: `${APIV3}/api/closingPrice/delClosingPriceById`
 		},
 		//包裹类型管理
 		parceltype: {
-			all: `${APIV3}/packageType/index`,
-			show: `${APIV3}/packageType/getPackageTypeById`,
-			create: `${APIV3}/packageType/add`,
-			update: `${APIV3}/packageType/modPackageTypeById`,
-			hide: `${APIV3}/packageType/delPackageTypeById`
+			all: `${APIV3}/api/packageType/index`,
+			show: `${APIV3}/api/packageType/getPackageTypeById`,
+			create: `${APIV3}/api/packageType/add`,
+			update: `${APIV3}/api/packageType/modPackageTypeById`,
+			hide: `${APIV3}/api/packageType/delPackageTypeById`
 		},
 		//产品类型管理
 		product: {
-			all: `${APIV3}/productType/index`,
-			show: `${APIV3}/productType/getProductTypeById`,
-			create: `${APIV3}/productType/add`,
-			update: `${APIV3}/productType/modProductTypeById`,
-			hide: `${APIV3}/productType/delProductTypeById`
+			all: `${APIV3}/api/productType/index`,
+			show: `${APIV3}/api/productType/getProductTypeById`,
+			create: `${APIV3}/api/productType/add`,
+			update: `${APIV3}/api/productType/modProductTypeById`,
+			hide: `${APIV3}/api/productType/delProductTypeById`
 		},
 		//目的地管理
 		destination: {
@@ -70,39 +70,39 @@ module.exports = {
 		},
 		//运费管理
 		freight: {
-			all: `${APIV3}/intlPrice/index`,
-			show: `${APIV3}intlPrice/getIntlPriceById`,
-			create: `${APIV3}/intlPrice/add`,
-			update: `${APIV3}/intlPrice/modIntlPriceById`,
-			hide: `${APIV3}/intlPrice/delIntlPriceById`
+			all: `${APIV3}/api/intlPrice/index`,
+			show: `${APIV3}/api/intlPrice/getIntlPriceById`,
+			create: `${APIV3}/api/intlPrice/add`,
+			update: `${APIV3}/api/intlPrice/modIntlPriceById`,
+			hide: `${APIV3}/api/intlPrice/delIntlPriceById`
 		},
     	// 国家api
 		country: {
-		  show: `${APIV3}/country/index`,
-		  create: `${APIV3}/country/add`,
-		  update: `${APIV3}/country/modCountryById`,
-		  hide: `${APIV3}/country/delCountryById`
+		  show: `${APIV3}/api/country/index`,
+		  create: `${APIV3}/api/country/add`,
+		  update: `${APIV3}/api/country/modCountryById`,
+		  hide: `${APIV3}/api/country/delCountryById`
 		},
 		// 省份/州api
 		province: {
-		  show: `${APIV3}/provinces/index`,
-		  create: `${APIV3}/provinces/add`,
-		  update: `${APIV3}/provinces/modProvincesById`,
-		  hide: `${APIV3}/provinces/delProvincesById`,
+		  show: `${APIV3}/api/provinces/index`,
+		  create: `${APIV3}/api/provinces/add`,
+		  update: `${APIV3}/api/provinces/modProvincesById`,
+		  hide: `${APIV3}/api/provinces/delProvincesById`,
 		},
 		// 市级api
 		city: {
-		  show: `${APIV3}/cities/index`,
-		  create: `${APIV3}/cities/add`,
-		  update: `${APIV3}/cities/modCitiesById`,
-		  hide: `${APIV3}/cities/delCitiesById`,
+		  show: `${APIV3}/api/cities/index`,
+		  create: `${APIV3}/api/cities/add`,
+		  update: `${APIV3}/api/cities/modCitiesById`,
+		  hide: `${APIV3}/api/cities/delCitiesById`,
 		},
 		// 区县api
 		county: {
-		  show: `${APIV3}/districts/index`,
-		  create: `${APIV3}/districts/add`,
-		  update: `${APIV3}/districts/modDistrictsById`,
-		  hide: `${APIV3}/districts/delDistrictsById`,
+		  show: `${APIV3}/api/districts/index`,
+		  create: `${APIV3}/api/districts/add`,
+		  update: `${APIV3}/api/districts/modDistrictsById`,
+		  hide: `${APIV3}/api/districts/delDistrictsById`,
 		},
 		// 二维码推广接口
 		qr: {

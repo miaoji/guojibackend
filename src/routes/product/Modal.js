@@ -80,7 +80,7 @@ const modal = ({
                 message: '请输入包裹类型!',
               },
             ],
-          })(<Select defaultValue="1" disabled={productDis}>{selectParcelType}</Select>)}
+          })(<Select value='1' disabled={productDis}>{selectParcelType}</Select>)}
         </FormItem>
         <FormItem label="产品名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('productName', {

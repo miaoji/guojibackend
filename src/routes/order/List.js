@@ -27,7 +27,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
         confirm({
           title: '确定要删除这一订单吗?',
           onOk () {
-            onDeleteItem(record.id)
+            onDeleteItem(record.ID)
           }
         })
         break
@@ -35,7 +35,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
         addBoot(record)
         break
       case '4':
-        window.open(`/bootdetail?serialnumber=${record.serialnumber}`)
+        window.open(`/bootdetail?orderNo=${record.order_no}`)
         break
       default:
         break
@@ -54,43 +54,44 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
   const columns = [
     {
       title: '全部订单号',
-      dataIndex: 'serialnumber',
-      key: 'serialnumber',
+      dataIndex: 'ORDER_NO',
+      key: 'ORDER_NO',
     },{
       title: '寄件人',
-      dataIndex: 'senderName',
-      key: 'senderName',
+      dataIndex: 'SENDER_NAME',
+      key: 'SENDER_NAME',
     },{
       title: '寄件人手机',
-      dataIndex: 'senderPhone',
-      key: 'senderPhone'
+      dataIndex: 'SENDER_MOBILE',
+      key: 'SENDER_MOBILE'
     },{
       title: '收件人',
-      dataIndex: 'buyerName',
-      key: 'buyerName'
+      dataIndex: 'RECEIVER_NAME',
+      key: 'RECEIVER_NAME'
     },{
       title: '收件人手机',
-      dataIndex: 'buyerPhone',
-      key: 'buyerPhone'
+      dataIndex: 'RECEIVER_MOBILE',
+      key: 'RECEIVER_MOBILE'
     },{
       title: '预付总金额',
-      dataIndex: 'totalfee',
-      key: 'totalfee',
+      dataIndex: 'TOTAL_FEE',
+      key: 'TOTAL_FEE',
       render: (text) => <span>{text ? Number(text)/100 : 0}元</span>,
    },{
       title: '下单时间',
-      dataIndex: 'endtime',
-      key: 'endtime',
+      dataIndex: 'CREATE_TIME',
+      key: 'CREATE_TIME',
     }, {
       title: '订单状态',
-      dataIndex: 'starte',
-      key: 'starte',
+      dataIndex: 'STATUS',
+      key: 'STATUS',
       render: (text) => {
         return <span>{realtext[text]}</span>
       }
     },{
       title: '预报信息',
-      key: 'createztorder',
+      dataIndex: "INTL_NO",
+      key: 'INTL_NO',
       width: 100,
       render: (text, record) => {
         const starte = record.starte
@@ -126,25 +127,12 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
       <Table
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
+        bordered
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
-            <p>订单号:  {record.serialnumber}</p>
-            <p>寄件人:  {record.senderName}</p>
-            <p>收件人:  {record.buyerName}</p>
-            <p>预付总金额:  {record.totalfee/100}元</p>
-            <p>产品类型:  {record.producttypeid}</p>
-            <p>收件人证件号:  {record.buyerIDCard}</p>
-            <p>国内段订单号:  {record.ZTONO}</p>
-            <p>国际段订单号:  {record.FPXNO}</p>
-            <p>重量:  {record.bearload}</p>
-            <p>寄件地址: {record.senderAddr}</p>
-            <p>中转地址: {record.transferAddress}</p>
-            <p>收件地址: {record.buyerAddr}</p>
-            <p>下单时间:  {record.endtime}</p>
-            <p>订单状态:  {realtext[record.starte]}</p>
+            <p>asdasd</p>
           </div>
         }
-        bordered
         scroll={{ x: 1250 }}
         columns={columns}
         simple

@@ -90,8 +90,8 @@ export default modelExtend(pageModel, {
     *getParcelType ({ payload = {} }, { select, call, put }) {
       const destNation={countryId:payload}
       let currentItem = yield select(({ freight }) => freight.currentItem)
-      currentItem.cargotype = null
-      currentItem.producttypeid = null
+      currentItem.name_cn = null
+      currentItem.product_name = null
       const data = yield call(parceltypeQuery,destNation)
 
       if (data) {
@@ -123,7 +123,7 @@ export default modelExtend(pageModel, {
       console.log('packagid', payload)
       const packageType={packageTypeId:payload}
       let currentItem = yield select(({ freight }) => freight.currentItem)
-      currentItem.producttypeid = null
+      currentItem.product_name = null
 
       const data = yield call(producttypeQuery,packageType)
 

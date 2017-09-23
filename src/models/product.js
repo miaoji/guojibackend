@@ -81,10 +81,12 @@ export default modelExtend(pageModel, {
       }
     },
     
-    *getParcelType ({ payload = {} }, { call, put }) {
+    *getParcelType ({ payload = {} }, { select, call, put }) {
+      let currentItem = yield select(({ product }) => product.currentItem)
+      currentItem.NAME_CN = null
       const destNation={ countryId:payload }
-      const data = yield call(parceltypeQuery, destNation)
 
+      const data = yield call(parceltypeQuery, destNation)
       if (data) {
         let obj = data.obj
         let children = []

@@ -10,7 +10,7 @@ export default {
       name: '明彰',
       title: '名言',
       content: '逆水行舟，不进则退',
-      avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',
+      // avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',
     },
     numbers: [
       {
@@ -43,7 +43,7 @@ export default {
     user: {
       name: '管理员',
       email: '2467254599@qq.com',
-      avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',
+      // avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',
     },
   },
   subscriptions: {
