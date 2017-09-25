@@ -113,7 +113,7 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).userId 
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId 
       // 用nameCn 来判断 nameEn 的值
       let nameEn = ''
       if (payload.nameCn=='包裹') {
@@ -138,7 +138,7 @@ export default modelExtend(pageModel, {
       const id = yield select(({ parceltype }) => parceltype.currentItem.ID)
       const country_cn = yield select(({ parceltype }) => parceltype.currentItem.country_cn)
       const DESTINATION = yield select(({ parceltype }) => parceltype.currentItem.DESTINATION)
-      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).userId 
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId 
       let nameEn = ''
       // 判断修改是输入的目的地国家的值有没有变化,没有变化则返回它本身的DESTINATION
       if (payload.destination==country_cn) {

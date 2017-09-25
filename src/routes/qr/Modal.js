@@ -61,18 +61,6 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="二维码参数" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('parameter', {
-            initialValue: item.parameter,
-            rules: [
-              {
-                required: true,
-                pattern: /^[A-Za-z0-9]{0,}$/,
-                message: '请输入二维码参数!'
-              },
-            ],
-          })(<Input disabled={paramDisabled} />)}
-        </FormItem>
       </Form>
     </Modal>
   )

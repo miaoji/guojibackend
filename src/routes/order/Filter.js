@@ -60,6 +60,7 @@ const Filter = ({
         }
       }
     }
+    console.log('fields',fields )
     setFieldsValue(fields)
     handleSubmit()
   }
@@ -75,14 +76,15 @@ const Filter = ({
     const newStarte = e.target.value
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    fields['starte'] = newStarte
+    fields['status'] = newStarte
+    console.log('fields', fields)
     if (Number(newStarte) === 6) {
-      delete fields['starte']
+      delete fields['status']
     }
     onFilterChange(fields)
   }
 
-  const { name, starte } = filter
+  const { name, status } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -106,7 +108,7 @@ const Filter = ({
       </Col>
       <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          {getFieldDecorator('starte', { initialValue: "6" })(
+          {getFieldDecorator('status', { initialValue: "6" })(
             <RadioGroup onChange={onChangeRadio}>
               <RadioButton value="6">全部</RadioButton>
               <RadioButton value="1">待付款</RadioButton>

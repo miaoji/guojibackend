@@ -41,7 +41,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     title: '提交补价',
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
-      console.log('update data', data)
+      // console.log('update data', data)
       dispatch({
         type: `order/addBoot`,
         payload: data,
@@ -104,8 +104,8 @@ const Order = ({ location, dispatch, order, loading }) => {
       dispatch({
         type: 'order/createChinaOrder',
         payload: {
-          id: item.id,
-          serialNumber: item.serialnumber
+          id: item.ID,
+          orderNo: item.ORDER_NO
         },
       })
     }

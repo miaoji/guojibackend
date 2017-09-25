@@ -30,6 +30,7 @@ const modal = ({
     getFieldDecorator,
     validateFields,
     getFieldsValue,
+    setFieldsValue
   },
   ...modalProps
 }) => {
@@ -54,10 +55,15 @@ const modal = ({
   const handleChange=async function(data){
     //通过目的地查询包裹类型
     await getParcelType(data)
+    setFieldsValue({
+      packageType:null,
+      productType:null
+    })
   }
 
   const productChange=async function(data){
     await getProductType(JSON.parse(data).id)
+    setFieldsValue({productType:null})
   }
 
   const modalOpts = {
@@ -77,7 +83,7 @@ const modal = ({
                 message: '请选择目的地国家!',
               },
             ],
-          })(<Select defaultValue="1" onSelect={handleChange} onFocus={handleClick}>{selectPackage}</Select>)}
+          })(<Select defaultValue="1" onChange={handleChange} onFocus={handleClick}>{selectPackage}</Select>)}
         </FormItem>
         <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('packageType', {

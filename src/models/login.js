@@ -45,7 +45,7 @@ export default {
       payload.uuid = loginUUID
       const data = yield call(accountLogin, payload)
       yield put({ type: 'hideLoginLoading' })
-      if (data.status === 1) {
+      if (data.status === 200) {
       	// 将 token, user信息 保存在本地localStorage
         storage({
           key: 'token',

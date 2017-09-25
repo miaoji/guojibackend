@@ -74,7 +74,12 @@ export default modelExtend(pageModel, {
     },
 
     *'markBlackList' ({ payload }, { call, put, select }) {
-      const newWxUser = payload
+      let newWxUser = payload
+      console.log('newWxUser', newWxUser)
+      // 判断有没有传过来blacklist属性,没有的传的话就默认等于1
+      if (newWxUser.blacklist==null) {
+        newWxUser.blacklist=1
+      }
       const data = yield call(update, newWxUser)
       if (data.success) {
         yield put({ type: 'hideModal' })

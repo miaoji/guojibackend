@@ -24,7 +24,8 @@ const statusGroup = {
 
 const Detail = ({ bootDetail }) => {
   const { data } = bootDetail
-  if (data.length === 0) {
+  console.log('data.obj',data)
+  if (data == null) {
     return (<div className="content-inner">
       <div className={styles.content}>
         暂无补价记录
@@ -46,8 +47,6 @@ const Detail = ({ bootDetail }) => {
             content = ''
             break
           case 'status':
-          // 如果传过来的 status 是null 则转换成 -1 用‘不加状态信息未获取’ 提示用户
-            if (!item[key]) {item[key]='-1'}
             content = (<div>{String(statusGroup[item[key]])}</div>)
             break
           case 'priceSpread':

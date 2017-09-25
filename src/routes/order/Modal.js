@@ -104,7 +104,7 @@ const modal = ({
         </FormItem>
         <FormItem label="订单状态" hasFeedback {...formItemLayout}>
           {getFieldDecorator('starte', {
-            initialValue: statusGroup[item.starte],
+            initialValue: statusGroup[item.STATUS],
             rules: [
               {
                 required: true,

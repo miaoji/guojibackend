@@ -3,7 +3,11 @@ const APIV2 = '/api/v2'
 let APIV3 = ''
 
 // 重构API
+// 线下地址
 APIV3 = 'http://192.168.1.111:8080'
+// 线上地址
+// APIV3 = 'http://api.didalive.net'
+
 
 module.exports = {
 	name: '国际快递后台管理系统',
@@ -31,15 +35,16 @@ module.exports = {
 		},
 		wxuser: {
 			all: `${APIV3}/api/wxUser/index`,
+			update: `${APIV3}/api/wxUser/modWxUserById`,
 		},
 		order: {
 			all: `${APIV3}/api/orderInfo/index`,//全部订单
 			show: `${APIV1}/order/:id`,
 			create: `${APIV3}/wx/OrderInfo/addOrderInfo`,//创建订单
 			update: `${APIV3}/wx/OrderInfo/modOrderInfo`,// 根据id更新订单
-			mod: `${APIV3}/wx/OrderInfo/modOrderById`,// 根据id更新订单 仝周
-			hide: `${APIV3}/wx/OrderInfo/delOrderById`,// 根据id更新订单 仝周
-			createChinaOrder: `${APIV3}/wx/order/createOrder`,// 新增国内(中通)订单	
+			mod: `${APIV3}/api/orderInfo/modOrderInfoById`,// 根据id更新订单 仝周
+			hide: `${APIV3}/api/orderInfo/delOrderInfoById`,// 根据id更新订单 仝周
+			createChinaOrder: `${APIV3}/api/order/createOrder`,// 新增国内(中通)订单	
 		},
 		boot: {
 			all: `${APIV3}/api/closingPrice/index`,// 查询所有差价(补价)信息
@@ -106,11 +111,11 @@ module.exports = {
 		},
 		// 二维码推广接口
 		qr: {
-	      create: `${APIV3}/wx/createQr`,
-	      all: `${APIV3}/wx/getQrAll`,
+	      all: `${APIV3}/api/qr/getQrAll`,
 	      show: `${APIV3}/wx/selectQrById`,
-	      update: `${APIV3}/wx/updateQrById`,
-	      del: `${APIV3}/wx/delQrById`
+	      create: `${APIV3}/api/qr/createQr`,
+	      update: `${APIV3}/api/qr/modWxQrById`,
+	      del: `${APIV3}/api/qr/delWxQrById`
 		}
 	},
 }

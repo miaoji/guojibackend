@@ -44,7 +44,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data) {
+      if (data.code=="200") {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -56,6 +56,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      }else {
+        throw data.msg || "网络延迟"
       }
     },
 
@@ -82,8 +84,8 @@ export default modelExtend(pageModel, {
     },
     
     *getParcelType ({ payload = {} }, { select, call, put }) {
-      let currentItem = yield select(({ product }) => product.currentItem)
-      currentItem.NAME_CN = null
+      // let currentItem = yield select(({ product }) => product.currentItem)
+      // currentItem.NAME_CN = null
       const destNation={ countryId:payload }
 
       const data = yield call(parceltypeQuery, destNation)
@@ -139,7 +141,7 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-    	const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).userId
+    	const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
     	const productCode = Math.floor(Math.random()*600000)
     	const newWxUser = { ...payload, createUserId, productCode,}
     	
@@ -164,7 +166,7 @@ export default modelExtend(pageModel, {
       if (payload.packageType==NAME_CN) {
         payload.packageType = PACKAGE_TYPE
       }
-      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).userId
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
       const productCode = yield select(({ product }) => product.currentItem.PRODUCT_CODE)
     	const newWxUser = { ...payload, id, createUserId, productCode,}
       const data = yield call(update, newWxUser)

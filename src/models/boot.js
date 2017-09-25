@@ -33,7 +33,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data) {  
+      if (data.code === 200) {  
         yield put({
           type: 'querySuccess',
           payload: {
@@ -45,6 +45,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      }else{
+        throw data.msg
       }
     },
 
@@ -55,11 +57,11 @@ export default modelExtend(pageModel, {
       const newFreight = {...payload, time, confirmor}
       
       const data = yield call(create, newFreight)
-      if (data.success) {
+      if (data.code===200) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 

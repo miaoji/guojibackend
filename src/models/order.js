@@ -51,17 +51,17 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 
     *'delete' ({ payload }, { call, put, select }) {
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 
@@ -70,54 +70,57 @@ export default modelExtend(pageModel, {
       const data = yield call(create, payload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ order }) => order.currentItem.id)
+      const id = yield select(({ order }) => order.currentItem.ID)
       const newOrder = { ...payload, id }
       const data = yield call(update, newOrder)
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.msg || data
       }
     },
 
     *addBoot ({ payload }, { call, put }) {
+      console.log('payload', payload)
       const other = {
-        'createUser': JSON.parse(window.localStorage.getItem('guojipc_user'))['userId'],
+        'createUserId': JSON.parse(window.localStorage.getItem('guojipc_user'))['roleId'],
         'status': 1
       }
+      console.log('other', other)
       const data = yield call(addBoot, {
-        boot: Number(payload.boot)*100,
-        serialNumber: payload.serialnumber,
+        priceSpread: Number(payload.priceSpread)*100,
+        orderNo: payload.orderNo,
         reason: payload.reason,
         ...other
       })
       if (data.success && data.code === 200) {
-        message.success(data.mess)
         yield put({ type: 'hideBootModal' })
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 
     *createChinaOrder ({ payload }, { call, put }) {
+      console.log('payload', payload)
       const data = yield call(createChinaOrder, {...payload})
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'hideBootModal' })
         yield put({ type: 'query' })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 

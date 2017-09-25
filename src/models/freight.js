@@ -90,8 +90,8 @@ export default modelExtend(pageModel, {
     *getParcelType ({ payload = {} }, { select, call, put }) {
       const destNation={countryId:payload}
       let currentItem = yield select(({ freight }) => freight.currentItem)
-      currentItem.name_cn = null
-      currentItem.product_name = null
+      // currentItem.name_cn = null
+      // currentItem.product_name = null
       const data = yield call(parceltypeQuery,destNation)
 
       if (data) {
@@ -123,7 +123,7 @@ export default modelExtend(pageModel, {
       console.log('packagid', payload)
       const packageType={packageTypeId:payload}
       let currentItem = yield select(({ freight }) => freight.currentItem)
-      currentItem.product_name = null
+      // currentItem.product_name = null
 
       const data = yield call(producttypeQuery,packageType)
 
@@ -183,7 +183,7 @@ export default modelExtend(pageModel, {
 
     *create ({ payload }, { call, put }) {
     	const createTime = new Date().getTime()
-    	const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).userId
+    	const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
       let newFreight = {...payload, createUserId}
       console.log('newFreight1', newFreight)
       newFreight.packageType = JSON.parse(newFreight.packageType).id
@@ -199,7 +199,7 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).userId
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
       const id = yield select(({ freight }) => freight.currentItem.ID )// 运费id
       const destination = yield select(({ freight }) => freight.currentItem.country_cn )// 国家名称
       const packageType = yield select(({ freight }) => freight.currentItem.name_cn )// 包裹类型名称

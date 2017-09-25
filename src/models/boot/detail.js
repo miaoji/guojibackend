@@ -26,19 +26,16 @@ export default {
       payload,
     }, { call, put }) {
       const data = yield call(query, payload)
-      const { code, obj, msg } = data
-      if (code === 200) {
-        if (obj === null) {
-          message.success("暂无补价信息")
-        }
+      // const { code, obj, msg } = data
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            data: obj,
+            data: data.obj,
           },
         })
       } else {
-        throw msg
+        throw data.msg
       }
     },
   },
