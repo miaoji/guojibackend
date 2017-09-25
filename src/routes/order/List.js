@@ -90,11 +90,10 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
       }
     },{
       title: '预报信息',
-      dataIndex: "INTL_NO",
       key: 'INTL_NO',
       width: 100,
       render: (text, record) => {
-        const starte = record.starte
+        const starte = record.STATUS
         if (starte === 2) {
           return <Button type="primary" size="default" ghost onClick={e => handleCreateZtorder(record, e)}>
             发送
@@ -127,16 +126,29 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
       <Table
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
-        bordered
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
-            <p>asdasd</p>
+            <p>订单号:  {record.serialnumber}</p>
+            <p>寄件人:  {record.senderName}</p>
+            <p>收件人:  {record.buyerName}</p>
+            <p>预付总金额:  {record.totalfee/100}元</p>
+            <p>产品类型:  {record.producttypeid}</p>
+            <p>收件人证件号:  {record.buyerIDCard}</p>
+            <p>国内段订单号:  {record.ZTONO}</p>
+            <p>国际段订单号:  {record.FPXNO}</p>
+            <p>重量:  {record.bearload}</p>
+            <p>寄件地址: {record.senderAddr}</p>
+            <p>中转地址: {record.transferAddress}</p>
+            <p>收件地址: {record.buyerAddr}</p>
+            <p>下单时间:  {record.endtime}</p>
+            <p>订单状态:  {realtext[record.starte]}</p>
           </div>
         }
+        bordered
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.id}
+        rowKey={record => record.ID}
         getBodyWrapper={getBodyWrapper}
       />
     </div>
