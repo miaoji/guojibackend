@@ -4,7 +4,7 @@ import { create, remove, update, markBlack, createChinaOrder } from '../services
 import { create as addBoot } from '../services/boot'
 import * as ordersService from '../services/orders'
 import { pageModel } from './common'
-import { config } from '../utils'
+import { config, time, } from '../utils'
 
 const { query } = ordersService
 const { prefix } = config
@@ -39,6 +39,12 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data.code === 200) {
+        // for(var item in data.obj){
+        //   data.obj[item].CREATE_TIME=time.formatTime(data.obj[item].CREATE_TIME)
+        // }
+        data.obj.forEach((item) => {
+          item.CREATE_TIME=time.formatTime(item.CREATE_TIME)
+        })
         yield put({
           type: 'querySuccess',
           payload: {

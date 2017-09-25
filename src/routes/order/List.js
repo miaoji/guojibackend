@@ -5,6 +5,7 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
+import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
@@ -137,7 +138,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
             <p>收件人证件号:  {record.RECEIVER_ID}</p>
             <p>国内段订单号:  {record.CN_NO}</p>
             <p>国际段订单号:  {record.INTL_NO}</p>
-            <p>重量:  {record.WEIGHT}</p>
+            <p>重量:  {record.WEIGHT}kg</p>
             <p>寄件地址: {record.SENDER_ADDRESS}</p>
             <p>中转地址: {record.TRANSFER_ADDRESS}</p>
             <p>收件地址: {record.RECEIVER_ADDRESS}</p>

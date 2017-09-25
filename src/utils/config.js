@@ -4,9 +4,9 @@ let APIV3 = ''
 
 // 重构API
 // 线下地址
-APIV3 = 'http://192.168.1.111:8080'
+// APIV3 = 'http://192.168.1.111:8080'
 // 线上地址
-// APIV3 = 'http://api.didalive.net'
+APIV3 = 'http://api.didalive.net'
 
 
 module.exports = {
