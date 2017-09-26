@@ -39,12 +39,12 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data.code === 200) {
-        // for(var item in data.obj){
-        //   data.obj[item].CREATE_TIME=time.formatTime(data.obj[item].CREATE_TIME)
-        // }
-        data.obj.forEach((item) => {
-          item.CREATE_TIME=time.formatTime(item.CREATE_TIME)
-        })
+        for(var item in data.obj){
+          data.obj[item].CREATE_TIME=time.formatTime(data.obj[item].CREATE_TIME)
+        }
+        // data.obj.forEach((item) => {
+        //   item.CREATE_TIME=time.formatTime(item.CREATE_TIME)
+        // })
         yield put({
           type: 'querySuccess',
           payload: {
@@ -57,7 +57,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.msg
+        throw data.msg || '网络不行了!!'
       }
     },
 

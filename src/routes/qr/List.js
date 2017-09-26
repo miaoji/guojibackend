@@ -30,7 +30,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   }
 
   const copyUrl = (record, e) => {
-    const href = 'http://control.mingz-tech.com/qrdetail?ticket=' + record.ticket + '&name=' + record.name + '&parameter=' + record.parameter
+    const href = 'http://control.mingz-tech.com/qrdetail?TICKET=' + record.ticket + '&name=' + record.NAME
     window.prompt('使用Ctrl+C复制到剪切板', href)
   }
 

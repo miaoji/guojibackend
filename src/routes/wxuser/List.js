@@ -27,8 +27,8 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
   const columns = [
     {
       title: '头像',
-      dataIndex: 'headurl',
-      key: 'headurl',
+      dataIndex: 'headimgurl',
+      key: 'headimgurl',
       width: 64,
       className: styles.avatar,
       render: (text) => <img alt={'avatar'} width={24} src={text} />,
@@ -111,7 +111,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         bordered
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
-            <p>openid:  {record.id}</p>
+            <p>openid:  {record.openid}</p>
             <p>手机号:  {record.mobile}</p>
             <p>证件号:  {record.id_card}</p>
           </div>

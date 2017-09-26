@@ -35,7 +35,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data.success && data.code === 200) {
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -48,7 +48,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || data
+        throw data.msg || '网络问题'
       }
     },
 
@@ -59,7 +59,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 
@@ -69,7 +69,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 
@@ -85,7 +85,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 
@@ -95,7 +95,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 
@@ -107,7 +107,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 
