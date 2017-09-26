@@ -1,6 +1,6 @@
 import { request, config } from '../utils'
 const { api } = config
-const { parceltype } = api
+const { parceltype, country, } = api
 
 export async function query (params) {
   return request({
@@ -30,6 +30,14 @@ export async function update (params) {
   return request({
     url: parceltype.update,
     method: 'post',
+    params,
+  })
+}
+
+export async function getCountyId (params) {
+  return request({
+    url: country.getCountyId,
+    method: 'get',
     params,
   })
 }

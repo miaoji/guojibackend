@@ -81,7 +81,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }} sm={{ span: 12 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按包裹类型搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按目的地搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="创建时间">

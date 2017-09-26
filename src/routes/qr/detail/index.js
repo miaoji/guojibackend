@@ -14,9 +14,8 @@ const Detail = ({ qrDetail }) => {
   return (<div className="content-inner">
     <div className={styles.content}>
       <div className={styles.item}>
-        <br/>
         <div>推广人姓名: {name}</div>
-        <br/>
+        <div>二维码参数: {parameter}</div>
         <div><img src={imgSrc} alt="二维码" /></div>
       </div>
     </div>

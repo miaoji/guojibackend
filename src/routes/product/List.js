@@ -25,12 +25,11 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   }
 
   const columns = [
-   {
-      title: '产品名称编号',
+    /*{title: '产品名称编号',
       dataIndex: 'PRODUCT_CODE',
       key: 'PRODUCT_CODE',
-    },{
-      title: '目的地',
+    },*/{
+      title: '目的地国家',
       dataIndex: 'country_cn',
       key: 'country_cn',
     },{

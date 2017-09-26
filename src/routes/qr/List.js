@@ -46,16 +46,16 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       render: (text)=>{
         return <span>{ text?text:0 }</span>
       }
-    },/* {
+    },{
       title: '二维码参数',
       dataIndex: 'PARAMETER',
       key: 'PARAMETER',
-    },*/{
+    },{
       title: '二维码图片',
       dataIndex: 'TICKET',
       key: 'TICKET',
       render: (text, record) => {
-        const href = '/qrdetail?TICKET=' + text + '&name=' + record.NAME;
+        const href = '/qrdetail?TICKET=' + text + '&name=' + record.NAME + '&parameter=' + record.PARAMETER;
         return <a href={href} target="_blank">点击查看</a>
       }
     },{

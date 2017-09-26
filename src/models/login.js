@@ -92,7 +92,7 @@ export default {
       const data = yield call(getVerifyCodeByMobile, payload)
       yield put({ type: 'hideCodeLoading' })
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({
           type: 'setCodeAuth',
           payload: {
@@ -100,7 +100,7 @@ export default {
           }
         })
       } else {
-        throw data.mess || data
+        throw data.msg || data
       }
     },
     /**

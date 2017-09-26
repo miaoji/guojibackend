@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
-import { create, remove, update, markBlack } from '../services/parceltype'
+import { create, remove, update, markBlack, getCountyId, } from '../services/parceltype'
 import * as parceltypesService from '../services/parceltypes'
 import * as countriesService from '../services/countries'
 import { pageModel } from './common'
@@ -41,7 +41,6 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data.code === 200 && data.success) {
-        console.log('total', data)
         yield put({
           type: 'querySuccess',
           payload: {
@@ -60,14 +59,13 @@ export default modelExtend(pageModel, {
 
      *getNation ({ payload = {} }, { call, put }) {
       const data = yield call(contryQuery)
-      if (data) {
-        console.log('data', data)
+      if (data.code === 200) {
         let obj = data.obj
         let children = []
         if (data.obj) {
           for (let i = 0; i < obj.length; i++) {
             let item = obj[i]
-            children.push(<Option key={item.id}>{item.country_cn}</Option>);
+            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>);
           }
         }
         yield put({
@@ -113,6 +111,17 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
+      console.log('payload 1111',payload)
+      console.log('payload',payload)
+      // 通过国家名称获取国家id
+      const destination = yield call(getCountyId,{name:payload.destination.toString()})
+      if (destination.code === 200) {
+        payload.destination=destination.obj.id
+      }else{
+        throw '获取国家ID失败'
+        return
+      }
+      // return
       const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId 
       // 用nameCn 来判断 nameEn 的值
       let nameEn = ''
@@ -140,9 +149,18 @@ export default modelExtend(pageModel, {
       const DESTINATION = yield select(({ parceltype }) => parceltype.currentItem.DESTINATION)
       const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId 
       let nameEn = ''
-      // 判断修改是输入的目的地国家的值有没有变化,没有变化则返回它本身的DESTINATION
+      // 判断修改是输入的目的地国家的值有没有变化,没有变化则返回它本身的DESTINATION,改变了则通过接口获取一个国家id
+      // 若没有获取到国家ID则提示用户,并return
       if (payload.destination==country_cn) {
         payload.destination = DESTINATION
+      }else{
+        const destination = yield call(getCountyId,{name:payload.destination.toString()})
+        if (destination.code === 200) {
+          payload.destination = destination.obj.id
+        }else{
+          throw '获取国家ID失败'
+          return
+        }
       }
       if (payload.nameCn=='包裹') {
         nameEn = "P"

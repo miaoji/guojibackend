@@ -4,9 +4,9 @@ let APIV3 = ''
 
 // 重构API
 // 线下地址
-// APIV3 = 'http://192.168.1.111:8080'
+APIV3 = 'http://192.168.1.112:8080'
 // 线上地址
-APIV3 = 'http://api.didalive.net'
+// APIV3 = 'http://api.didalive.net'
 
 
 module.exports = {
@@ -59,7 +59,7 @@ module.exports = {
 			show: `${APIV3}/api/packageType/getPackageTypeById`,
 			create: `${APIV3}/api/packageType/add`,
 			update: `${APIV3}/api/packageType/modPackageTypeById`,
-			hide: `${APIV3}/api/packageType/delPackageTypeById`
+			hide: `${APIV3}/api/packageType/delPackageTypeById`,
 		},
 		//产品类型管理
 		product: {
@@ -86,7 +86,8 @@ module.exports = {
 		  show: `${APIV3}/api/country/index`,
 		  create: `${APIV3}/api/country/add`,
 		  update: `${APIV3}/api/country/modCountryById`,
-		  hide: `${APIV3}/api/country/delCountryById`
+		  hide: `${APIV3}/api/country/delCountryById`,
+		  getCountyId: `${APIV3}/api/country/getCountryIdByName`,// 通过国家名称获取国家id
 		},
 		// 省份/州api
 		province: {
