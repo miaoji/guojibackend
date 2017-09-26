@@ -9,3 +9,11 @@ export async function query (params) {
     data: params,
   }
 )}
+
+export async function getCountryId (params) {
+	return request({
+		url: country.getCountryId,
+		method: 'get',
+		params
+	})
+}

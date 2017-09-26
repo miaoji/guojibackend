@@ -33,11 +33,3 @@ export async function update (params) {
     params,
   })
 }
-
-export async function getCountyId (params) {
-  return request({
-    url: country.getCountyId,
-    method: 'get',
-    params,
-  })
-}

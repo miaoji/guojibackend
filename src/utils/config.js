@@ -87,7 +87,7 @@ module.exports = {
 		  create: `${APIV3}/api/country/add`,
 		  update: `${APIV3}/api/country/modCountryById`,
 		  hide: `${APIV3}/api/country/delCountryById`,
-		  getCountyId: `${APIV3}/api/country/getCountryIdByName`,// 通过国家名称获取国家id
+		  getCountryId: `${APIV3}/api/country/getCountryIdByName`,// 通过国家名称获取国家id
 		},
 		// 省份/州api
 		province: {

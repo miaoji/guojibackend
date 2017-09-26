@@ -7,9 +7,14 @@ import * as showPTypeByCounIdsService from '../services/showPTypeByCounIds'
 import { pageModel } from './common'
 import { config } from '../utils'
 
-const { query } = productsService
 const { prefix } = config
+// 获取产品类型分页数据
+const { query } = productsService
+// 获取全部国家信息
 const contryQuery = countriesService.query
+// 通过国家名称获取国家id
+const getCountryId = countriesService.getCountryId
+// 通过国家id获取包裹类型数据
 const parceltypeQuery = showPTypeByCounIdsService.query
 const Option = Select.Option
 
@@ -69,7 +74,7 @@ export default modelExtend(pageModel, {
         if (data.obj) {
           for (let i = 0; i < obj.length; i++) {
             let item = obj[i]
-            children.push(<Option key={item.id}>{item.country_cn}</Option>);
+            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>);
           }
         }
         yield put({
@@ -86,6 +91,16 @@ export default modelExtend(pageModel, {
     *getParcelType ({ payload = {} }, { select, call, put }) {
       // let currentItem = yield select(({ product }) => product.currentItem)
       // currentItem.NAME_CN = null
+      console.log('payload',payload)
+      const countryId = yield call(getCountryId,{ name:payload.toString() })
+      if (countryId.code === 200) {
+        payload = countryId.obj.id
+      }else{
+        throw '获取国家ID失败'
+        return
+      }
+      console.log('payload 国家id',payload)
+      // return 
       const destNation={ countryId:payload }
 
       const data = yield call(parceltypeQuery, destNation)

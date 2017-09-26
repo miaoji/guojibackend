@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
-import { create, remove, update, markBlack, getCountyId, } from '../services/parceltype'
+import { create, remove, update, markBlack, } from '../services/parceltype'
 import * as parceltypesService from '../services/parceltypes'
 import * as countriesService from '../services/countries'
 import { pageModel } from './common'
@@ -8,6 +8,7 @@ import { config } from '../utils'
 
 const { query } = parceltypesService
 const contryQuery = countriesService.query
+const  getCountryId = countriesService. getCountryId
 const { prefix } = config
 const Option = Select.Option
 
@@ -114,7 +115,7 @@ export default modelExtend(pageModel, {
       console.log('payload 1111',payload)
       console.log('payload',payload)
       // 通过国家名称获取国家id
-      const destination = yield call(getCountyId,{name:payload.destination.toString()})
+      const destination = yield call(getCountryId,{name:payload.destination.toString()})
       if (destination.code === 200) {
         payload.destination=destination.obj.id
       }else{
@@ -154,7 +155,7 @@ export default modelExtend(pageModel, {
       if (payload.destination==country_cn) {
         payload.destination = DESTINATION
       }else{
-        const destination = yield call(getCountyId,{name:payload.destination.toString()})
+        const destination = yield call(getCountryId,{name:payload.destination.toString()})
         if (destination.code === 200) {
           payload.destination = destination.obj.id
         }else{

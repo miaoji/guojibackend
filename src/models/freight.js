@@ -11,6 +11,7 @@ import { gettimes } from '../utils/time'
 
 const { query } = freightsService
 const contryQuery = countriesService.query
+const getCountryId = countriesService.getCountryId
 const parceltypeQuery = showPTypeByCounIdsService.query
 const producttypeQuery = showproductNamesService.query
 const { prefix } = config
@@ -75,7 +76,7 @@ export default modelExtend(pageModel, {
         if (data.obj) {
           for (let i = 0; i < obj.length; i++) {
             let item = obj[i]
-            children.push(<Option key={item.id}>{item.country_cn}</Option>);
+            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>);
           }
         }
         yield put({
@@ -90,10 +91,17 @@ export default modelExtend(pageModel, {
     },
 
     *getParcelType ({ payload = {} }, { select, call, put }) {
+      const countryId = yield call(getCountryId,{name:payload.toString()})
+      if (countryId.code === 200) {
+        payload = countryId.obj.id
+      }else{
+        throw '获取国家ID失败'
+        return
+      }
+      console.log("payload", payload)
+      // return
       const destNation={countryId:payload}
       let currentItem = yield select(({ freight }) => freight.currentItem)
-      // currentItem.name_cn = null
-      // currentItem.product_name = null
       const data = yield call(parceltypeQuery,destNation)
 
       if (data) {
@@ -189,7 +197,14 @@ export default modelExtend(pageModel, {
       let newFreight = {...payload, createUserId}
       console.log('newFreight1', newFreight)
       newFreight.packageType = JSON.parse(newFreight.packageType).id
-      console.log('newFreight2', newFreight)
+      const countryId = yield call(getCountryId,{name:payload.destination.toString()})
+      if (countryId.code === 200) {
+        newFreight.destination = countryId.obj.id
+      }else{
+        throw '获取国家ID失败'
+        return
+      }
+      console.log('newFreight2222', newFreight)
       const data = yield call(create, newFreight)
       if (data.code=='200') {
         message.success(data.msg)
@@ -212,6 +227,14 @@ export default modelExtend(pageModel, {
       // 判断国家是否修改
       if (payload.destination==destination) {
         payload.destination=DESTINATION
+      }else{
+        const countryId = yield call(getCountryId,{name:payload.destination})
+        if (countryId.code === 200) {
+          payload.destination = countryId.obj.id
+        }else{
+          throw '获取国家ID失败'
+          return
+        }
       }
       // 判断产品类型是否修改
       if (payload.packageType==packageType) {
@@ -223,8 +246,8 @@ export default modelExtend(pageModel, {
       if (payload.productType==productType) {
         payload.productType=PRODUCT_TYPE
       }
-      console.log('id', id)
       let newFreight = {...payload, id, createUserId,}
+      console.log('newFreight222', newFreight)
       const data = yield call( update, newFreight )
       console.log('data', data)
       if (data.code='200') {

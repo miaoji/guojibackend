@@ -74,7 +74,7 @@ const modal = ({
                 message: '请输入目的地国家!',
               },
             ],
-          })(<Select defaultValue="1" onChange={handleChange} onFocus={handleClick}>{selectNation}</Select>)}
+          })(<Select showSearch onChange={handleChange} onFocus={handleClick}>{selectNation}</Select>)}
         </FormItem>
         <FormItem label="包裹类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('packageType', {
