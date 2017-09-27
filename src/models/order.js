@@ -160,6 +160,14 @@ export default modelExtend(pageModel, {
       return { ...state, ...payload }
     },
 
+    showAddModal (state, { payload }) {
+      return { ...state, ...payload, addModalVisible: true }
+    },
+
+    hideAddModal (state, { payload }) {
+      return { ...state, addModalVisible: false }
+    },
+
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },

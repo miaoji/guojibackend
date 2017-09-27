@@ -7,10 +7,32 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 import BootModal from './bootModal'
+import AddModal from './addModal'
 
 const Order = ({ location, dispatch, order, loading }) => {
-  const { list, pagination, currentItem, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = order
+  const { list, pagination, currentItem, addModalVisible, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = order
   const { pageSize } = pagination
+
+  const addModelProps = {
+    type: modalType,
+    item: currentItem,
+    visible: addModalVisible,
+    confirmLoading: loading.effects['order/update'],
+    title: '创建订单',
+    wrapClassName: 'vertical-center-modal',
+    onOk (data) {
+      // console.log('update data', data)
+      dispatch({
+        type: `order/addOrder`,
+        payload: data,
+      })
+    },
+    onCancel () {
+      dispatch({
+        type: 'order/hideAddModal',
+      })
+    },
+  }
 
   const modalProps = {
     type: modalType,
@@ -145,7 +167,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
     onAdd () {
       dispatch({
-        type: 'order/showModal',
+        type: 'order/showAddModal',
         payload: {
           modalType: 'create',
         },
@@ -182,6 +204,7 @@ const Order = ({ location, dispatch, order, loading }) => {
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
       {bootModalVisible && <BootModal {...bootModalProps} />}
+      {addModalVisible && <AddModal {...addModelProps}/>}
     </div>
   )
 }
