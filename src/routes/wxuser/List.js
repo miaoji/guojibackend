@@ -63,6 +63,22 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         return <span>{realtext[text]}</span>
       }
     }, {
+      title: '黑名单',
+      dataIndex: 'blacklist',
+      key: 'blacklist',
+      filters: [
+        { text: '是', value: 1 },
+        { text: '否', value: 0 }
+      ],
+      onFilter: (value, record)=> Number(record.blacklist) === Number(value),
+      render: (text) => {
+        const realtext = {
+          0: '否',
+          1: '是'
+        }
+        return <span>{realtext[text]}</span>
+      }
+    }, {
       title: '关注状态',
       dataIndex: 'hidden_status',
       key: 'hidden_status',
@@ -70,7 +86,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         { text: '关注', value: '1' },
         { text: '取消关注', value: '0' }
       ],
-      onFilter: (value, record) => Number(record.subscribe) === Number(value),
+      onFilter: (value, record) => Number(record.hidden_status) === Number(value),
       render: (text) => {
         const realtext = {
           '0': '取消关注',
@@ -91,7 +107,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '标记' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' },/* { key: '2', name: '标记' }*/]} />
       },
     },
   ]
