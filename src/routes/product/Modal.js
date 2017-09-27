@@ -52,7 +52,6 @@ const modal = ({
   const handleChange= async function(data){
     //通过目的地查询包裹类型
     await getParcelType(data)
-    let fields = getFieldsValue()
     // 当目的地的数据改变时,清空包裹类型select组件的数据
     setFieldsValue({packageType:null})
   }

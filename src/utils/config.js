@@ -4,9 +4,9 @@ let APIV3 = ''
 
 // 重构API
 // 线下地址
-APIV3 = 'http://192.168.1.112:8080'
+// APIV3 = 'http://192.168.1.112:8080'
 // 线上地址
-// APIV3 = 'http://api.didalive.net'
+APIV3 = 'http://api.didalive.net'
 
 
 module.exports = {
@@ -53,6 +53,12 @@ module.exports = {
 			add: `${APIV3}/api/closingPrice/add`,// 新增差价(补价)信息
 			update: `${APIV3}/api/closingPrice/modClosingPriceById`,// 更新差价(补价)信息
 			hide: `${APIV3}/api/closingPrice/delClosingPriceById`
+		},
+		transfer: {
+			all: `${APIV3}/api/transfer/index`,
+			create: `${APIV3}/api/transfer/add`,
+			update: `${APIV3}/api/transfer/modTransferById`,
+			hide: `${APIV3}/api/transfer/delTransferById`,
 		},
 		//包裹类型管理
 		parceltype: {

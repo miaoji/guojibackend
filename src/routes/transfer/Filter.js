@@ -2,12 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Radio } from 'antd'
+import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch } from 'antd'
 import city from '../../utils/city'
 
 const Search = Input.Search
-const RadioButton = Radio.Button
-const RadioGroup = Radio.Group
 const { RangePicker } = DatePicker
 
 const ColProps = {
@@ -60,7 +58,6 @@ const Filter = ({
         }
       }
     }
-    console.log('fields',fields )
     setFieldsValue(fields)
     handleSubmit()
   }
@@ -71,20 +68,7 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-
-  const onChangeRadio = (e) => {
-    const newStarte = e.target.value
-    let fields = getFieldsValue()
-    fields = handleFields(fields)
-    fields['status'] = newStarte
-    console.log('fields', fields)
-    if (Number(newStarte) === 6) {
-      delete fields['status']
-    }
-    onFilterChange(fields)
-  }
-
-  const { orderNo, status } = filter
+  const { name, address } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -96,8 +80,8 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('orderNo', { initialValue: orderNo })(<Search placeholder="按订单号搜索" size="large" onSearch={handleSubmit} />)}
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }} sm={{ span: 12 }}>
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按目的地搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="创建时间">
@@ -106,27 +90,14 @@ const Filter = ({
           )}
         </FilterItem>
       </Col>
-      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          {getFieldDecorator('status', { initialValue: "6" })(
-            <RadioGroup onChange={onChangeRadio}>
-              <RadioButton value="6">全部</RadioButton>
-              <RadioButton value="1">待付款</RadioButton>
-              <RadioButton value="2">已付款</RadioButton>
-              <RadioButton value="3">国内</RadioButton>
-              <RadioButton value="0">国际</RadioButton>
-              <RadioButton value="4">异常</RadioButton>
-            </RadioGroup>)}
-        </div>
-      </Col>
-      <Col {...TwoColProps} xl={{ span: 5 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
-          <div style={{ display: 'none' }}>
-            <Button size="large" type="ghost" onClick={onAdd}>创建</Button>
+          <div>
+            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
           </div>
         </div>
       </Col>

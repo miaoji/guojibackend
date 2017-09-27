@@ -6,88 +6,64 @@ import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
-import BootModal from './bootModal'
-import AddModal from './addModal'
 
-const Order = ({ location, dispatch, order, loading }) => {
-  const { list, pagination, currentItem, addModalVisible, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = order
+const Transfer = ({ location, dispatch, transfer, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectNation, selectProvince, selectCity, selectCounty, } = transfer
   const { pageSize } = pagination
 
-  // 订单创建的modal
-  const addModelProps = {
-    type: modalType,
-    item: currentItem,
-    visible: addModalVisible,
-    confirmLoading: loading.effects['order/update'],
-    title: '创建订单',
-    wrapClassName: 'vertical-center-modal',
-    onOk (data) {
-      // console.log('update data', data)
-      dispatch({
-        type: `order/addOrder`,
-        payload: data,
-      })
-    },
-    onCancel () {
-      dispatch({
-        type: 'order/hideAddModal',
-      })
-    },
-  }
-
-  // 订单修改modal
   const modalProps = {
-    type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    maskClosable: true,
-    confirmLoading: loading.effects['order/update'],
-    title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
+    maskClosable: false,
+    confirmLoading: loading.effects['transfer/update'],
+    title: `${modalType === 'create' ? '新增中转地址' : '修改中转地址'}`,
     wrapClassName: 'vertical-center-modal',
-    selectKdCompany: selectKdCompany,
-    onOk (data) {
-      dispatch({
-        type: `order/${modalType}`,
-        payload: data,
-      })
-    },
-    getKdCompany () {
-      dispatch({
-        type: `order/getKdCompany`
-      })
-    },
-    onCancel () {
-      dispatch({
-        type: 'order/hideModal',
-      })
-    },
-  }
+    selectNation: selectNation,
+    selectProvince: selectProvince,
+    selectCity: selectCity,
+    selectCounty: selectCounty,
 
-  // 补价modal
-  const bootModalProps = {
-    type: modalType,
-    item: currentItem,
-    visible: bootModalVisible,
-    confirmLoading: loading.effects['order/update'],
-    title: '提交补价',
-    wrapClassName: 'vertical-center-modal',
     onOk (data) {
-      // console.log('update data', data)
       dispatch({
-        type: `order/addBoot`,
+        type: `transfer/${modalType}`,
         payload: data,
+      })
+    },
+    getCountry(data){
+      dispatch({
+        type:`transfer/getCountry`
+      })
+    },
+    getProvince(data){
+      dispatch({
+        type:`transfer/getProvince`,
+        payload:data
+      })
+    },
+    getCity(data){
+      console.log('data',data)
+      dispatch({
+        type:`transfer/getCity`,
+        payload:data
+      })
+    },
+    getCounty(data){
+      console.log('data',data)
+      dispatch({
+        type:`transfer/getCounty`,
+        payload:data
       })
     },
     onCancel () {
       dispatch({
-        type: 'order/hideBootModal',
+        type: 'transfer/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['order/query'],
+    loading: loading.effects['transfer/query'],
     pagination,
     location,
     isMotion,
@@ -104,39 +80,22 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
     onMarkItem (id) {
       dispatch({
-        type: 'order/markBlackList',
+        type: 'transfer/markBlackList',
         payload: id
       })
     },
     onDeleteItem (id) {
       dispatch({
-        type: 'order/delete',
+        type: 'transfer/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'order/showModal',
+        type: 'transfer/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
-        },
-      })
-    },
-    addBoot (item) {
-      dispatch({
-        type: 'order/showBootModal',
-        payload: {
-          currentItem: item,
-        },
-      })
-    },
-    onCreateCtorder (item) {
-      dispatch({
-        type: 'order/createChinaOrder',
-        payload: {
-          id: item.ID,
-          orderNo: item.ORDER_NO
         },
       })
     }
@@ -159,31 +118,31 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/order',
+        pathname: '/transfer',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/order',
+        pathname: '/transfer',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'order/showAddModal',
+        type: 'transfer/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion () {
-      dispatch({ type: 'order/switchIsMotion' })
+      dispatch({ type: 'transfer/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'order/multiDelete',
+      type: 'transfer/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -206,17 +165,15 @@ const Order = ({ location, dispatch, order, loading }) => {
       }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
-      {bootModalVisible && <BootModal {...bootModalProps} />}
-      {addModalVisible && <AddModal {...addModelProps}/>}
     </div>
   )
 }
 
-Order.propTypes = {
-  order: PropTypes.object,
+Transfer.propTypes = {
+  transfer: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ order, loading }) => ({ order, loading }))(Order)
+export default connect(({ transfer, loading }) => ({ transfer, loading }))(Transfer)

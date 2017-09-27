@@ -73,6 +73,13 @@ module.exports = [
     icon: 'pay-circle-o',
     router: '/freight',
   },{
+    id: 45,
+    bpid: 4,
+    mpid: 4,
+    name: '中转地址管理',
+    icon: 'fork',
+    router: '/transfer',
+  },{
     id: 5,
     bpid: 1,
     name: '补价管理',
