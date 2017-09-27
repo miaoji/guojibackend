@@ -9,7 +9,7 @@ import Modal from './Modal'
 import BootModal from './bootModal'
 
 const Order = ({ location, dispatch, order, loading }) => {
-  const { list, pagination, currentItem, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys } = order
+  const { list, pagination, currentItem, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = order
   const { pageSize } = pagination
 
   const modalProps = {
@@ -20,10 +20,16 @@ const Order = ({ location, dispatch, order, loading }) => {
     confirmLoading: loading.effects['order/update'],
     title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
     wrapClassName: 'vertical-center-modal',
+    selectKdCompany: selectKdCompany,
     onOk (data) {
       dispatch({
         type: `order/${modalType}`,
         payload: data,
+      })
+    },
+    getKdCompany () {
+      dispatch({
+        type: `order/getKdCompany`
       })
     },
     onCancel () {

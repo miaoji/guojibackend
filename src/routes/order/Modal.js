@@ -29,6 +29,8 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
+  selectKdCompany,
+  getKdCompany,
   form: {
     getFieldDecorator,
     validateFields,
@@ -47,6 +49,11 @@ const modal = ({
       }
       onOk(data)
     })
+  }
+
+  const handleFocus = () => {
+    getKdCompany()
+    // alert(1)
   }
 
   const modalOpts = {
@@ -79,16 +86,7 @@ const modal = ({
                 message: '请选择快递公司名!',
               },
             ],
-          })(<Select defaultValue="dhlen" style={{ width: 286 }}>
-            <Option value="youzhengguonei">邮政包裹/平邮</Option>
-            <Option value="youzhengguoji">国际包裹</Option>
-            <Option value="ems">EMS</Option>
-            <Option value="emsguoji">EMS-国际件(只能查部份从中国寄出或寄往中国的件)</Option>
-            <Option value="emsinten">EMS-国际件-英文结果</Option>
-            <Option value="dhlen">DHL全球件</Option>
-            <Option value="dhl">DHL</Option>
-            <Option value="dhlde">DHL-德国</Option>
-          </Select>)}
+          })(<Select showSearch placeholder='输入快递备注名可搜索' onFocus={handleFocus} defaultValue="dhlen" style={{ width: 286 }}>{ selectKdCompany }</Select>)}
         </FormItem>
         <FormItem label="国际段单号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('FPXNO', {

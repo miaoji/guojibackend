@@ -74,7 +74,7 @@ const modal = ({
                 message: '请输入目的地国家!',
               },
             ],
-          })(<Select showSearch onChange={handleChange} onFocus={handleClick}>{selectNation}</Select>)}
+          })(<Select placeholder='输入文字可搜索' showSearch onChange={handleChange} onFocus={handleClick}>{selectNation}</Select>)}
         </FormItem>
         <FormItem label="包裹类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('packageType', {
@@ -85,7 +85,7 @@ const modal = ({
                 message: '请输入包裹类型!',
               },
             ],
-          })(<Select value='1' disabled={productDis}>{selectParcelType}</Select>)}
+          })(<Select placeholder='点击选择' value='1' disabled={productDis}>{selectParcelType}</Select>)}
         </FormItem>
         <FormItem label="产品名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('productName', {

@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, remove, update, markBlack, createChinaOrder } from '../services/order'
+import { create, remove, update, markBlack, createChinaOrder, getKdCompany, } from '../services/order'
 import { create as addBoot } from '../services/boot'
 import * as ordersService from '../services/orders'
 import { pageModel } from './common'
@@ -130,9 +130,35 @@ export default modelExtend(pageModel, {
       }
     },
 
+    *getKdCompany ({ payload }, { call, put,}) {
+      const data = yield call(getKdCompany)
+      console.log('data', data)
+      if (data.code === 200 ) {
+        let children = []
+        if (data.obj) {
+          for (let i = 0; i < data.obj.length; i++) {
+            let item = data.obj[i]
+            children.push(<Option key={item.company_code}>{item.company_name} / {item.company_code}</Option>)
+          }
+        }
+        yield put({
+          type: 'setKdCompany',
+          payload: {
+            selectKdCompany: children
+          }
+        })
+      } else {
+        throw '获取国际段快递公司失败'
+      }
+    }
+
   },
 
   reducers: {
+
+    setKdCompany (state, { payload }) {
+      return { ...state, ...payload }
+    },
 
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }

@@ -60,7 +60,7 @@ const modal = ({
                 message: '请输入目的地国家!',
               },
             ],
-          })(<Select showSearch onFocus={handleClick}>{selectNation}</Select>)}
+          })(<Select placeholder='输入文字可搜索' showSearch onFocus={handleClick}>{selectNation}</Select>)}
         </FormItem>
         <FormItem label="包裹类型中文名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('nameCn', {

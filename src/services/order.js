@@ -56,3 +56,11 @@ export async function createChinaOrder (params) {
     params,
   })
 }
+
+export async function getKdCompany (params) {
+  return request({
+    url: order.getKdCompany,
+    method: 'get',
+    params
+  })
+}

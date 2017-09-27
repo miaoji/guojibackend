@@ -45,6 +45,7 @@ module.exports = {
 			mod: `${APIV3}/api/orderInfo/modOrderInfoById`,// 根据id更新订单 仝周
 			hide: `${APIV3}/api/orderInfo/delOrderInfoById`,// 根据id更新订单 仝周
 			createChinaOrder: `${APIV3}/api/order/createOrder`,// 新增国内(中通)订单	
+			getKdCompany: `${APIV3}/api/kdCompany/index`, // 动态获取国际段快递公司
 		},
 		boot: {
 			all: `${APIV3}/api/closingPrice/index`,// 查询所有差价(补价)信息
