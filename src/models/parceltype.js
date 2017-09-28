@@ -110,7 +110,7 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName 
+      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0 
       const destNation = payload.nation
       const maxRange = payload.max_range
       const minRange = payload.min_range
@@ -129,7 +129,7 @@ export default modelExtend(pageModel, {
 
     *update ({ payload }, { select, call, put }) {
       const id = yield select(({ parceltype }) => parceltype.currentItem.id)
-      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName 
+      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0 
       const destNation = payload.nation
       const maxRange = payload.max_range
       const minRange = payload.min_range
@@ -137,8 +137,6 @@ export default modelExtend(pageModel, {
       const nameEn = payload.name_en
       const newFreight = {...payload, id, createUser, destNation, maxRange, minRange, nameCh, nameEn}
       
-      
-//    const newWxUser = { ...payload, id }
       const data = yield call(update, newFreight)
       if (data.success) {
         yield put({ type: 'hideModal' })

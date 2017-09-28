@@ -175,7 +175,7 @@ export default modelExtend(pageModel, {
 
     *create ({ payload }, { call, put }) {
     	const time = new Date().getTime()
-    	const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
+    	const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0
     	const confirmor = username
       let newFreight = {...payload, time, confirmor}
       newFreight.cargotype = JSON.parse(newFreight.cargotype).name
@@ -193,7 +193,7 @@ export default modelExtend(pageModel, {
       const id = yield select(({ freight }) => freight.currentItem.id)
       const ifPackageJson = yield select(({ freight }) => freight.ifPackageJson)
       const time = new Date().getTime()
-      const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
+      const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0
       const confirmor = username
       let newFreight = {...payload, id, time, confirmor}
       newFreight.cargotype = ifPackageJson ? JSON.parse(payload.cargotype).name : payload.cargotype

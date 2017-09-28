@@ -156,7 +156,7 @@ export default modelExtend(pageModel, {
       //获取包裹类型的id
       const pid = yield select(({ product }) => product.currentItem.producttypeid)
 
-      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
+      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0
     	const productCode = yield select(({ product }) => product.currentItem.product_code)
     	const productName = payload.product_name
       
