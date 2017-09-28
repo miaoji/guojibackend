@@ -49,6 +49,7 @@ export async function update (params) {
   })
 }
 
+// 新增国内(中通)订单
 export async function createChinaOrder (params) {
   return request({
     url: order.createChinaOrder,
@@ -57,9 +58,36 @@ export async function createChinaOrder (params) {
   })
 }
 
+// 动态获取国际段快递公司
 export async function getKdCompany (params) {
   return request({
     url: order.getKdCompany,
+    method: 'get',
+    params
+  })
+}
+// 获取orderdetail页面信息
+export async function getOrderInfo (params) {
+  return request({
+    url: order.getOrderInfo,
+    method: 'get',
+    params
+  })
+}
+
+// 根据订单号获取快件信息
+export async function getOrderInfoByOrderNo (params) {
+  return request({
+    url: order.getOrderInfoByOrderNo,
+    method: 'get',
+    params
+  })
+}
+
+// 根据订单号获取快递信息
+export async function queryByCompany (params) {
+  return request({
+    url: order.queryByCompany,
     method: 'get',
     params
   })
