@@ -89,7 +89,6 @@ export default modelExtend(pageModel, {
 
      *getCountry ({ payload = {} }, { call, put }) {
       const data = yield call(getCountry)
-      console.log('data',data)
       if (data.code === 200) {
         let obj = data.obj
         let children = []
@@ -101,7 +100,7 @@ export default modelExtend(pageModel, {
               id:item.id
             }
             str = JSON.stringify(str)
-            children.push(<Option key={str}>{item.country_cn}</Option>);
+            children.push(<Option key={str}>{item.country_cn}</Option>)
           }
         }
         yield put({
@@ -231,7 +230,7 @@ export default modelExtend(pageModel, {
         throw data.msg
       }
     },
-
+    
   },
 
   reducers: {

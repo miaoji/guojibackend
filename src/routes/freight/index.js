@@ -126,6 +126,9 @@ const Freight = ({ location, dispatch, freight, loading }) => {
           modalType: 'create',
         },
       })
+      dispatch({
+        type: `freight/getPackage`
+      })
     },
     switchIsMotion () {
       dispatch({ type: 'freight/switchIsMotion' })

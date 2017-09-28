@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { time } from '../../utils'
+import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 
@@ -58,6 +59,9 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
       title: '全部订单号',
       dataIndex: 'ORDER_NO',
       key: 'ORDER_NO',
+      render: (text,record) => {
+        return <Link to={`/orderdetail?orderNo=${record.ORDER_NO}`}>{text}</Link>
+      }
     },{
       title: '寄件人',
       dataIndex: 'SENDER_NAME',

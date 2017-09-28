@@ -11,14 +11,20 @@ module.exports = [
     name: '微信用户',
     icon: 'message',
     router: '/wxuser',
-  },
-  {
+  },{
     id: 3,
     bpid: 1,
     name: '订单',
     icon: 'tags-o',
     router: '/order',
-  }, {
+  },{
+    id: 31,
+    bpid: 3,
+    mpid: -1,
+    name: '订单详情',
+    icon: 'tags-o',
+    router: '/orderdetail',
+  },{
     id: 4,
     bpid: 1,
     name: '类型管理',

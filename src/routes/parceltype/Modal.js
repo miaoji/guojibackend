@@ -40,7 +40,7 @@ const modal = ({
   }
 
   const handleClick= async function() {
-    await getNation()
+    // await getNation()
   }
 
   const modalOpts = {

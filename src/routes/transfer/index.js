@@ -134,6 +134,9 @@ const Transfer = ({ location, dispatch, transfer, loading }) => {
           modalType: 'create',
         },
       })
+      dispatch({
+        type: 'transfer/getCountry'
+      })
     },
     switchIsMotion () {
       dispatch({ type: 'transfer/switchIsMotion' })

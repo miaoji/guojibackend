@@ -110,6 +110,9 @@ const Parceltype = ({ location, dispatch, parceltype, loading }) => {
           modalType: 'create',
         },
       })
+      dispatch({
+        type:`parceltype/getNation`
+      })
     },
     switchIsMotion () {
       dispatch({ type: 'parceltype/switchIsMotion' })

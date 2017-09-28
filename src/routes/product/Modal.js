@@ -46,7 +46,7 @@ const modal = ({
   const handleClick= async function() {
     // 处理selectPackage 放入 option中
     // 获取国际信息
-    await getNation()
+    // await getNation()
   }
 
   const handleChange= async function(data){

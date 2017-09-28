@@ -47,7 +47,7 @@ const modal = ({
   }
 
   const handleClick= async function() {
-    await getCountry()
+    // await getCountry()
   }
 
   const countryChange = async function(e){
@@ -110,6 +110,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^((13[0-9])|(14[0-9])|(15([0-9]))|(18[0-9])|(17[0-9]))\d{8}$/,
                 message: '请输入收件人电话!',
               },
             ],
@@ -124,7 +125,7 @@ const modal = ({
                 message: '请选择收件人国家!',
               },
             ],
-          })(<Select onChange={countryChange} placeholder='输入文字可搜索' onFocus={handleClick}>{selectNation}</Select>)}
+          })(<Select onChange={countryChange} placeholder='点击选择' onFocus={handleClick}>{selectNation}</Select>)}
         </FormItem>
         <FormItem label="收件人省" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferProv', {
@@ -176,6 +177,7 @@ const modal = ({
             rules: [
               {
                 required: true,
+                pattern: /^[0-9]{6}$/,
                 message: '请输入收件邮编!',
               },
             ],

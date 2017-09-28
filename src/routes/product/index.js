@@ -118,6 +118,9 @@ const Product = ({ location, dispatch, product, loading }) => {
           modalType: 'create',
         },
       })
+      dispatch({
+        type:`product/getNation`
+      })
     },
     switchIsMotion () {
       dispatch({ type: 'product/switchIsMotion' })
