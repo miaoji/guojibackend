@@ -31,6 +31,9 @@ export default modelExtend(pageModel, {
       history.listen(location => {
         if (location.pathname === '/destination') {
           dispatch({
+            type: 'setListEmpty'
+          })
+          dispatch({
             type: 'query',
             payload: location.query,
           })
@@ -140,6 +143,10 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+
+    setListEmpty (state) {
+      return { ...state, list:{show:true, name: "国家信息正在加载,请稍等..."} }
+    },
 
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }

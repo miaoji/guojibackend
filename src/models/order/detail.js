@@ -13,8 +13,8 @@ export default {
       history.listen(() => {
         if (location.pathname === '/orderdetail') {
           const match = location.search.split('?orderNo=')
-          console.log('match',match)
           if (match) {
+            dispatch({ type: 'setListEmpty' })
             dispatch({ type: 'query', payload: { orderNo : match[1] } })
           }
         }
@@ -25,7 +25,7 @@ export default {
   effects: {
     *query ({ payload }, { call, put }) {
       const data = yield call(getOrderInfo, payload)
-      let detailDate = data.data[0]
+      let detailDate = data.obj
       // 获取快递信息(开始)
       let orderData = ''
       const orderInfo = yield call(getOrderInfoByOrderNo, payload)
@@ -34,14 +34,12 @@ export default {
         if (kdInfo.code === 200) {
           orderData = kdInfo.obj.data
           detailDate.orderData = orderData
-        }else{
-          message.warning('未获取到快递信息')
         }
       }else{
         console.log('error',orderInfo)
-        message.warning('未获取到快件信息')
       }
       // 获取快递信息(结束)
+
       if (data) {
         yield put({
           type: 'querySuccess',
@@ -56,12 +54,15 @@ export default {
   },
 
   reducers: {
+    setListEmpty (state) {
+      return { ...state, data:{} }
+    },
     querySuccess (state, { payload }) {
       const { data } = payload
       return {
         ...state,
-        data,
+        data
       }
-    },
-  },
+    }
+  }
 }

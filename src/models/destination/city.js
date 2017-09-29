@@ -162,7 +162,7 @@ export default modelExtend(pageModel, {
 
   reducers: {
     setListEmpty (state) {
-      return { ...state, list: [] }
+      return { ...state, list: {show:true,name:"数据加载中..."} }
     },
 
     showModal (state, { payload }) {

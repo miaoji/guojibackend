@@ -43,7 +43,19 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
+      console.log('data',data)
       if (data.code === 200 && data.success) {
+        for(let item in data.obj){
+          console.log('item',item)
+          data.obj[item].countryName = data.obj[item].country.countryCn
+          data.obj[item].provincesName = data.obj[item].provinces.province
+          data.obj[item].citiesName = data.obj[item].cities.city
+          data.obj[item].districtsName = data.obj[item].districts.district
+          data.obj[item].countryId = data.obj[item].country.id
+          data.obj[item].provincesId = data.obj[item].provinces.id
+          data.obj[item].citiesId = data.obj[item].cities.id
+          data.obj[item].districtsId = data.obj[item].districts.id
+        }
         yield put({
           type: 'querySuccess',
           payload: {
@@ -55,33 +67,6 @@ export default modelExtend(pageModel, {
             },
           },
         })
-        // 获取国家信息开始
-        // const countryData = yield call(getCountry)
-        // console.log('data',countryData)
-        // if (countryData.code === 200) {
-        //   let obj = countryData.obj
-        //   let children = []
-        //   if (countryData.obj) {
-        //     for (let i = 0; i < obj.length; i++) {
-        //       let item = obj[i]
-        //       let str = {
-        //         code:item.country_code,
-        //         id:item.id
-        //       }
-        //       str = JSON.stringify(str)
-        //       children.push(<Option key={str}>{item.country_cn}</Option>);
-        //     }
-        //   }
-        //   yield put({
-        //     type: 'setNation',
-        //     payload: {
-        //       selectNation: children,
-        //     },
-        //   })
-        // } else {
-        //   throw countryData.msg
-        // }
-        // 获取国家信息结束
       } else {
       	throw data.msg||'网络问题'
       }
@@ -217,10 +202,38 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
+      console.log('payload',payload)
       payload.id = yield select(({ transfer }) => transfer.currentItem.id)
-      payload.transferCountry = JSON.parse(payload.transferCountry).id
-      payload.transferProv = JSON.parse(payload.transferProv).id
-      payload.transferCity = JSON.parse(payload.transferCity).id
+      const newCurrentItem = yield select(({ transfer }) => transfer.currentItem)
+      console.log('newCurrentItem',newCurrentItem)
+      // 判断修改时的国家是否与加载时的国家相同
+      if (payload.transferCountry == newCurrentItem.country.countryCn) {
+        // payload.transferCountry = newCurrentItem.countryId
+        delete payload.transferCountry
+      }else{
+        payload.transferCountry = JSON.parse(payload.transferCountry).id
+      }
+      // 判断修改时的省是否与加载时的省相同
+      if (payload.transferProv == newCurrentItem.provinces.province) {
+        // payload.transferProv = newCurrentItem.provincesId
+        delete payload.transferProv
+      }else{
+        payload.transferProv = JSON.parse(payload.transferProv).id
+      }
+      // 判断修改时的市是否与加载时的市相同
+      if (payload.transferCity == newCurrentItem.cities.city) {
+        // payload.transferCity = newCurrentItem.citiesId
+        delete payload.transferCity
+      }else{
+        payload.transferCity = JSON.parse(payload.transferCity).id
+      }
+      // 判断修改时的区是否与加载时的区相同
+      if (payload.transferCounty == newCurrentItem.districts.district) {
+        // payload.transferCounty = newCurrentItem.districtsId
+        delete payload.transferCounty
+      }
+      console.log('payload1111',payload)
+      // return
       const data = yield call(update, payload)
       if (data.code === 200) {
         message.success(data.msg)

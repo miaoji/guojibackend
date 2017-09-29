@@ -97,7 +97,7 @@ export default modelExtend(pageModel, {
     },
 
     *addBoot ({ payload }, { call, put }) {
-      console.log('payload', payload)
+      console.log('payload111', payload)
       const other = {
         'createUserId': JSON.parse(window.localStorage.getItem('guojipc_user'))['roleId'],
         'status': 1
@@ -110,8 +110,8 @@ export default modelExtend(pageModel, {
         ...other
       })
       if (data.success && data.code === 200) {
-        yield put({ type: 'hideBootModal' })
         message.success(data.msg)
+        yield put({ type: 'hideBootModal' })
         yield put({ type: 'query' })
       } else {
         throw data.msg

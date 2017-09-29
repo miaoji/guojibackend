@@ -98,6 +98,9 @@ const Transfer = ({ location, dispatch, transfer, loading }) => {
           currentItem: item,
         },
       })
+      dispatch({
+        type: 'transfer/getCountry'
+      })
     }
   }
 

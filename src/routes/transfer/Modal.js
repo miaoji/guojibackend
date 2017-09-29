@@ -84,7 +84,7 @@ const modal = ({
       <Form>
         <FormItem label="寄件人姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferName', {
-            initialValue: item.transfer_name,
+            initialValue: item.transferName,
             rules: [
               {
                 required: true,
@@ -95,7 +95,7 @@ const modal = ({
         </FormItem>
         <FormItem label="收件人公司" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferCompany', {
-            initialValue: item.transfer_company,
+            initialValue: item.transferCompany,
             rules: [
               {
                 required: true,
@@ -106,7 +106,7 @@ const modal = ({
         </FormItem>
         <FormItem label="收件人电话" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferMobile', {
-            initialValue: item.transfer_mobile,
+            initialValue: item.transferMobile,
             rules: [
               {
                 required: true,
@@ -118,7 +118,7 @@ const modal = ({
         </FormItem>
         <FormItem label="收件人国家" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferCountry', {
-            initialValue: item.transfer_country,
+            initialValue: item.countryName,
             rules: [
               {
                 required: true,
@@ -129,7 +129,7 @@ const modal = ({
         </FormItem>
         <FormItem label="收件人省" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferProv', {
-            initialValue: item.transfer_prov,
+            initialValue: item.provincesName,
             rules: [
               {
                 required: true,
@@ -140,7 +140,7 @@ const modal = ({
         </FormItem>
         <FormItem label="收件人市" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferCity', {
-            initialValue: item.transfer_city,
+            initialValue: item.citiesName,
             rules: [
               {
                 required: true,
@@ -151,7 +151,7 @@ const modal = ({
         </FormItem>
         <FormItem label="收件人区" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferCounty', {
-            initialValue: item.transfer_county,
+            initialValue: item.districtsName,
             rules: [
               {
                 required: true,
@@ -162,7 +162,7 @@ const modal = ({
         </FormItem>
         <FormItem label="收件人详细地址" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferAddress', {
-            initialValue: item.transfer_address,
+            initialValue: item.transferAddress,
             rules: [
               {
                 required: true,
@@ -173,7 +173,7 @@ const modal = ({
         </FormItem>
         <FormItem label="收件人邮编" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferPostcode', {
-            initialValue: item.transfer_postcode,
+            initialValue: item.transferPostcode,
             rules: [
               {
                 required: true,

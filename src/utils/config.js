@@ -46,7 +46,7 @@ module.exports = {
 			hide: `${APIV3}/api/orderInfo/delOrderInfoById`,// 根据id更新订单 仝周
 			createChinaOrder: `${APIV3}/api/order/createOrder`,// 新增国内(中通)订单	
 			getKdCompany: `${APIV3}/api/kdCompany/index`, // 动态获取国际段快递公司
-			getOrderInfo:`${APIV1}/orders`, // 根据订单号查询订单详细信息,用户微信信息,包裹信息
+			getOrderInfo:`${APIV3}/api/orderInfo/getOrderDetailByOrderNo`, // 根据订单号查询订单详细信息,用户微信信息,包裹信息
 			getOrderInfoByOrderNo: `${APIV3}/api/orderInfo/getOrderInfoByOrderNo`,// 根据订单号查询快件信息
 			queryByCompany: `${APIV3}/api/order/queryByCompany`, // 根据快件信息查询快递信息
 		},
