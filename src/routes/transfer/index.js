@@ -8,7 +8,22 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Transfer = ({ location, dispatch, transfer, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectNation, selectProvince, selectCity, selectCounty, } = transfer
+  const { 
+    list, 
+    pagination, 
+    currentItem, 
+    modalVisible, 
+    modalType, 
+    isMotion, 
+    selectedRowKeys, 
+    selectNation, 
+    selectProvince, 
+    selectCity, 
+    selectCounty,
+    provinceDis,
+    cityDis,
+    districtDis,
+  } = transfer
   const { pageSize } = pagination
 
   const modalProps = {
@@ -22,6 +37,9 @@ const Transfer = ({ location, dispatch, transfer, loading }) => {
     selectProvince: selectProvince,
     selectCity: selectCity,
     selectCounty: selectCounty,
+    provinceDis: provinceDis,
+    cityDis: cityDis,
+    districtDis: districtDis,
 
     onOk (data) {
       dispatch({

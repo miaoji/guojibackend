@@ -1,13 +1,10 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove } from '../services/qr'
-import * as bootsService from '../services/qrs'
+import { create, update, remove, query, } from '../services/extensionapps'
 import { pageModel } from './common'
 
-const { query } = bootsService
-
 export default modelExtend(pageModel, {
-  namespace: 'qr',
+  namespace: 'extensionapp',
 
   state: {
     currentItem: {},
@@ -18,7 +15,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/qr') {
+        if (location.pathname === '/extensionapp') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -65,7 +62,7 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ qr }) => qr.currentItem.ID)
+      const id = yield select(({ extensionapp }) => extensionapp.currentItem.id)
       const newQr = {
         name: payload.name,
         id

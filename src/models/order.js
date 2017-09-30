@@ -57,7 +57,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.msg || '网络不行了!!'
+        throw data.msg
       }
     },
 

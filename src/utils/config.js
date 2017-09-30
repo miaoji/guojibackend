@@ -127,6 +127,14 @@ module.exports = {
 	      create: `${APIV3}/api/qr/createQr`,
 	      update: `${APIV3}/api/qr/modWxQrById`,
 	      del: `${APIV3}/api/qr/delWxQrById`
+		},
+		// app推广接口
+		extensionapp: {
+		  all: `${APIV3}/wx/app/index`,
+	      show: `${APIV3}/wx/selectQrById`,
+	      create: `${APIV3}/wx/app/add`,
+	      update: `${APIV3}/wx/app/modWxAppById`,
+	      hide: `${APIV3}/wx/app/delById`
 		}
 	},
 }

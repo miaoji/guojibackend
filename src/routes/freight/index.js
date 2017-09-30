@@ -90,6 +90,9 @@ const Freight = ({ location, dispatch, freight, loading }) => {
           currentItem: item,
         },
       })
+      dispatch({
+        type: `freight/getPackage`
+      })
     }
   }
 

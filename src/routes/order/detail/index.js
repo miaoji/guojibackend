@@ -33,20 +33,45 @@ const Detail = ({ orderDetail }) => {
     <div className={styles.content}>
       {data.wxUser?<div className={styles.item}>
         <div className={styles.title}>订单详情:</div>
+
+          <div className={styles.titleItem}>收件人信息:</div>
+          <span>收件人姓名: {data.receiverName?data.receiverName:'暂无'}</span>
+          <span>收件人公司: {data.receiverCompany?data.receiverCompany:'暂无'}</span>
+          <span>收件人国家: {data.receiverCountry?data.receiverCountry:'暂无'}</span>
+          <span>收件地址邮编: {data.receiverPostcode?data.receiverPostcode:'暂无'}</span>
+          <span>收件人详细地址: {data.receiverAddress?data.receiverAddress:'暂无'}</span>
+          <span>收件人电话: {data.receiverMobile?data.receiverMobile:'暂无'}</span>
+
+          <div className={styles.titleItem}>发件人信息:</div>
+          <span>发件人姓名: {data.senderName?data.senderName:'暂无'}</span>
+          <span>发件人公司: {data.senderCompany?data.senderCompany:'暂无'}</span>
+          <span>发件人电话: {data.senderMobile?data.senderMobile:'暂无'}</span>
+          <span>发件人国家: {data.senderCountry?data.senderCountry:'暂无'}</span>
+          <span>发件人省份: {data.senderProv?data.senderProv:'暂无'}</span>
+          <span>发件人城市: {data.senderCity?data.senderCity:'暂无'}</span>
+          <span>发件人地址: {data.senderAddress?data.senderAddress:'暂无'}</span>
+          <span>发件地址邮编: {data.senderPostcode?data.senderPostcode:'暂无'}</span>
+
+          <div className={styles.titleItem}>中转地址信息:</div>
+          <span>中转地址名称: {data.transferName?data.transferName:'暂无'}</span>
+          <span>中转地址公司: {data.transferCompany?data.transferCompany:'暂无'}</span>
+          <span>中转地址电话: {data.transferMobile?data.transferMobile:'暂无'}</span>
+          <span>中转地址国家: {data.transferCountry?data.transferCountry:'暂无'}</span>
+          <span>中转地址省份: {data.transferProv?data.transferProv:'暂无'}</span>
+          <span>中转地址市级: {data.transferCity?data.transferCity:'暂无'}</span>
+          <span>中转地址县区: {data.transferCounty?data.transferCounty:'暂无'}</span>
+          <span>中转地址详细地址: {data.transferAddress?data.transferAddress:'暂无'}</span>
+          <span>中转地址详细邮编: {data.transferPostcode?data.transferPostcode:'暂无'}</span>
+
+          <div className={styles.titleItem}>订单基础信息:</div>
           <span>订单号: {data.orderNo?data.orderNo:'暂无'}</span>
           <span>国内单号: {data.cnNo?data.cnNo:'暂无'}</span>
           <span>国际单号: {data.intlNo?data.intlNo:'暂无'}</span>
-          <span>寄件人: {data.senderName?data.senderName:'暂无'}</span>
-          <span>寄件人手机号: {data.senderMobile?data.senderMobile:'暂无'}</span>
           <span>下单时间: {time.formatTime(data.createTime)}</span>
-          <span>收件人: {data.receiverName?data.receiverName:'暂无'}</span>
-          <span>收件人手机号: {data.receiverMobile?data.receiverMobile:'暂无'}</span>
           <span>订单状态: {realOrderStatus[data.status]}</span>
-          <span>寄件地址: {data.senderAddress}</span>
-          <span>中转地址: {data.transferAddress}</span>
-          <span>收件地址: {data.receiverAddress}</span>
           <span>预付总金额: {(data.totalFee?data.totalFee:'暂无')/100}元</span>
           <span>快件重量: {data.weight}kg</span>
+
         <div className={styles.title}>微信详情:</div>
           <span>用户昵称: {wxUser.nickName?wxUser.nickName:'暂无'}</span>
           <span>手机号码: {wxUser.mobile?wxUser.mobile:'暂无'}</span>

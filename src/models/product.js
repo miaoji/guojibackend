@@ -62,7 +62,7 @@ export default modelExtend(pageModel, {
           },
         })
       }else {
-        throw data.msg || "网络延迟"
+        throw data.msg
       }
     },
 

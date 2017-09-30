@@ -77,7 +77,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || "网络错误"
+        throw data.msg
       }
     },
 

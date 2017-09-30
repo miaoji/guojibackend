@@ -27,20 +27,20 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
   const columns = [
     {
       title: '头像',
-      dataIndex: 'headimgurl',
-      key: 'headimgurl',
+      dataIndex: 'HEADIMGURL',
+      key: 'HEADIMGURL',
       width: 64,
       className: styles.avatar,
       render: (text) => <img alt={'avatar'} width={24} src={text} />,
     }, {
       title: '微信名',
-      dataIndex: 'nick_name',
-      key: 'nick_name',
+      dataIndex: 'NICK_NAME',
+      key: 'NICK_NAME',
       // render: (text, record) => <Link to={`wxuser/${record.id}`}>{text}</Link>,
     }, {
       title: '手机号',
-      dataIndex: 'mobile',
-      key: 'mobile',
+      dataIndex: 'MOBILE',
+      key: 'MOBILE',
       render: (text) => {
         const str = text.toString()
         if (str === '') {
@@ -52,8 +52,8 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       }
     }, {
       title: '性别',
-      dataIndex: 'sex',
-      key: 'sex',
+      dataIndex: 'SEX',
+      key: 'SEX',
       render: (text) => {
         const realtext = {
           '0': '未知',
@@ -64,13 +64,13 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       }
     }, {
       title: '黑名单',
-      dataIndex: 'blacklist',
-      key: 'blacklist',
+      dataIndex: 'BLACKLIST',
+      key: 'BLACKLIST',
       filters: [
         { text: '是', value: 1 },
         { text: '否', value: 0 }
       ],
-      onFilter: (value, record)=> Number(record.blacklist) === Number(value),
+      onFilter: (value, record)=> Number(record.BLACKLIST) === Number(value),
       render: (text) => {
         const realtext = {
           0: '否',
@@ -80,13 +80,13 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       }
     }, {
       title: '关注状态',
-      dataIndex: 'hidden_status',
-      key: 'hidden_status',
+      dataIndex: 'SUBSCRIBE',
+      key: 'SUBSCRIBE',
       filters: [
         { text: '关注', value: '1' },
         { text: '取消关注', value: '0' }
       ],
-      onFilter: (value, record) => Number(record.hidden_status) === Number(value),
+      onFilter: (value, record) => Number(record.SUBSCRIBE) === Number(value),
       render: (text) => {
         const realtext = {
           '0': '取消关注',
@@ -96,12 +96,16 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       }
     },{
       title: '关注时间',
-      dataIndex: 'subscribe_time',
-      key: 'subscribe_time',
+      dataIndex: 'SUBSCRIBE_TIME',
+      key: 'SUBSCRIBE_TIME',
       render: (text) => {
         const renderTime = time.formatTime(text)
         return <span>{renderTime}</span>
       }
+    },{
+      title: '推广人',
+      dataIndex: 'qrName',
+      key: 'qrName',
     },{
       title: '操作',
       key: 'operation',
@@ -127,15 +131,15 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         bordered
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
-            <p>openid:  {record.openid}</p>
-            <p>手机号:  {record.mobile}</p>
-            <p>证件号:  {record.id_card}</p>
+            <p>openid:  {record.OPENID}</p>
+            <p>手机号:  {record.MOBILE}</p>
+            <p>证件号:  {record.ID_CARD}</p>
           </div>
         }
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.id}
+        rowKey={record => record.ID}
         getBodyWrapper={getBodyWrapper}
       />
     </div>

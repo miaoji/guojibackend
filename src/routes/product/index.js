@@ -82,6 +82,9 @@ const Product = ({ location, dispatch, product, loading }) => {
           currentItem: item,
         },
       })
+      dispatch({
+        type:`product/getNation`
+      })
     }
   }
 

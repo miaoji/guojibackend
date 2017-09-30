@@ -97,12 +97,25 @@ module.exports = [
     mpid: -1,
     name: '补价详情',
     router: '/bootdetail',
-  }, {
+  },{
     id: 6,
     bpid: 1,
     name: '推广管理',
-    icon: 'global',
+    icon: 'bars'
+  }, {
+    id: 61,
+    bpid: 6,
+    mpid: 6,
+    name: '推广管理',
+    icon: 'contacts',
     router: '/qr',
+  },{
+    id: 62,
+    bpid: 6,
+    mpid: 6,
+    name: 'APP推广管理',
+    icon: 'global',
+    router: '/extensionapp'
   }, {
     id: 61,
     bpid: 6,

@@ -144,6 +144,14 @@ const Routers = function ({ history, app }) {
             }, 'qr')
           }
         },{
+          path: 'extensionapp',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/extensionapp'))
+              cb(null, require('./routes/extensionapp/'))
+            }, 'extensionapp')
+          }
+        },{
           path: 'qrdetail',
           getComponent (nextState, cb) {
             require.ensure([], require => {

@@ -20,7 +20,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         confirm({
           title: '确定要删除吗?',
           onOk () {
-            onDeleteItem(record.ID)
+            onDeleteItem(record.id)
           }
         })
         break
@@ -36,35 +36,19 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const columns = [
     {
-      title: '推广人姓名',
-      dataIndex: 'NAME',
-      key: 'NAME',
+      title: '推广名称',
+      dataIndex: 'name',
+      key: 'name',
     }, {
-      title: '扫描关注人数',
-      dataIndex: 'SOURCE_COUNT',
-      key: 'SOURCE_COUNT',
-      render: (text)=>{
+      title: 'AppId',
+      dataIndex: 'appid',
+      key: 'appid',
+    },{
+      title: '用户量',
+      dataIndex: 'sourceCount',
+      key: 'sourceCount',
+      render: (text) => {
         return <span>{ text?text:0 }</span>
-      }
-    },{
-      title: '二维码参数',
-      dataIndex: 'TICKET',
-      key: 'TICKET',
-    },{
-      title: '二维码图片',
-      dataIndex: 'TICKETa',
-      key: 'TICKETa',
-      render: (text, record) => {
-        const href = '/qrdetail?TICKET=' + record.TICKET + '&name=' + record.NAME + '&parameter=' + record.TICKET;
-        return <a href={href} target="_blank">点击查看</a>
-      }
-    },{
-      title: '关注用户详情',
-      dataIndex: 'qrTICKET',
-      key: 'qrTICKET',
-      render: (text, record) => {
-        const href = '/wxuser?qrTicket=' + record.TICKET;
-        return <a href={href} target="_blank">点击查看</a>
       }
     },{
       title: '下单量',
@@ -82,12 +66,6 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         return <span>{createtime}</span>
       }
     },{
-      title: '复制图片路径',
-      key: 'copy',
-      render: (text, record) => {
-        return <Button type="primary" size="large" onClick={e => copyUrl(record, e)}>复制到剪切板</Button>
-      },
-    }, {
       title: '操作',
       key: 'operation',
       width: 100,

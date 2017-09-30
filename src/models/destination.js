@@ -62,7 +62,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || "网络延迟!!!"
+        throw data.msg
       }
     },
 
@@ -115,7 +115,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || "连接失败!"
+        throw data.msg
       }
     },
 
@@ -136,7 +136,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || data
+        throw data.msg
       }
     }
 

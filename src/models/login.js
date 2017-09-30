@@ -68,7 +68,7 @@ export default {
         yield put({
           type: 'handleRefreshImage'
         })
-        throw data.msg || data
+        throw data.msg
       }
     },
     /**

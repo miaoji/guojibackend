@@ -7,42 +7,35 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Parceltype = ({ location, dispatch, parceltype, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectNation } = parceltype
+const Extensionapp = ({ location, dispatch, extensionapp, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType } = extensionapp
   const { pageSize } = pagination
 
   const modalProps = {
+    type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    maskClosable: false,
-    confirmLoading: loading.effects['parceltype/update'],
-    title: `${modalType === 'create' ? '新增包裹类型' : '修改包裹类型'}`,
+    confirmLoading: loading.effects['boot/update'],
+    title: `${modalType === 'create' ? '新增二维码' : '修改二维码'}`,
     wrapClassName: 'vertical-center-modal',
-    selectNation: selectNation,
     onOk (data) {
       dispatch({
-        type: `parceltype/${modalType}`,
+        type: `extensionapp/${modalType}`,
         payload: data,
-      })
-    },
-    getNation(data){
-      dispatch({
-        type:`parceltype/getNation`
       })
     },
     onCancel () {
       dispatch({
-        type: 'parceltype/hideModal',
+        type: 'extensionapp/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['parceltype/query'],
+    loading: loading.effects['extensionapp/query'],
     pagination,
     location,
-    isMotion,
     onChange (page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
@@ -54,34 +47,24 @@ const Parceltype = ({ location, dispatch, parceltype, loading }) => {
         },
       }))
     },
-    onMarkItem (id) {
-      dispatch({
-        type: 'parceltype/markBlackList',
-        payload: id
-      })
-    },
     onDeleteItem (id) {
       dispatch({
-        type: 'parceltype/delete',
+        type: 'extensionapp/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'parceltype/showModal',
+        type: 'extensionapp/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
         },
       })
-      dispatch({
-        type:`parceltype/getNation`
-      })
     }
   }
 
   const filterProps = {
-    isMotion,
     filter: {
       ...location.query,
     },
@@ -97,34 +80,31 @@ const Parceltype = ({ location, dispatch, parceltype, loading }) => {
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/parceltype',
+        pathname: '/extensionapp',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/parceltype',
+        pathname: '/extensionapp',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'parceltype/showModal',
+        type: 'extensionapp/showModal',
         payload: {
           modalType: 'create',
         },
       })
-      dispatch({
-        type:`parceltype/getNation`
-      })
     },
     switchIsMotion () {
-      dispatch({ type: 'parceltype/switchIsMotion' })
+      dispatch({ type: 'extensionapp/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'parceltype/multiDelete',
+      type: 'extensionapp/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -134,28 +114,17 @@ const Parceltype = ({ location, dispatch, parceltype, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
-      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }
 
-Parceltype.propTypes = {
-  parceltype: PropTypes.object,
+Extensionapp.propTypes = {
+  extensionapp: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ parceltype, loading }) => ({ parceltype, loading }))(Parceltype)
+export default connect(({ extensionapp, loading }) => ({ extensionapp, loading }))(Extensionapp)

@@ -21,6 +21,9 @@ const modal = ({
   selectProvince,
   selectCity,
   selectCounty,
+  provinceDis,
+  cityDis,
+  districtDis,
   getCountry,
   getProvince,
   getCity,
@@ -136,7 +139,7 @@ const modal = ({
                 message: '请选择收件省!',
               },
             ],
-          })(<Select placeholder='点击选择' onChange={provinceChange}>{selectProvince}</Select>)}
+          })(<Select disabled={provinceDis} placeholder='点击选择' onChange={provinceChange}>{selectProvince}</Select>)}
         </FormItem>
         <FormItem label="收件人市" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferCity', {
@@ -147,7 +150,7 @@ const modal = ({
                 message: '请选择收件人市!',
               },
             ],
-          })(<Select placeholder='点击选择' onChange={cityChange}>{selectCity}</Select>)}
+          })(<Select disabled={cityDis} placeholder='点击选择' onChange={cityChange}>{selectCity}</Select>)}
         </FormItem>
         <FormItem label="收件人区" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferCounty', {
@@ -158,7 +161,7 @@ const modal = ({
                 message: '请选择收件人区!',
               },
             ],
-          })(<Select placeholder='点击选择'>{selectCounty}</Select>)}
+          })(<Select disabled={districtDis} placeholder='点击选择'>{selectCounty}</Select>)}
         </FormItem>
         <FormItem label="收件人详细地址" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferAddress', {

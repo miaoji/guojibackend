@@ -23,7 +23,10 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: false,
-    selectNation:[],
+    selectNation: [],
+    provinceDis: true,
+    cityDis: true,
+    districtDis: true
   },
 
   subscriptions: {
@@ -68,7 +71,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-      	throw data.msg||'网络问题'
+      	throw data.msg
       }
     },
 
@@ -202,38 +205,30 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      console.log('payload',payload)
-      payload.id = yield select(({ transfer }) => transfer.currentItem.id)
       const newCurrentItem = yield select(({ transfer }) => transfer.currentItem)
-      console.log('newCurrentItem',newCurrentItem)
-      // 判断修改时的国家是否与加载时的国家相同
+      payload.id = newCurrentItem.id
+      // 判断修改时的国家是否与加载时的国家相同 相同则不修改
       if (payload.transferCountry == newCurrentItem.country.countryCn) {
-        // payload.transferCountry = newCurrentItem.countryId
         delete payload.transferCountry
       }else{
         payload.transferCountry = JSON.parse(payload.transferCountry).id
       }
-      // 判断修改时的省是否与加载时的省相同
+      // 判断修改时的省是否与加载时的省相同 相同则不修改
       if (payload.transferProv == newCurrentItem.provinces.province) {
-        // payload.transferProv = newCurrentItem.provincesId
         delete payload.transferProv
       }else{
         payload.transferProv = JSON.parse(payload.transferProv).id
       }
-      // 判断修改时的市是否与加载时的市相同
+      // 判断修改时的市是否与加载时的市相同 相同则不修改
       if (payload.transferCity == newCurrentItem.cities.city) {
-        // payload.transferCity = newCurrentItem.citiesId
         delete payload.transferCity
       }else{
         payload.transferCity = JSON.parse(payload.transferCity).id
       }
-      // 判断修改时的区是否与加载时的区相同
+      // 判断修改时的区是否与加载时的区相同 相同则不修改
       if (payload.transferCounty == newCurrentItem.districts.district) {
-        // payload.transferCounty = newCurrentItem.districtsId
         delete payload.transferCounty
       }
-      console.log('payload1111',payload)
-      // return
       const data = yield call(update, payload)
       if (data.code === 200) {
         message.success(data.msg)
@@ -253,15 +248,15 @@ export default modelExtend(pageModel, {
     },
 
     setProvince (state, { payload }) {
-      return { ...state, ...payload }
+      return { ...state, ...payload, provinceDis:false }
     },
 
     setCity (state, { payload }) {
-      return { ...state, ...payload }
+      return { ...state, ...payload, cityDis: false }
     },
 
     setCounty (state, { payload }) {
-      return { ...state, ...payload }
+      return { ...state, ...payload, districtDis: false }
     },
 
     showModal (state, { payload }) {
@@ -269,7 +264,7 @@ export default modelExtend(pageModel, {
     },
 
     hideModal (state) {
-      return { ...state, modalVisible: false }
+      return { ...state, modalVisible: false, provinceDis: true, cityDis: true, districtDis: true }
     }
 
   },
