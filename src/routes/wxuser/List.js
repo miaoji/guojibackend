@@ -106,6 +106,9 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       title: '推广人',
       dataIndex: 'qrName',
       key: 'qrName',
+      render: (text) => {
+        return <span>{text?text:'无'}</span>
+      }
     },{
       title: '操作',
       key: 'operation',

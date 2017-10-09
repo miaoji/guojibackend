@@ -70,6 +70,8 @@ const Filter = ({
 
   const handleReset = () => {
     const fields = getFieldsValue()
+    // console.log('fields1',fields)
+    // const option=fields.option
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
         if (fields[item] instanceof Array) {
@@ -79,8 +81,9 @@ const Filter = ({
         }
       }
     }
+    fields.option = '1'
+    // console.log('fields',fields )
     setFieldsValue(fields)
-    console.log('fields',fields )
     handleSubmit()
   }
 
@@ -134,7 +137,7 @@ const Filter = ({
               </Select>
           )}
           {getFieldDecorator('extension')(
-            <Input style={{ width: '50%' }} defaultValue="" />
+            <Search style={{ width: '50%' }} placeholder="按推广条件搜索" size="large" onSearch={handleSubmit} />
           )}
           </InputGroup>
       </Col>

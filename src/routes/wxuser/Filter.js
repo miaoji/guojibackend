@@ -79,20 +79,22 @@ const Filter = ({
     initialCreateTime[1] = moment(filter.createTime[1])
   }
 
+      // 微信所属渠道
+      // <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+      //   {getFieldDecorator('address', { initialValue: address })(
+      //     <Cascader
+      //       size="large"
+      //       style={{ width: '100%' }}
+      //       options={city}
+      //       placeholder="所属渠道"
+      //       onChange={handleChange.bind(null, 'address')}
+      //     />)}
+      // </Col>
+
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('wxName', { initialValue: wxName })(<Search placeholder="按微信名搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('address', { initialValue: address })(
-          <Cascader
-            size="large"
-            style={{ width: '100%' }}
-            options={city}
-            placeholder="所属渠道"
-            onChange={handleChange.bind(null, 'address')}
-          />)}
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="创建时间">
