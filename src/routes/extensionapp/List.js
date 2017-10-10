@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { time } from '../../utils'
+import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 // const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
@@ -30,8 +31,10 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   }
 
   const copyUrl = (record, e) => {
-    const href = 'http://control.mingz-tech.com/qrdetail?TICKET=' + record.ticket + '&name=' + record.NAME
-    window.prompt('使用Ctrl+C复制到剪切板', href)
+    const href = 'http://www.mingz-tech.com/wechat/#/send?appid='+record.appid
+    var temp = window.prompt('使用Ctrl+C复制到剪切板', href)
+    temp.select()
+    document.execCommand('copy', false);
   }
 
   const columns = [
@@ -57,13 +60,27 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       render: (text) => {
         return <span>{ text?text:0 }</span>
       }
-    }, {
+    },{
+      title: '关注用户详情',
+      dataIndex: 'qrTICKET',
+      key: 'qrTICKET',
+      render: (text, record) => {
+        return <Link to={`/wxuserdetail?appid=${record.appid}`}>点击查看</Link>
+      }
+    },{
       title: '创建时间',
-      dataIndex: 'CREATE_TIME',
-      key: 'CREATE_TIME',
+      dataIndex: 'create_time',
+      key: 'create_time',
       render: (text) => {
         const createtime = time.formatTime(text)
         return <span>{createtime}</span>
+      }
+    },{
+      title:'复制推广链接',
+      dataIndex: 'catenate',
+      key: 'catenate',
+      render: (text, record) => {
+        return <Button type="primary" size="large" onClick={e => copyUrl(record, e)}>复制到剪切板</Button>
       }
     },{
       title: '操作',

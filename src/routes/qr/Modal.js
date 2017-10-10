@@ -51,7 +51,7 @@ const modal = ({
       <Form layout="horizontal">
         <FormItem label="推广人姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
-            initialValue: item.name,
+            initialValue: item.NAME,
             rules: [
               {
                 required: true,

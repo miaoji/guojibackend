@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { time } from '../../utils'
+import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 // const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
@@ -30,7 +31,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   }
 
   const copyUrl = (record, e) => {
-    const href = 'http://control.mingz-tech.com/qrdetail?TICKET=' + record.ticket + '&name=' + record.NAME
+    const href = 'http://control.mingz-tech.com/qrdetail?TICKET=' + record.TICKET + '&name=' + record.NAME + '&parameter=' + record.TICKET
     window.prompt('使用Ctrl+C复制到剪切板', href)
   }
 
@@ -55,16 +56,14 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'TICKETa',
       key: 'TICKETa',
       render: (text, record) => {
-        const href = '/qrdetail?TICKET=' + record.TICKET + '&name=' + record.NAME + '&parameter=' + record.TICKET;
-        return <a href={href} target="_blank">点击查看</a>
+        return <a href={`/qrdetail?TICKET=${record.TICKET}&name=${record.NAME}&parameter=${record.TICKET }`} target="_blank">点击查看</a>
       }
     },{
       title: '关注用户详情',
       dataIndex: 'qrTICKET',
       key: 'qrTICKET',
       render: (text, record) => {
-        const href = '/wxuser?qrTicket=' + record.TICKET;
-        return <a href={href} target="_blank">点击查看</a>
+        return <Link to={`/wxuserdetail?qrTicket=${record.TICKET}`}>点击查看</Link>
       }
     },{
       title: '下单量',

@@ -33,7 +33,7 @@ export default {
       payload,
     }, { call, put }) {
       const data = yield call(query, payload)
-      const { code, obj, mess } = data
+      const { code, obj, msg } = data
       if (code === 200) {
         yield put({
           type: 'querySuccess',
@@ -42,7 +42,7 @@ export default {
           },
         })
       } else {
-        throw mess
+        throw msg
       }
     },
   },

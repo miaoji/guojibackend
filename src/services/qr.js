@@ -1,5 +1,5 @@
 import { request, config } from '../utils'
-const { qr } = config.api
+const { qr, wxuser } = config.api
 
 export async function query (params) {
   return request({
@@ -30,5 +30,13 @@ export async function remove (params) {
     url: qr.del,
     method: 'delete',
     params,
+  })
+}
+
+export async function getwxuserdetail (params) {
+  return request({
+    url: wxuser.all,
+    method: 'get',
+    params
   })
 }

@@ -21,7 +21,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/wxuser') {
+        if (location.pathname === '/wxuser' || location.pathname === '/wxuserdetail' ) {
           dispatch({
             type: 'query',
             payload: location.query,

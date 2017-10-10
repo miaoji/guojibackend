@@ -64,14 +64,11 @@ const Filter = ({
     let fields = getFieldsValue()
     fields = handleFields(fields)
     console.log('fields',fields)
-    // return
     onFilterChange(fields)
   }
 
   const handleReset = () => {
     const fields = getFieldsValue()
-    // console.log('fields1',fields)
-    // const option=fields.option
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
         if (fields[item] instanceof Array) {
@@ -81,8 +78,8 @@ const Filter = ({
         }
       }
     }
+    // 在刷新重置的时候让推广的下拉菜单有一个初始值(不会没有东西显示)
     fields.option = '1'
-    // console.log('fields',fields )
     setFieldsValue(fields)
     handleSubmit()
   }
@@ -99,7 +96,7 @@ const Filter = ({
     let fields = getFieldsValue()
     fields = handleFields(fields)
     fields['status'] = newStarte
-    console.log('fields', fields)
+    // 如果查询的订单状态为全部即status==6,则不向后端传递status参数
     if (Number(newStarte) === 6) {
       delete fields['status']
     }

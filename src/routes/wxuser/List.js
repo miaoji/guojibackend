@@ -63,6 +63,14 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         return <span>{realtext[text]}</span>
       }
     }, {
+      title: '寄件总次数',
+      dataIndex: 'PACKAGE_COUNT',
+      key: 'PACKAGE_COUNT',
+    }, {
+      title: '消费总金额',
+      dataIndex: 'TOTAL_AMOUNT',
+      key: 'TOTAL_AMOUNT',
+    }, {
       title: '黑名单',
       dataIndex: 'BLACKLIST',
       key: 'BLACKLIST',

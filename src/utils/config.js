@@ -4,9 +4,9 @@ let APIV3 = ''
 
 // 重构API
 // 线下地址
-// APIV3 = 'http://192.168.1.112:8080'
+APIV3 = 'http://192.168.1.210:8080'
 // 线上地址
-APIV3 = 'http://api.didalive.net'
+// APIV3 = 'http://api.didalive.net'
 
 
 module.exports = {
@@ -34,7 +34,7 @@ module.exports = {
 			mobileLogin: `${APIV3}/login/loginByCode`
 		},
 		wxuser: {
-			all: `${APIV3}/api/wxUser/index`,
+			all: `${APIV3}/api/wxUser/index`, // 查询所有微信用户
 			update: `${APIV3}/api/wxUser/modWxUserById`,
 		},
 		order: {
@@ -130,11 +130,11 @@ module.exports = {
 		},
 		// app推广接口
 		extensionapp: {
-		  all: `${APIV3}/wx/app/index`,
-	      show: `${APIV3}/wx/selectQrById`,
-	      create: `${APIV3}/wx/app/add`,
-	      update: `${APIV3}/wx/app/modWxAppById`,
-	      hide: `${APIV3}/wx/app/delById`
+		  all: `${APIV3}/api/app/index`,
+	      show: `${APIV3}/api/selectQrById`,
+	      create: `${APIV3}/api/app/add`,
+	      update: `${APIV3}/api/app/modWxAppById`,
+	      hide: `${APIV3}/api/app/delById`
 		}
 	},
 }

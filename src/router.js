@@ -160,6 +160,14 @@ const Routers = function ({ history, app }) {
             }, 'qr-detail')
           }
         },{
+          path: 'wxuserdetail',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/wxuser'))
+              cb(null, require('./routes/wxuser'))
+            }, 'qr-wxuserdetail')
+          }
+        },{
           path: 'producefreight',
           getComponent (nextState, cb) {
             require.ensure([], require => {

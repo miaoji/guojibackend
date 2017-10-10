@@ -4,8 +4,7 @@ module.exports = [
     icon: 'laptop',
     name: '主页',
     router: '/dashboard',
-  },
-  {
+  },{
     id: 2,
     bpid: 1,
     name: '微信用户',
@@ -41,21 +40,18 @@ module.exports = [
     bpid:41,
     mpid:-1,
     name:'省份',
-    icon:'flag',
     router: '/province',
   },{
     id: 412,
     bpid:411,
     mpid:-1,
     name:'市级',
-    icon:'flag',
     router: '/city',
   },{
     id: 413,
     bpid:412,
     mpid:-1,
     name:'县区',
-    icon:'flag',
     router: '/county',
   },{
     id: 42,
@@ -91,7 +87,7 @@ module.exports = [
     name: '补价管理',
     icon: 'api',
     router: '/boot',
-  }, {
+  },{
     id: 52,
     bpid: 5,
     mpid: -1,
@@ -106,21 +102,27 @@ module.exports = [
     id: 61,
     bpid: 6,
     mpid: 6,
-    name: '推广管理',
-    icon: 'contacts',
+    name: '二维码推广',
+    icon: 'qrcode',
     router: '/qr',
   },{
     id: 62,
     bpid: 6,
     mpid: 6,
     name: 'APP推广管理',
-    icon: 'global',
+    icon: 'tablet',
     router: '/extensionapp'
-  }, {
+  },{
     id: 61,
-    bpid: 6,
+    bpid: 61,
     mpid: -1,
     name: '二维码图片',
     router: '/qrdetail',
+  },{
+    id: 62,
+    bpid: 61,
+    mpid: -1,
+    name: '微信用户详情',
+    router: '/wxuserdetail',
   },
 ]
