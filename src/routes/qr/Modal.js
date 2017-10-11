@@ -55,7 +55,7 @@ const modal = ({
             rules: [
               {
                 required: true,
-                pattern: /^[\u4e00-\u9fa5]{0,}$/,
+                // pattern: /^[\u4e00-\u9fa5]{0,}$/,
                 message: '请输入推广人姓名!',
               },
             ],

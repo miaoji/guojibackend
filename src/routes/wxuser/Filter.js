@@ -37,6 +37,11 @@ const Filter = ({
     const { createTime } = fields
     if (createTime.length) {
       fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+      fields.startDate = fields.createTime[0]
+      fields.endDate = fields.createTime[1]
+      delete fields.createTime
+    }else{
+      delete fields.createTime
     }
     return fields
   }
@@ -69,7 +74,7 @@ const Filter = ({
     onFilterChange(fields)
   }
 
-  const { wxName, address } = filter
+  const { name, address } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -94,7 +99,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('wxName', { initialValue: wxName })(<Search placeholder="按微信名搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按微信名搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="创建时间">

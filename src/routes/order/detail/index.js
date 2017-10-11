@@ -9,19 +9,22 @@ const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
 
 const Detail = ({ orderDetail }) => {
   const { data } = orderDetail
-  const { wxUser,orderItemList,orderData } = data
+  const { wxUser,orderItemList,cnExpressInfo,gjExpressInfo } = data
+
+  console.log('data',data)
   const realSex = {
     0: '未知',
     1: '男',
     2: '女'
   }
+  //状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
   const realOrderStatus = {
-   '1': '待付款',
-   '2': '付款完成',
-   '3': '中通完成',
-   '0': 'fpx完成',
-   '4': '异常订单',
-   '5': '取消订单',
+    '1': '待付款',
+    '2': '付款完成',
+    '3': '国内完成',
+    '4': '国际完成',
+    '5': '异常订单',
+    '6': '取消订单'
   }
   const realBlackList = {
     0: '否',
@@ -39,8 +42,9 @@ const Detail = ({ orderDetail }) => {
           <span>收件人公司: {data.receiverCompany?data.receiverCompany:'暂无'}</span>
           <span>收件人国家: {data.receiverCountry?data.receiverCountry:'暂无'}</span>
           <span>收件地址邮编: {data.receiverPostcode?data.receiverPostcode:'暂无'}</span>
-          <span>收件人详细地址: {data.receiverAddress?data.receiverAddress:'暂无'}</span>
           <span>收件人电话: {data.receiverMobile?data.receiverMobile:'暂无'}</span>
+          <span></span>
+          <span>收件人详细地址: {data.receiverAddress?data.receiverAddress:'暂无'}</span>
 
           <div className={styles.titleItem}>发件人信息:</div>
           <span>发件人姓名: {data.senderName?data.senderName:'暂无'}</span>
@@ -82,6 +86,7 @@ const Detail = ({ orderDetail }) => {
           <span>消费总金额: {wxUser.totalAmount?wxUser.totalAmount:'暂无'}</span>
           <span>黑名单: {wxUser.blacklist?realBlackList[wxUser.blacklist]:'未知'}</span>
           <span>关注状态: {wxUser.subscribe?wxUser.subscribe:'暂无'}</span>
+
         <div className={styles.title}>包裹详情:</div>
           <span>中文名称: {orderItemList.nameCn?orderItemList.nameCn:'暂无'}</span>
           <span>英文名称: {orderItemList.nameEn?orderItemList.nameEn:'暂无'}</span>
@@ -90,8 +95,13 @@ const Detail = ({ orderDetail }) => {
           <span>价值: {orderItemList.worth?orderItemList.worth:'暂无'}</span>
           <span>包裹重量: {orderItemList.itemWeight?orderItemList.itemWeight:'暂无'}</span>
           <span>海关编号: {orderItemList.hscode?orderItemList.hscode:'暂无'}</span>
-        <div className={styles.title}>快递详情:</div>
-          {orderData?orderData.map(item => (<div><span>{item.time}</span><span>{item.context}</span></div>)):<span>暂无快递信息</span>}
+
+        <div className={styles.title}>国内段快递信息:</div>
+          {cnExpressInfo?cnExpressInfo.map(item => (<div><span>{item.time}</span><span>{item.context}</span></div>)):<span>暂无快递信息</span>}
+          
+        <div className={styles.title}>国际段快递信息:</div>
+          {gjExpressInfo?gjExpressInfo.map(item => (<div><span>{item.time}</span><span>{item.context}</span></div>)):<span>暂无快递信息</span>}
+
       </div>:<span>暂无订单详细信息</span>}
     </div>
   </div>)

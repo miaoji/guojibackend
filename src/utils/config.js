@@ -7,6 +7,8 @@ let APIV3 = ''
 APIV3 = 'http://192.168.1.210:8080'
 // 线上地址
 // APIV3 = 'http://api.didalive.net'
+// 正式地址
+// APIV3 = 'http://api.mingz-tech.com'
 
 
 module.exports = {

@@ -27,13 +27,15 @@ export default {
       const data = yield call(getOrderInfo, payload)
       let detailDate = data.obj
       // 获取快递信息(开始)
-      let orderData = ''
-      const orderInfo = yield call(getOrderInfoByOrderNo, payload)
-      if (orderInfo.code === 200) {
-        const kdInfo = yield call(queryByCompany,{num:orderInfo.obj.cnNo,company:'zhongtong'})
-        if (kdInfo.code === 200) {
-          orderData = kdInfo.obj.data
-          detailDate.orderData = orderData
+      if (data.code === 200) {
+        const cnInfo = yield call(queryByCompany,{num:data.obj.cnNo||'',company:data.obj.kdCompanyCodeCn||'zhongtong'})
+        const gjInfo = yield call(queryByCompany,{num:data.obj.intlNo||'',company:data.obj.kdCompanyCode||''})
+        console.log('gjInfo',gjInfo)
+        if (cnInfo.code === 200) {
+          detailDate.cnExpressInfo = cnInfo.obj.data
+        }
+        if (gjInfo.code === 200) {
+          detailDate.gjExpressInfo = gjInfo.obj.data
         }
       }else{
         console.log('error',orderInfo)

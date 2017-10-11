@@ -9,14 +9,14 @@ import { time } from '../../utils'
 import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
-
+//状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
 const realtext = {
   '1': '待付款',
   '2': '付款完成',
-  '3': '中通完成',
-  '0': 'fpx完成',
-  '4': '异常订单',
-  '5': '取消订单',
+  '3': '国内完成',
+  '4': '国际完成',
+  '5': '异常订单',
+  '6': '取消订单'
 }
 
 const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
