@@ -54,7 +54,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-      	throw data.msg
+        throw data.msg
       }
     },
 

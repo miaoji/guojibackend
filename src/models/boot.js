@@ -52,7 +52,7 @@ export default modelExtend(pageModel, {
 
     *create ({ payload }, { call, put }) {
       const time = new Date().getTime()
-      const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
+      const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0
       const confirmor = username
       const newFreight = {...payload, time, confirmor}
       
@@ -68,7 +68,7 @@ export default modelExtend(pageModel, {
     *update ({ payload }, { select, call, put }) {
       const id = yield select(({ freight }) => freight.currentItem.id)
       const time = new Date().getTime()
-      const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userName
+      const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0
       const confirmor = username
       const newFreight = {...payload, id, time, confirmor}
       

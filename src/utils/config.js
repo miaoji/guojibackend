@@ -4,12 +4,16 @@ let APIV3 = ''
 
 // 重构API
 // 线下地址
-APIV3 = 'http://192.168.1.210:8080'
+// APIV3 = 'http://192.168.1.210:8080'
 // 线上地址
 // APIV3 = 'http://api.didalive.net'
 // 正式地址
 // APIV3 = 'http://api.mingz-tech.com'
 
+// 生产环境时api固定为线上url
+if (process.env.NODE_ENV !== 'development') {
+	APIV3 = 'http://api.mingz-tech.com'
+}
 
 module.exports = {
 	name: '国际快递后台管理系统',

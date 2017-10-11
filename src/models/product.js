@@ -156,10 +156,10 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-    	const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
-    	const productCode = Math.floor(Math.random()*600000)
-    	const newWxUser = { ...payload, createUserId, productCode,}
-    	
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
+      const productCode = Math.floor(Math.random()*600000)
+      const newWxUser = { ...payload, createUserId, productCode,}
+      
       const data = yield call(create, newWxUser)
       if (data.success) {
         yield put({ type: 'hideModal' })
@@ -183,7 +183,7 @@ export default modelExtend(pageModel, {
       }
       const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
       const productCode = yield select(({ product }) => product.currentItem.PRODUCT_CODE)
-    	const newWxUser = { ...payload, id, createUserId, productCode,}
+      const newWxUser = { ...payload, id, createUserId, productCode,}
       const data = yield call(update, newWxUser)
       if (data.success) {
         message.success(data.msg)
