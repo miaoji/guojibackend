@@ -8,7 +8,7 @@ let APIV3 = ''
 // 线上地址
 // APIV3 = 'http://api.didalive.net'
 // 正式地址
-// APIV3 = 'http://api.mingz-tech.com'
+APIV3 = 'http://api.mingz-tech.com'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
