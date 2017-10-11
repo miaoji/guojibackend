@@ -1,14 +1,28 @@
 .content {
-  line-height: 2.4;
+  line-height: 3;
   font-size: 13px;
 
   .item {
-    display: flex;
-
-    & > div {
-      &:first-child {
-        width: 160px;
-      }
+    text-align: left;
+    .title{
+    	font-size: 16px;
+    	font-weight: bold;
+    	line-height: 2;
+    	color: #222;
+      padding-top: 20px;
+    }
+    .titleItem{
+      font-size: 13px;
+      line-height: 2;
+      font-weight: bold;
+      color: #333;
+    }
+    span{
+    	display: inline-block;
+    	width: 30%;
+    }
+    span.kdTime{
+      max-width: 200px;
     }
   }
 }

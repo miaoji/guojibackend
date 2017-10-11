@@ -6,6 +6,6 @@ export async function query (params) {
   return request({
     url: showPTypeByCounId,
     method: 'get',
-    data: params,
+    params,
   })
 }

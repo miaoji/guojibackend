@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
-import { create, remove, update, markBlack } from '../services/parceltype'
+import { create, remove, update, markBlack, } from '../services/parceltype'
 import * as parceltypesService from '../services/parceltypes'
 import * as countriesService from '../services/countries'
 import { pageModel } from './common'
@@ -8,6 +8,7 @@ import { config } from '../utils'
 
 const { query } = parceltypesService
 const contryQuery = countriesService.query
+const  getCountryId = countriesService. getCountryId
 const { prefix } = config
 const Option = Select.Option
 
@@ -40,8 +41,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data.code === 200) {
-        console.log('total', data)
+      if (data.code === 200 && data.success) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -54,18 +54,20 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-      	throw data.mess
+        throw data.msg
       }
     },
 
      *getNation ({ payload = {} }, { call, put }) {
       const data = yield call(contryQuery)
-      if (data) {
+      if (data.code === 200) {
         let obj = data.obj
         let children = []
-        for (let i = 0; i < obj.length; i++) {
-          let item = obj[i]
-          children.push(<Option key={item.name}>{item.name}</Option>);
+        if (data.obj) {
+          for (let i = 0; i < obj.length; i++) {
+            let item = obj[i]
+            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>);
+          }
         }
         yield put({
           type: 'setNation',
@@ -74,17 +76,17 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 
     *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.msg || data
       }
     },
 
@@ -110,16 +112,31 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0 
-      const destNation = payload.nation
-      const maxRange = payload.max_range
-      const minRange = payload.min_range
-      const nameCh = payload.name_ch
-      const nameEn = payload.name_en
-      const newFreight = {...payload, createUser, destNation, maxRange, minRange, nameCh, nameEn}
-      
+      console.log('payload 1111',payload)
+      console.log('payload',payload)
+      // 通过国家名称获取国家id
+      const destination = yield call(getCountryId,{name:payload.destination.toString()})
+      if (destination.code === 200) {
+        payload.destination=destination.obj.id
+      }else{
+        throw '获取国家ID失败'
+        return
+      }
+      // return
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId 
+      // 用nameCn 来判断 nameEn 的值
+      let nameEn = ''
+      if (payload.nameCn=='包裹') {
+        nameEn = "P"
+      }else if (payload.nameCn=="文件") {
+        nameEn = "D"
+      }else{
+        nameEn = "*"
+      }
+      const newFreight = {...payload, createUserId, nameEn, }
       const data = yield call(create, newFreight)
-      if (data.success) {
+      if (data.success && data.code == '200') {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
@@ -128,21 +145,40 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ parceltype }) => parceltype.currentItem.id)
-      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0 
-      const destNation = payload.nation
-      const maxRange = payload.max_range
-      const minRange = payload.min_range
-      const nameCh = payload.name_ch
-      const nameEn = payload.name_en
-      const newFreight = {...payload, id, createUser, destNation, maxRange, minRange, nameCh, nameEn}
-      
+      const id = yield select(({ parceltype }) => parceltype.currentItem.ID)
+      const country_cn = yield select(({ parceltype }) => parceltype.currentItem.country_cn)
+      const DESTINATION = yield select(({ parceltype }) => parceltype.currentItem.DESTINATION)
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId 
+      let nameEn = ''
+      // 判断修改是输入的目的地国家的值有没有变化,没有变化则返回它本身的DESTINATION,改变了则通过接口获取一个国家id
+      // 若没有获取到国家ID则提示用户,并return
+      if (payload.destination==country_cn) {
+        payload.destination = DESTINATION
+      }else{
+        const destination = yield call(getCountryId,{name:payload.destination.toString()})
+        if (destination.code === 200) {
+          payload.destination = destination.obj.id
+        }else{
+          throw '获取国家ID失败'
+          return
+        }
+      }
+      if (payload.nameCn=='包裹') {
+        nameEn = "P"
+      }else if (payload.nameCn=="文件") {
+        nameEn = "D"
+      }else{
+        nameEn = "*"
+      }
+      const newFreight = {...payload, id, createUserId, nameEn, }
+      console.log('newFreight', newFreight)
       const data = yield call(update, newFreight)
       if (data.success) {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 

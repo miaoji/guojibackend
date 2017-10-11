@@ -11,6 +11,7 @@ import { gettimes } from '../utils/time'
 
 const { query } = freightsService
 const contryQuery = countriesService.query
+const getCountryId = countriesService.getCountryId
 const parceltypeQuery = showPTypeByCounIdsService.query
 const producttypeQuery = showproductNamesService.query
 const { prefix } = config
@@ -50,7 +51,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data) {
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -62,6 +63,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      }else {
+        throw data.msg
       }
     },
 
@@ -70,9 +73,11 @@ export default modelExtend(pageModel, {
       if (data) {
         let obj = data.obj
         let children = []
-        for (let i = 0; i < obj.length; i++) {
-          let item = obj[i]
-          children.push(<Option key={item.name}>{item.name}</Option>);
+        if (data.obj) {
+          for (let i = 0; i < obj.length; i++) {
+            let item = obj[i]
+            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>);
+          }
         }
         yield put({
           type: 'setPackage',
@@ -86,22 +91,31 @@ export default modelExtend(pageModel, {
     },
 
     *getParcelType ({ payload = {} }, { select, call, put }) {
-      const destNation={destNation:payload}
+      const countryId = yield call(getCountryId,{name:payload.toString()})
+      if (countryId.code === 200) {
+        payload = countryId.obj.id
+      }else{
+        throw '获取国家ID失败'
+        return
+      }
+      console.log("payload", payload)
+      // return
+      const destNation={countryId:payload}
       let currentItem = yield select(({ freight }) => freight.currentItem)
-      currentItem.cargotype = null
-      currentItem.producttypeid = null
       const data = yield call(parceltypeQuery,destNation)
 
       if (data) {
         let obj = data.obj
         let children = []
-        for (let i = 0; i < obj.length; i++) {
-          let item = obj[i]
-          let str = JSON.stringify({
-            id: item.id,
-            name: item.nameCh
-          })
-          children.push(<Option key={str}>{item.nameCh}</Option>);
+        if (data.obj) {
+          for (let i = 0; i < obj.length; i++) {
+            let item = obj[i]
+            let str = JSON.stringify({
+              id: item.id,
+              name: item.nameCh
+            })
+            children.push(<Option key={str}>{item.name_cn}</Option>);
+          }
         }
         yield put({
           type: 'setParcelType',
@@ -116,9 +130,10 @@ export default modelExtend(pageModel, {
     },
 
     *getProductType ({ payload = {} }, { select, call, put }) {
-      const packageType={packageType:payload}
+      console.log('packagid', payload)
+      const packageType={packageTypeId:payload}
       let currentItem = yield select(({ freight }) => freight.currentItem)
-      currentItem.producttypeid = null
+      // currentItem.product_name = null
 
       const data = yield call(producttypeQuery,packageType)
 
@@ -126,9 +141,11 @@ export default modelExtend(pageModel, {
       if (data) {
         let obj = data.obj
         let children = []
-        for (let i = 0; i < obj.length; i++) {
-          let item = obj[i]
-          children.push(<Option key={item.productName}>{item.productName}</Option>);
+        if (data.obj) {
+          for (let i = 0; i < obj.length; i++) {
+            let item = obj[i]
+            children.push(<Option key={item.id}>{item.product_name}</Option>);
+          }
         }
         yield put({
           type: 'setProductType',
@@ -146,9 +163,10 @@ export default modelExtend(pageModel, {
       console.log('payload', payload)
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success) {
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 
@@ -174,38 +192,72 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-    	const time = new Date().getTime()
-    	const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0
-    	const confirmor = username
-      let newFreight = {...payload, time, confirmor}
-      newFreight.cargotype = JSON.parse(newFreight.cargotype).name
+      const createTime = new Date().getTime()
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
+      let newFreight = {...payload, createUserId}
+      console.log('newFreight1', newFreight)
+      newFreight.packageType = JSON.parse(newFreight.packageType).id
+      const countryId = yield call(getCountryId,{name:payload.destination.toString()})
+      if (countryId.code === 200) {
+        newFreight.destination = countryId.obj.id
+      }else{
+        throw '获取国家ID失败'
+        return
+      }
+      console.log('newFreight2222', newFreight)
       const data = yield call(create, newFreight)
-      if (data.success) {
+      if (data.code=='200') {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
-        message.success(data.mess)
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.msg || data
       }
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ freight }) => freight.currentItem.id)
-      const ifPackageJson = yield select(({ freight }) => freight.ifPackageJson)
-      const time = new Date().getTime()
-      const username = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0
-      const confirmor = username
-      let newFreight = {...payload, id, time, confirmor}
-      newFreight.cargotype = ifPackageJson ? JSON.parse(payload.cargotype).name : payload.cargotype
-      const data = yield call(update, newFreight)
-      if (data.success) {
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
+      const id = yield select(({ freight }) => freight.currentItem.ID )// 运费id
+      const destination = yield select(({ freight }) => freight.currentItem.country_cn )// 国家名称
+      const packageType = yield select(({ freight }) => freight.currentItem.name_cn )// 包裹类型名称
+      const productType = yield select(({ freight }) => freight.currentItem.product_name )// 产品类型名称
+      const DESTINATION = yield select(({ freight }) => freight.currentItem.DESTINATION )// 国家id
+      const PACKAGE_TYPE = yield select(({ freight }) => freight.currentItem.PACKAGE_TYPE )// 包裹类型id
+      const PRODUCT_TYPE = yield select(({ freight }) => freight.currentItem.PRODUCT_TYPE )// 产品类型id
+      // 判断国家是否修改
+      if (payload.destination==destination) {
+        payload.destination=DESTINATION
+      }else{
+        const countryId = yield call(getCountryId,{name:payload.destination})
+        if (countryId.code === 200) {
+          payload.destination = countryId.obj.id
+        }else{
+          throw '获取国家ID失败'
+          return
+        }
+      }
+      // 判断产品类型是否修改
+      if (payload.packageType==packageType) {
+        payload.packageType=PACKAGE_TYPE
+      }else{
+        payload.packageType=JSON.parse(payload.packageType).id
+      }
+      // 判断包裹类型是否修改
+      if (payload.productType==productType) {
+        payload.productType=PRODUCT_TYPE
+      }
+      let newFreight = {...payload, id, createUserId,}
+      console.log('newFreight222', newFreight)
+      const data = yield call( update, newFreight )
+      console.log('data', data)
+      if (data.code='200') {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
-      } else {
-        throw data
+      }else {
+        throw data.msg
       }
     },
-
   },
 
   reducers: {

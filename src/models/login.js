@@ -45,7 +45,7 @@ export default {
       payload.uuid = loginUUID
       const data = yield call(accountLogin, payload)
       yield put({ type: 'hideLoginLoading' })
-      if (data.status === 1) {
+      if (data.status === 200) {
       	// 将 token, user信息 保存在本地localStorage
         storage({
           key: 'token',
@@ -68,7 +68,7 @@ export default {
         yield put({
           type: 'handleRefreshImage'
         })
-        throw data.msg || data
+        throw data.msg
       }
     },
     /**
@@ -92,7 +92,7 @@ export default {
       const data = yield call(getVerifyCodeByMobile, payload)
       yield put({ type: 'hideCodeLoading' })
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({
           type: 'setCodeAuth',
           payload: {
@@ -100,7 +100,7 @@ export default {
           }
         })
       } else {
-        throw data.mess || data
+        throw data.msg || data
       }
     },
     /**

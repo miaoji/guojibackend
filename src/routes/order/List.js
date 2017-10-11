@@ -5,6 +5,8 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
+import { time } from '../../utils'
+import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 
@@ -27,7 +29,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
         confirm({
           title: '确定要删除这一订单吗?',
           onOk () {
-            onDeleteItem(record.id)
+            onDeleteItem(record.ID)
           }
         })
         break
@@ -35,7 +37,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
         addBoot(record)
         break
       case '4':
-        window.open(`/bootdetail?serialnumber=${record.serialnumber}`)
+        window.open(`/bootdetail?orderNo=${record.ORDER_NO}`)
         break
       default:
         break
@@ -46,6 +48,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
     confirm({
       title: '确定要发送中通订单吗?',
       onOk () {
+        console.log('record', record)
         onCreateCtorder(record)
       }
     })
@@ -54,46 +57,49 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
   const columns = [
     {
       title: '全部订单号',
-      dataIndex: 'serialnumber',
-      key: 'serialnumber',
+      dataIndex: 'ORDER_NO',
+      key: 'ORDER_NO',
+      render: (text,record) => {
+        return <Link to={`/orderdetail?orderNo=${record.ORDER_NO}`}>{text}</Link>
+      }
     },{
       title: '寄件人',
-      dataIndex: 'senderName',
-      key: 'senderName',
+      dataIndex: 'SENDER_NAME',
+      key: 'SENDER_NAME',
     },{
       title: '寄件人手机',
-      dataIndex: 'senderPhone',
-      key: 'senderPhone'
+      dataIndex: 'SENDER_MOBILE',
+      key: 'SENDER_MOBILE'
     },{
       title: '收件人',
-      dataIndex: 'buyerName',
-      key: 'buyerName'
+      dataIndex: 'RECEIVER_NAME',
+      key: 'RECEIVER_NAME'
     },{
       title: '收件人手机',
-      dataIndex: 'buyerPhone',
-      key: 'buyerPhone'
+      dataIndex: 'RECEIVER_MOBILE',
+      key: 'RECEIVER_MOBILE'
     },{
       title: '预付总金额',
-      dataIndex: 'totalfee',
-      key: 'totalfee',
+      dataIndex: 'TOTAL_FEE',
+      key: 'TOTAL_FEE',
       render: (text) => <span>{text ? Number(text)/100 : 0}元</span>,
    },{
       title: '下单时间',
-      dataIndex: 'endtime',
-      key: 'endtime',
+      dataIndex: 'CREATE_TIME',
+      key: 'CREATE_TIME',
     }, {
       title: '订单状态',
-      dataIndex: 'starte',
-      key: 'starte',
+      dataIndex: 'STATUS',
+      key: 'STATUS',
       render: (text) => {
         return <span>{realtext[text]}</span>
       }
     },{
       title: '预报信息',
-      key: 'createztorder',
+      key: 'INTL_NO',
       width: 100,
       render: (text, record) => {
-        const starte = record.starte
+        const starte = record.STATUS
         if (starte === 2) {
           return <Button type="primary" size="default" ghost onClick={e => handleCreateZtorder(record, e)}>
             发送
@@ -128,27 +134,27 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
-            <p>订单号:  {record.serialnumber}</p>
-            <p>寄件人:  {record.senderName}</p>
-            <p>收件人:  {record.buyerName}</p>
-            <p>预付总金额:  {record.totalfee/100}元</p>
-            <p>产品类型:  {record.producttypeid}</p>
-            <p>收件人证件号:  {record.buyerIDCard}</p>
-            <p>国内段订单号:  {record.ZTONO}</p>
-            <p>国际段订单号:  {record.FPXNO}</p>
-            <p>重量:  {record.bearload}</p>
-            <p>寄件地址: {record.senderAddr}</p>
-            <p>中转地址: {record.transferAddress}</p>
-            <p>收件地址: {record.buyerAddr}</p>
-            <p>下单时间:  {record.endtime}</p>
-            <p>订单状态:  {realtext[record.starte]}</p>
+            <p>订单号:  {record.ORDER_NO}</p>
+            <p>国内段订单号:  {record.CN_NO}</p>
+            <p>国际段订单号:  {record.INTL_NO}</p>
+            <p>寄件人:  {record.SENDER_NAME}</p>
+            <p>收件人:  {record.RECEIVER_NAME}</p>
+            <p>收件人证件号:  {record.RECEIVER_ID}</p>
+            <p>预付总金额:  {record.TOTAL_FEE/100}元</p>
+            <p>产品类型:  {record.PRODUCT_TYPE}</p>
+            <p>重量:  {record.WEIGHT}kg</p>
+            <p>寄件地址: {record.SENDER_ADDRESS}</p>
+            <p>中转地址: {record.TRANSFER_ADDRESS}</p>
+            <p>收件地址: {record.RECEIVER_ADDRESS}</p>
+            <p>下单时间:  {record.CREATE_TIME}</p>
+            <p>订单状态:  {realtext[record.STATUS]}</p>
           </div>
         }
         bordered
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.id}
+        rowKey={record => record.ID}
         getBodyWrapper={getBodyWrapper}
       />
     </div>

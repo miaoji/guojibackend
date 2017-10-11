@@ -47,8 +47,8 @@ const bootModal = ({
     <Modal {...modalOpts}>
       <Form layout="horizontal">
         <FormItem label="订单号" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('serialnumber', {
-            initialValue: item.serialnumber,
+          {getFieldDecorator('orderNo', {
+            initialValue: item.ORDER_NO,
             rules: [
               {
                 required: true,
@@ -58,7 +58,7 @@ const bootModal = ({
           })(<Input disabled />)}
         </FormItem>
         <FormItem label="补价金额" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('boot', {
+          {getFieldDecorator('priceSpread', {
             initialValue: item.boot,
             rules: [
               {

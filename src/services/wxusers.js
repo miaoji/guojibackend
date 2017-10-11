@@ -6,7 +6,7 @@ export async function query (params) {
 	params = pageParams(params)
   return request({
     url: wxuser.all,
-    method: 'post',
+    method: 'get',
     params
   })
 }

@@ -1,5 +1,5 @@
 import { query } from '../../services/boot'
-
+import { message } from 'antd'
 export default {
 
   namespace: 'bootDetail',
@@ -12,9 +12,9 @@ export default {
     setup ({ dispatch, history }) {
       history.listen(() => {
         if (location.pathname === '/bootdetail') {
-          const match = location.search.split('?serialnumber=')
+          const match = location.search.split('?orderNo=')
           if (match) {
-            dispatch({ type: 'query', payload: { serialnumber : match[1] } })
+            dispatch({ type: 'query', payload: { orderNo : match[1] } })
           }
         }
       })
@@ -26,16 +26,16 @@ export default {
       payload,
     }, { call, put }) {
       const data = yield call(query, payload)
-      const { code, obj, mess } = data
-      if (code === 200) {
+      // const { code, obj, msg } = data
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            data: obj,
+            data: data.obj,
           },
         })
       } else {
-        throw mess
+        throw data.msg
       }
     },
   },

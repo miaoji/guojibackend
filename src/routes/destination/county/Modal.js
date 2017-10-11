@@ -46,8 +46,8 @@ const modal = ({
     <Modal {...modalOpts}>
       <Form layout="horizontal">
         <FormItem label="县区中文名" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name', {
-            initialValue: item.name,
+          {getFieldDecorator('district', {
+            initialValue: item.district,
             rules: [
               {
                 required: true,
@@ -62,7 +62,7 @@ const modal = ({
             initialValue: item.englishname,
             rules: [
               {
-                required: true,
+                required: false,
                 pattern: /^[A-Za-z]{0,}([\s]{1}[A-Za-z]{1,}){0,}$/,
                 message: '请输入英文名称!',
               },

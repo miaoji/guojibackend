@@ -46,6 +46,14 @@ const Routers = function ({ history, app }) {
             }, 'order')
           },
         }, {
+          path: 'orderdetail',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/order/detail'))
+              cb(null, require('./routes/order/detail'))
+            }, 'orderdetail')
+          },
+        }, {
           path: 'boot',
           getComponent (nextState, cb) {
             require.ensure([], require => {
@@ -120,6 +128,14 @@ const Routers = function ({ history, app }) {
             }, 'freight')
           },
         },{
+          path: 'transfer',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/transfer'))
+              cb(null, require('./routes/transfer/'))
+            }, 'transfer')
+          },
+        },{
           path: 'qr',
           getComponent (nextState, cb) {
             require.ensure([], require => {
@@ -128,12 +144,28 @@ const Routers = function ({ history, app }) {
             }, 'qr')
           }
         },{
+          path: 'extensionapp',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/extensionapp'))
+              cb(null, require('./routes/extensionapp/'))
+            }, 'extensionapp')
+          }
+        },{
           path: 'qrdetail',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/qr/detail'))
               cb(null, require('./routes/qr/detail'))
             }, 'qr-detail')
+          }
+        },{
+          path: 'wxuserdetail',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/wxuser'))
+              cb(null, require('./routes/wxuser'))
+            }, 'qr-wxuserdetail')
           }
         },{
           path: 'producefreight',

@@ -7,11 +7,35 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 import BootModal from './bootModal'
+import AddModal from './addModal'
 
 const Order = ({ location, dispatch, order, loading }) => {
-  const { list, pagination, currentItem, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys } = order
+  const { list, pagination, currentItem, addModalVisible, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = order
   const { pageSize } = pagination
 
+  // 订单创建的modal
+  const addModelProps = {
+    type: modalType,
+    item: currentItem,
+    visible: addModalVisible,
+    confirmLoading: loading.effects['order/update'],
+    title: '创建订单',
+    wrapClassName: 'vertical-center-modal',
+    onOk (data) {
+      // console.log('update data', data)
+      dispatch({
+        type: `order/addOrder`,
+        payload: data,
+      })
+    },
+    onCancel () {
+      dispatch({
+        type: 'order/hideAddModal',
+      })
+    },
+  }
+
+  // 订单修改modal
   const modalProps = {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
@@ -20,10 +44,16 @@ const Order = ({ location, dispatch, order, loading }) => {
     confirmLoading: loading.effects['order/update'],
     title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
     wrapClassName: 'vertical-center-modal',
+    selectKdCompany: selectKdCompany,
     onOk (data) {
       dispatch({
         type: `order/${modalType}`,
         payload: data,
+      })
+    },
+    getKdCompany () {
+      dispatch({
+        type: `order/getKdCompany`
       })
     },
     onCancel () {
@@ -33,6 +63,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
   }
 
+  // 补价modal
   const bootModalProps = {
     type: modalType,
     item: currentItem,
@@ -41,7 +72,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     title: '提交补价',
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
-      console.log('update data', data)
+      // console.log('update data', data)
       dispatch({
         type: `order/addBoot`,
         payload: data,
@@ -104,8 +135,8 @@ const Order = ({ location, dispatch, order, loading }) => {
       dispatch({
         type: 'order/createChinaOrder',
         payload: {
-          id: item.id,
-          serialNumber: item.serialnumber
+          id: item.ID,
+          orderNo: item.ORDER_NO
         },
       })
     }
@@ -139,7 +170,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
     onAdd () {
       dispatch({
-        type: 'order/showModal',
+        type: 'order/showAddModal',
         payload: {
           modalType: 'create',
         },
@@ -176,6 +207,7 @@ const Order = ({ location, dispatch, order, loading }) => {
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
       {bootModalVisible && <BootModal {...bootModalProps} />}
+      {addModalVisible && <AddModal {...addModelProps}/>}
     </div>
   )
 }

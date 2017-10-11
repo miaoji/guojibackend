@@ -1,10 +1,10 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, remove, update, markBlack, createChinaOrder } from '../services/order'
+import { create, remove, update, markBlack, createChinaOrder, getKdCompany, } from '../services/order'
 import { create as addBoot } from '../services/boot'
 import * as ordersService from '../services/orders'
 import { pageModel } from './common'
-import { config } from '../utils'
+import { config, time, } from '../utils'
 
 const { query } = ordersService
 const { prefix } = config
@@ -39,6 +39,12 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data.code === 200) {
+        for(var item in data.obj){
+          data.obj[item].CREATE_TIME=time.formatTime(data.obj[item].CREATE_TIME)
+        }
+        // data.obj.forEach((item) => {
+        //   item.CREATE_TIME=time.formatTime(item.CREATE_TIME)
+        // })
         yield put({
           type: 'querySuccess',
           payload: {
@@ -51,17 +57,17 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 
     *'delete' ({ payload }, { call, put, select }) {
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 
@@ -70,60 +76,97 @@ export default modelExtend(pageModel, {
       const data = yield call(create, payload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ order }) => order.currentItem.id)
+      const id = yield select(({ order }) => order.currentItem.ID)
       const newOrder = { ...payload, id }
       const data = yield call(update, newOrder)
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.msg || data
       }
     },
 
     *addBoot ({ payload }, { call, put }) {
+      console.log('payload111', payload)
       const other = {
-        'createUser': JSON.parse(window.localStorage.getItem('guojipc_user'))['userId'],
+        'createUserId': JSON.parse(window.localStorage.getItem('guojipc_user'))['roleId'],
         'status': 1
       }
+      console.log('other', other)
       const data = yield call(addBoot, {
-        boot: Number(payload.boot)*100,
-        serialNumber: payload.serialnumber,
+        priceSpread: Number(payload.priceSpread)*100,
+        orderNo: payload.orderNo,
         reason: payload.reason,
         ...other
       })
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'hideBootModal' })
         yield put({ type: 'query' })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 
     *createChinaOrder ({ payload }, { call, put }) {
+      console.log('payload', payload)
       const data = yield call(createChinaOrder, {...payload})
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'hideBootModal' })
         yield put({ type: 'query' })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
+
+    *getKdCompany ({ payload }, { call, put,}) {
+      const data = yield call(getKdCompany)
+      console.log('data', data)
+      if (data.code === 200 ) {
+        let children = []
+        if (data.obj) {
+          for (let i = 0; i < data.obj.length; i++) {
+            let item = data.obj[i]
+            children.push(<Option key={item.company_code}>{item.company_name} / {item.company_code}</Option>)
+          }
+        }
+        yield put({
+          type: 'setKdCompany',
+          payload: {
+            selectKdCompany: children
+          }
+        })
+      } else {
+        throw '获取国际段快递公司失败'
+      }
+    }
 
   },
 
   reducers: {
+
+    setKdCompany (state, { payload }) {
+      return { ...state, ...payload }
+    },
+
+    showAddModal (state, { payload }) {
+      return { ...state, ...payload, addModalVisible: true }
+    },
+
+    hideAddModal (state, { payload }) {
+      return { ...state, addModalVisible: false }
+    },
 
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }

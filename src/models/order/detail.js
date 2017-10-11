@@ -1,6 +1,5 @@
-import pathToRegexp from 'path-to-regexp'
-import { query } from '../../services/order'
-
+import { getOrderInfo, getOrderInfoByOrderNo, queryByCompany, } from '../../services/order'
+import { message } from 'antd'
 export default {
 
   namespace: 'orderDetail',
@@ -12,40 +11,58 @@ export default {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(() => {
-        const match = pathToRegexp('/order/:id').exec(location.pathname)
-        if (match) {
-          dispatch({ type: 'query', payload: { id: match[1] } })
+        if (location.pathname === '/orderdetail') {
+          const match = location.search.split('?orderNo=')
+          if (match) {
+            dispatch({ type: 'setListEmpty' })
+            dispatch({ type: 'query', payload: { orderNo : match[1] } })
+          }
         }
       })
     },
   },
 
   effects: {
-    *query ({
-      payload,
-    }, { call, put }) {
-      const data = yield call(query, payload)
-      const { success, message, status, ...other } = data
-      if (success) {
+    *query ({ payload }, { call, put }) {
+      const data = yield call(getOrderInfo, payload)
+      let detailDate = data.obj
+      // 获取快递信息(开始)
+      let orderData = ''
+      const orderInfo = yield call(getOrderInfoByOrderNo, payload)
+      if (orderInfo.code === 200) {
+        const kdInfo = yield call(queryByCompany,{num:orderInfo.obj.cnNo,company:'zhongtong'})
+        if (kdInfo.code === 200) {
+          orderData = kdInfo.obj.data
+          detailDate.orderData = orderData
+        }
+      }else{
+        console.log('error',orderInfo)
+      }
+      // 获取快递信息(结束)
+
+      if (data) {
         yield put({
           type: 'querySuccess',
           payload: {
-            data: other,
+            data: detailDate,
           },
         })
       } else {
-        throw data
+        throw data.msg
       }
     },
   },
 
   reducers: {
+    setListEmpty (state) {
+      return { ...state, data:{} }
+    },
     querySuccess (state, { payload }) {
       const { data } = payload
       return {
         ...state,
-        data,
+        data
       }
-    },
-  },
+    }
+  }
 }

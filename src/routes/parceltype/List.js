@@ -17,7 +17,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       confirm({
         title: '确定要删除这一条包裹类型吗?',
         onOk () {
-          onDeleteItem(record.id)
+          onDeleteItem(record.ID)
         },
       })
     }
@@ -26,35 +26,31 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: '目的地国家',
-      dataIndex: 'nation',
-      key: 'nation',
+      dataIndex: 'country_cn',
+      key: 'country_cn',
       render: (text) => <span>{text}</span>,
     },{
       title: '包裹类型名称',
-      dataIndex: 'name_ch',
-      key: 'name_ch',
+      dataIndex: 'NAME_CN',
+      key: 'NAME_CN',
     },{
       title: '包裹类型英文名',
-      dataIndex: 'name_en',
-      key: 'name_en',
+      dataIndex: 'NAME_EN',
+      key: 'NAME_EN',
     },{
       title: '最小重量',
-      dataIndex: 'min_range',
-      key: 'min_range',
+      dataIndex: 'MIN_RANGE',
+      key: 'MIN_RANGE',
       render: (text) => <span>{text}kg</span>,
     },{
       title: '最大重量',
-      dataIndex: 'max_range',
-      key: 'max_range',
+      dataIndex: 'MAX_RANGE',
+      key: 'MAX_RANGE',
       render: (text) => <span>{text}kg</span>,
-    },/*{
-      title: '货物类型代码',
-      dataIndex: 'hid',
-      key: 'hid',
-    },*/{
+    },{
       title: '备注',
-      dataIndex: 'remark',
-      key: 'remark',
+      dataIndex: 'REMARK',
+      key: 'REMARK',
       render: (text) => <span>{text}</span>,
     },{
       title: '操作',

@@ -1,15 +1,14 @@
 /**
- * 目的地model
+ * 目的地 县区级model
  */
 import modelExtend from 'dva-model-extend'
 import { message, Row, Col } from 'antd'
-//import { create, remove } from '../services/county'
 import * as countysService from '../../services/countys'
 import * as locationService from '../../services/location'
 import { pageModel } from '../common'
 import { queryURL, storage, } from '../../utils'
 
-const { query, create, } = countysService
+const { query, create, update, remove, } = countysService
 const queryLocation = locationService.query
 const createLocation = locationService.create
 
@@ -46,24 +45,24 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
-// 当前跳转的时候获得cityid ,如果获取了 cityid 则跟新本地存储
+// 当前跳转的时候获得cityid ,如果获取了 cityCode 则跟新本地存储
 // 如果没有 则从 localStorage 获取
     *query ({ payload = {} }, { call, put }) {
-      if(payload.cityid){
+      if(payload.cityCode){
         storage({
-          key:'cityid',
-          val:payload.cityid,
+          key:'cityCode',
+          val:payload.cityCode,
           type:'set'
         })
       }else{
-        payload.cityid=storage({
-          key:'cityid',
+        payload.cityCode=storage({
+          key:'cityCode',
           type:'get'
         })
       }
       const data = yield call(query, payload)
-      if (data.code=="200") {
-        if(data.obj.length<1){
+      if (data.code=="200"||data.code=='500') {
+        if(data.obj==null||data.code=='500'){
           data.obj={show:true, name: "暂无该城市的信息"}
         }
         yield put({
@@ -78,17 +77,18 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || "网络错误"
+        throw data.msg
       }
     },
 
     *create ({ payload }, { call, put }) {
-      const cityid=queryURL('cityid')
-      console.log('cityid', cityid)
-      payload.cityid=queryURL('cityid')
-      console.log('location.pathname', payload)
+      payload.cityCode=storage({
+        key:'cityCode',
+        type:'get'
+      })
       const data = yield call(create, payload)
       if (data.success) {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
@@ -101,6 +101,7 @@ export default modelExtend(pageModel, {
       const newcounty = { ...payload, id }
       const data = yield call(update, newcounty)
       if (data.success) {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
@@ -111,7 +112,7 @@ export default modelExtend(pageModel, {
     *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
         throw data.mess
@@ -161,7 +162,7 @@ export default modelExtend(pageModel, {
 
   reducers: {
     setListEmpty (state) {
-      return { ...state, list: [] }
+      return { ...state, list: {show:true, name: "数据加载中..."} }
     },
 
     showModal (state, { payload }) {

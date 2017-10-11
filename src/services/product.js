@@ -21,7 +21,7 @@ export async function create (params) {
 export async function remove (params) {
   return request({
     url: product.hide,
-    method: 'post',
+    method: 'delete',
     params
   })
 }

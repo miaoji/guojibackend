@@ -27,7 +27,7 @@ const Product = ({ location, dispatch, product, loading }) => {
         payload: data,
       })
     },
-    getNation(data){
+    getNation(){
       dispatch({
         type:`product/getNation`
       })
@@ -82,6 +82,9 @@ const Product = ({ location, dispatch, product, loading }) => {
           currentItem: item,
         },
       })
+      dispatch({
+        type:`product/getNation`
+      })
     }
   }
 
@@ -117,6 +120,9 @@ const Product = ({ location, dispatch, product, loading }) => {
         payload: {
           modalType: 'create',
         },
+      })
+      dispatch({
+        type:`product/getNation`
       })
     },
     switchIsMotion () {

@@ -46,8 +46,8 @@ const modal = ({
     <Modal {...modalOpts}>
       <Form layout="horizontal">
         <FormItem label="省份中文名" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name', {
-            initialValue: item.name,
+          {getFieldDecorator('province', {
+            initialValue: item.province,
             rules: [
               {
                 required: true,

@@ -21,7 +21,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/wxuser') {
+        if (location.pathname === '/wxuser' || location.pathname === '/wxuserdetail' ) {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -35,7 +35,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data.success && data.code === 200) {
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -48,7 +48,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || data
+        throw data.msg
       }
     },
 
@@ -59,7 +59,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 
@@ -69,18 +69,23 @@ export default modelExtend(pageModel, {
         yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 
     *'markBlackList' ({ payload }, { call, put, select }) {
-      const newWxUser = payload
+      let newWxUser = payload
+      console.log('newWxUser', newWxUser)
+      // 判断有没有传过来blacklist属性,没有的传的话就默认等于1
+      if (newWxUser.blacklist==null) {
+        newWxUser.blacklist=1
+      }
       const data = yield call(update, newWxUser)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 
@@ -90,7 +95,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 
@@ -102,7 +107,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 

@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { time } from '../../utils'
+import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 // const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
@@ -20,7 +21,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         confirm({
           title: '确定要删除吗?',
           onOk () {
-            onDeleteItem(record.id)
+            onDeleteItem(record.ID)
           }
         })
         break
@@ -30,39 +31,51 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   }
 
   const copyUrl = (record, e) => {
-    const href = 'http://control.mingz-tech.com/qrdetail?ticket=' + record.ticket + '&name=' + record.name + '&parameter=' + record.parameter
+    const href = 'http://control.mingz-tech.com/qrdetail?TICKET=' + record.TICKET + '&name=' + record.NAME + '&parameter=' + record.TICKET
     window.prompt('使用Ctrl+C复制到剪切板', href)
   }
 
   const columns = [
     {
       title: '推广人姓名',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'NAME',
+      key: 'NAME',
     }, {
       title: '扫描关注人数',
-      dataIndex: 'source_number',
-      key: 'source_number',
-    }, {
+      dataIndex: 'SOURCE_COUNT',
+      key: 'SOURCE_COUNT',
+      render: (text)=>{
+        return <span>{ text?text:0 }</span>
+      }
+    },{
       title: '二维码参数',
-      dataIndex: 'parameter',
-      key: 'parameter',
+      dataIndex: 'TICKET',
+      key: 'TICKET',
     },{
       title: '二维码图片',
-      dataIndex: 'ticket',
-      key: 'ticket',
+      dataIndex: 'TICKETa',
+      key: 'TICKETa',
       render: (text, record) => {
-        const href = '/qrdetail?ticket=' + text + '&name=' + record.name + '&parameter=' + record.parameter
-        return <a href={href} target="_blank">点击查看</a>
+        return <a href={`/qrdetail?TICKET=${record.TICKET}&name=${record.NAME}&parameter=${record.TICKET }`} target="_blank">点击查看</a>
+      }
+    },{
+      title: '关注用户详情',
+      dataIndex: 'qrTICKET',
+      key: 'qrTICKET',
+      render: (text, record) => {
+        return <Link to={`/wxuserdetail?qrTicket=${record.TICKET}`}>点击查看</Link>
       }
     },{
       title: '下单量',
       dataIndex: 'orderCount',
-      key: 'orderCount'
+      key: 'orderCount',
+      render: (text) => {
+        return <span>{ text?text:0 }</span>
+      }
     }, {
       title: '创建时间',
-      dataIndex: 'create_time',
-      key: 'create_time',
+      dataIndex: 'CREATE_TIME',
+      key: 'CREATE_TIME',
       render: (text) => {
         const createtime = time.formatTime(text)
         return <span>{createtime}</span>

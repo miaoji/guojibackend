@@ -66,8 +66,14 @@ const fetch = (options) => {
         }
       })
     case 'delete':
-      return axios.delete(url, {
-        data: cloneData,
+      return axios({
+        url,
+        method: 'delete',
+        params: cloneData || params,
+        timeout: 5000,
+        headers: {
+          'token': window.localStorage.getItem('guojipc_token')
+        }
       })
     case 'post':
       return axios({

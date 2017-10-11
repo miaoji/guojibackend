@@ -90,6 +90,9 @@ const Freight = ({ location, dispatch, freight, loading }) => {
           currentItem: item,
         },
       })
+      dispatch({
+        type: `freight/getPackage`
+      })
     }
   }
 
@@ -125,6 +128,9 @@ const Freight = ({ location, dispatch, freight, loading }) => {
         payload: {
           modalType: 'create',
         },
+      })
+      dispatch({
+        type: `freight/getPackage`
       })
     },
     switchIsMotion () {

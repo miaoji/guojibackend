@@ -7,9 +7,14 @@ import * as showPTypeByCounIdsService from '../services/showPTypeByCounIds'
 import { pageModel } from './common'
 import { config } from '../utils'
 
-const { query } = productsService
 const { prefix } = config
+// 获取产品类型分页数据
+const { query } = productsService
+// 获取全部国家信息
 const contryQuery = countriesService.query
+// 通过国家名称获取国家id
+const getCountryId = countriesService.getCountryId
+// 通过国家id获取包裹类型数据
 const parceltypeQuery = showPTypeByCounIdsService.query
 const Option = Select.Option
 
@@ -44,7 +49,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data) {
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -56,17 +61,21 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      }else {
+        throw data.msg
       }
     },
 
-    *getNation ({ payload }, { select, call, put }) {
+     *getNation ({ payload }, { select, call, put }) {
       const data = yield call(contryQuery)
       if (data) {
         let obj = data.obj
         let children = []
-        for (let i = 0; i < obj.length; i++) {
-          let item = obj[i]
-          children.push(<Option key={item.name}>{item.name}</Option>);
+        if (data.obj) {
+          for (let i = 0; i < obj.length; i++) {
+            let item = obj[i]
+            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>);
+          }
         }
         yield put({
           type: 'setNation',
@@ -75,20 +84,34 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
     
-    *getParcelType ({ payload = {} }, { call, put }) {
-      const destNation={destNation:payload}
-      const data = yield call(parceltypeQuery,destNation)
+    *getParcelType ({ payload = {} }, { select, call, put }) {
+      // let currentItem = yield select(({ product }) => product.currentItem)
+      // currentItem.NAME_CN = null
+      console.log('payload',payload)
+      const countryId = yield call(getCountryId,{ name:payload.toString() })
+      if (countryId.code === 200) {
+        payload = countryId.obj.id
+      }else{
+        throw '获取国家ID失败'
+        return
+      }
+      console.log('payload 国家id',payload)
+      // return 
+      const destNation={ countryId:payload }
 
+      const data = yield call(parceltypeQuery, destNation)
       if (data) {
         let obj = data.obj
         let children = []
-        for (let i = 0; i < obj.length; i++) {
-          let item = obj[i]
-          children.push(<Option key={item.id}>{item.nameCh}</Option>);
+        if (data.obj) {
+          for (let i = 0; i < obj.length; i++) {
+            let item = obj[i]
+            children.push(<Option key={item.id}>{item.name_cn}</Option>);
+          }
         }
         yield put({
           type: 'setParcelType',
@@ -97,17 +120,17 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 
     *'delete' ({ payload }, { call, put, select }) {
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.msg || data
       }
     },
 
@@ -133,12 +156,10 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-    	const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0
-    	const productCode = Math.floor(Math.random()*600000)
-    	const productName = payload.product_name
-    	const packageType = payload.producttypeid
-    	const newWxUser = { ...payload, createUser, productCode,  productName, packageType }
-    	
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
+      const productCode = Math.floor(Math.random()*600000)
+      const newWxUser = { ...payload, createUserId, productCode,}
+      
       const data = yield call(create, newWxUser)
       if (data.success) {
         yield put({ type: 'hideModal' })
@@ -149,34 +170,27 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      // 获取对应的id
-      const id = yield select(({ product }) => product.currentItem.id)
+      //获取对应的id
+      const id = yield select(({ product }) => product.currentItem.ID)
       //获取对应的包裹类型的中文名称
-      const name_ch = yield select(({ product }) => product.currentItem.name_ch)
+      const NAME_CN = yield select(({ product }) => product.currentItem.NAME_CN)
       //获取包裹类型的id
-      const pid = yield select(({ product }) => product.currentItem.producttypeid)
+      const PACKAGE_TYPE = yield select(({ product }) => product.currentItem.PACKAGE_TYPE)
 
-      const createUser = JSON.parse(window.localStorage.getItem("guojipc_user")).userId || 0
-    	const productCode = yield select(({ product }) => product.currentItem.product_code)
-    	const productName = payload.product_name
-      
       //判断提交的包裹类型是否被修改..相同则提交之前查询到的包裹类型的id..不同则提交表单传输过来的id 
-      let packageType = payload.producttypeid
-      if (packageType===name_ch) {
-        packageType = pid
-      }else{
-        packageType = payload.producttypeid
+      if (payload.packageType==NAME_CN) {
+        payload.packageType = PACKAGE_TYPE
       }
-
-    	const newWxUser = { ...payload, id, createUser, productCode,  productName, packageType,}
-    	
-      console.log('newWxUser',newWxUser)
+      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
+      const productCode = yield select(({ product }) => product.currentItem.PRODUCT_CODE)
+      const newWxUser = { ...payload, id, createUserId, productCode,}
       const data = yield call(update, newWxUser)
       if (data.success) {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 

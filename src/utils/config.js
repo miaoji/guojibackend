@@ -1,16 +1,16 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
 let APIV3 = ''
-// 测试线上
-// APIV3 = 'http://api.didalive.net/DHL'
-// 正式线上
-// APIV3 = 'http://api.mingz-tech.com/DHL'
-// 仝舟
-APIV3 = 'http://192.168.1.111:8080'
+
+// 重构API
+// 线下地址
+// APIV3 = 'http://192.168.1.210:8080'
+// 线上地址
+APIV3 = 'http://api.didalive.net'
+
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
-	// APIV3 = 'http://api.didalive.net/DHL'
-	APIV3 = 'http://api.mingz-tech.com/DHL'
+	APIV3 = 'http://api.mingz-tech.com'
 }
 
 module.exports = {
@@ -28,9 +28,9 @@ module.exports = {
 	api: {
 		dashboard: `${APIV1}/dashboard`,
 		//根据国家查询包裹类型
-		showPTypeByCounId: `${APIV3}/wx/PackageType/selectPtype`,
+		showPTypeByCounId: `${APIV3}/api/packageType/getPackageTypeByCountry`,
 		//根据包裹类型id获取对应的产品类型
-		showproductName: `${APIV3}/wx/ProductType/selectproductName`,
+		showproductName: `${APIV3}/api/productType/getProductByPackage`,
 		login: {
 			accountLogin: `${APIV3}/login`,
 			getVerifyImage: `${APIV3}/login/imageCode`,
@@ -38,38 +38,50 @@ module.exports = {
 			mobileLogin: `${APIV3}/login/loginByCode`
 		},
 		wxuser: {
-			all: `${APIV3}/wx/User/selectWxUser`,
+			all: `${APIV3}/api/wxUser/index`, // 查询所有微信用户
+			update: `${APIV3}/api/wxUser/modWxUserById`,
 		},
 		order: {
-			all: `${APIV3}/wx/OrderInfo/getOrderInfo`,//全部订单
+			all: `${APIV3}/api/orderInfo/index`,//全部订单
 			show: `${APIV1}/order/:id`,
 			create: `${APIV3}/wx/OrderInfo/addOrderInfo`,//创建订单
 			update: `${APIV3}/wx/OrderInfo/modOrderInfo`,// 根据id更新订单
-			mod: `${APIV3}/wx/OrderInfo/modOrderById`,// 根据id更新订单 仝周
-			hide: `${APIV3}/wx/OrderInfo/delOrderById`,// 根据id更新订单 仝周
-			createChinaOrder: `${APIV3}/wx/order/createOrder`,// 新增国内(中通)订单	
+			mod: `${APIV3}/api/orderInfo/modOrderInfoById`,// 根据id更新订单 仝周
+			hide: `${APIV3}/api/orderInfo/delOrderInfoById`,// 根据id更新订单 仝周
+			createChinaOrder: `${APIV3}/api/order/createOrder`,// 新增国内(中通)订单	
+			getKdCompany: `${APIV3}/api/kdCompany/index`, // 动态获取国际段快递公司
+			getOrderInfo:`${APIV3}/api/orderInfo/getOrderDetailByOrderNo`, // 根据订单号查询订单详细信息,用户微信信息,包裹信息
+			getOrderInfoByOrderNo: `${APIV3}/api/orderInfo/getOrderInfoByOrderNo`,// 根据订单号查询快件信息
+			queryByCompany: `${APIV3}/api/order/queryByCompany`, // 根据快件信息查询快递信息
 		},
 		boot: {
-			all: `${APIV3}/wx/boot/getBootAll`,// 查询所有差价(补价)信息
-			show: `${APIV3}/wx/boot/getBootInfo`,// 根据单号查询差价信息
-			add: `${APIV3}/wx/boot/addBoot`,// 新增差价(补价)信息
-			update: `${APIV3}/wx/boot/modBoot`,// 更新差价(补价)信息
+			all: `${APIV3}/api/closingPrice/index`,// 查询所有差价(补价)信息
+			show: `${APIV3}/api/closingPrice/getByOrderNo`,// 根据单号查询差价信息
+			add: `${APIV3}/api/closingPrice/add`,// 新增差价(补价)信息
+			update: `${APIV3}/api/closingPrice/modClosingPriceById`,// 更新差价(补价)信息
+			hide: `${APIV3}/api/closingPrice/delClosingPriceById`
+		},
+		transfer: {
+			all: `${APIV3}/api/transfer/index`,
+			create: `${APIV3}/api/transfer/add`,
+			update: `${APIV3}/api/transfer/modTransferById`,
+			hide: `${APIV3}/api/transfer/delTransferById`,
 		},
 		//包裹类型管理
 		parceltype: {
-			all: `${APIV3}/wx/PackageType/ShowPackageType`,
-			show: `${APIV3}/wx/PackageType/ShowPackageTypeById`,
-			create: `${APIV3}/wx/PackageType/AddPackageType`,
-			update: `${APIV3}/wx/PackageType/updatePackageType`,
-			hide: `${APIV3}/wx/PackageType/delPackageById`
+			all: `${APIV3}/api/packageType/index`,
+			show: `${APIV3}/api/packageType/getPackageTypeById`,
+			create: `${APIV3}/api/packageType/add`,
+			update: `${APIV3}/api/packageType/modPackageTypeById`,
+			hide: `${APIV3}/api/packageType/delPackageTypeById`,
 		},
 		//产品类型管理
 		product: {
-			all: `${APIV3}/wx/ProductType/ShowProvince`,
-			show: `${APIV3}/wx/ProductType/ShowProvinceById`,
-			create: `${APIV3}/wx/ProductType/AddPackageType`,
-			update: `${APIV3}/wx/ProductType/updateProductType`,
-			hide: `${APIV3}/wx/ProductType/delProductById`
+			all: `${APIV3}/api/productType/index`,
+			show: `${APIV3}/api/productType/getProductTypeById`,
+			create: `${APIV3}/api/productType/add`,
+			update: `${APIV3}/api/productType/modProductTypeById`,
+			hide: `${APIV3}/api/productType/delProductTypeById`
 		},
 		//目的地管理
 		destination: {
@@ -77,41 +89,56 @@ module.exports = {
 		},
 		//运费管理
 		freight: {
-			all: `${APIV3}/Internationalprice/ShowInternational`,
-			show: `${APIV3}/Internationalprice/ShowInternationalById`,
-			create: `${APIV3}/Internationalprice/InsertInternationalprice`,
-			update: `${APIV3}/Internationalprice/UpadteInternationalprice`,
-			hide: `${APIV3}/wx/Internationalprice/delPriceById`
+			all: `${APIV3}/api/intlPrice/index`,
+			show: `${APIV3}/api/intlPrice/getIntlPriceById`,
+			create: `${APIV3}/api/intlPrice/add`,
+			update: `${APIV3}/api/intlPrice/modIntlPriceById`,
+			hide: `${APIV3}/api/intlPrice/delIntlPriceById`
 		},
-    // 国家api
+    	// 国家api
 		country: {
-		  show: `${APIV3}/wx/Country/ShowCountry`,
-		  create: `${APIV3}/wx/Country/AddCountry`,
-		  hide: `${APIV3}/wx/Country/delCountryById`,
-		  update: `${APIV3}/wx/Country/updateCountryById`
+		  show: `${APIV3}/api/country/index`,
+		  create: `${APIV3}/api/country/add`,
+		  update: `${APIV3}/api/country/modCountryById`,
+		  hide: `${APIV3}/api/country/delCountryById`,
+		  getCountryId: `${APIV3}/api/country/getCountryIdByName`,// 通过国家名称获取国家id
 		},
 		// 省份/州api
 		province: {
-		  show: `${APIV3}/wx/Province/ShowProvinceid`,
-		  create: `${APIV3}/wx/Province/AddProvince`
+		  show: `${APIV3}/api/provinces/index`,
+		  create: `${APIV3}/api/provinces/add`,
+		  update: `${APIV3}/api/provinces/modProvincesById`,
+		  hide: `${APIV3}/api/provinces/delProvincesById`,
 		},
 		// 市级api
 		city: {
-		  show: `${APIV3}/wx/City/ShowCityid`,
-		  create: `${APIV3}/wx/City/AddCity`
+		  show: `${APIV3}/api/cities/index`,
+		  create: `${APIV3}/api/cities/add`,
+		  update: `${APIV3}/api/cities/modCitiesById`,
+		  hide: `${APIV3}/api/cities/delCitiesById`,
 		},
 		// 区县api
 		county: {
-		  show: `${APIV3}/wx/County/ShowCountyid`,
-		  create: `${APIV3}/wx/County/AddCounty`
+		  show: `${APIV3}/api/districts/index`,
+		  create: `${APIV3}/api/districts/add`,
+		  update: `${APIV3}/api/districts/modDistrictsById`,
+		  hide: `${APIV3}/api/districts/delDistrictsById`,
 		},
 		// 二维码推广接口
 		qr: {
-	      create: `${APIV3}/wx/createQr`,
-	      all: `${APIV3}/wx/getQrAll`,
+	      all: `${APIV3}/api/qr/getQrAll`,
 	      show: `${APIV3}/wx/selectQrById`,
-	      update: `${APIV3}/wx/updateQrById`,
-	      del: `${APIV3}/wx/delQrById`
+	      create: `${APIV3}/api/qr/createQr`,
+	      update: `${APIV3}/api/qr/modWxQrById`,
+	      del: `${APIV3}/api/qr/delWxQrById`
+		},
+		// app推广接口
+		extensionapp: {
+		  all: `${APIV3}/api/app/index`,
+	      show: `${APIV3}/api/selectQrById`,
+	      create: `${APIV3}/api/app/add`,
+	      update: `${APIV3}/api/app/modWxAppById`,
+	      hide: `${APIV3}/api/app/delById`
 		}
 	},
 }

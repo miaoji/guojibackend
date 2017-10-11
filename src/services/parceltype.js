@@ -1,6 +1,6 @@
 import { request, config } from '../utils'
 const { api } = config
-const { parceltype } = api
+const { parceltype, country, } = api
 
 export async function query (params) {
   return request({
@@ -21,8 +21,8 @@ export async function create (params) {
 export async function remove (params) {
   return request({
     url: parceltype.hide,
-    method: 'post',
-    params
+    method: 'delete',
+    data:params
   })
 }
 

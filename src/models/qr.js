@@ -32,7 +32,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data) {  
+      if (data.code === 200) {  
         yield put({
           type: 'querySuccess',
           payload: {
@@ -44,6 +44,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      }else{
+        throw data.msg
       }
     },
 
@@ -53,17 +55,17 @@ export default modelExtend(pageModel, {
         name: payload.name
       }
       const data = yield call(create, newQr)
-      if (data.success) {
+      if (data.code === 200) {
         yield put({ type: 'hideModal' })
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.msg || data
       }
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ qr }) => qr.currentItem.id)
+      const id = yield select(({ qr }) => qr.currentItem.ID)
       const newQr = {
         name: payload.name,
         id
@@ -74,17 +76,17 @@ export default modelExtend(pageModel, {
         message.success('更新成功')
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.msg || data
       }
     },
 
     *'delete' ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { id: payload })
+      const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.msg || data
       }
     },
 
@@ -93,6 +95,8 @@ export default modelExtend(pageModel, {
   reducers: {
 
     showModal (state, { payload }) {
+      console.log('state', state)
+      console.log('payload', payload)
       return { ...state, ...payload, modalVisible: true }
     },
 

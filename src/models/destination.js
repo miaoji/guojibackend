@@ -31,6 +31,9 @@ export default modelExtend(pageModel, {
       history.listen(location => {
         if (location.pathname === '/destination') {
           dispatch({
+            type: 'setListEmpty'
+          })
+          dispatch({
             type: 'query',
             payload: location.query,
           })
@@ -44,6 +47,9 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data.code=='200') {
+        if (data.obj==null) {
+          data.obj={show:true, name: "暂无该城市的信息"}
+        }
         yield put({
           type: 'querySuccess',
           payload: {
@@ -56,11 +62,12 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || "网络错误"
+        throw data.msg
       }
     },
 
     *create ({ payload }, { call, put }) {
+      console.log('payload', payload)
       const data = yield call(create, payload)
       if (data.success) {
         yield put({ type: 'hideModal' })
@@ -84,11 +91,13 @@ export default modelExtend(pageModel, {
 
     *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload.toString() })
+      console.log('data id', data)
+      console.log('data id', data.msg)
       if (data.success && data.code === 200) {
-        message.success(data.mess)
+        message.success(data.msg)
         yield put({ type: 'query' })
       } else {
-        throw data.mess
+        throw data.msg
       }
     },
 
@@ -106,7 +115,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || "连接失败!"
+        throw data.msg
       }
     },
 
@@ -127,13 +136,17 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || data
+        throw data.msg
       }
     }
 
   },
 
   reducers: {
+
+    setListEmpty (state) {
+      return { ...state, list:{show:true, name: "国家信息正在加载,请稍等..."} }
+    },
 
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }

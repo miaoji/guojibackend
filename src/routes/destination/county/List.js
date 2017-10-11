@@ -31,16 +31,16 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
   return (
     <div>
       <ul className={styles.list}>
-        {list.show?<li>{list.name}</li>:list.map(item => (<li key={item.name}>
+        {list.show?<li>{list.name}</li>:list.map(item => (<li key={item.id}>
           <div>
-            {item.name}
+            {item.district}
+            <DropOption onMenuClick={e => handleMenuClick(item, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
           </div>
         </li>))}
       </ul>
     </div>
   )
 }
-// <DropOption onMenuClick={e => handleMenuClick(item, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
 
 
 List.propTypes = {

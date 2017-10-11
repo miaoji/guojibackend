@@ -4,7 +4,7 @@ const config = require('../utils/config')
 const { apiPrefix } = config
 
 let ordersListData = Mock.mock({
-  'data|40-50': [
+  'data': [
     {
       id: '@id',
       did:/^\d{8}$/,

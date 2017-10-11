@@ -46,8 +46,8 @@ const modal = ({
     <Modal {...modalOpts}>
       <Form layout="horizontal">
         <FormItem label="国家中文名" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name', {
-            initialValue: item.name,
+          {getFieldDecorator('countryCn', {
+            initialValue: item.country_cn,
             rules: [
               {
                 required: true,
@@ -57,9 +57,21 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
+        <FormItem label="国家拼音名" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('pinyin', {
+            initialValue: item.pinyin,
+            rules: [
+              {
+                required: false,
+                pattern: /^[A-Za-z]{0,}([\s]{1}[A-Za-z]{1,}){0,}$/,
+                message: '请输入中文名称的拼音!',
+              },
+            ],
+          })(<Input />)}
+        </FormItem>
         <FormItem label="国家英文名" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('englishname', {
-            initialValue: item.englishname,
+          {getFieldDecorator('countryEn', {
+            initialValue: item.country_en,
             rules: [
               {
                 required: true,

@@ -26,6 +26,8 @@ const modal = ({
     getFieldDecorator,
     validateFields,
     getFieldsValue,
+    setFieldsValue,
+    resetFields
   },
   ...modalProps
 }) => {
@@ -43,12 +45,15 @@ const modal = ({
   }
   const handleClick= async function() {
     // 处理selectPackage 放入 option中
-    await getNation()
+    // 获取国际信息
+    // await getNation()
   }
 
   const handleChange= async function(data){
     //通过目的地查询包裹类型
     await getParcelType(data)
+    // 当目的地的数据改变时,清空包裹类型select组件的数据
+    setFieldsValue({packageType:null})
   }
 
   const modalOpts = {
@@ -61,29 +66,29 @@ const modal = ({
       <Form layout="horizontal">
       <FormItem label="目的地国家" hasFeedback {...formItemLayout}>
           {getFieldDecorator('nation', {
-            initialValue: item.nation,
+            initialValue: item.country_cn,
             rules: [
               {
                 required: true,
                 message: '请输入目的地国家!',
               },
             ],
-          })(<Select defaultValue="1" onChange={handleChange} onFocus={handleClick}>{selectNation}</Select>)}
+          })(<Select placeholder='输入文字可搜索' showSearch onChange={handleChange} onFocus={handleClick}>{selectNation}</Select>)}
         </FormItem>
         <FormItem label="包裹类型" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('producttypeid', {
-            initialValue: item.name_ch,
+          {getFieldDecorator('packageType', {
+            initialValue: item.NAME_CN,
             rules: [
               {
                 required: true,
                 message: '请输入包裹类型!',
               },
             ],
-          })(<Select defaultValue="1" disabled={productDis}>{selectParcelType}</Select>)}
+          })(<Select placeholder='点击选择' value='1' disabled={productDis}>{selectParcelType}</Select>)}
         </FormItem>
         <FormItem label="产品名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('product_name', {
-            initialValue: item.product_name,
+          {getFieldDecorator('productName', {
+            initialValue: item.PRODUCT_NAME,
             rules: [
               {
                 required: true,
@@ -92,26 +97,9 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="状态" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('state', {
-            initialValue: item.state || 1,
-            rules: [
-              {
-                required: true,
-                type: 'number',
-                message: '请选择状态!',
-              },
-            ],
-          })(
-            <Radio.Group defaultValue={1}>
-              <Radio value={1}>生效</Radio>
-              <Radio value={2}>失效</Radio>
-            </Radio.Group>
-          )}
-        </FormItem>
         <FormItem label="备注" hasFeedback {...formItemLayout}>
           {getFieldDecorator('remark', {
-            initialValue: item.remark || '',
+            initialValue: item.REMARK,
             rules: [
               {
                 required: false,

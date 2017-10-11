@@ -31,11 +31,13 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
   return (
     <div>
       <ul className={styles.list}>
-        {list.map(item => (<li key={item.name}>
-          <Button title={item.name} size="large">
-            <Link to={`/province?countryid=${item.id}`}><span>{item.name} - {item.sort || 0}</span></Link>
+        {list.show?<span>{list.name}</span>:list.map(item => (<li key={item.id}>
+        <Link to={`/province?countryCode=${item.country_code}`}>
+          <Button title={item.country_cn} size="large">
+            <span>{item.country_cn} - {item.sort || 0}</span>
             <DropOption onMenuClick={e => handleMenuClick(item, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
           </Button>
+        </Link>
         </li>))}
       </ul>
     </div>

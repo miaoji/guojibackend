@@ -30,7 +30,7 @@ export async function create (params) {
 export async function remove (params) {
   return request({
     url: order.hide,
-    method: 'post',
+    method: 'delete',
     params
   })
 }
@@ -38,9 +38,9 @@ export async function remove (params) {
 export async function update (params) {
   const newParams = {
     id: params.id,
-    starte: statusGroup[params.starte] ? statusGroup[params.starte] : params.starte,
-    fpxno: params.FPXNO,
-    nation_express_com: params.nation_express_com
+    status: statusGroup[params.starte] ? statusGroup[params.starte] : params.starte,
+    intlNo: params.FPXNO,
+    transferCompany: params.nation_express_com
   }
   return request({
     url: order.mod,
@@ -49,10 +49,46 @@ export async function update (params) {
   })
 }
 
+// 新增国内(中通)订单
 export async function createChinaOrder (params) {
   return request({
     url: order.createChinaOrder,
     method: 'post',
     params,
+  })
+}
+
+// 动态获取国际段快递公司
+export async function getKdCompany (params) {
+  return request({
+    url: order.getKdCompany,
+    method: 'get',
+    params
+  })
+}
+// 获取orderdetail页面信息
+export async function getOrderInfo (params) {
+  return request({
+    url: order.getOrderInfo,
+    method: 'get',
+    params
+  })
+}
+
+// 根据订单号获取快件信息
+export async function getOrderInfoByOrderNo (params) {
+  return request({
+    url: order.getOrderInfoByOrderNo,
+    method: 'get',
+    params
+  })
+}
+
+// 根据订单号获取快递信息
+export async function queryByCompany (params) {
+  return request({
+    url: order.queryByCompany,
+    method: 'get',
+    params
   })
 }
