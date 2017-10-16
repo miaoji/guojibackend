@@ -4,11 +4,11 @@ let APIV3 = ''
 
 // 重构API
 // 线下地址
-// APIV3 = 'http://192.168.1.210:8080'
+APIV3 = 'http://192.168.1.210:8080'
 // 线上地址
 // APIV3 = 'http://api.didalive.net'
 // 正式地址
-APIV3 = 'http://api.mingz-tech.com'
+// APIV3 = 'http://api.mingz-tech.com'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -137,10 +137,17 @@ module.exports = {
 		// app推广接口
 		extensionapp: {
 		  all: `${APIV3}/api/app/index`,
-	      show: `${APIV3}/api/selectQrById`,
-	      create: `${APIV3}/api/app/add`,
-	      update: `${APIV3}/api/app/modWxAppById`,
-	      hide: `${APIV3}/api/app/delById`
+	      show: `${APIV3}/api/reply/getWxReplyById`,
+	      create: `${APIV3}/api/reply/add`,
+	      update: `${APIV3}/api/reply/modWxReplyById`,
+	      hide: `${APIV3}/api/reply/delWxReplyById`
+		},
+		// 微信回复配置
+		wxconfig: {
+			all: `${APIV3}/api/reply/index`,
+			show: `${APIV3}/api/reply/index`,
+			all: `${APIV3}/api/reply/index`,
+			all: `${APIV3}/api/reply/index`,
 		}
 	},
 }

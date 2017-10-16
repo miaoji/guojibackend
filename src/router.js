@@ -184,6 +184,14 @@ const Routers = function ({ history, app }) {
             }, 'login')
           },
         },{
+          path: 'wxconfig',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/wxconfig'))
+              cb(null, require('./routes/wxconfig/'))
+            }, 'wxconfig')
+          },
+        },{
           path: '*',
           getComponent (nextState, cb) {
             require.ensure([], require => {

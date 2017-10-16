@@ -7,8 +7,8 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Extensionapp = ({ location, dispatch, extensionapp, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType } = extensionapp
+const Wxconfig = ({ location, dispatch, wxconfig, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType } = wxconfig
   const { pageSize } = pagination
 
   const modalProps = {
@@ -16,24 +16,24 @@ const Extensionapp = ({ location, dispatch, extensionapp, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增APP推广链接' : '修改推广主体名称'}`,
+    title: `${modalType === 'create' ? '新增二维码' : '修改二维码'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `extensionapp/${modalType}`,
+        type: `wxconfig/${modalType}`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'extensionapp/hideModal',
+        type: 'wxconfig/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['extensionapp/query'],
+    loading: loading.effects['wxconfig/query'],
     pagination,
     location,
     onChange (page) {
@@ -49,13 +49,13 @@ const Extensionapp = ({ location, dispatch, extensionapp, loading }) => {
     },
     onDeleteItem (id) {
       dispatch({
-        type: 'extensionapp/delete',
+        type: 'wxconfig/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'extensionapp/showModal',
+        type: 'wxconfig/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -80,31 +80,31 @@ const Extensionapp = ({ location, dispatch, extensionapp, loading }) => {
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/extensionapp',
+        pathname: '/wxconfig',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/extensionapp',
+        pathname: '/wxconfig',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'extensionapp/showModal',
+        type: 'wxconfig/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion () {
-      dispatch({ type: 'extensionapp/switchIsMotion' })
+      dispatch({ type: 'wxconfig/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'extensionapp/multiDelete',
+      type: 'wxconfig/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -120,11 +120,11 @@ const Extensionapp = ({ location, dispatch, extensionapp, loading }) => {
   )
 }
 
-Extensionapp.propTypes = {
-  extensionapp: PropTypes.object,
+Wxconfig.propTypes = {
+  wxconfig: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ extensionapp, loading }) => ({ extensionapp, loading }))(Extensionapp)
+export default connect(({ wxconfig, loading }) => ({ wxconfig, loading }))(Wxconfig)

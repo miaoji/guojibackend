@@ -57,18 +57,6 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="国家拼音名" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('pinyin', {
-            initialValue: item.pinyin,
-            rules: [
-              {
-                required: false,
-                pattern: /^[A-Za-z]{0,}([\s]{1}[A-Za-z]{1,}){0,}$/,
-                message: '请输入中文名称的拼音!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
         <FormItem label="国家英文名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('countryEn', {
             initialValue: item.country_en,
@@ -91,6 +79,22 @@ const modal = ({
               },
             ],
           })(<Input type="number" />)}
+        </FormItem>
+        <FormItem label="热门国家" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('hot', {
+            initialValue: item.hot,
+            rules: [
+              {
+                required: true,
+                message: '请输入包裹类型中文名称!',
+              },
+            ],
+          })(
+            <Radio.Group defaultValue={1}>
+              <Radio value={1}>是</Radio>
+              <Radio value={0}>否</Radio>
+            </Radio.Group>
+          )}
         </FormItem>
       </Form>
     </Modal>

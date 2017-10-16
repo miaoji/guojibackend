@@ -39,7 +39,7 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime, status, extension, option, } = fields
-    if (status == 6) {
+    if (status == 0) {
       delete fields.status
     }
     if (createTime.length) {
@@ -97,7 +97,7 @@ const Filter = ({
     fields = handleFields(fields)
     fields['status'] = newStarte
     // 如果查询的订单状态为全部即status==6,则不向后端传递status参数
-    if (Number(newStarte) === 6) {
+    if (Number(newStarte) === 0) {
       delete fields['status']
     }
     onFilterChange(fields)
@@ -151,14 +151,15 @@ const Filter = ({
       </Col>
       <Col {...TwoColProps} xl={{ span: 24 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          {getFieldDecorator('status', { initialValue: "6" })(
+          {getFieldDecorator('status', { initialValue: "0" })(
             <RadioGroup onChange={onChangeRadio}>
-              <RadioButton value="6">全部</RadioButton>
+              <RadioButton value="0">全部</RadioButton>
               <RadioButton value="1">待付款</RadioButton>
-              <RadioButton value="2">已付款</RadioButton>
-              <RadioButton value="3">国内</RadioButton>
-              <RadioButton value="0">国际</RadioButton>
-              <RadioButton value="4">异常</RadioButton>
+              <RadioButton value="2">付款完成</RadioButton>
+              <RadioButton value="3">国内完成</RadioButton>
+              <RadioButton value="4">国际完成</RadioButton>
+              <RadioButton value="5">异常订单</RadioButton>
+              <RadioButton value="6">取消订单</RadioButton>
             </RadioGroup>)}
         </div>
       </Col>

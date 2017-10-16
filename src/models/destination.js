@@ -69,11 +69,12 @@ export default modelExtend(pageModel, {
     *create ({ payload }, { call, put }) {
       console.log('payload', payload)
       const data = yield call(create, payload)
-      if (data.success) {
+      if (data.code === 200) {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg
       }
     },
 
@@ -81,7 +82,8 @@ export default modelExtend(pageModel, {
       const id = yield select(({ destination }) => destination.currentItem.id)
       const newDestination = { ...payload, id }
       const data = yield call(update, newDestination)
-      if (data.success) {
+      if (data.code === 200) {
+        message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {

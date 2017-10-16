@@ -37,12 +37,12 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
     <div>
       <ul className={styles.list}>
         {list.show?<li>{list.name}</li>:list.map(item => (<li key={item.id}>
-        <Link to={`/county?cityCode=${item.city_code}`}>
-          <Button size="large">
-            <span>{item.city}</span>
+          <div title={item.city} size="large">
+            <Link to={`/county?cityCode=${item.city_code}`}>
+                <span>{item.city}</span>
+            </Link>
             <DropOption onMenuClick={e => handleMenuClick(item, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
-          </Button>
-        </Link>
+          </div>
         </li>))}
       </ul>
     </div>

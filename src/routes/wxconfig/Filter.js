@@ -23,8 +23,6 @@ const TwoColProps = {
 
 const Filter = ({
   onAdd,
-  isMotion,
-  switchIsMotion,
   onFilterChange,
   filter,
   form: {
@@ -34,10 +32,10 @@ const Filter = ({
   },
 }) => {
   const handleFields = (fields) => {
-    // const { createTime } = fields
-    // if (createTime.length) {
-    //   fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
-    // }
+    const { createTime } = fields
+    if (createTime.length) {
+      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+    }
     return fields
   }
 
@@ -68,7 +66,7 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-  const { country, address } = filter
+  const { name, address } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -80,8 +78,15 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }} sm={{ span: 12 }}>
-        {getFieldDecorator('country', { initialValue: country })(<Search placeholder="按目的地搜索" size="large" onSearch={handleSubmit} />)}
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按名称搜索" size="large" onSearch={handleSubmit} />)}
+      </Col>
+      <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
+        <FilterItem label="创建时间">
+          {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
+            <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
+          )}
+        </FilterItem>
       </Col>
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -89,7 +94,7 @@ const Filter = ({
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
-          <div>
+          <div style={{ display:'none' }}>
             <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
           </div>
         </div>
@@ -100,7 +105,6 @@ const Filter = ({
 
 Filter.propTypes = {
   onAdd: PropTypes.func,
-  isMotion: PropTypes.bool,
   switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,

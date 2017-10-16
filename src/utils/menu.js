@@ -124,5 +124,17 @@ module.exports = [
     mpid: -1,
     name: '微信用户详情',
     router: '/wxuserdetail',
-  },
+  },{
+    id: 7,
+    bpid: 1,
+    name: '微信配置',
+    icon: 'api',
+  },{
+    id: 71,
+    bpid: 7,
+    mpid: 7,
+    name: '微信回复配置',
+    icon: 'setting',
+    router: '/wxconfig'
+  }
 ]
