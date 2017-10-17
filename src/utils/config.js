@@ -145,9 +145,17 @@ module.exports = {
 		// 微信回复配置
 		wxconfig: {
 			all: `${APIV3}/api/reply/index`,
-			show: `${APIV3}/api/reply/index`,
-			all: `${APIV3}/api/reply/index`,
-			all: `${APIV3}/api/reply/index`,
+			create: `${APIV3}/api/reply/add`,
+			update: `${APIV3}/api/reply/modWxReplyById`,
+			hide: `${APIV3}/api/reply/delWxReplyById`,
+		},
+		// 微信回复配置
+		wxmenu: {
+			all: `${APIV3}/api/wxMenu/index`,
+			create: `${APIV3}/api/wxMenu/add`,
+			update: `${APIV3}/api/wxMenu/modWxMenuById`,
+			hide: `${APIV3}/api/wxMenu/delWxMenuById`,
+			setmenu: `${APIV3}/api/wxMenu/setMenu`,
 		}
 	},
 }

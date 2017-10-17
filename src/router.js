@@ -192,6 +192,22 @@ const Routers = function ({ history, app }) {
             }, 'wxconfig')
           },
         },{
+          path: 'wxmenu',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/wxmenu'))
+              cb(null, require('./routes/wxmenu/'))
+            }, 'wxmenu')
+          },
+        },{
+          path: 'wxmenudetail',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/wxmenu/wxmenudetail'))
+              cb(null, require('./routes/wxmenu/wxmenudetail/'))
+            }, 'wxmenudetail')
+          },
+        },{
           path: '*',
           getComponent (nextState, cb) {
             require.ensure([], require => {

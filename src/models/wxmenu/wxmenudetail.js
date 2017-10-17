@@ -1,10 +1,11 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove, query, } from '../services/wxconfigs'
-import { pageModel } from './common'
+import { create, update, remove, query, } from '../../services/wxmenus'
+import { pageModel } from '../common'
+import { queryURL, storage, } from '../../utils'
 
 export default modelExtend(pageModel, {
-  namespace: 'wxconfig',
+  namespace: 'wxmenudetail',
 
   state: {
     currentItem: {},
@@ -15,7 +16,10 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/wxconfig') {
+        if (location.pathname === '/wxmenudetail') {
+          const parentId = queryURL('parentId')
+          console.log('parentId',parentId)
+          console.log('query',location.query)
           dispatch({
             type: 'query',
             payload: location.query,
@@ -28,6 +32,18 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
+      if(payload.parentId){
+        storage({
+          key:'parentId',
+          val:payload.parentId,
+          type:'set'
+        })
+      }else{
+        payload.parentId=storage({
+          key:'parentId',
+          type:'get'
+        })
+      }
       const data = yield call(query, payload)
       if (data.code === 200) {  
         yield put({
@@ -47,11 +63,13 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
+      const parentId=storage({ key:'parentId',type:'get' })
       const newPayload = {
-        content: payload.parameter,
-        name: payload.name
+        url: payload.url,
+        name: payload.name,
+        type:'view',
+        parentId,
       }
-      return
       const data = yield call(create, newPayload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -63,9 +81,10 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ wxconfig }) => wxconfig.currentItem.id)
+      const id = yield select(({ wxmenudetail }) => wxmenudetail.currentItem.id)
       const newPayload = {
-        content: payload.content,
+        url: payload.url,
+        name: payload.name,
         id: id
       }
       // console.log('newQr',newQr)

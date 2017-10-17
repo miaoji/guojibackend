@@ -1,10 +1,10 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove, query, } from '../services/wxconfigs'
+import { create, update, remove, query, } from '../services/wxmenus'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
-  namespace: 'wxconfig',
+  namespace: 'wxmenu',
 
   state: {
     currentItem: {},
@@ -15,7 +15,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/wxconfig') {
+        if (location.pathname === '/wxmenu') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -28,7 +28,9 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      const data = yield call(query, payload)
+      const parentId = '0'
+      const newPayload = { ...payload, parentId, }
+      const data = yield call(query, newPayload)
       if (data.code === 200) {  
         yield put({
           type: 'querySuccess',
@@ -48,10 +50,11 @@ export default modelExtend(pageModel, {
 
     *create ({ payload }, { call, put }) {
       const newPayload = {
-        content: payload.parameter,
-        name: payload.name
+        url: payload.url,
+        name: payload.name,
+        type: 'view',
+        parentId: '0'
       }
-      return
       const data = yield call(create, newPayload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -63,13 +66,12 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ wxconfig }) => wxconfig.currentItem.id)
+      const id = yield select(({ wxmenu }) => wxmenu.currentItem.id)
       const newPayload = {
-        content: payload.content,
+        url: payload.url,
+        name: payload.name,
         id: id
       }
-      // console.log('newQr',newQr)
-      // return
       const data = yield call(update, newPayload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })

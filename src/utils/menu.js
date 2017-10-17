@@ -136,5 +136,18 @@ module.exports = [
     name: '微信回复配置',
     icon: 'setting',
     router: '/wxconfig'
+  },{
+    id: 72,
+    bpid: 7,
+    mpid: 7,
+    name: '微信菜单配置',
+    icon: 'setting',
+    router: '/wxmenu'
+  },{
+    id: 73,
+    bpid: 72,
+    mpid: -1,
+    name: '微信子菜单配置',
+    router: '/wxmenudetail'
   }
 ]
