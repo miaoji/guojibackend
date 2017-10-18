@@ -9,6 +9,7 @@ import { time } from '../../utils'
 import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
+
 //状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
 const realtext = {
   '1': '待付款',
@@ -19,7 +20,7 @@ const realtext = {
   '6': '取消订单'
 }
 
-const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
+const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -42,6 +43,15 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
       default:
         break
     }
+  }
+
+  const handleTableChange = (pagination, filters, sorter) => {
+    console.log('filter',filter)
+    console.log('pagination',pagination)
+    console.log('filters',filters.STATUS[0])
+    console.log('sorter',sorter)
+    const value = {  ...filter, status:filters.STATUS[0], }
+    filterStatus(value)
   }
 
   const handleCreateZtorder = (record) => {
@@ -91,6 +101,15 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
       title: '订单状态',
       dataIndex: 'STATUS',
       key: 'STATUS',
+      filters: [
+        { text: '待付款', value: 1 },
+        { text: '付款完成', value: 2 },
+        { text: '国内完成', value: 3 },
+        { text: '国际完成', value: 4 },
+        { text: '异常订单', value: 5 },
+        { text: '取消订单', value: 6 }
+      ],
+      filterMultiple: false,
       render: (text) => {
         return <span>{realtext[text]}</span>
       }
@@ -156,6 +175,7 @@ const List = ({ onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateC
         simple
         rowKey={record => record.ID}
         getBodyWrapper={getBodyWrapper}
+        onChange={handleTableChange}
       />
     </div>
   )

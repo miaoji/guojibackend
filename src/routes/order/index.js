@@ -86,6 +86,9 @@ const Order = ({ location, dispatch, order, loading }) => {
   }
 
   const listProps = {
+    filter: {
+      ...location.query,
+    },
     dataSource: list,
     loading: loading.effects['order/query'],
     pagination,
@@ -139,6 +142,14 @@ const Order = ({ location, dispatch, order, loading }) => {
           orderNo: item.ORDER_NO
         },
       })
+    },
+    filterStatus (value) {
+      dispatch(routerRedux.push({
+        pathname: location.pathname,
+        query: {
+          ...value,
+        },
+      }))
     }
   }
 
@@ -152,22 +163,20 @@ const Order = ({ location, dispatch, order, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
-          page: 1,
-          pageSize,
         },
       }))
     },
-    onSearch (fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/order',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/order',
-      }))
-    },
+    // onSearch (fieldsValue) {
+    //   fieldsValue.keyword.length ? dispatch(routerRedux.push({
+    //     pathname: '/order',
+    //     query: {
+    //       field: fieldsValue.field,
+    //       keyword: fieldsValue.keyword,
+    //     },
+    //   })) : dispatch(routerRedux.push({
+    //     pathname: '/order',
+    //   }))
+    // },
     onAdd () {
       dispatch({
         type: 'order/showAddModal',

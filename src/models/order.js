@@ -37,14 +37,12 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
+      console.log('payload',payload)
       const data = yield call(query, payload)
       if (data.code === 200) {
         for(var item in data.obj){
           data.obj[item].CREATE_TIME=time.formatTime(data.obj[item].CREATE_TIME)
         }
-        // data.obj.forEach((item) => {
-        //   item.CREATE_TIME=time.formatTime(item.CREATE_TIME)
-        // })
         yield put({
           type: 'querySuccess',
           payload: {
