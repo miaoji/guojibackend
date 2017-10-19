@@ -27,18 +27,25 @@ export default {
       const data = yield call(getOrderInfo, payload)
       let detailDate = data.obj
       // 获取快递信息(开始)
-      if (data.code === 200) {
-        const cnInfo = yield call(queryByCompany,{num:data.obj.cnNo||'',company:data.obj.kdCompanyCodeCn||'zhongtong'})
-        const gjInfo = yield call(queryByCompany,{num:data.obj.intlNo||'',company:data.obj.kdCompanyCode||''})
-        console.log('gjInfo',gjInfo)
-        if (cnInfo.code === 200) {
-          detailDate.cnExpressInfo = cnInfo.obj.data
+      // 未查询到数据的时候 data返回的code也是200,但是没有obj
+      if (data.code === 200 && data.obj) {
+        if (data.obj.cnNo) {
+          const cnInfo = yield call(queryByCompany,{num:data.obj.cnNo||'',company:data.obj.kdCompanyCodeCn||'zhongtong',source:'backend'})
+          // 未查询到快递轨迹的时候,返回的code是500
+          if (cnInfo.code === 200) {
+            detailDate.cnExpressInfo = cnInfo.obj.data
+          }
         }
-        if (gjInfo.code === 200) {
-          detailDate.gjExpressInfo = gjInfo.obj.data
+        if (data.obj.intlNo) {
+          const gjInfo = yield call(queryByCompany,{num:data.obj.intlNo||'',company:data.obj.kdCompanyCode||'',source:'backend'})
+          console.log('gjInfo',gjInfo)
+          if (gjInfo.code === 200) {
+            detailDate.gjExpressInfo = gjInfo.obj.data
+          }
         }
       }else{
-        console.log('error',orderInfo)
+        console.log('error',data)
+        return '查询无果'
       }
       // 获取快递信息(结束)
 
