@@ -73,8 +73,6 @@ const Qr = ({ location, dispatch, qr, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
-          page: 1,
-          pageSize,
         },
       }))
     },
