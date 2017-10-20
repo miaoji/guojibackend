@@ -72,6 +72,8 @@ const Detail = ({ orderDetail }) => {
           <span>国内单号: {data.cnNo?data.cnNo:'暂无'}</span>
           <span>国际单号: {data.intlNo?data.intlNo:'暂无'}</span>
           <span>下单时间: {time.formatTime(data.createTime)}</span>
+          <span>国内段快递公司: {data.kdCompanyCodeCn?data.kdCompanyCodeCn:'暂无'}</span>
+          <span>国际段快递公司: {data.kdCompanyCode?data.kdCompanyCode:'暂无'}</span>
           <span>订单状态: {realOrderStatus[data.status]}</span>
           <span>预付总金额: {(data.totalFee?data.totalFee:'暂无')/100}元</span>
           <span>快件重量: {data.weight}kg</span>

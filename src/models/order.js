@@ -83,6 +83,11 @@ export default modelExtend(pageModel, {
 
     *update ({ payload }, { select, call, put }) {
       const id = yield select(({ order }) => order.currentItem.ID)
+      // 暂时不允许修改中转地址
+      delete payload.transferAddress
+      // 删除多余的字段
+      delete payload.key
+
       const newOrder = { ...payload, id }
       const data = yield call(update, newOrder)
       if (data.success && data.code === 200) {

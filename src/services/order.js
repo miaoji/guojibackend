@@ -45,7 +45,7 @@ export async function update (params) {
   return request({
     url: order.mod,
     method: 'post',
-    params: newParams,
+    params
   })
 }
 
