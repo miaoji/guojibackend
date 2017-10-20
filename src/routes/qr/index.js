@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Qr = ({ location, dispatch, qr, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType } = qr
+  const { list, pagination, currentItem, modalVisible, modalType, inputDis, } = qr
   const { pageSize } = pagination
 
   const modalProps = {
@@ -18,6 +18,8 @@ const Qr = ({ location, dispatch, qr, loading }) => {
     confirmLoading: loading.effects['boot/update'],
     title: `${modalType === 'create' ? '新增二维码' : '修改二维码'}`,
     wrapClassName: 'vertical-center-modal',
+    typeDis:modalType === 'create' ? false : true,
+    inputDis: inputDis,
     onOk (data) {
       dispatch({
         type: `qr/${modalType}`,
@@ -29,6 +31,16 @@ const Qr = ({ location, dispatch, qr, loading }) => {
         type: 'qr/hideModal',
       })
     },
+    onShowInput(){
+      dispatch({
+        type:'qr/showInput'
+      })
+    },
+    onHideInput(){
+      dispatch({
+        type: 'qr/hideInput'
+      })
+    }
   }
 
   const listProps = {

@@ -82,7 +82,7 @@ const modal = ({
             initialValue: item.KD_COMPANY_CODE,
             rules: [
               {
-                required: false,
+                required: true,
                 message: '请选择快递公司名!',
               },
             ],
@@ -93,7 +93,7 @@ const modal = ({
             initialValue: item.INTL_NO,
             rules: [
               {
-                required: false,
+                required: true,
                 pattern: /^[A-Za-z0-9]{0,}$/,
                 message: '请输入国际段单号!',
               },

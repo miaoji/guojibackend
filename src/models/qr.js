@@ -12,6 +12,7 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
+    inputDis: true,
     modalType: 'create'
   },
 
@@ -50,11 +51,17 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      const newQr = {
-        param: payload.parameter,
-        name: payload.name
+
+      console.log('newQr',payload)
+      delete payload.key
+      if (payload.type&&payload.type==1) {
+        delete payload.seconds
+      }else if (payload.seconds) {
+        payload.seconds = payload.seconds*60*60*24
       }
-      const data = yield call(create, newQr)
+      // console.log('aaa',payload)
+      // return
+      const data = yield call(create, payload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.msg)
@@ -65,11 +72,14 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
+      // 获取当前要修改数据的id
       const id = yield select(({ qr }) => qr.currentItem.ID)
-      const newQr = {
-        name: payload.name,
-        id
-      }
+
+      // 删除多余的参数
+      delete payload.key
+      delete payload.seconds
+      delete payload.type
+      const newQr = { ...payload, id }
       const data = yield call(update, newQr)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -97,11 +107,19 @@ export default modelExtend(pageModel, {
     showModal (state, { payload }) {
       console.log('state', state)
       console.log('payload', payload)
-      return { ...state, ...payload, modalVisible: true }
+      return { ...state, ...payload, modalVisible: true, inputDis: true, }
     },
 
     hideModal (state) {
-      return { ...state, modalVisible: false }
+      return { ...state, modalVisible: false, inputDis: false, }
+    },
+
+    showInput (state) {
+      return { ...state, inputDis: false }
+    },
+
+    hideInput (state) {
+      return { ...state, inputDis: true }
     }
 
   },

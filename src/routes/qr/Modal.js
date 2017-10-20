@@ -17,10 +17,15 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
+  inputDis,
+  typeDis,
+  onShowInput,
+  onHideInput,
   form: {
     getFieldDecorator,
     validateFields,
     getFieldsValue,
+    setFieldsValue,
   },
   type,
   ...modalProps
@@ -40,7 +45,17 @@ const modal = ({
   }
 
   const handleChange = (e) => {
-    console.log('e',e.target.value)
+    switch(e.target.value.toString()) {
+      case '1':
+        onHideInput()
+        setFieldsValue({seconds:null})
+        break
+      case '0':
+        onShowInput()
+        break
+      default:
+        onHideInput()
+    }
   }
 
   const modalOpts = {
@@ -66,29 +81,29 @@ const modal = ({
         </FormItem>
         <FormItem label="有效时长" hasFeedback {...formItemLayout}>
           {getFieldDecorator('type', {
-            initialValue: item.TYPE,
+            initialValue: item.TYPE || 1,
             rules: [
               {
-                required: true,
-                message: '请输入有效时长!',
+                required: !typeDis,
+                message: '请选择有效时长!',
               },
             ],
-          })(<Radio.Group onChange={handleChange}>
+          })(<Radio.Group onChange={handleChange} disabled={ typeDis }>
             <Radio value={1}>永久有效</Radio>
-            <Radio value={0}>临时有效</Radio>
+            <Radio value={0}>临时有效(最长一个的时间)</Radio>
           </Radio.Group>)}
         </FormItem>
-        <FormItem label="有效期" hasFeedback {...formItemLayout}>
+        <FormItem label="有效期(天)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('seconds', {
             initialValue: item.SECONDS,
             rules: [
               {
-                required: true,
-                pattern: /^[0-9]{0,}$/,
-                message: '请选择有效期!',
+                required: !inputDis,
+                pattern: /(^[1-9]{1}$)|(^[0-2]{1}[0-9]{1}$)|(^30$)/,
+                message: '请输入有效期!',
               },
             ],
-          })(<Input />)}
+          })(<Input disabled={ inputDis } />)}
         </FormItem>
       </Form>
     </Modal>
