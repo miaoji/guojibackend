@@ -45,14 +45,14 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, isMotio
     }
   }
 
-  const handleTableChange = (pagination, filters, sorter) => {
-    console.log('filter',filter)
-    console.log('pagination',pagination)
-    console.log('filters',filters.STATUS[0])
-    console.log('sorter',sorter)
-    const value = {  ...filter, status:filters.STATUS[0], }
-    filterStatus(value)
-  }
+  // const handleTableChange = (pagination, filters, sorter) => {
+  //   console.log('filter',filter)
+  //   console.log('pagination',pagination)
+  //   console.log('filters',filters.STATUS[0])
+  //   console.log('sorter',sorter)
+  //   const value = {  ...filter, status:filters.STATUS[0], }
+  //   filterStatus(value)
+  // }
 
   const handleCreateZtorder = (record) => {
     confirm({
@@ -175,7 +175,6 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, isMotio
         simple
         rowKey={record => record.ID}
         getBodyWrapper={getBodyWrapper}
-        onChange={handleTableChange}
       />
     </div>
   )
