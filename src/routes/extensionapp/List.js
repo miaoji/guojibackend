@@ -48,8 +48,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'appid',
     },{
       title: '用户量',
-      dataIndex: 'sourceCount',
-      key: 'sourceCount',
+      dataIndex: 'userCount',
+      key: 'userCount',
       render: (text) => {
         return <span>{ text?text:0 }</span>
       }

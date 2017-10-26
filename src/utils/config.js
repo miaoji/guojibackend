@@ -137,10 +137,10 @@ module.exports = {
 		// app推广接口
 		extensionapp: {
 		  all: `${APIV3}/api/app/index`,
-	      show: `${APIV3}/api/reply/getWxReplyById`,
-	      create: `${APIV3}/api/reply/add`,
-	      update: `${APIV3}/api/reply/modWxReplyById`,
-	      hide: `${APIV3}/api/reply/delWxReplyById`
+	      show: `${APIV3}/api/app/getWxAppById`,
+	      create: `${APIV3}/api/app/add`,
+	      update: `${APIV3}/api/app/modWxAppById`,
+	      hide: `${APIV3}/api/app/delById`
 		},
 		// 微信回复配置
 		wxconfig: {
