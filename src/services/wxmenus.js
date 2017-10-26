@@ -37,7 +37,7 @@ export async function remove (params) {
 export async function setmenu (params) {
   return request({
     url: wxmenu.setmenu,
-    method: 'get',
+    method: 'post',
     params,
   })
 }

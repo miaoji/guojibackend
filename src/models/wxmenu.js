@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove, query, } from '../services/wxmenus'
+import { create, update, remove, query, setmenu, } from '../services/wxmenus'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -75,7 +75,7 @@ export default modelExtend(pageModel, {
       const data = yield call(update, newPayload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
-        message.success('更新成功')
+        message.success('修改成功')
         yield put({ type: 'query' })
       } else {
         throw data.msg || data
@@ -86,6 +86,16 @@ export default modelExtend(pageModel, {
       const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')
+        yield put({ type: 'query' })
+      } else {
+        throw data.msg || data
+      }
+    },
+
+    *setmenu ({ payload }, { call, put, select }) {
+      const data = yield call(setmenu)
+      if (data.code === 200) {
+        message.success('设置微信菜单成功')
         yield put({ type: 'query' })
       } else {
         throw data.msg || data

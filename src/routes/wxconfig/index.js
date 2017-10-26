@@ -16,7 +16,7 @@ const Wxconfig = ({ location, dispatch, wxconfig, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增二维码' : '修改二维码'}`,
+    title: `${modalType === 'create' ? '新增微信回复配置' : '修改微信回复配置'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({

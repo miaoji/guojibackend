@@ -16,7 +16,7 @@ const Wxmenu = ({ location, dispatch, wxmenu, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增二维码' : '修改二维码'}`,
+    title: `${modalType === 'create' ? '新增微信菜单配置' : '修改微信菜单配置'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
@@ -95,6 +95,11 @@ const Wxmenu = ({ location, dispatch, wxmenu, loading }) => {
         payload: {
           modalType: 'create',
         },
+      })
+    },
+    onSubmitWeChat () {
+      dispatch({
+        type: 'wxmenu/setmenu',
       })
     },
     switchIsMotion () {

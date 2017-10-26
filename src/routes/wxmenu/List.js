@@ -46,23 +46,15 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         return <Link to={`/wxmenudetail?parentId=${record.id}`}>{text}</Link>
       }
     }, {
-      title: '地址',
+      title: 'URL地址',
       dataIndex: 'url',
       key: 'url',
-    },{
-      title: '创建时间',
-      dataIndex: 'create_time',
-      key: 'create_time',
-      render: (text) => {
-        const createtime = time.formatTime(text)
-        return <span>{createtime}</span>
-      }
     },{
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' },{ key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' },{ key: '2', name: '删除' }]} />
       },
     },
   ]

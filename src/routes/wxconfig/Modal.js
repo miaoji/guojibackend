@@ -4,7 +4,7 @@ import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
 import city from '../../utils/city'
 
 const FormItem = Form.Item
-const TextArea = Input
+const { TextArea } = Input
 
 const formItemLayout = {
   labelCol: {
@@ -60,7 +60,7 @@ const modal = ({
                 message: '请输入推广人姓名!',
               },
             ],
-          })(<TextArea rows={4} />)}
+          })(<TextArea autosize='true' />)}
         </FormItem>
       </Form>
     </Modal>
