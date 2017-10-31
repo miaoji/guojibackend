@@ -7,6 +7,7 @@ import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { time } from '../../utils'
 import { Link } from 'dva/router'
+import copy from "copy-to-clipboard"
 
 const confirm = Modal.confirm
 // const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
@@ -32,7 +33,9 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const copyUrl = (record, e) => {
     const href = 'http://control.mingz-tech.com/qrdetail?TICKET=' + record.TICKET + '&name=' + record.NAME + '&parameter=' + record.TICKET
-    window.prompt('使用Ctrl+C复制到剪切板', href)
+    copy(href)
+    window.prompt('复制成功,如果失败,请在输入框内手动复制!!!', href)
+    // message.success('复制成功,如果失败,请在输入框内手动复制!!!')
   }
 
   const columns = [
