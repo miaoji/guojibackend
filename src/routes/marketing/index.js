@@ -16,7 +16,7 @@ const Marketing = ({ location, dispatch, marketing, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '发送优惠券' : '修改微信菜单配置'}`,
+    title: `${modalType === 'create' ? '向所有用户发送代金券' : '修改微信菜单配置'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({

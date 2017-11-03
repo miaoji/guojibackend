@@ -89,7 +89,7 @@ const Filter = ({
             <Button size="large" type="ghost" onClick={onSubmit}>发送优惠卷</Button>
           </div>
           <div style={{ display:'block' }}>
-            <Button size="large" type="ghost" onClick={onAdd}>向所有用户发送优惠卷</Button>
+            <Button size="large" type="ghost" onClick={onAdd}>向所有用户发送代金券</Button>
           </div>
         </div>
       </Col>
