@@ -1,5 +1,5 @@
 import { request, config, pageParams,} from '../utils'
-const { wxmenu, wxuser, } = config.api
+const { wxmenu, wxuser, marketing, } = config.api
 
 export async function query (params) {
   params = pageParams(params)
@@ -11,9 +11,9 @@ export async function query (params) {
 }
 
 export async function create (params) {
-  return
+  // console.log('add',params)
   return request({
-    url: wxmenu.create,
+    url: marketing.setmenu,
     method: 'post',
     params,
   })
@@ -38,9 +38,10 @@ export async function remove (params) {
 }
 
 export async function setmenu (params) {
+  // console.log('params',params)
   return
   return request({
-    url: wxmenu.setmenu,
+    url: marketing.setmenu,
     method: 'post',
     params,
   })

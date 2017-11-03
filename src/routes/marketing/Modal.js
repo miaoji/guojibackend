@@ -50,26 +50,14 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="按钮名称" hasFeedback {...formItemLayout}>
+        <FormItem label="优惠券ID" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
             initialValue: item.name,
             rules: [
               {
                 required: true,
                 // pattern: /^[\u4e00-\u9fa5]{0,}$/,
-                message: '请输入按钮名称!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="地址" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('url', {
-            initialValue: item.url,
-            rules: [
-              {
-                required: true,
-                // pattern: /^[\u4e00-\u9fa5]{0,}$/,
-                message: '请输入url地址!',
+                message: '请输入优惠券ID!',
               },
             ],
           })(<Input />)}

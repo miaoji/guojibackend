@@ -35,7 +35,7 @@ const Filter = ({
 }) => {
   const onSubmit = () => {
     confirm({
-      title: '确定要提交到微信吗?',
+      title: '确定要向微信用户发送优惠券吗?',
       onOk () {
         onSubmitWeChat()
       }
@@ -85,11 +85,11 @@ const Filter = ({
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
-          <div style={{ display:'block' }}>
+          <div style={{ display:'none' }}>
             <Button size="large" type="ghost" onClick={onSubmit}>发送优惠卷</Button>
           </div>
           <div style={{ display:'block' }}>
-            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
+            <Button size="large" type="ghost" onClick={onAdd}>向所有用户发送优惠卷</Button>
           </div>
         </div>
       </Col>

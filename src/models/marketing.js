@@ -50,10 +50,7 @@ export default modelExtend(pageModel, {
 
     *create ({ payload }, { call, put }) {
       const newPayload = {
-        url: payload.url,
-        name: payload.name,
-        type: 'view',
-        parentId: '0'
+        coupon_stock_id: payload.name,
       }
       const data = yield call(create, newPayload)
       if (data.code === 200) {
@@ -95,7 +92,7 @@ export default modelExtend(pageModel, {
     *setmenu ({ payload }, { call, put, select }) {
       const data = yield call(setmenu)
       if (data.code === 200) {
-        message.success('设置微信菜单成功')
+        message.success('发送优惠卷成功')
         yield put({ type: 'query' })
       } else {
         throw data.msg || data

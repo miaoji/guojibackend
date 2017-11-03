@@ -68,14 +68,14 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       render: (text) => {
         return <span>{text?text:'无'}</span>
       }
-    },{
+    },/*{
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' },]} />
       },
-    },
+    },*/
   ]
 
   const getBodyWrapperProps = {
