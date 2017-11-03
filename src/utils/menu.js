@@ -144,6 +144,13 @@ module.exports = [
     icon: 'setting',
     router: '/wxmenu'
   },{
+    id: 74,
+    bpid: 7,
+    mpid: 7,
+    name: '微信营销配置',
+    icon: 'setting',
+    router: '/marketing'
+  },{
     id: 73,
     bpid: 72,
     mpid: -1,
