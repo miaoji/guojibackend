@@ -75,6 +75,7 @@ const modal = ({
             <Radio.Group defaultValue={'包裹'}>
               <Radio value={'包裹'}>包裹</Radio>
               <Radio value={'文件'}>文件</Radio>
+              <Radio value={'大货'}>大货</Radio>
             </Radio.Group>
           )}
         </FormItem>

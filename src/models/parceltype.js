@@ -130,6 +130,8 @@ export default modelExtend(pageModel, {
         nameEn = "P"
       }else if (payload.nameCn=="文件") {
         nameEn = "D"
+      }else if (payload.nameCn=="大货") {
+        nameEn = "H"
       }else{
         nameEn = "*"
       }
