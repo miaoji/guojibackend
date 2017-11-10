@@ -9,6 +9,16 @@ import { config, time, } from '../utils'
 const { query } = ordersService
 const { prefix } = config
 
+//状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
+const realtext = {
+  '1': '待付款',
+  '2': '付款完成',
+  '3': '国内完成',
+  '4': '国际完成',
+  '5': '异常订单',
+  '6': '取消订单'
+}
+
 export default modelExtend(pageModel, {
   namespace: 'order',
 
@@ -17,6 +27,7 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     bootModalVisible: false,
+    stateModalVisible: false,
     selectedRowKeys: [],
     isMotion: false,
   },
@@ -121,6 +132,26 @@ export default modelExtend(pageModel, {
       }
     },
 
+    *updateState ({ payload }, { call, put, select }) {
+      const id = yield select(({ order }) => order.currentItem.ID)
+      const state = yield select(({ order }) => order.currentItem.STATUS)
+      // 判断是否修改state(订单状态)
+      if (!Number(payload.state)) {
+        payload.state=state
+      }
+      const data = yield call(update, {
+        id:id,
+        status:payload.state
+      })
+      if ( data.success && data.code === 200) {
+        message.success('状态修改成功')
+        yield put({ type: 'hideStateModal'})
+        yield put({ type: 'query' })
+      }else{
+        throw data.msg
+      }
+    },
+
     *createChinaOrder ({ payload }, { call, put }) {
       console.log('payload', payload)
       const data = yield call(createChinaOrder, {...payload})
@@ -185,6 +216,14 @@ export default modelExtend(pageModel, {
 
     hideBootModal (state) {
       return { ...state, bootModalVisible: false }
+    },
+
+    showStateModal (state, { payload }) {
+      return { ...state, ...payload, stateModalVisible: true }
+    },
+
+    hideStateModal (state) {
+      return { ...state, stateModalVisible: false }
     }
 
   },

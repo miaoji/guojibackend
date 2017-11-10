@@ -8,9 +8,10 @@ import Filter from './Filter'
 import Modal from './Modal'
 import BootModal from './bootModal'
 import AddModal from './addModal'
+import StateModal from './stateModal'
 
 const Order = ({ location, dispatch, order, loading }) => {
-  const { list, pagination, currentItem, addModalVisible, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = order
+  const { list, pagination, currentItem, addModalVisible, stateModalVisible, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = order
   const { pageSize } = pagination
 
   // 订单创建的modal
@@ -85,6 +86,28 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
   }
 
+  // 改状态modal
+  const stateModalProps = {
+    type: modalType,
+    item: currentItem,
+    visible: stateModalVisible,
+    confirmLoading: loading.effects['order/update'],
+    title: '修改状态',
+    wrapClassName: 'vertical-center-modal',
+    onOk (data) {
+      console.log('data',data)
+      dispatch({
+        type: `order/updateState`,
+        payload: data,
+      })
+    },
+    onCancel () {
+      dispatch({
+        type: 'order/hideStateModal',
+      })
+    },
+  }
+
   const listProps = {
     filter: {
       ...location.query,
@@ -138,6 +161,14 @@ const Order = ({ location, dispatch, order, loading }) => {
         },
       })
     },
+    showStateModal (item) {
+      dispatch({
+        type: 'order/showStateModal',
+        payload: {
+          currentItem: item
+        }
+      })
+    },
     onCreateCtorder (item) {
       dispatch({
         type: 'order/createChinaOrder',
@@ -170,17 +201,6 @@ const Order = ({ location, dispatch, order, loading }) => {
         },
       }))
     },
-    // onSearch (fieldsValue) {
-    //   fieldsValue.keyword.length ? dispatch(routerRedux.push({
-    //     pathname: '/order',
-    //     query: {
-    //       field: fieldsValue.field,
-    //       keyword: fieldsValue.keyword,
-    //     },
-    //   })) : dispatch(routerRedux.push({
-    //     pathname: '/order',
-    //   }))
-    // },
     onAdd () {
       dispatch({
         type: 'order/showAddModal',
@@ -220,6 +240,7 @@ const Order = ({ location, dispatch, order, loading }) => {
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
       {bootModalVisible && <BootModal {...bootModalProps} />}
+      {stateModalVisible && <StateModal {...stateModalProps}/>}
       {addModalVisible && <AddModal {...addModelProps}/>}
     </div>
   )

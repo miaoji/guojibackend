@@ -131,7 +131,7 @@ export default modelExtend(pageModel, {
       }else if (payload.nameCn=="文件") {
         nameEn = "D"
       }else if (payload.nameCn=="大货") {
-        nameEn = "H"
+        nameEn = "PPS"
       }else{
         nameEn = "*"
       }

@@ -20,7 +20,7 @@ const realtext = {
   '6': '取消订单'
 }
 
-const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
+const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -40,19 +40,13 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, isMotio
       case '4':
         window.open(`/bootdetail?orderNo=${record.ORDER_NO}`)
         break
+      case '5':
+        showStateModal(record)
+        break
       default:
         break
     }
   }
-
-  // const handleTableChange = (pagination, filters, sorter) => {
-  //   console.log('filter',filter)
-  //   console.log('pagination',pagination)
-  //   console.log('filters',filters.STATUS[0])
-  //   console.log('sorter',sorter)
-  //   const value = {  ...filter, status:filters.STATUS[0], }
-  //   filterStatus(value)
-  // }
 
   const handleCreateZtorder = (record) => {
     confirm({
@@ -134,7 +128,7 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, isMotio
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '改价'}, { key: '4', name: '改价记录' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '改价'}, { key: '4', name: '改价记录' }, { key: '2', name: '删除' }, { key: '5', name: '修改状态' }]} />
       },
     },
   ]
@@ -184,6 +178,7 @@ List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   addBoot: PropTypes.func,
+  showStateModal: PropTypes.func,
   isMotion: PropTypes.bool,
   location: PropTypes.object,
 }
