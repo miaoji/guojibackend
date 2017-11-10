@@ -52,15 +52,12 @@ export default modelExtend(pageModel, {
 
     *create ({ payload }, { call, put }) {
 
-      console.log('newQr',payload)
       delete payload.key
       if (payload.type&&payload.type==1) {
         delete payload.seconds
       }else if (payload.seconds) {
         payload.seconds = payload.seconds*60*60*24
       }
-      // console.log('aaa',payload)
-      // return
       const data = yield call(create, payload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -105,8 +102,6 @@ export default modelExtend(pageModel, {
   reducers: {
 
     showModal (state, { payload }) {
-      console.log('state', state)
-      console.log('payload', payload)
       return { ...state, ...payload, modalVisible: true, inputDis: true, }
     },
 

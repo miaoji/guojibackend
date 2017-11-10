@@ -48,7 +48,6 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      console.log('payload',payload)
       const data = yield call(query, payload)
       if (data.code === 200) {
         for(var item in data.obj){
@@ -111,12 +110,10 @@ export default modelExtend(pageModel, {
     },
 
     *addBoot ({ payload }, { call, put }) {
-      console.log('payload111', payload)
       const other = {
         'createUserId': JSON.parse(window.localStorage.getItem('guojipc_user'))['roleId'],
         'status': 1
       }
-      console.log('other', other)
       const data = yield call(addBoot, {
         priceSpread: Number(payload.priceSpread)*100,
         orderNo: payload.orderNo,
@@ -153,7 +150,6 @@ export default modelExtend(pageModel, {
     },
 
     *createChinaOrder ({ payload }, { call, put }) {
-      console.log('payload', payload)
       const data = yield call(createChinaOrder, {...payload})
       if (data.success && data.code === 200) {
         message.success(data.msg)
@@ -166,7 +162,6 @@ export default modelExtend(pageModel, {
 
     *getKdCompany ({ payload }, { call, put,}) {
       const data = yield call(getKdCompany)
-      console.log('data', data)
       if (data.code === 200 ) {
         let children = []
         if (data.obj) {

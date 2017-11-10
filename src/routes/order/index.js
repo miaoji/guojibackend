@@ -23,7 +23,6 @@ const Order = ({ location, dispatch, order, loading }) => {
     title: '创建订单',
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
-      // console.log('update data', data)
       dispatch({
         type: `order/addOrder`,
         payload: data,
@@ -73,7 +72,6 @@ const Order = ({ location, dispatch, order, loading }) => {
     title: '提交补价',
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
-      // console.log('update data', data)
       dispatch({
         type: `order/addBoot`,
         payload: data,
@@ -95,7 +93,6 @@ const Order = ({ location, dispatch, order, loading }) => {
     title: '修改状态',
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
-      console.log('data',data)
       dispatch({
         type: `order/updateState`,
         payload: data,

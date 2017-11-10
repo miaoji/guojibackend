@@ -46,10 +46,8 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      console.log('data',data)
       if (data.code === 200 && data.success) {
         for(let item in data.obj){
-          console.log('item',item)
           data.obj[item].countryName = data.obj[item].country.countryCn
           data.obj[item].provincesName = data.obj[item].provinces.province
           data.obj[item].citiesName = data.obj[item].cities.city
@@ -133,7 +131,6 @@ export default modelExtend(pageModel, {
       payload = JSON.parse(payload).code
       const data = yield call(getCity,{provinceCode:payload})
       if (data.code === 200) {
-        console.log('dadadada',data)
         let children = []
         if (data.obj) {
           for (let i=0; i < data.obj.length; i++) {
@@ -161,7 +158,6 @@ export default modelExtend(pageModel, {
       payload = JSON.parse(payload).code
       const data = yield call(getCounty,{cityCode:payload})
       if (data.code === 200) {
-        console.log('dadadada',data)
         let children = []
         if (data.obj) {
           for (let i=0; i < data.obj.length; i++) {

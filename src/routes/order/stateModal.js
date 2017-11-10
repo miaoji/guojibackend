@@ -84,10 +84,6 @@ const stateModal = ({
             <Select>
               <Option value="1">待付款</Option>
               <Option value="2">付款完成</Option>
-              <Option value="3">国内完成</Option>
-              <Option value="4">国际完成</Option>
-              <Option value="5">异常订单</Option>
-              <Option value="6">取消订单</Option>
             </Select>
           )}
         </FormItem>
@@ -95,6 +91,11 @@ const stateModal = ({
     </Modal>
   )
 }
+
+// <Option value="3">国内完成</Option>
+// <Option value="4">国际完成</Option>
+// <Option value="5">异常订单</Option>
+// <Option value="6">取消订单</Option>
 
 stateModal.propTypes = {
   form: PropTypes.object.isRequired,
