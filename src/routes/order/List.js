@@ -128,7 +128,7 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '改价'}, { key: '4', name: '改价记录' }, { key: '2', name: '删除' }, { key: '5', name: '修改状态' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '修改状态' }, { key: '1', name: '修改订单' }, { key: '3', name: '改价'}, { key: '4', name: '改价记录' }, { key: '2', name: '删除' }]} />
       },
     },
   ]
