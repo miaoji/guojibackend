@@ -54,6 +54,22 @@ const Routers = function ({ history, app }) {
             }, 'orderdetail')
           },
         }, {
+          path: 'cargo',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/cargo'))
+              cb(null, require('./routes/cargo/'))
+            }, 'cargo')
+          },
+        }, {
+          path: 'cargodetail',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/cargodetail'))
+              cb(null, require('./routes/cargodetail/'))
+            }, 'cargodetail')
+          },
+        }, {
           path: 'boot',
           getComponent (nextState, cb) {
             require.ensure([], require => {

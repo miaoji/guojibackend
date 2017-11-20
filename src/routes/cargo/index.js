@@ -10,8 +10,8 @@ import BootModal from './bootModal'
 import AddModal from './addModal'
 import StateModal from './stateModal'
 
-const Order = ({ location, dispatch, order, loading }) => {
-  const { list, pagination, currentItem, addModalVisible, stateModalVisible, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = order
+const Cargo = ({ location, dispatch, cargo, loading }) => {
+  const { list, pagination, currentItem, addModalVisible, stateModalVisible, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = cargo
   const { pageSize } = pagination
 
   // 订单创建的modal
@@ -19,18 +19,18 @@ const Order = ({ location, dispatch, order, loading }) => {
     type: modalType,
     item: currentItem,
     visible: addModalVisible,
-    confirmLoading: loading.effects['order/update'],
+    confirmLoading: loading.effects['cargo/update'],
     title: '创建订单',
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `order/addOrder`,
+        type: `cargo/addcargo`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'order/hideAddModal',
+        type: 'cargo/hideAddModal',
       })
     },
   }
@@ -41,24 +41,24 @@ const Order = ({ location, dispatch, order, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: true,
-    confirmLoading: loading.effects['order/update'],
+    confirmLoading: loading.effects['cargo/update'],
     title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
     wrapClassName: 'vertical-center-modal',
     selectKdCompany: selectKdCompany,
     onOk (data) {
       dispatch({
-        type: `order/${modalType}`,
+        type: `cargo/${modalType}`,
         payload: data,
       })
     },
     getKdCompany () {
       dispatch({
-        type: `order/getKdCompany`
+        type: `cargo/getKdCompany`
       })
     },
     onCancel () {
       dispatch({
-        type: 'order/hideModal',
+        type: 'cargo/hideModal',
       })
     },
   }
@@ -68,18 +68,18 @@ const Order = ({ location, dispatch, order, loading }) => {
     type: modalType,
     item: currentItem,
     visible: bootModalVisible,
-    confirmLoading: loading.effects['order/update'],
+    confirmLoading: loading.effects['cargo/update'],
     title: '提交补价',
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `order/addBoot`,
+        type: `cargo/addBoot`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'order/hideBootModal',
+        type: 'cargo/hideBootModal',
       })
     },
   }
@@ -89,18 +89,18 @@ const Order = ({ location, dispatch, order, loading }) => {
     type: modalType,
     item: currentItem,
     visible: stateModalVisible,
-    confirmLoading: loading.effects['order/update'],
+    confirmLoading: loading.effects['cargo/update'],
     title: '修改状态',
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `order/updateState`,
+        type: `cargo/updateState`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'order/hideStateModal',
+        type: 'cargo/hideStateModal',
       })
     },
   }
@@ -110,7 +110,7 @@ const Order = ({ location, dispatch, order, loading }) => {
       ...location.query,
     },
     dataSource: list,
-    loading: loading.effects['order/query'],
+    loading: loading.effects['cargo/query'],
     pagination,
     location,
     isMotion,
@@ -131,31 +131,28 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
     onMarkItem (id) {
       dispatch({
-        type: 'order/markBlackList',
+        type: 'cargo/markBlackList',
         payload: id
       })
     },
     onDeleteItem (id) {
       dispatch({
-        type: 'order/delete',
+        type: 'cargo/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'order/showModal',
+        type: 'cargo/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
         },
       })
-      dispatch({
-        type: 'order/getKdCompany'
-      })
     },
     addBoot (item) {
       dispatch({
-        type: 'order/showBootModal',
+        type: 'cargo/showBootModal',
         payload: {
           currentItem: item,
         },
@@ -163,18 +160,18 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
     showStateModal (item) {
       dispatch({
-        type: 'order/showStateModal',
+        type: 'cargo/showStateModal',
         payload: {
           currentItem: item
         }
       })
     },
-    onCreateCtorder (item) {
+    onCreateCtcargo (item) {
       dispatch({
-        type: 'order/createChinaOrder',
+        type: 'cargo/createChinacargo',
         payload: {
           id: item.ID,
-          orderNo: item.ORDER_NO
+          cargoNo: item.cargo_NO
         },
       })
     },
@@ -203,20 +200,20 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
     onAdd () {
       dispatch({
-        type: 'order/showAddModal',
+        type: 'cargo/showAddModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion () {
-      dispatch({ type: 'order/switchIsMotion' })
+      dispatch({ type: 'cargo/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'order/multiDelete',
+      type: 'cargo/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -246,11 +243,11 @@ const Order = ({ location, dispatch, order, loading }) => {
   )
 }
 
-Order.propTypes = {
-  order: PropTypes.object,
+Cargo.propTypes = {
+  cargo: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ order, loading }) => ({ order, loading }))(Order)
+export default connect(({ cargo, loading }) => ({ cargo, loading }))(Cargo)

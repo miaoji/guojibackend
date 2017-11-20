@@ -1,12 +1,12 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, remove, update, markBlack, createChinaOrder, getKdCompany, } from '../services/order'
-import { create as addBoot } from '../services/boot'
-import * as ordersService from '../services/orders'
+// import { create, remove, update, markBlack, createChinaOrder, getKdCompany, } from '../services/order'
+// import { create as addBoot } from '../services/boot'
+import { query } from '../services/cargos'
 import { pageModel } from './common'
 import { config, time, } from '../utils'
 
-const { query } = ordersService
+// const { query } = ordersService
 const { prefix } = config
 
 //状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
@@ -20,7 +20,7 @@ const realtext = {
 }
 
 export default modelExtend(pageModel, {
-  namespace: 'order',
+  namespace: 'cargo',
 
   state: {
     currentItem: {},
@@ -35,7 +35,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/order') {
+        if (location.pathname === '/cargo') {
           dispatch({
             type: 'query',
             payload: location.query
@@ -49,6 +49,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
+      console.log('dataaa', data)
       if (data.code === 200) {
         for(var item in data.obj){
           data.obj[item].CREATE_TIME=time.formatTime(data.obj[item].CREATE_TIME)
@@ -92,15 +93,14 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ order }) => order.currentItem.ID)
-      const kdCompanyCode = payload.kdCompanyCode.split('/-/')[1]
-      const newOrder = { 
-        intlNo: payload.intlNo,
-        kdCompanyCode,
-        id
-      }
-      console.log('newOrder',newOrder)
-      const data = yield call(update, newOrder)
+      const id = yield select(({ cargo }) => cargo.currentItem.ID)
+      // 暂时不允许修改中转地址
+      delete payload.transferAddress
+      // 删除多余的字段
+      delete payload.key
+
+      const newcargo = { ...payload, id }
+      const data = yield call(update, newcargo)
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.msg)
@@ -117,7 +117,7 @@ export default modelExtend(pageModel, {
       }
       const data = yield call(addBoot, {
         priceSpread: Number(payload.priceSpread)*100,
-        orderNo: payload.orderNo,
+        cargoNo: payload.cargoNo,
         reason: payload.reason,
         ...other
       })
@@ -131,8 +131,8 @@ export default modelExtend(pageModel, {
     },
 
     *updateState ({ payload }, { call, put, select }) {
-      const id = yield select(({ order }) => order.currentItem.ID)
-      const state = yield select(({ order }) => order.currentItem.STATUS)
+      const id = yield select(({ cargo }) => cargo.currentItem.ID)
+      const state = yield select(({ cargo }) => cargo.currentItem.STATUS)
       // 判断是否修改state(订单状态)
       if (!Number(payload.state)) {
         payload.state=state
@@ -150,8 +150,8 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *createChinaOrder ({ payload }, { call, put }) {
-      const data = yield call(createChinaOrder, {...payload})
+    *createChinacargo ({ payload }, { call, put }) {
+      const data = yield call(createChinacargo, {...payload})
       if (data.success && data.code === 200) {
         message.success(data.msg)
         yield put({ type: 'hideBootModal' })
@@ -168,7 +168,7 @@ export default modelExtend(pageModel, {
         if (data.obj) {
           for (let i = 0; i < data.obj.length; i++) {
             let item = data.obj[i]
-            children.push(<Option key={item.company_name+'/-/'+item.company_code}>{item.company_name} / {item.company_code}</Option>)
+            children.push(<Option key={item.company_code}>{item.company_name} / {item.company_code}</Option>)
           }
         }
         yield put({

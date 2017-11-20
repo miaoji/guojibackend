@@ -61,7 +61,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data.msg
+        throw data.msg || "无法跟服务器建立有效链接"
       }
     },
 

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './Modal.less'
 import classnames from 'classnames'
-import { Form, Input, InputNumber, Modal, Select } from 'antd'
+import { Form, Input, InputNumber, Modal, Select, Radio } from 'antd'
 import city from '../../utils/city'
 
 const FormItem = Form.Item
@@ -65,39 +65,19 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="中转地址" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('transferAddress', {
-            initialValue: item.TRANSFER_ADDRESS || '泰虹路168弄万科时一区1号楼302室',
+        <FormItem label="货物类型" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('cargoType', {
+            initialValue: item.cargoType,
             rules: [
               {
                 required: true,
-                message: '请输入中转地址!',
+                message: '请输入货物类型!',
               },
             ],
-          })(<Input disabled />)}
-        </FormItem>
-        <FormItem label="国际段快递公司" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('kdCompanyCode', {
-            initialValue: item.KD_COMPANY_CODE,
-            rules: [
-              {
-                required: true,
-                message: '请选择快递公司名!',
-              },
-            ],
-          })(<Select showSearch placeholder='输入快递备注名可搜索' onFocus={handleFocus} defaultValue="dhlen" style={{ width: 286 }}>{ selectKdCompany }</Select>)}
-        </FormItem>
-        <FormItem label="国际段单号" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('intlNo', {
-            initialValue: item.INTL_NO,
-            rules: [
-              {
-                required: true,
-                pattern: /^[A-Za-z0-9]{0,}$/,
-                message: '请输入国际段单号!',
-              },
-            ],
-          })(<Input />)}
+          })(<Radio.Group defaultValue={'-1'}>
+              <Radio value={'-1'}>普货</Radio>
+              <Radio value={'-2'}>特货</Radio>
+            </Radio.Group>)}
         </FormItem>
       </Form>
     </Modal>

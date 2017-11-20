@@ -52,7 +52,8 @@ const modal = ({
   }
 
   const handleFocus = () => {
-    // getKdCompany()
+    getKdCompany()
+    // alert(1)
   }
 
   const modalOpts = {

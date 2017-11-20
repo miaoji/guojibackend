@@ -1,14 +1,23 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update } from '../services/wxuser'
-import * as wxusersService from '../services/wxusers'
+import { message } from 'antd'
+import { query, merge } from '../services/cargodetails'
 import { pageModel } from './common'
-import { config } from '../utils'
+import { config, time, storage } from '../utils'
 
-const { query } = wxusersService
 const { prefix } = config
 
+//状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
+const realtext = {
+  '1': '待付款',
+  '2': '付款完成',
+  '3': '国内完成',
+  '4': '国际完成',
+  '5': '异常订单',
+  '6': '取消订单'
+}
+
 export default modelExtend(pageModel, {
-  namespace: 'wxUser',
+  namespace: 'cargodetail',
 
   state: {
     currentItem: {},
@@ -19,9 +28,11 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
+
     setup ({ dispatch, history }) {
+
       history.listen(location => {
-        if (location.pathname === '/wxuser' || location.pathname === '/wxuserdetail' ) {
+        if (location.pathname === '/cargodetail') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -35,7 +46,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data.code === 200) {
+      if (data.code===200 && data.success) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -59,33 +70,28 @@ export default modelExtend(pageModel, {
         yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
         yield put({ type: 'query' })
       } else {
-        throw data.msg
+        throw data
       }
     },
 
     *'multiDelete' ({ payload }, { call, put }) {
-      const data = yield call(wxusersService.remove, payload)
+      const data = yield call(storeusersService.remove, payload)
       if (data.success) {
         yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
         yield put({ type: 'query' })
       } else {
-        throw data.msg
+        throw data
       }
     },
 
     *'markBlackList' ({ payload }, { call, put, select }) {
-      let newWxUser = payload
-      console.log('newWxUser', newWxUser)
-      // 判断有没有传过来blacklist属性,没有的传的话就默认等于1
-      if (newWxUser.blacklist==null) {
-        newWxUser.blacklist=1
-      }
-      const data = yield call(update, newWxUser)
+      const newUser = { status: 2, id: payload }
+      const data = yield call(update, newUser)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data.msg
+        throw data
       }
     },
 
@@ -95,19 +101,23 @@ export default modelExtend(pageModel, {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data.msg
+        throw data
       }
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ wxUser }) => wxUser.currentItem.id)
-      const newWxUser = { ...payload, id }
-      const data = yield call(update, newWxUser)
+      const ids = yield select(({ cargodetail }) => cargodetail.currentItem.ids)
+      console.log('aaa', ids)
+      // return
+      const data = yield call(merge, {
+        cargoType: payload.cargoType,
+        type: 1
+      }, ids)
       if (data.success) {
         yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
+        yield put({ type: 'query', payload: location.query })
       } else {
-        throw data.msg
+        throw data
       }
     },
 

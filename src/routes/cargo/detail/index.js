@@ -77,9 +77,6 @@ const Detail = ({ orderDetail }) => {
           <span>订单状态: {realOrderStatus[data.status]}</span>
           <span>预付总金额: {(data.totalFee?data.totalFee:'暂无')/100}元</span>
           <span>快件重量: {data.weight}kg</span>
-          <span>是否保价: {data.insured===1?'是':'否'}</span>
-          <span>保价金额: {data.insuredAmount===0?'无':data.insuredAmount+'元'}</span>
-          <span>保费: {data.insuredPrice===0?'无':data.insuredPrice+'元'}</span>
 
         <div className={styles.title}>微信详情:</div>
           <span>用户昵称: {wxUser.nickName?wxUser.nickName:'暂无'}</span>

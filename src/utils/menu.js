@@ -13,22 +13,29 @@ module.exports = [
   },{
     id: 3,
     bpid: 1,
-    name: '订单',
+    name: '订单管理',
     icon: 'tags-o',
   },{
     id: 31,
     bpid: 1,
     mpid: 3,
-    name: '直邮',
+    name: '直邮订单',
     icon: 'tag',
     router: '/order',
   },{
     id: 32,
     bpid: 1,
     mpid: 3,
-    name: '集运',
+    name: '集运订单',
     icon: 'tags',
     router: '/cargo',
+  },{
+    id: 321,
+    bpid: 32,
+    mpid: -1,
+    name: '集运订单详情',
+    icon: 'tags',
+    router: '/cargodetail',
   },{
     id: 311,
     bpid: 31,
