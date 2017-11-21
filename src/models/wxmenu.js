@@ -44,7 +44,7 @@ export default modelExtend(pageModel, {
           },
         })
       }else{
-        throw data.msg || "无法跟服务器建立有效链接"
+        throw data.msg || "无法跟服务器建立有效连接"
       }
     },
 

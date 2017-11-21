@@ -57,7 +57,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
         yield put({ type: 'query' })
       } else {
-        throw data || "无法跟服务器建立有效链接"
+        throw data || "无法跟服务器建立有效连接"
       }
     },
 

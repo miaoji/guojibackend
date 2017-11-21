@@ -26,7 +26,9 @@ const realtext = {
   '3': '国内完成',
   '4': '国际完成',
   '5': '异常订单',
-  '6': '取消订单'
+  '6': '取消订单',
+  '7': '未到件',
+  '8': '已到件'
 }
 
 const stateModal = ({
@@ -62,7 +64,7 @@ const stateModal = ({
       <Form layout="horizontal">
         <FormItem label="订单号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderNo', {
-            initialValue: item.ORDER_NO,
+            initialValue: item.orderNo,
             rules: [
               {
                 required: true,
@@ -72,8 +74,8 @@ const stateModal = ({
           })(<Input disabled/>)}
         </FormItem>
         <FormItem label="状态" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('state', {
-            initialValue: realtext[item.STATUS],
+          {getFieldDecorator('status', {
+            initialValue: realtext[item.status],
             rules: [
               {
                 required: true,
@@ -82,8 +84,8 @@ const stateModal = ({
             ],
           })(
             <Select>
-              <Option value="1">待付款</Option>
-              <Option value="2">付款完成</Option>
+              <Option value="未到件">未到件</Option>
+              <Option value="已到件">已到件</Option>
             </Select>
           )}
         </FormItem>

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, InputNumber, Modal } from 'antd'
-import styles from './bootModal.less'
 import classnames from 'classnames'
 
 const FormItem = Form.Item
@@ -48,40 +47,37 @@ const bootModal = ({
       <Form layout="horizontal">
         <FormItem label="订单号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderNo', {
-            initialValue: item.ORDER_NO,
+            initialValue: item.orderNo,
             rules: [
               {
                 required: true,
                 message: '请输入订单号!',
               },
             ],
-          })(<Input disabled />)}
+          })(<Input disabled/>)}
         </FormItem>
-        <FormItem label="补价金额" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('priceSpread', {
-            initialValue: item.boot,
+        <FormItem label="定价金额(元)" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('totalFee', {
+            initialValue: item.totalFee/100,
             rules: [
               {
                 required: true,
-                message: '请输入补价金额!',
-              },
-            ],
-          })(<InputNumber
-            min={0}
-            className={classnames({ [styles.width]: true })}
-            formatter={value => `￥ ${value}`}
-          />)}
-        </FormItem>
-        <FormItem label="补价原因" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('reason', {
-            initialValue: item.reason,
-            rules: [
-              {
-                required: true,
-                message: '补价原因!',
+                pattern: /^([0-9]*)+(.[0-9]{1,2})?$/,
+                message: '请输入金额!',
               },
             ],
           })(<Input />)}
+        </FormItem>
+        <FormItem label="备注信息" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('remark', {
+            initialValue: item.remark,
+            rules: [
+              {
+                required: true,
+                message: '请输入备注信息!',
+              },
+            ],
+          })(<Input placeholder='请输入备注信息' />)}
         </FormItem>
       </Form>
     </Modal>

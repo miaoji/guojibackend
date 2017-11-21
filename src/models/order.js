@@ -65,7 +65,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.msg || "无法跟服务器建立有效链接"
+        throw data.msg || "无法跟服务器建立有效连接"
       }
     },
 
@@ -94,7 +94,7 @@ export default modelExtend(pageModel, {
     *update ({ payload }, { select, call, put }) {
       const id = yield select(({ order }) => order.currentItem.ID)
       const kdCompanyCode = payload.kdCompanyCode.split('/-/')[1]
-      const newOrder = { 
+      const newOrder = {
         intlNo: payload.intlNo,
         kdCompanyCode,
         id
@@ -168,9 +168,10 @@ export default modelExtend(pageModel, {
         if (data.obj) {
           for (let i = 0; i < data.obj.length; i++) {
             let item = data.obj[i]
-            children.push(<Option key={item.company_name+'/-/'+item.company_code}>{item.company_name} / {item.company_code}</Option>)
+            children.push(<Option key={item.companyName+'/-/'+item.companyCode}>{item.companyName}</Option>)
           }
         }
+        console.log('children', children)
         yield put({
           type: 'setKdCompany',
           payload: {

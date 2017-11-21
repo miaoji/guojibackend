@@ -30,6 +30,8 @@ const Filter = ({
   isMotion,
   switchIsMotion,
   onFilterChange,
+  selectedRowKeys,
+  onMergeOrder,
   filter,
   form: {
     getFieldDecorator,
@@ -63,11 +65,12 @@ const Filter = ({
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    console.log('fields',fields)
-    onFilterChange(fields)
+    console.log('filter231',filter)
+    onFilterChange({...fields, ...filter})
   }
 
   const handleReset = () => {
+    console.log('filter', filter)
     const fields = getFieldsValue()
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
@@ -81,6 +84,7 @@ const Filter = ({
     // 在刷新重置的时候让推广的下拉菜单有一个初始值(不会没有东西显示)
     fields.option = '1'
     setFieldsValue(fields)
+    console.log('filter', filter)
     handleSubmit()
   }
 
@@ -88,7 +92,7 @@ const Filter = ({
     let fields = getFieldsValue()
     fields[key] = values
     fields = handleFields(fields)
-    onFilterChange(fields)
+    onFilterChange(fields, ...filter)
   }
 
   const onChangeRadio = (e) => {
@@ -113,8 +117,20 @@ const Filter = ({
     initialCreateTime[1] = moment(filter.createTime[1])
   }
 
+  const handleMergeClick = () => {
+    console.log('这是一些很简单的数据', selectedRowKeys)
+    onMergeOrder(selectedRowKeys)
+  }
+
   return (
     <Row gutter={24}>
+      {
+        selectedRowKeys.length > 0 &&
+        <Col {...ColProps} xl ={{ span: 4 }} md = {{ span: 8 }} sm = {{ span: 12}}>
+          <Button type="primary" size="large" onClick={handleMergeClick} style={{ marginLeft: 8 }}>合单</Button>
+          <span style={{ paddingLeft: '20px'}}>{`选中 ${selectedRowKeys.length} 条订单 `}</span>
+        </Col>
+      }
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('orderNo', { initialValue: orderNo })(<Search placeholder="按订单号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
@@ -125,14 +141,11 @@ const Filter = ({
           )}
         </FilterItem>
       </Col>
-      <Col {...TwoColProps} xl={{ span: 5 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
-          </div>
-          <div style={{display:'none'}}>
-            <Button size="large" type="ghost" onClick={onAdd}>合包</Button>
           </div>
         </div>
       </Col>

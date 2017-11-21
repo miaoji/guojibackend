@@ -60,11 +60,11 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
 
   const columns = [
     {
-      title: 'ID',
+      title: '微信用户ID',
       dataIndex: 'ID',
       key: 'ID',
     },{
-      title: '批次号',
+      title: '集运批次号',
       dataIndex: 'BATCH',
       key: 'BATCH',
       render: (text,record) => {

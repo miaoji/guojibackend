@@ -6,23 +6,24 @@ import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
+import BootModal from './bootModal'
+import StateModal from './stateModal'
 import { queryURL, storage, } from '../../utils'
 
 const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = cargodetail
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, bootModalVisible, stateModalVisible } = cargodetail
   const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: false,
-    confirmLoading: loading.effects['storeUser/update'],
+    confirmLoading: loading.effects['cargodetail/merge'],
     title: `${modalType === 'create' ? '创建消息' : '进行集运合包'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
-      console.log('data',data)
       dispatch({
-        type: `cargodetail/${modalType}`,
+        type: `cargodetail/mergeOrder`,
         payload: data,
       })
     },
@@ -31,6 +32,45 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         type: 'cargodetail/hideModal',
       })
     },
+  }
+
+  const bootModalProps = {
+    item: currentItem,
+    visible: bootModalVisible,
+    maskClosable: true,
+    confirmLoading: loading.effects['cargodetail/setFreight'],
+    title: `确定订单运费金额`,
+    wrapClassName: 'vertical-center-modal',
+    onOk (data) {
+      dispatch({
+        type: `cargodetail/setFreight`,
+        payload: data
+      })
+    },
+    onCancel () {
+      console.log('currentItem', currentItem)
+      dispatch({
+        type: `cargodetail/hideBootModal`
+      })
+    }
+  }
+
+  const stateModalProps = {
+    item: currentItem,
+    visible: stateModalVisible,
+    maskClosable: false,
+    confirmLoading: loading.effects['cargodetail/setStatus'],
+    title: '确认订单是否到件',
+    wrapClassName: 'vertical-center-modal',
+    onOk (data) {
+      dispatch({
+        type: 'cargodetail/setStatus',
+        payload: data
+      })
+    },
+    onCancel () {
+      dispatch({type:'cargodetail/hideStateModal'})
+    }
   }
 
   const listProps = {
@@ -50,25 +90,33 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         },
       }))
     },
-    onMarkItem (id) {
+    onSetCancel (id) {
       dispatch({
-        type: 'cargodetail/markBlackList',
+        type: 'cargodetail/setCancel',
         payload: id
+      })
+    },
+    onSetFreight (item) {
+      console.log('item啊啊啊', item)
+      dispatch({
+        type: 'cargodetail/showBootModal',
+        payload: {
+          currentItem: item
+        }
+      })
+    },
+    onSetStatus (item) {
+      dispatch({
+        type: 'cargodetail/showStateModal',
+        payload: {
+          currentItem: item
+        }
       })
     },
     onDeleteItem (id) {
       dispatch({
         type: 'cargodetail/delete',
-        payload: id,
-      })
-    },
-    onEditItem (item) {
-      dispatch({
-        type: 'cargodetail/showModal',
-        payload: {
-          modalType: 'update',
-          currentItem: item,
-        },
+        payload: id
       })
     },
     rowSelection: {
@@ -82,11 +130,21 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
           },
         })
       },
-    },
+      getCheckboxProps: record => ({
+        disabled: record.parentId !== 0 || record.status === 7,
+      }),
+      onSelect: (record, selected, selectedRows) => {
+        console.log(record, selected, selectedRows);
+      },
+      onSelectAll: (selected, selectedRows, changeRows) => {
+        console.log(selected, selectedRows, changeRows);
+      }
+    }
   }
 
   const filterProps = {
     isMotion,
+    selectedRowKeys,
     filter: {
       ...location.query,
     },
@@ -110,6 +168,15 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       })) : dispatch(routerRedux.push({
         pathname: '/cargodetail',
       }))
+    },
+    onMergeOrder (selectedRowKeys) {
+      dispatch({
+        type: 'cargodetail/showModal',
+        payload: {
+          modalType: 'merge',
+          currentItem: {ids: selectedRowKeys},
+        }
+      })
     },
     onAdd () {
       dispatch({
@@ -137,17 +204,10 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个消息 `}
-                 <Button type="primary" onClick={handleDeleteItems} size="large" style={{ marginLeft: 8 }}>合单</Button>
-             </Col>
-           </Row>
-      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
+      {bootModalVisible && <BootModal {...bootModalProps} />}
+      {stateModalVisible && <StateModal {...stateModalProps} />}
     </div>
   )
 }

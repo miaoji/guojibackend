@@ -18,8 +18,9 @@ const Order = ({ location, dispatch, order, loading }) => {
   const addModelProps = {
     type: modalType,
     item: currentItem,
+    maskClosable: false,
     visible: addModalVisible,
-    confirmLoading: loading.effects['order/update'],
+    confirmLoading: loading.effects['order/create'],
     title: '创建订单',
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
@@ -226,17 +227,6 @@ const Order = ({ location, dispatch, order, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
-      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
       {bootModalVisible && <BootModal {...bootModalProps} />}

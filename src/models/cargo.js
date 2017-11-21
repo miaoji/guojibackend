@@ -66,137 +66,12 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.msg || "无法跟服务器建立有效链接"
+        throw data.msg || "无法跟服务器建立有效连接"
       }
     },
-
-    *'delete' ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { ids: payload.toString() })
-      if (data.success && data.code === 200) {
-        message.success(data.msg)
-        yield put({ type: 'query' })
-      } else {
-        throw data.msg
-      }
-    },
-
-    *create ({ payload }, { call, put }) {
-      payload['serialnumber'] = 'MZ' + new Date().getTime()
-      const data = yield call(create, payload)
-      if (data.code === 200) {
-        yield put({ type: 'hideModal' })
-        message.success(data.msg)
-        yield put({ type: 'query' })
-      } else {
-        throw data.msg
-      }
-    },
-
-    *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ cargo }) => cargo.currentItem.ID)
-      // 暂时不允许修改中转地址
-      delete payload.transferAddress
-      // 删除多余的字段
-      delete payload.key
-
-      const newcargo = { ...payload, id }
-      const data = yield call(update, newcargo)
-      if (data.success && data.code === 200) {
-        yield put({ type: 'hideModal' })
-        message.success(data.msg)
-        yield put({ type: 'query' })
-      } else {
-        throw data.msg || data
-      }
-    },
-
-    *addBoot ({ payload }, { call, put }) {
-      const other = {
-        'createUserId': JSON.parse(window.localStorage.getItem('guojipc_user'))['roleId'],
-        'status': 1
-      }
-      const data = yield call(addBoot, {
-        priceSpread: Number(payload.priceSpread)*100,
-        cargoNo: payload.cargoNo,
-        reason: payload.reason,
-        ...other
-      })
-      if (data.success && data.code === 200) {
-        message.success(data.msg)
-        yield put({ type: 'hideBootModal' })
-        yield put({ type: 'query' })
-      } else {
-        throw data.msg
-      }
-    },
-
-    *updateState ({ payload }, { call, put, select }) {
-      const id = yield select(({ cargo }) => cargo.currentItem.ID)
-      const state = yield select(({ cargo }) => cargo.currentItem.STATUS)
-      // 判断是否修改state(订单状态)
-      if (!Number(payload.state)) {
-        payload.state=state
-      }
-      const data = yield call(update, {
-        id:id,
-        status:payload.state
-      })
-      if ( data.success && data.code === 200) {
-        message.success('状态修改成功')
-        yield put({ type: 'hideStateModal'})
-        yield put({ type: 'query' })
-      }else{
-        throw data.msg
-      }
-    },
-
-    *createChinacargo ({ payload }, { call, put }) {
-      const data = yield call(createChinacargo, {...payload})
-      if (data.success && data.code === 200) {
-        message.success(data.msg)
-        yield put({ type: 'hideBootModal' })
-        yield put({ type: 'query' })
-      } else {
-        throw data.msg
-      }
-    },
-
-    *getKdCompany ({ payload }, { call, put,}) {
-      const data = yield call(getKdCompany)
-      if (data.code === 200 ) {
-        let children = []
-        if (data.obj) {
-          for (let i = 0; i < data.obj.length; i++) {
-            let item = data.obj[i]
-            children.push(<Option key={item.company_code}>{item.company_name} / {item.company_code}</Option>)
-          }
-        }
-        yield put({
-          type: 'setKdCompany',
-          payload: {
-            selectKdCompany: children
-          }
-        })
-      } else {
-        throw '获取国际段快递公司失败'
-      }
-    }
-
   },
 
   reducers: {
-
-    setKdCompany (state, { payload }) {
-      return { ...state, ...payload }
-    },
-
-    showAddModal (state, { payload }) {
-      return { ...state, ...payload, addModalVisible: true }
-    },
-
-    hideAddModal (state, { payload }) {
-      return { ...state, addModalVisible: false }
-    },
 
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
@@ -205,22 +80,6 @@ export default modelExtend(pageModel, {
     hideModal (state) {
       return { ...state, modalVisible: false }
     },
-
-    showBootModal (state, { payload }) {
-      return { ...state, ...payload, bootModalVisible: true }
-    },
-
-    hideBootModal (state) {
-      return { ...state, bootModalVisible: false }
-    },
-
-    showStateModal (state, { payload }) {
-      return { ...state, ...payload, stateModalVisible: true }
-    },
-
-    hideStateModal (state) {
-      return { ...state, stateModalVisible: false }
-    }
 
   },
 })

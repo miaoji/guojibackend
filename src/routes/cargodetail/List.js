@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Button } from 'antd'
+import { Menu, Table, Modal, Button, message } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -17,31 +17,49 @@ const realtext = {
   '3': '国内完成',
   '4': '国际完成',
   '5': '异常订单',
-  '6': '取消订单'
+  '6': '取消订单',
+  '7': '未到件',
+  '8': '已到件'
 }
 // 包裹状态: 0 还没有合单, -1 普货, -2特货
-const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
+const List = ({ filter, onSetStatus, onSetCancel, filterStatus, onDeleteItem, onSetFreight, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
+      // 确定运费
       case '1':
-        onEditItem(record)
+        if (record.parentId<0) {
+          onSetFreight(record)
+        } else {
+          message.warn('该订单不能进行此操作!!!')
+        }
         break
+        // 删除订单
       case '2':
         confirm({
           title: '确定要删除这一订单吗?',
           onOk () {
-            onDeleteItem(record.ID)
+            onDeleteItem(record.id)
           }
         })
         break
+        // 修改状态
       case '3':
-        addBoot(record)
+        onSetStatus(record)
         break
       case '4':
         window.open(`/bootdetail?orderNo=${record.ORDER_NO}`)
         break
       case '5':
-        showStateModal(record)
+        if (record.parentId>0) {
+          confirm({
+            title: '确定要撤销本子订单的合单操作吗?',
+            onOk () {
+              onSetCancel(record.id)
+            }
+          })
+        } else {
+          message.warn('本订单不能进行此操作!!!')
+        }
         break
       default:
         break
@@ -64,14 +82,6 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       dataIndex: 'orderNo',
       key: 'orderNo',
     },{
-      title: '寄件人',
-      dataIndex: 'senderName',
-      key: 'senderName',
-    },{
-      title: '寄件人手机',
-      dataIndex: 'senderMobile',
-      key: 'senderMobile'
-    },{
       title: '收件人',
       dataIndex: 'receiverName',
       key: 'receiverName'
@@ -80,7 +90,7 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       dataIndex: 'receiverMobile',
       key: 'receiverMobile'
     },{
-      title: '预付总金额',
+      title: '运费',
       dataIndex: 'totalFee',
       key: 'totalFee',
       render: (text) => <span>{text ? Number(text)/100 : 0}元</span>,
@@ -89,10 +99,12 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       dataIndex: 'parentId',
       key: 'parentId',
       render: (text) => {
+        text > 0 ? text = 1 : text=text
         const realText={
           '0': '待合单',
           '-1': '普货订单',
-          '-2': '特货订单'
+          '-2': '特货订单',
+          '1': '子订单'
         }
         return <span>{ realText[text] }</span>
       }
@@ -116,14 +128,24 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       title: '下单时间',
       dataIndex: 'createTime',
       key: 'createTime',
+      render: (text) => {
+        const realText = time.formatTime(text)
+        return <span>{ realText }</span>
+      }
     },{
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '修改状态' }, { key: '1', name: '修改订单' }, { key: '3', name: '改价'}, { key: '4', name: '改价记录' }, { key: '2', name: '删除' }]} />
-      },
-    },
+        if (record.parentId===0) {
+            return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '到件处理'}, { key: '2', name: '删除订单' }]} />
+        } else if (record.parentId < 0) {
+            return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '确定运费' }, { key: '2', name: '删除订单' }]} />
+        } else if (record.parentId > 0) {
+            return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '撤销合单' }, { key: '2', name: '删除订单' }]} />
+        }
+      }
+    }
   ]
 
   const getBodyWrapperProps = {
@@ -138,24 +160,6 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       <Table
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
-        expandedRowRender={record =>
-          <div className={classnames({ [styles.p]: true })}>
-            <p>订单号:  {record.orderNo}</p>
-            <p>国内段订单号:  {record.cnNo}</p>
-            <p>国际段订单号:  {record.intlNo}</p>
-            <p>寄件人:  {record.senderName}</p>
-            <p>收件人:  {record.receiverName}</p>
-            <p>收件人证件号:  {record.RECEIVER_ID}</p>
-            <p>预付总金额:  {record.totalFee/100}元</p>
-            <p>产品类型:  {record.PRODUCT_TYPE}</p>
-            <p>重量:  {record.WEIGHT}kg</p>
-            <p>寄件地址: {record.senderAddress}</p>
-            <p>中转地址: {record.transferAddress}</p>
-            <p>收件地址: {record.receiverAddress}</p>
-            <p>下单时间:  {record.createTime}</p>
-            <p>订单状态:  {realtext[record.status]}</p>
-          </div>
-        }
         bordered
         scroll={{ x: 1250 }}
         columns={columns}
@@ -169,7 +173,7 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
 
 List.propTypes = {
   onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
+  onSetFreight: PropTypes.func,
   addBoot: PropTypes.func,
   showStateModal: PropTypes.func,
   isMotion: PropTypes.bool,

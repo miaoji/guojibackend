@@ -6,34 +6,10 @@ import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
-import BootModal from './bootModal'
-import AddModal from './addModal'
-import StateModal from './stateModal'
 
 const Cargo = ({ location, dispatch, cargo, loading }) => {
-  const { list, pagination, currentItem, addModalVisible, stateModalVisible, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = cargo
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = cargo
   const { pageSize } = pagination
-
-  // 订单创建的modal
-  const addModelProps = {
-    type: modalType,
-    item: currentItem,
-    visible: addModalVisible,
-    confirmLoading: loading.effects['cargo/update'],
-    title: '创建订单',
-    wrapClassName: 'vertical-center-modal',
-    onOk (data) {
-      dispatch({
-        type: `cargo/addcargo`,
-        payload: data,
-      })
-    },
-    onCancel () {
-      dispatch({
-        type: 'cargo/hideAddModal',
-      })
-    },
-  }
 
   // 订单修改modal
   const modalProps = {
@@ -59,48 +35,6 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
     onCancel () {
       dispatch({
         type: 'cargo/hideModal',
-      })
-    },
-  }
-
-  // 补价modal
-  const bootModalProps = {
-    type: modalType,
-    item: currentItem,
-    visible: bootModalVisible,
-    confirmLoading: loading.effects['cargo/update'],
-    title: '提交补价',
-    wrapClassName: 'vertical-center-modal',
-    onOk (data) {
-      dispatch({
-        type: `cargo/addBoot`,
-        payload: data,
-      })
-    },
-    onCancel () {
-      dispatch({
-        type: 'cargo/hideBootModal',
-      })
-    },
-  }
-
-  // 改状态modal
-  const stateModalProps = {
-    type: modalType,
-    item: currentItem,
-    visible: stateModalVisible,
-    confirmLoading: loading.effects['cargo/update'],
-    title: '修改状态',
-    wrapClassName: 'vertical-center-modal',
-    onOk (data) {
-      dispatch({
-        type: `cargo/updateState`,
-        payload: data,
-      })
-    },
-    onCancel () {
-      dispatch({
-        type: 'cargo/hideStateModal',
       })
     },
   }
@@ -223,22 +157,8 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
-      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
-      {bootModalVisible && <BootModal {...bootModalProps} />}
-      {stateModalVisible && <StateModal {...stateModalProps}/>}
-      {addModalVisible && <AddModal {...addModelProps}/>}
     </div>
   )
 }

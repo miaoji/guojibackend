@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, InputNumber, Modal } from 'antd'
-import styles from './bootModal.less'
+import styles from './Modal.less'
 import classnames from 'classnames'
 
 const FormItem = Form.Item
@@ -48,7 +48,7 @@ const bootModal = ({
       <Form layout="horizontal">
         <FormItem label="订单号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderNo', {
-            initialValue: item.ORDER_NO,
+            initialValue: item.orderNo,
             rules: [
               {
                 required: true,

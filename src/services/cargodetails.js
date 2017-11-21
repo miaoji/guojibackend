@@ -20,3 +20,20 @@ export async function merge (params, data) {
 		data
 	})
 }
+
+export async function cancel (params, data) {
+  return request({
+    url: cargodetail.cancel,
+    method: 'post',
+    params,
+    data
+  })
+}
+
+export async function freight (params) {
+  return request({
+    url: cargodetail.setFreight,
+    method: 'post',
+    params
+  })
+}
