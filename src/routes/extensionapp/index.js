@@ -61,7 +61,7 @@ const Extensionapp = ({ location, dispatch, extensionapp, loading }) => {
           currentItem: item,
         },
       })
-    }
+    },
   }
 
   const filterProps = {

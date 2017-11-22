@@ -7,7 +7,7 @@ export default {
   namespace: 'qrWxUserDetail',
 
   state: {
-    qrTicket: ''
+    qrTicket: '',
   },
 
   subscriptions: {
@@ -16,19 +16,19 @@ export default {
         if (location.pathname === '/wxuserdetail') {
           const qrTicket = queryURL('qrTicket')
           dispatch({
-            type: 'setListEmpty'
+            type: 'setListEmpty',
           })
-          dispatch({ type: 'query', payload: { qrTicket }})
+          dispatch({ type: 'query', payload: { qrTicket } })
         }
       })
     },
   },
 
   effects: {
-    *query ({payload}, { call, put }) {
-      console.log('payload111',payload)
+    *query ({ payload }, { call, put }) {
+      console.log('payload111', payload)
       const data = yield call(query, payload)
-      console.log('data',data)
+      console.log('data', data)
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -45,7 +45,7 @@ export default {
   reducers: {
 
     setListEmpty (state) {
-      return { ...state, data:[{ID:true, NICK_NAME: "国家信息正在加载,请稍等..."}] }
+      return { ...state, data: [{ ID: true, NICK_NAME: '国家信息正在加载,请稍等...' }] }
     },
 
     querySuccess (state, { payload }) {

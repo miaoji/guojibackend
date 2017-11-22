@@ -31,7 +31,7 @@ export default modelExtend(pageModel, {
       history.listen(location => {
         if (location.pathname === '/destination') {
           dispatch({
-            type: 'setListEmpty'
+            type: 'setListEmpty',
           })
           dispatch({
             type: 'query',
@@ -46,9 +46,9 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data.code=='200') {
-        if (data.obj==null) {
-          data.obj={show:true, name: "暂无该城市的信息"}
+      if (data.code == '200') {
+        if (data.obj == null) {
+          data.obj = { show: true, name: '暂无该城市的信息' }
         }
         yield put({
           type: 'querySuccess',
@@ -62,7 +62,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.msg || "无法跟服务器建立有效连接"
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
@@ -105,15 +105,15 @@ export default modelExtend(pageModel, {
 
     *queryLocation ({ payload = {} }, { select, call, put }) {
       const countryId = payload.currentItem.id
-      const params = {countryid: countryId}
-      const data = yield call(queryLocation, {params, type: 'province'})
+      const params = { countryid: countryId }
+      const data = yield call(queryLocation, { params, type: 'province' })
       if (data) {
         yield put({
           type: 'showLocationModal',
           payload: {
             locationData: data.obj,
             currentItem: payload.currentItem,
-            type: payload.type
+            type: payload.type,
           },
         })
       } else {
@@ -124,30 +124,30 @@ export default modelExtend(pageModel, {
     *createProvince ({ payload = {} }, { select, call, put }) {
       const currentItem = yield select(({ destination }) => destination.currentItem)
       const countryId = currentItem.id
-      const params = {countryid: countryId, name: payload.name, englishname: payload.englishname}
-      const data = yield call(createLocation, {params, type: 'province'})
+      const params = { countryid: countryId, name: payload.name, englishname: payload.englishname }
+      const data = yield call(createLocation, { params, type: 'province' })
       if (data.success && data.code === 200) {
-        const queryData = yield call(queryLocation, {params: {countryid: countryId}, type: 'province'})
+        const queryData = yield call(queryLocation, { params: { countryid: countryId }, type: 'province' })
         if (!queryData.success) throw queryData.mess
         yield put({
           type: 'showLocationModal',
           payload: {
             locationData: queryData.obj,
             currentItem,
-            type: payload.type
+            type: payload.type,
           },
         })
       } else {
         throw data.msg
       }
-    }
+    },
 
   },
 
   reducers: {
 
     setListEmpty (state) {
-      return { ...state, list:{show:true, name: "国家信息正在加载,请稍等..."} }
+      return { ...state, list: { show: true, name: '国家信息正在加载,请稍等...' } }
     },
 
     showModal (state, { payload }) {
@@ -160,16 +160,16 @@ export default modelExtend(pageModel, {
 
     showLocationModal (state, { payload }) {
       let { currentItem, locationData, type } = payload
-      const visible = type + 'ModalVisible'
-      locationData = locationData.map(function(elem) {
-        return <Row gutter={16}>
+      const visible = `${type}ModalVisible`
+      locationData = locationData.map((elem) => {
+        return (<Row gutter={16}>
                 <Col className="gutter-row" span={8}>
-                  <div className="gutter-box">{elem['id']}</div>
+                  <div className="gutter-box">{elem.id}</div>
                 </Col>
                 <Col className="gutter-row" span={8}>
-                  <div className="gutter-box">{elem['name']}</div>
+                  <div className="gutter-box">{elem.name}</div>
                 </Col>
-              </Row>;
+              </Row>)
       })
       let res = { ...state, currentItem, locationData }
       res[visible] = true
@@ -178,11 +178,11 @@ export default modelExtend(pageModel, {
 
     hideLocationModal (state, { payload }) {
       const { type } = payload
-      const visible = type + 'ModalVisible'
+      const visible = `${type}ModalVisible`
       let res = { ...state }
       res[visible] = false
       return res
-    }
+    },
 
   },
 })

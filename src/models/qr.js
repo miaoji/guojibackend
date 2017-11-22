@@ -13,7 +13,7 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     inputDis: true,
-    modalType: 'create'
+    modalType: 'create',
   },
 
   subscriptions: {
@@ -33,7 +33,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data.code === 200) {  
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -45,18 +45,17 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      }else{
-        throw data.msg || "无法跟服务器建立有效连接"
+      } else {
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
     *create ({ payload }, { call, put }) {
-
       delete payload.key
-      if (payload.type&&payload.type==1) {
+      if (payload.type && payload.type == 1) {
         delete payload.seconds
-      }else if (payload.seconds) {
-        payload.seconds = payload.seconds*60*60*24
+      } else if (payload.seconds) {
+        payload.seconds = payload.seconds * 60 * 60 * 24
       }
       const data = yield call(create, payload)
       if (data.code === 200) {
@@ -102,11 +101,11 @@ export default modelExtend(pageModel, {
   reducers: {
 
     showModal (state, { payload }) {
-      return { ...state, ...payload, modalVisible: true, inputDis: true, }
+      return { ...state, ...payload, modalVisible: true, inputDis: true }
     },
 
     hideModal (state) {
-      return { ...state, modalVisible: false, inputDis: false, }
+      return { ...state, modalVisible: false, inputDis: false }
     },
 
     showInput (state) {
@@ -115,7 +114,7 @@ export default modelExtend(pageModel, {
 
     hideInput (state) {
       return { ...state, inputDis: true }
-    }
+    },
 
   },
 })

@@ -1,9 +1,9 @@
-import { request, config, pageParams,} from '../utils'
+import { request, config, pageParams } from '../utils'
 const { wxconfig } = config.api
 
 export async function query (params) {
   params = pageParams(params)
-  console.log('params',params)
+  console.log('params', params)
   return request({
     url: wxconfig.all,
     method: 'get',

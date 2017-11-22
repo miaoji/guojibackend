@@ -109,13 +109,13 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
  * @return  {params} Object
  */
 const pageParams = function (params) {
-      params = params ? params : {
-        page: 1,
-        rows: 10
-      }
-      params.page = params.page || 1
-      params.rows = params.pageSize || 10
-      return params
+  params = params || {
+    page: 1,
+    rows: 10,
+  }
+  params.page = params.page || 1
+  params.rows = params.pageSize || 10
+  return params
 }
 
 /**
@@ -126,7 +126,7 @@ const pageParams = function (params) {
  * @param  {String}  type   [localStorage的操作方式 get、set、remove、clear]
  * @return {String} res     [localStorage.getItem(key)时返回的值]
  */
-export const storage = function ({key, val, prefix = true, type = 'get'}) {
+export const storage = function ({ key, val, prefix = true, type = 'get' }) {
   let typeCheck = type === 'get'
   if (prefix) {
     key = localPrefix + key
@@ -165,5 +165,5 @@ module.exports = {
   queryArray,
   arrayToTree,
   pageParams,
-  time
+  time,
 }

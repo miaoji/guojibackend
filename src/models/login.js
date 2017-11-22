@@ -15,24 +15,24 @@ export default {
     loginUUID: '',
     verifyImage: '',
     loginType: 'account',
-    getCodeAuth: true
+    getCodeAuth: true,
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/login') {
-          const loginUUID = 'mz_uuid' + new Date().getTime()
+          const loginUUID = `mz_uuid${new Date().getTime()}`
           dispatch({
             type: 'setVerifyImage',
             payload: {
               loginUUID,
-              verifyImage: loginApi.getVerifyImage + `?uuid=${loginUUID}`
-            }
+              verifyImage: `${loginApi.getVerifyImage}?uuid=${loginUUID}`,
+            },
           })
         }
       })
-    }
+    },
   },
 
   effects: {
@@ -50,12 +50,12 @@ export default {
         storage({
           key: 'token',
           val: data.token,
-          type: 'set'
+          type: 'set',
         })
         storage({
           key: 'user',
           val: JSON.stringify(data.user),
-          type: 'set'
+          type: 'set',
         })
         const from = queryURL('from')
         yield put({ type: 'app/query' })
@@ -66,22 +66,22 @@ export default {
         }
       } else {
         yield put({
-          type: 'handleRefreshImage'
+          type: 'handleRefreshImage',
         })
-        throw data.msg || "无法跟服务器建立有效连接"
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
     /**
      * 刷新图片验证码
      */
     *handleRefreshImage ({ payload }, { put }) {
-      const loginUUID = 'mz_uuid' + new Date().getTime()
+      const loginUUID = `mz_uuid${new Date().getTime()}`
       yield put({
         type: 'setVerifyImage',
         payload: {
           loginUUID,
-          verifyImage: loginApi.getVerifyImage + `?uuid=${loginUUID}`
-        }
+          verifyImage: `${loginApi.getVerifyImage}?uuid=${loginUUID}`,
+        },
       })
     },
     /**
@@ -96,8 +96,8 @@ export default {
         yield put({
           type: 'setCodeAuth',
           payload: {
-            getCodeAuth: false
-          }
+            getCodeAuth: false,
+          },
         })
       } else {
         throw data.msg || data
@@ -115,12 +115,12 @@ export default {
         storage({
           key: 'token',
           val: data.token,
-          type: 'set'
+          type: 'set',
         })
         storage({
           key: 'user',
           val: JSON.stringify(data.user),
-          type: 'set'
+          type: 'set',
         })
         const from = queryURL('from')
         yield put({ type: 'app/query' })
@@ -132,7 +132,7 @@ export default {
       } else {
         throw data.msg || data
       }
-    }
+    },
   },
   reducers: {
     showLoginLoading (state) {
@@ -171,6 +171,6 @@ export default {
     setCodeAuth (state, { payload }) {
       const getCodeAuth = payload.getCodeAuth
       return { ...state, getCodeAuth }
-    }
+    },
   },
 }

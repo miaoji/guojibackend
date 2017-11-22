@@ -21,7 +21,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
           title: '确定要删除吗?',
           onOk () {
             onDeleteItem(record.id)
-          }
+          },
         })
         break
       default:
@@ -30,10 +30,10 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   }
 
   const copyUrl = (record, e) => {
-    const href = 'http://www.mingz-tech.com/wechat/#/send?appid='+record.appid
-    var temp = window.prompt('使用Ctrl+C复制到剪切板', href)
+    const href = `http://www.mingz-tech.com/wechat/#/send?appid=${record.appid}`
+    let temp = window.prompt('使用Ctrl+C复制到剪切板', href)
     temp.select()
-    document.execCommand('copy', false);
+    document.execCommand('copy', false)
   }
 
   const columns = [
@@ -41,18 +41,18 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '微信名',
       dataIndex: 'NICK_NAME',
       key: 'NICK_NAME',
-    },{
+    }, {
       title: '性别',
       dataIndex: 'SEX',
       key: 'SEX',
       render: (text) => {
         const realtext = {
-          '0': '未知',
-          '1': '男',
-          '2': '女',
+          0: '未知',
+          1: '男',
+          2: '女',
         }
         return <span>{realtext[text]}</span>
-      }
+      },
     }, {
       title: '寄件总次数',
       dataIndex: 'PACKAGE_COUNT',
@@ -61,14 +61,14 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '消费总金额',
       dataIndex: 'TOTAL_AMOUNT',
       key: 'TOTAL_AMOUNT',
-    },{
+    }, {
       title: '推广人',
       dataIndex: 'qrName',
       key: 'qrName',
       render: (text) => {
-        return <span>{text?text:'无'}</span>
-      }
-    },/*{
+        return <span>{text || '无'}</span>
+      },
+    }, /*{
       title: '操作',
       key: 'operation',
       width: 100,
@@ -89,13 +89,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true})}
+        className={classnames({ [styles.table]: true })}
         bordered
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
-            <p>openid:  {record.OPENID}</p>
-            <p>手机号:  {record.MOBILE?record.MOBILE.toString().substr(0, 3) + '***' + record.MOBILE.toString().substr(7, 10):'未绑定手机号'}</p>
-            <p>证件号:  {record.ID_CARD?record.ID_CARD:'未绑定证件号'}</p>
+            <p>openid:            {record.OPENID}</p>
+            <p>手机号:            {record.MOBILE ? `${record.MOBILE.toString().substr(0, 3)}***${record.MOBILE.toString().substr(7, 10)}` : '未绑定手机号'}</p>
+            <p>证件号:            {record.ID_CARD ? record.ID_CARD : '未绑定证件号'}</p>
           </div>
         }
         scroll={{ x: 1250 }}

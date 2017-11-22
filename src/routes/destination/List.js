@@ -20,7 +20,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
           title: '确定要删除这目的地吗?',
           onOk () {
             onDeleteItem(record.id)
-          }
+          },
         })
         break
       default:
@@ -31,7 +31,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
   return (
     <div>
       <ul className={styles.list}>
-        {list.show?<span>{list.name}</span>:list.map(item => (<li key={item.id}>
+        {list.show ? <span>{list.name}</span> : list.map(item => (<li key={item.id}>
           <div title={item.country_cn} size="large">
             <Link to={`/province?countryCode=${item.country_code}`}>
                 <span>{item.country_cn} - {item.sort || 0}</span>

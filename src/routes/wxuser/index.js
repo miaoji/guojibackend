@@ -51,7 +51,7 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'wxUser/markBlackList',
-        payload: { id, blacklist: 1}
+        payload: { id, blacklist: 1 },
       })
     },
     onDeleteItem (id) {

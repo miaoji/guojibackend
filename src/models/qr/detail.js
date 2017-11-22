@@ -8,7 +8,7 @@ export default {
   state: {
     name: '',
     ticket: '',
-    parameter: ''
+    parameter: '',
   },
 
   subscriptions: {
@@ -18,11 +18,11 @@ export default {
           const name = queryURL('name')
           const ticket = queryURL('ticket')
           const parameter = queryURL('parameter')
-          dispatch({ type: 'querySuccess', payload: { 
+          dispatch({ type: 'querySuccess', payload: {
             name,
             ticket,
-            parameter
-          }})
+            parameter,
+          } })
         }
       })
     },

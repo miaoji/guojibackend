@@ -1,6 +1,6 @@
 import { request, config, pageParams } from '../utils'
 const { api } = config
-const { cargodetail } = api
+const { cargodetail, order } = api
 
 
 export async function query (params) {
@@ -13,12 +13,12 @@ export async function query (params) {
 }
 
 export async function merge (params, data) {
-	return request({
-		url: cargodetail.merge,
-		method: 'post',
+  return request({
+    url: cargodetail.merge,
+    method: 'post',
     params,
-		data
-	})
+    data,
+  })
 }
 
 export async function cancel (params, data) {
@@ -26,7 +26,7 @@ export async function cancel (params, data) {
     url: cargodetail.cancel,
     method: 'post',
     params,
-    data
+    data,
   })
 }
 
@@ -34,6 +34,14 @@ export async function freight (params) {
   return request({
     url: cargodetail.setFreight,
     method: 'post',
+    params,
+  })
+}
+
+export async function getOrderInfo (params) {
+  return request({
+    url: order.getOrderInfoById,
+    method: 'get',
     params
   })
 }

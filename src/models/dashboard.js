@@ -7,10 +7,10 @@ export default {
   state: {
     sales: [],
     quote: {
-      name: '明彰',
+      name: '明彰科技',
       title: '名言',
-      content: '逆水行舟，不进则退',
-      // avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',
+      content: '学如逆水行舟，不进则退',
+      avatar: 'http://www.feizl.com/upload2007/2011_11/111114031328587.jpg',
     },
     numbers: [
       {
@@ -42,8 +42,8 @@ export default {
     cpu: {},
     user: {
       name: '管理员',
-      email: '2467254599@qq.com',
-      // avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',
+      email: 'winner@qq.com',
+      avatar: 'http://pic.qbaobei.com/Uploads/Picture/2016-01-14/569781503c21f.jpg',
     },
   },
   subscriptions: {
@@ -56,7 +56,7 @@ export default {
       payload,
     }, { call, put }) {
       const data = yield call(query, parse(payload))
-    }
+    },
   },
   reducers: {
   },

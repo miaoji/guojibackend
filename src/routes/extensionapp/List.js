@@ -22,7 +22,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
           title: '确定要删除吗?',
           onOk () {
             onDeleteItem(record.id)
-          }
+          },
         })
         break
       default:
@@ -31,10 +31,10 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   }
 
   const copyUrl = (record, e) => {
-    const href = 'http://www.mingz-tech.com/wechat/#/send?appid='+record.appid
-    var temp = window.prompt('使用Ctrl+C复制到剪切板', href)
+    const href = `http://www.mingz-tech.com/wechat/#/send?appid=${record.appid}`
+    let temp = window.prompt('使用Ctrl+C复制到剪切板', href)
     temp.select()
-    document.execCommand('copy', false);
+    document.execCommand('copy', false)
   }
 
   const columns = [
@@ -46,48 +46,48 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: 'AppId',
       dataIndex: 'appid',
       key: 'appid',
-    },{
+    }, {
       title: '用户量',
       dataIndex: 'userCount',
       key: 'userCount',
       render: (text) => {
-        return <span>{ text?text:0 }</span>
-      }
-    },{
+        return <span>{text || 0}</span>
+      },
+    }, {
       title: '下单量',
       dataIndex: 'orderCount',
       key: 'orderCount',
       render: (text) => {
-        return <span>{ text?text:0 }</span>
-      }
-    },{
+        return <span>{text || 0}</span>
+      },
+    }, {
       title: '关注用户详情',
       dataIndex: 'qrTICKET',
       key: 'qrTICKET',
       render: (text, record) => {
         return <Link to={`/wxuserdetail?appid=${record.appid}`}>点击查看</Link>
-      }
-    },{
+      },
+    }, {
       title: '创建时间',
       dataIndex: 'create_time',
       key: 'create_time',
       render: (text) => {
         const createtime = time.formatTime(text)
         return <span>{createtime}</span>
-      }
-    },{
-      title:'复制推广链接',
+      },
+    }, {
+      title: '复制推广链接',
       dataIndex: 'catenate',
       key: 'catenate',
       render: (text, record) => {
         return <Button type="primary" size="large" onClick={e => copyUrl(record, e)}>复制到剪切板</Button>
-      }
-    },{
+      },
+    }, {
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' },{ key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '删除' }]} />
       },
     },
   ]
@@ -103,7 +103,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true})}
+        className={classnames({ [styles.table]: true })}
         bordered
         scroll={{ x: 1250 }}
         columns={columns}

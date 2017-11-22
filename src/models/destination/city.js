@@ -6,9 +6,9 @@ import { message, Row, Col } from 'antd'
 import * as citysService from '../../services/citys'
 import * as locationService from '../../services/location'
 import { pageModel } from '../common'
-import { config, storage, } from '../../utils'
+import { config, storage } from '../../utils'
 
-const { query, create, update, remove, } = citysService
+const { query, create, update, remove } = citysService
 const { prefix } = config
 
 const queryLocation = locationService.query
@@ -48,22 +48,22 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-    	if(payload.provinceCode){
+    	if (payload.provinceCode) {
     		storage({
-    			key:'provinceCode',
-    			val:payload.provinceCode,
-    			type:'set'
+    			key: 'provinceCode',
+    			val: payload.provinceCode,
+    			type: 'set',
     		})
-    	}else{
-    		payload.provinceCode=storage({
-    			key:'provinceCode',
-    			type:'get'
+    	} else {
+    		payload.provinceCode = storage({
+    			key: 'provinceCode',
+    			type: 'get',
     		})
     	}
       const data = yield call(query, payload)
-      if (data.code=="200"||data.code=='500') {
-        if(data.code=='500'||data.obj==null){
-          data.obj={show:true, name: "暂无该城市的信息"}
+      if (data.code == '200' || data.code == '500') {
+        if (data.code == '500' || data.obj == null) {
+          data.obj = { show: true, name: '暂无该城市的信息' }
         }
         yield put({
           type: 'querySuccess',
@@ -82,10 +82,10 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      payload.provinceCode=storage({
-          key:'provinceCode',
-          type:'get'
-        })
+      payload.provinceCode = storage({
+        key: 'provinceCode',
+        type: 'get',
+      })
       const data = yield call(create, payload)
       if (data.success) {
         message.success(data.msg)
@@ -121,15 +121,15 @@ export default modelExtend(pageModel, {
 
     *queryLocation ({ payload = {} }, { select, call, put }) {
       const countryId = payload.currentItem.id
-      const params = {countryid: countryId}
-      const data = yield call(queryLocation, {params, type: 'province'})
+      const params = { countryid: countryId }
+      const data = yield call(queryLocation, { params, type: 'province' })
       if (data) {
         yield put({
           type: 'showLocationModal',
           payload: {
             locationData: data.obj,
             currentItem: payload.currentItem,
-            type: payload.type
+            type: payload.type,
           },
         })
       } else {
@@ -140,29 +140,29 @@ export default modelExtend(pageModel, {
     *createProvince ({ payload = {} }, { select, call, put }) {
       const currentItem = yield select(({ city }) => city.currentItem)
       const countryId = currentItem.id
-      const params = {countryid: countryId, name: payload.name, englishname: payload.englishname}
-      const data = yield call(createLocation, {params, type: 'province'})
+      const params = { countryid: countryId, name: payload.name, englishname: payload.englishname }
+      const data = yield call(createLocation, { params, type: 'province' })
       if (data.success && data.code === 200) {
-        const queryData = yield call(queryLocation, {params: {countryid: countryId}, type: 'province'})
+        const queryData = yield call(queryLocation, { params: { countryid: countryId }, type: 'province' })
         if (!queryData.success) throw queryData.mess
         yield put({
           type: 'showLocationModal',
           payload: {
             locationData: queryData.obj,
             currentItem,
-            type: payload.type
+            type: payload.type,
           },
         })
       } else {
         throw data.mess || data
       }
-    }
+    },
 
   },
 
   reducers: {
     setListEmpty (state) {
-      return { ...state, list: {show:true,name:"数据加载中..."} }
+      return { ...state, list: { show: true, name: '数据加载中...' } }
     },
 
     showModal (state, { payload }) {
@@ -175,16 +175,16 @@ export default modelExtend(pageModel, {
 
     showLocationModal (state, { payload }) {
       let { currentItem, locationData, type } = payload
-      const visible = type + 'ModalVisible'
-      locationData = locationData.map(function(elem) {
-        return <Row gutter={16}>
+      const visible = `${type}ModalVisible`
+      locationData = locationData.map((elem) => {
+        return (<Row gutter={16}>
                 <Col className="gutter-row" span={8}>
-                  <div className="gutter-box">{elem['id']}</div>
+                  <div className="gutter-box">{elem.id}</div>
                 </Col>
                 <Col className="gutter-row" span={8}>
-                  <div className="gutter-box">{elem['name']}</div>
+                  <div className="gutter-box">{elem.name}</div>
                 </Col>
-              </Row>;
+              </Row>)
       })
       let res = { ...state, currentItem, locationData }
       res[visible] = true
@@ -193,11 +193,11 @@ export default modelExtend(pageModel, {
 
     hideLocationModal (state, { payload }) {
       const { type } = payload
-      const visible = type + 'ModalVisible'
+      const visible = `${type}ModalVisible`
       let res = { ...state }
       res[visible] = false
       return res
-    }
+    },
 
   },
 })

@@ -13,16 +13,16 @@ export async function accountLogin (data) {
 export async function getVerifyImage () {
   return request({
     url: login.getVerifyImage,
-    method: 'get'
+    method: 'get',
   })
 }
 
 export async function getVerifyCodeByMobile (data) {
-	return request({
+  return request({
 	  url: login.getMobileCode,
 	  method: 'get',
-	  data
-	})
+	  data,
+  })
 }
 
 export async function mobileLogin (data) {

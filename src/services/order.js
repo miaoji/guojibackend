@@ -22,7 +22,7 @@ export async function remove (params) {
   return request({
     url: order.hide,
     method: 'delete',
-    params
+    params,
   })
 }
 
@@ -30,7 +30,7 @@ export async function update (params) {
   return request({
     url: order.mod,
     method: 'post',
-    params
+    params,
   })
 }
 
@@ -48,7 +48,7 @@ export async function getKdCompany (params) {
   return request({
     url: order.getKdCompany,
     method: 'get',
-    params
+    params,
   })
 }
 // 获取orderdetail页面信息
@@ -56,7 +56,7 @@ export async function getOrderInfo (params) {
   return request({
     url: order.getOrderInfo,
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -65,7 +65,7 @@ export async function getOrderInfoByOrderNo (params) {
   return request({
     url: order.getOrderInfoByOrderNo,
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -74,6 +74,6 @@ export async function queryByCompany (params) {
   return request({
     url: order.queryByCompany,
     method: 'get',
-    params
+    params,
   })
 }

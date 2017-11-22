@@ -61,7 +61,7 @@ const Marketing = ({ location, dispatch, marketing, loading }) => {
           currentItem: item,
         },
       })
-    }
+    },
   }
 
   const filterProps = {

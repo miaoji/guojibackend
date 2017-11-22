@@ -9,12 +9,12 @@ const FormItem = Form.Item
 const Option = Select.Option
 
 const statusGroup = {
-  '1': '待付款',
-  '2': '付款完成',
-  '3': '中通完成',
-  '0': 'fpx完成',
-  '4': '异常订单',
-  '5': '取消订单',
+  1: '待付款',
+  2: '付款完成',
+  3: '中通完成',
+  0: 'fpx完成',
+  4: '异常订单',
+  5: '取消订单',
 }
 
 const formItemLayout = {
@@ -86,7 +86,7 @@ const modal = ({
                 message: '请选择快递公司名!',
               },
             ],
-          })(<Select showSearch placeholder='输入快递备注名可搜索' onFocus={handleFocus} defaultValue="dhlen" style={{ width: 286 }}>{ selectKdCompany }</Select>)}
+          })(<Select showSearch placeholder="输入快递备注名可搜索" onFocus={handleFocus} defaultValue="dhlen" style={{ width: 286 }}>{selectKdCompany}</Select>)}
         </FormItem>
         <FormItem label="国际段单号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('intlNo', {

@@ -30,7 +30,7 @@ const modal = ({
     getFieldDecorator,
     validateFields,
     getFieldsValue,
-    setFieldsValue
+    setFieldsValue,
   },
   ...modalProps
 }) => {
@@ -47,23 +47,23 @@ const modal = ({
     })
   }
 
-  const handleClick= async function() {
+  const handleClick = async function() {
     // 处理selectPackage 放入 option中
     // await getPackage()
   }
 
-  const handleChange=async function(data){
-    //通过目的地查询包裹类型
+  const handleChange = async function(data) {
+    // 通过目的地查询包裹类型
     await getParcelType(data)
     setFieldsValue({
-      packageType:null,
-      productType:null
+      packageType: null,
+      productType: null,
     })
   }
 
-  const productChange=async function(data){
+  const productChange = async function(data) {
     await getProductType(JSON.parse(data).id)
-    setFieldsValue({productType:null})
+    setFieldsValue({ productType: null })
   }
 
   const modalOpts = {
@@ -83,7 +83,7 @@ const modal = ({
                 message: '请选择目的地国家!',
               },
             ],
-          })(<Select placeholder='输入文字可搜索' showSearch onChange={handleChange} onFocus={handleClick}>{selectPackage}</Select>)}
+          })(<Select placeholder="输入文字可搜索" showSearch onChange={handleChange} onFocus={handleClick}>{selectPackage}</Select>)}
         </FormItem>
         <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('packageType', {
@@ -94,7 +94,7 @@ const modal = ({
                 message: '请选择物品类型!',
               },
             ],
-          })(<Select placeholder='点击选择' onChange={productChange} disabled={productDis}>{selectParcelType}</Select>)}
+          })(<Select placeholder="点击选择" onChange={productChange} disabled={productDis}>{selectParcelType}</Select>)}
         </FormItem>
         <FormItem label="产品类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('productType', {
@@ -105,7 +105,7 @@ const modal = ({
                 message: '请选择产品类型!',
               },
             ],
-          })(<Select placeholder='点击选择' disabled={freightDis}>{selectProductType}</Select>)}
+          })(<Select placeholder="点击选择" disabled={freightDis}>{selectProductType}</Select>)}
         </FormItem>
         <FormItem label="首重价格(¥)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('initPrice', {
@@ -203,7 +203,7 @@ modal.propTypes = {
   freightDis: PropTypes.Blooean,
   selectPackage: PropTypes.object,
   getPackage: PropTypes.func,
-  onOk: PropTypes.func
+  onOk: PropTypes.func,
 }
 
 export default Form.create()(modal)

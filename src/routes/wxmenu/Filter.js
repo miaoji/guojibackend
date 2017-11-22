@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Modal, } from 'antd'
+import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Modal } from 'antd'
 import city from '../../utils/city'
 
 const Search = Input.Search
@@ -38,7 +38,7 @@ const Filter = ({
       title: '确定要提交到微信吗?',
       onOk () {
         onSubmitWeChat()
-      }
+      },
     })
   }
   const handleFields = (fields) => {
@@ -104,10 +104,10 @@ const Filter = ({
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
-          <div style={{ display:'block' }}>
+          <div style={{ display: 'block' }}>
             <Button size="large" type="ghost" onClick={onSubmit}>更新到微信</Button>
           </div>
-          <div style={{ display:'block' }}>
+          <div style={{ display: 'block' }}>
             <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
           </div>
         </div>

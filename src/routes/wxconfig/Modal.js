@@ -36,7 +36,6 @@ const modal = ({
         key: item.key,
       }
       onOk(data)
-      
     })
   }
 
@@ -60,7 +59,7 @@ const modal = ({
                 message: '请输入推广人姓名!',
               },
             ],
-          })(<TextArea autosize='true' />)}
+          })(<TextArea autosize="true" />)}
         </FormItem>
       </Form>
     </Modal>

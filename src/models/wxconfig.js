@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove, query, } from '../services/wxconfigs'
+import { create, update, remove, query } from '../services/wxconfigs'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -9,7 +9,7 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
-    modalType: 'create'
+    modalType: 'create',
   },
 
   subscriptions: {
@@ -29,7 +29,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data.code === 200) {  
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -41,15 +41,15 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      }else{
-        throw data.msg || "无法跟服务器建立有效连接"
+      } else {
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
     *create ({ payload }, { call, put }) {
       const newPayload = {
         content: payload.parameter,
-        name: payload.name
+        name: payload.name,
       }
       return
       const data = yield call(create, newPayload)
@@ -66,7 +66,7 @@ export default modelExtend(pageModel, {
       const id = yield select(({ wxconfig }) => wxconfig.currentItem.id)
       const newPayload = {
         content: payload.content,
-        id: id
+        id,
       }
       // console.log('newQr',newQr)
       // return
@@ -100,7 +100,7 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false }
-    }
+    },
 
   },
 })

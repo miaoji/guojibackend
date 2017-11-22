@@ -22,7 +22,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
           title: '确定要删除吗?',
           onOk () {
             onDeleteItem(record.id)
-          }
+          },
         })
         break
       default:
@@ -31,10 +31,10 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   }
 
   const copyUrl = (record, e) => {
-    const href = 'http://www.mingz-tech.com/wechat/#/send?appid='+record.appid
-    var temp = window.prompt('使用Ctrl+C复制到剪切板', href)
+    const href = `http://www.mingz-tech.com/wechat/#/send?appid=${record.appid}`
+    let temp = window.prompt('使用Ctrl+C复制到剪切板', href)
     temp.select()
-    document.execCommand('copy', false);
+    document.execCommand('copy', false)
   }
 
   const columns = [
@@ -46,20 +46,20 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '内容',
       dataIndex: 'content',
       key: 'content',
-    },{
+    }, {
       title: '创建时间',
       dataIndex: 'create_time',
       key: 'create_time',
       render: (text) => {
         const createtime = time.formatTime(text)
         return <span>{createtime}</span>
-      }
-    },{
+      },
+    }, {
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' },{ key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '删除' }]} />
       },
     },
   ]
@@ -75,7 +75,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true})}
+        className={classnames({ [styles.table]: true })}
         bordered
         scroll={{ x: 1250 }}
         columns={columns}

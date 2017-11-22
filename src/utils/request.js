@@ -62,8 +62,8 @@ const fetch = (options) => {
         params: cloneData || params,
         timeout: 5000,
         headers: {
-        	'token': window.localStorage.getItem('guojipc_token')
-        }
+        	token: window.localStorage.getItem('guojipc_token'),
+        },
       })
     case 'delete':
       return axios({
@@ -72,8 +72,8 @@ const fetch = (options) => {
         params: cloneData || params,
         timeout: 5000,
         headers: {
-          'token': window.localStorage.getItem('guojipc_token')
-        }
+          token: window.localStorage.getItem('guojipc_token'),
+        },
       })
     case 'post':
       return axios({
@@ -83,8 +83,8 @@ const fetch = (options) => {
         params,
       	timeout: 5000,
         headers: {
-          'token': window.localStorage.getItem('guojipc_token')
-        }
+          token: window.localStorage.getItem('guojipc_token'),
+        },
       })
     case 'put':
       return axios.put(url, cloneData)
@@ -96,11 +96,10 @@ const fetch = (options) => {
 }
 
 export default function request (options) {
-  //判断如果不是登陆页 在localStorage 中没有token的话  就跳转到login页面上
+  // 判断如果不是登陆页 在localStorage 中没有token的话  就跳转到login页面上
   if (window.location.pathname !== '/login') {
     const token = window.localStorage.getItem('guojipc_token')
-    if(!token||token === '')
-    return browserHistory.push('/login')  	
+    if (!token || token === '') { return browserHistory.push('/login') }
   }
   return fetch(options).then((response) => {
     const { statusText, status } = response
@@ -109,7 +108,7 @@ export default function request (options) {
       success: true,
       message: statusText,
       statusCode: status,
-      ...data
+      ...data,
     }
   }).catch((error) => {
     const { response } = error

@@ -38,7 +38,7 @@ const Province = ({ location, dispatch, province, loading }) => {
     onOk (data) {
       console.log('data', data)
       dispatch({
-        type: `province/createProvince`,
+        type: 'province/createProvince',
         payload: data,
       })
     },
@@ -46,8 +46,8 @@ const Province = ({ location, dispatch, province, loading }) => {
       dispatch({
         type: 'province/hideLocationModal',
         payload: {
-          type: 'province'
-        }
+          type: 'province',
+        },
       })
     },
   }
@@ -86,10 +86,10 @@ const Province = ({ location, dispatch, province, loading }) => {
         type: 'province/queryLocation',
         payload: {
           currentItem: item,
-          type
+          type,
         },
       })
-    }
+    },
   }
 
   const filterProps = {
@@ -122,7 +122,7 @@ const Province = ({ location, dispatch, province, loading }) => {
           modalType: 'create',
         },
       })
-    }
+    },
   }
 
   return (

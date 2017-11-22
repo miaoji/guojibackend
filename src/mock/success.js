@@ -7,10 +7,10 @@ let successsListData = Mock.mock({
   'data|40-50': [
     {
       id: '@id',
-      did:/^\d{8}$/,
+      did: /^\d{8}$/,
       wxName: '@cname',
-      'name|1':['上海','北京','广东','深圳','安徽','江西'],
-      'storename|1':['上海','北京','广东','深圳','安徽','江西'],
+      'name|1': ['上海', '北京', '广东', '深圳', '安徽', '江西'],
+      'storename|1': ['上海', '北京', '广东', '深圳', '安徽', '江西'],
       nickName: '@cname',
       phone: /^1[34578]\d{9}$/,
       belongStore: '@county',

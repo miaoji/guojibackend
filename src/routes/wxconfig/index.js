@@ -61,7 +61,7 @@ const Wxconfig = ({ location, dispatch, wxconfig, loading }) => {
           currentItem: item,
         },
       })
-    }
+    },
   }
 
   const filterProps = {

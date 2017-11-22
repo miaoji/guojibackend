@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Menu, Table, Modal, Button, Icon, message } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
-//import AnimTableBody from '../../components/DataTable/AnimTableBody'
+// import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
 import { Link } from 'dva/router'
 
@@ -21,7 +21,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
           title: '确定要删除这目的地吗?',
           onOk () {
             onDeleteItem(record.id)
-          }
+          },
         })
         break
       default:
@@ -29,14 +29,14 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
     }
   }
 
-  const clickSeeProvince = ( record ) => {
+  const clickSeeProvince = (record) => {
 //  window.open(`/county?cityid=${record.id}`)
   }
 
   return (
     <div>
       <ul className={styles.list}>
-        {list.show?<li>{list.name}</li>:list.map(item => (<li key={item.id}>
+        {list.show ? <li>{list.name}</li> : list.map(item => (<li key={item.id}>
           <div title={item.city} size="large">
             <Link to={`/county?cityCode=${item.city_code}`}>
                 <span>{item.city}</span>

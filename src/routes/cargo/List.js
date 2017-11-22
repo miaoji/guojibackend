@@ -10,14 +10,14 @@ import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 
-//状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
+// 状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
 const realtext = {
-  '1': '待付款',
-  '2': '付款完成',
-  '3': '国内完成',
-  '4': '国际完成',
-  '5': '异常订单',
-  '6': '取消订单'
+  1: '待付款',
+  2: '付款完成',
+  3: '国内完成',
+  4: '国际完成',
+  5: '异常订单',
+  6: '取消订单',
 }
 
 const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
@@ -31,7 +31,7 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
           title: '确定要删除这一订单吗?',
           onOk () {
             onDeleteItem(record.ID)
-          }
+          },
         })
         break
       case '3':
@@ -54,31 +54,31 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       onOk () {
         console.log('record', record)
         onCreateCtorder(record)
-      }
+      },
     })
   }
 
   const columns = [
     {
-      title: '微信用户ID',
-      dataIndex: 'ID',
-      key: 'ID',
-    },{
-      title: '集运批次号',
+      title: '客户编号',
+      dataIndex: 'CUSTOMER_NO',
+      key: 'CUSTOMER_NO'
+    }, {
+      title: '批次号',
       dataIndex: 'BATCH',
       key: 'BATCH',
-      render: (text,record) => {
+      render: (text, record) => {
         return <Link to={`/cargodetail?batch=${record.BATCH}`}>{text}</Link>
-      }
-    },{
+      },
+    }, {
       title: '用户名',
       dataIndex: 'NICK_NAME',
       key: 'NICK_NAME',
-    },{
+    }, {
       title: '下单时间',
       dataIndex: 'CREATE_TIME',
       key: 'CREATE_TIME',
-    }
+    },
   ]
 
   const getBodyWrapperProps = {

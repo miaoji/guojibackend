@@ -40,15 +40,14 @@ const modal = ({
         key: item.key,
       }
       onOk(data)
-      
     })
   }
 
   const handleChange = (e) => {
-    switch(e.target.value.toString()) {
+    switch (e.target.value.toString()) {
       case '1':
         onHideInput()
-        setFieldsValue({seconds:null})
+        setFieldsValue({ seconds: null })
         break
       case '0':
         onShowInput()
@@ -88,7 +87,7 @@ const modal = ({
                 message: '请选择有效时长!',
               },
             ],
-          })(<Radio.Group onChange={handleChange} disabled={ typeDis }>
+          })(<Radio.Group onChange={handleChange} disabled={typeDis}>
             <Radio value={1}>永久有效</Radio>
             <Radio value={0}>临时有效(最长一个的时间)</Radio>
           </Radio.Group>)}
@@ -103,7 +102,7 @@ const modal = ({
                 message: '请输入有效期!',
               },
             ],
-          })(<Input disabled={ inputDis } />)}
+          })(<Input disabled={inputDis} />)}
         </FormItem>
       </Form>
     </Modal>

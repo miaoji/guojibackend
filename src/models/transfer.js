@@ -1,15 +1,15 @@
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
-import { query, create, remove, update, } from '../services/transfers'
+import { query, create, remove, update } from '../services/transfers'
 import * as location from '../services/countries'
 import { pageModel } from './common'
 import { config } from '../utils'
 
-const getCountry=location.query // 获取国家信息
-const getProvince=location.getProvinceId // 获取省份信息
-const getCity=location.getCityId // 获取市级信息
-const getCounty=location.getCountyId // 获取县区级信息
-const getCountryId=location.getCountryId // 通过国家姓名获取国家ID
+const getCountry = location.query // 获取国家信息
+const getProvince = location.getProvinceId // 获取省份信息
+const getCity = location.getCityId // 获取市级信息
+const getCounty = location.getCountyId // 获取县区级信息
+const getCountryId = location.getCountryId // 通过国家姓名获取国家ID
 
 const { prefix } = config
 const Option = Select.Option
@@ -26,7 +26,7 @@ export default modelExtend(pageModel, {
     selectNation: [],
     provinceDis: true,
     cityDis: true,
-    districtDis: true
+    districtDis: true,
   },
 
   subscriptions: {
@@ -47,7 +47,7 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data.code === 200 && data.success) {
-        for(let item in data.obj){
+        for (let item in data.obj) {
           data.obj[item].countryName = data.obj[item].country.countryCn
           data.obj[item].provincesName = data.obj[item].provinces.province
           data.obj[item].citiesName = data.obj[item].cities.city
@@ -69,11 +69,11 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-      	throw data.msg || "无法跟服务器建立有效连接"
+      	throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
-     *getCountry ({ payload = {} }, { call, put }) {
+    *getCountry ({ payload = {} }, { call, put }) {
       const data = yield call(getCountry)
       if (data.code === 200) {
         let obj = data.obj
@@ -82,8 +82,8 @@ export default modelExtend(pageModel, {
           for (let i = 0; i < obj.length; i++) {
             let item = obj[i]
             let str = {
-              code:item.country_code,
-              id:item.id
+              code: item.country_code,
+              id: item.id,
             }
             str = JSON.stringify(str)
             children.push(<Option key={str}>{item.country_cn}</Option>)
@@ -99,18 +99,18 @@ export default modelExtend(pageModel, {
         throw data.msg
       }
     },
-  
+
     *getProvince ({ payload = {} }, { call, put }) {
       payload = JSON.parse(payload).code
-      const data = yield call(getProvince,{countryCode:payload})
+      const data = yield call(getProvince, { countryCode: payload })
       if (data.code === 200) {
         let children = []
         if (data.obj) {
-          for (let i=0; i < data.obj.length; i++) {
+          for (let i = 0; i < data.obj.length; i++) {
             let item = data.obj[i]
             let str = {
-              code:item.province_code,
-              id:item.id
+              code: item.province_code,
+              id: item.id,
             }
             str = JSON.stringify(str)
             children.push(<Option key={str}>{item.province}</Option>)
@@ -119,25 +119,25 @@ export default modelExtend(pageModel, {
         yield put({
           type: 'setProvince',
           payload: {
-            selectProvince: children
-          }
+            selectProvince: children,
+          },
         })
-      }else{
+      } else {
         throw data.msg
       }
     },
 
     *getCity ({ payload = {} }, { call, put }) {
       payload = JSON.parse(payload).code
-      const data = yield call(getCity,{provinceCode:payload})
+      const data = yield call(getCity, { provinceCode: payload })
       if (data.code === 200) {
         let children = []
         if (data.obj) {
-          for (let i=0; i < data.obj.length; i++) {
+          for (let i = 0; i < data.obj.length; i++) {
             let item = data.obj[i]
             let str = {
               code: item.city_code,
-              id: item.id
+              id: item.id,
             }
             str = JSON.stringify(str)
             children.push(<Option key={str}>{item.city}</Option>)
@@ -146,21 +146,21 @@ export default modelExtend(pageModel, {
         yield put({
           type: 'setCity',
           payload: {
-            selectCity: children
-          }
+            selectCity: children,
+          },
         })
-      }else{
+      } else {
         throw data.msg
       }
-    },    
+    },
 
     *getCounty ({ payload = {} }, { call, put }) {
       payload = JSON.parse(payload).code
-      const data = yield call(getCounty,{cityCode:payload})
+      const data = yield call(getCounty, { cityCode: payload })
       if (data.code === 200) {
         let children = []
         if (data.obj) {
-          for (let i=0; i < data.obj.length; i++) {
+          for (let i = 0; i < data.obj.length; i++) {
             let item = data.obj[i]
             children.push(<Option key={item.id}>{item.district}</Option>)
           }
@@ -168,13 +168,13 @@ export default modelExtend(pageModel, {
         yield put({
           type: 'setCounty',
           payload: {
-            selectCounty: children
-          }
+            selectCounty: children,
+          },
         })
-      }else{
+      } else {
         throw data.msg
       }
-    }, 
+    },
 
     *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload.toString() })
@@ -206,19 +206,19 @@ export default modelExtend(pageModel, {
       // 判断修改时的国家是否与加载时的国家相同 相同则不修改
       if (payload.transferCountry == newCurrentItem.country.countryCn) {
         delete payload.transferCountry
-      }else{
+      } else {
         payload.transferCountry = JSON.parse(payload.transferCountry).id
       }
       // 判断修改时的省是否与加载时的省相同 相同则不修改
       if (payload.transferProv == newCurrentItem.provinces.province) {
         delete payload.transferProv
-      }else{
+      } else {
         payload.transferProv = JSON.parse(payload.transferProv).id
       }
       // 判断修改时的市是否与加载时的市相同 相同则不修改
       if (payload.transferCity == newCurrentItem.cities.city) {
         delete payload.transferCity
-      }else{
+      } else {
         payload.transferCity = JSON.parse(payload.transferCity).id
       }
       // 判断修改时的区是否与加载时的区相同 相同则不修改
@@ -234,7 +234,7 @@ export default modelExtend(pageModel, {
         throw data.msg
       }
     },
-    
+
   },
 
   reducers: {
@@ -244,7 +244,7 @@ export default modelExtend(pageModel, {
     },
 
     setProvince (state, { payload }) {
-      return { ...state, ...payload, provinceDis:false }
+      return { ...state, ...payload, provinceDis: false }
     },
 
     setCity (state, { payload }) {
@@ -261,7 +261,7 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false, provinceDis: true, cityDis: true, districtDis: true }
-    }
+    },
 
   },
 })

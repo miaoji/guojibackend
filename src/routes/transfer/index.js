@@ -8,17 +8,17 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Transfer = ({ location, dispatch, transfer, loading }) => {
-  const { 
-    list, 
-    pagination, 
-    currentItem, 
-    modalVisible, 
-    modalType, 
-    isMotion, 
-    selectedRowKeys, 
-    selectNation, 
-    selectProvince, 
-    selectCity, 
+  const {
+    list,
+    pagination,
+    currentItem,
+    modalVisible,
+    modalType,
+    isMotion,
+    selectedRowKeys,
+    selectNation,
+    selectProvince,
+    selectCity,
     selectCounty,
     provinceDis,
     cityDis,
@@ -33,13 +33,13 @@ const Transfer = ({ location, dispatch, transfer, loading }) => {
     confirmLoading: loading.effects['transfer/update'],
     title: `${modalType === 'create' ? '新增中转地址' : '修改中转地址'}`,
     wrapClassName: 'vertical-center-modal',
-    selectNation: selectNation,
-    selectProvince: selectProvince,
-    selectCity: selectCity,
-    selectCounty: selectCounty,
-    provinceDis: provinceDis,
-    cityDis: cityDis,
-    districtDis: districtDis,
+    selectNation,
+    selectProvince,
+    selectCity,
+    selectCounty,
+    provinceDis,
+    cityDis,
+    districtDis,
 
     onOk (data) {
       dispatch({
@@ -47,29 +47,29 @@ const Transfer = ({ location, dispatch, transfer, loading }) => {
         payload: data,
       })
     },
-    getCountry(data){
+    getCountry (data) {
       dispatch({
-        type:`transfer/getCountry`
+        type: 'transfer/getCountry',
       })
     },
-    getProvince(data){
+    getProvince (data) {
       dispatch({
-        type:`transfer/getProvince`,
-        payload:data
+        type: 'transfer/getProvince',
+        payload: data,
       })
     },
-    getCity(data){
-      console.log('data',data)
+    getCity (data) {
+      console.log('data', data)
       dispatch({
-        type:`transfer/getCity`,
-        payload:data
+        type: 'transfer/getCity',
+        payload: data,
       })
     },
-    getCounty(data){
-      console.log('data',data)
+    getCounty (data) {
+      console.log('data', data)
       dispatch({
-        type:`transfer/getCounty`,
-        payload:data
+        type: 'transfer/getCounty',
+        payload: data,
       })
     },
     onCancel () {
@@ -99,7 +99,7 @@ const Transfer = ({ location, dispatch, transfer, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'transfer/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {
@@ -117,9 +117,9 @@ const Transfer = ({ location, dispatch, transfer, loading }) => {
         },
       })
       dispatch({
-        type: 'transfer/getCountry'
+        type: 'transfer/getCountry',
       })
-    }
+    },
   }
 
   const filterProps = {
@@ -156,7 +156,7 @@ const Transfer = ({ location, dispatch, transfer, loading }) => {
         },
       })
       dispatch({
-        type: 'transfer/getCountry'
+        type: 'transfer/getCountry',
       })
     },
     switchIsMotion () {

@@ -5,7 +5,7 @@ import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import * as provincesService from '../../services/provinces'
 import { pageModel } from '../common'
-import { config, storage, } from '../../utils'
+import { config, storage } from '../../utils'
 
 const { query, create, update, remove } = provincesService
 const { prefix } = config
@@ -26,9 +26,9 @@ export default modelExtend(pageModel, {
     setup ({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/province') {
-          //清空module原有的数据
+          // 清空module原有的数据
           dispatch({
-            type: 'setListEmpty'
+            type: 'setListEmpty',
           })
           dispatch({
             type: 'query',
@@ -42,22 +42,22 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-    	if(payload.countryCode){
+    	if (payload.countryCode) {
     		storage({
-    			key:'countryCode',
-    			val:payload.countryCode,
-    			type:"set"
+    			key: 'countryCode',
+    			val: payload.countryCode,
+    			type: 'set',
     		})
-    	}else{
-    		payload.countryCode=storage({
-    			key:'countryCode',
-    			type:'get'
+    	} else {
+    		payload.countryCode = storage({
+    			key: 'countryCode',
+    			type: 'get',
     		})
     	}
       const data = yield call(query, payload)
-      if (data.code=='200'||data.code=='500') {
-        if (data.code=='500'||data.obj==null) {
-          data.obj={show:true, name: "暂无该城市的信息"}
+      if (data.code == '200' || data.code == '500') {
+        if (data.code == '500' || data.obj == null) {
+          data.obj = { show: true, name: '暂无该城市的信息' }
         }
         yield put({
           type: 'querySuccess',
@@ -70,13 +70,13 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      } else{
+      } else {
         throw data.msg
       }
     },
 
     *'delete' ({ payload }, { call, put }) {
-      const data = yield call(remove, {  ids: payload.toString() })
+      const data = yield call(remove, { ids: payload.toString() })
       if (data.success && data.code === 200) {
         message.success(data.msg)
         yield put({ type: 'query' })
@@ -107,10 +107,10 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      payload.countryCode=storage({
-          key:'countryCode',
-          type:'get'
-        })
+      payload.countryCode = storage({
+        key: 'countryCode',
+        type: 'get',
+      })
       const data = yield call(create, payload)
       if (data.success) {
         yield put({ type: 'hideModal' })
@@ -137,7 +137,7 @@ export default modelExtend(pageModel, {
 
   reducers: {
     setListEmpty (state) {
-      return { ...state, list: {show:true, name: "数据加载中..."} }
+      return { ...state, list: { show: true, name: '数据加载中...' } }
     },
 
     showModal (state, { payload }) {

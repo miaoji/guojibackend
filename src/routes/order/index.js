@@ -11,7 +11,7 @@ import AddModal from './addModal'
 import StateModal from './stateModal'
 
 const Order = ({ location, dispatch, order, loading }) => {
-  const { list, pagination, currentItem, addModalVisible, stateModalVisible, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = order
+  const { list, pagination, currentItem, addModalVisible, stateModalVisible, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany } = order
   const { pageSize } = pagination
 
   // 订单创建的modal
@@ -25,7 +25,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `order/addOrder`,
+        type: 'order/addOrder',
         payload: data,
       })
     },
@@ -45,7 +45,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     confirmLoading: loading.effects['order/update'],
     title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
     wrapClassName: 'vertical-center-modal',
-    selectKdCompany: selectKdCompany,
+    selectKdCompany,
     onOk (data) {
       dispatch({
         type: `order/${modalType}`,
@@ -54,7 +54,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
     getKdCompany () {
       dispatch({
-        type: `order/getKdCompany`
+        type: 'order/getKdCompany',
       })
     },
     onCancel () {
@@ -74,7 +74,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `order/addBoot`,
+        type: 'order/addBoot',
         payload: data,
       })
     },
@@ -95,7 +95,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `order/updateState`,
+        type: 'order/updateState',
         payload: data,
       })
     },
@@ -115,9 +115,9 @@ const Order = ({ location, dispatch, order, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange (page,filter) {
+    onChange (page, filter) {
       const value = {
-        status:filter.STATUS?filter.STATUS[0]:undefined
+        status: filter.STATUS ? filter.STATUS[0] : undefined,
       }
       const { query, pathname } = location
       dispatch(routerRedux.push({
@@ -133,7 +133,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'order/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {
@@ -151,7 +151,7 @@ const Order = ({ location, dispatch, order, loading }) => {
         },
       })
       dispatch({
-        type: 'order/getKdCompany'
+        type: 'order/getKdCompany',
       })
     },
     addBoot (item) {
@@ -166,8 +166,8 @@ const Order = ({ location, dispatch, order, loading }) => {
       dispatch({
         type: 'order/showStateModal',
         payload: {
-          currentItem: item
-        }
+          currentItem: item,
+        },
       })
     },
     onCreateCtorder (item) {
@@ -175,7 +175,7 @@ const Order = ({ location, dispatch, order, loading }) => {
         type: 'order/createChinaOrder',
         payload: {
           id: item.ID,
-          orderNo: item.ORDER_NO
+          orderNo: item.ORDER_NO,
         },
       })
     },
@@ -186,7 +186,7 @@ const Order = ({ location, dispatch, order, loading }) => {
           ...value,
         },
       }))
-    }
+    },
   }
 
   const filterProps = {
@@ -230,8 +230,8 @@ const Order = ({ location, dispatch, order, loading }) => {
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
       {bootModalVisible && <BootModal {...bootModalProps} />}
-      {stateModalVisible && <StateModal {...stateModalProps}/>}
-      {addModalVisible && <AddModal {...addModelProps}/>}
+      {stateModalVisible && <StateModal {...stateModalProps} />}
+      {addModalVisible && <AddModal {...addModelProps} />}
     </div>
   )
 }

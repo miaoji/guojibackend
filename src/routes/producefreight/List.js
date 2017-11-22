@@ -36,17 +36,17 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '产品类型',
       dataIndex: 'xx',
       key: 'xx',
-      render:() => <span>类型未定义</span>,
+      render: () => <span>类型未定义</span>,
     }, {
       title: '重量',
       dataIndex: 'maxweight',
       key: 'maxweight',
-      render:(text) => <span>{text}kg</span>,
+      render: (text) => <span>{text}kg</span>,
     }, {
       title: '体积重',
       dataIndex: 'minweight',
       key: 'minweight',
-      render:(text) => <span>{text}kg</span>,
+      render: (text) => <span>{text}kg</span>,
     }, {
       title: '金额',
       dataIndex: 'consume',
@@ -62,11 +62,11 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'blacklist',
       render: (text) => {
         const realtext = {
-          '0': '否',
-          '1': '是',
+          0: '否',
+          1: '是',
         }
         return <span>{realtext[text]}</span>
-      }
+      },
     }, {
       title: '操作',
       key: 'operation',

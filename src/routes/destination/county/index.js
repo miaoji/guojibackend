@@ -38,7 +38,7 @@ const County = ({ location, dispatch, county, loading }) => {
     onOk (data) {
       console.log('data', data)
       dispatch({
-        type: `county/createProvince`,
+        type: 'county/createProvince',
         payload: data,
       })
     },
@@ -46,8 +46,8 @@ const County = ({ location, dispatch, county, loading }) => {
       dispatch({
         type: 'county/hideLocationModal',
         payload: {
-          type: 'province'
-        }
+          type: 'province',
+        },
       })
     },
   }
@@ -86,10 +86,10 @@ const County = ({ location, dispatch, county, loading }) => {
         type: 'county/queryLocation',
         payload: {
           currentItem: item,
-          type
+          type,
         },
       })
-    }
+    },
   }
 
   const filterProps = {
@@ -122,7 +122,7 @@ const County = ({ location, dispatch, county, loading }) => {
           modalType: 'create',
         },
       })
-    }
+    },
   }
 
   return (

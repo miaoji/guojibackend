@@ -55,7 +55,7 @@ const addModal = ({
                 message: '请输入订单号!',
               },
             ],
-          })(<Input/>)}
+          })(<Input />)}
         </FormItem>
         <FormItem label="补价金额" hasFeedback {...formItemLayout}>
           {getFieldDecorator('priceSpread', {

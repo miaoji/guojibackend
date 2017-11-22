@@ -7,12 +7,12 @@ let parceltypesListData = Mock.mock({
   'data|40-50': [
     {
       id: '@id',
-      'did|+1':100001,
-      hid:/^\d{8}$/,
-      remark:'暂无',
+      'did|+1': 100001,
+      hid: /^\d{8}$/,
+      remark: '暂无',
       cname: '@cname',
       ename: '@name',
-      'storename|1':['上海','北京','广东','深圳','安徽','江西'],
+      'storename|1': ['上海', '北京', '广东', '深圳', '安徽', '江西'],
       nickName: '@cname',
       phone: /^1[34578]\d{9}$/,
       belongStore: '@county',

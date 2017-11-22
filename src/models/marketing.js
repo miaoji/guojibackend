@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove, query, setmenu, } from '../services/marketings'
+import { create, update, remove, query, setmenu } from '../services/marketings'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -9,7 +9,7 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
-    modalType: 'create'
+    modalType: 'create',
   },
 
   subscriptions: {
@@ -29,9 +29,9 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const parentId = '0'
-      const newPayload = { ...payload, parentId, }
+      const newPayload = { ...payload, parentId }
       const data = yield call(query, newPayload)
-      if (data.code === 200) {  
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -43,8 +43,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      }else{
-        throw data.msg || "无法跟服务器建立有效连接"
+      } else {
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
@@ -67,7 +67,7 @@ export default modelExtend(pageModel, {
       const newPayload = {
         url: payload.url,
         name: payload.name,
-        id: id
+        id,
       }
       const data = yield call(update, newPayload)
       if (data.code === 200) {
@@ -109,7 +109,7 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false }
-    }
+    },
 
   },
 })

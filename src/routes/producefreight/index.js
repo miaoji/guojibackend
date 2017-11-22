@@ -51,7 +51,7 @@ const Producefreight = ({ location, dispatch, producefreight, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'producefreight/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {
@@ -68,7 +68,7 @@ const Producefreight = ({ location, dispatch, producefreight, loading }) => {
           currentItem: item,
         },
       })
-    }
+    },
   }
 
   const filterProps = {

@@ -4,19 +4,19 @@ import { message } from 'antd'
 // import { create as addBoot } from '../services/boot'
 import { query } from '../services/cargos'
 import { pageModel } from './common'
-import { config, time, } from '../utils'
+import { config, time } from '../utils'
 
 // const { query } = ordersService
 const { prefix } = config
 
-//状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
+// 状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
 const realtext = {
-  '1': '待付款',
-  '2': '付款完成',
-  '3': '国内完成',
-  '4': '国际完成',
-  '5': '异常订单',
-  '6': '取消订单'
+  1: '待付款',
+  2: '付款完成',
+  3: '国内完成',
+  4: '国际完成',
+  5: '异常订单',
+  6: '取消订单',
 }
 
 export default modelExtend(pageModel, {
@@ -38,7 +38,7 @@ export default modelExtend(pageModel, {
         if (location.pathname === '/cargo') {
           dispatch({
             type: 'query',
-            payload: location.query
+            payload: location.query,
           })
         }
       })
@@ -51,8 +51,8 @@ export default modelExtend(pageModel, {
       const data = yield call(query, payload)
       console.log('dataaa', data)
       if (data.code === 200) {
-        for(var item in data.obj){
-          data.obj[item].CREATE_TIME=time.formatTime(data.obj[item].CREATE_TIME)
+        for (let item in data.obj) {
+          data.obj[item].CREATE_TIME = time.formatTime(data.obj[item].CREATE_TIME)
         }
         yield put({
           type: 'querySuccess',
@@ -66,7 +66,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.msg || "无法跟服务器建立有效连接"
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
   },

@@ -27,9 +27,9 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: false,
-    selectNation:[],
-    selectParcelType:[],
-    productDis: true
+    selectNation: [],
+    selectParcelType: [],
+    productDis: true,
   },
 
   subscriptions: {
@@ -61,12 +61,12 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      }else {
-        throw data.msg || "无法跟服务器建立有效连接"
+      } else {
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
-     *getNation ({ payload }, { select, call, put }) {
+    *getNation ({ payload }, { select, call, put }) {
       const data = yield call(contryQuery)
       if (data) {
         let obj = data.obj
@@ -74,7 +74,7 @@ export default modelExtend(pageModel, {
         if (data.obj) {
           for (let i = 0; i < obj.length; i++) {
             let item = obj[i]
-            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>);
+            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>)
           }
         }
         yield put({
@@ -87,21 +87,21 @@ export default modelExtend(pageModel, {
         throw data.msg
       }
     },
-    
+
     *getParcelType ({ payload = {} }, { select, call, put }) {
       // let currentItem = yield select(({ product }) => product.currentItem)
       // currentItem.NAME_CN = null
-      console.log('payload',payload)
-      const countryId = yield call(getCountryId,{ name:payload.toString() })
+      console.log('payload', payload)
+      const countryId = yield call(getCountryId, { name: payload.toString() })
       if (countryId.code === 200) {
         payload = countryId.obj.id
-      }else{
+      } else {
         throw '获取国家ID失败'
         return
       }
-      console.log('payload 国家id',payload)
-      // return 
-      const destNation={ countryId:payload }
+      console.log('payload 国家id', payload)
+      // return
+      const destNation = { countryId: payload }
 
       const data = yield call(parceltypeQuery, destNation)
       if (data) {
@@ -110,7 +110,7 @@ export default modelExtend(pageModel, {
         if (data.obj) {
           for (let i = 0; i < obj.length; i++) {
             let item = obj[i]
-            children.push(<Option key={item.id}>{item.name_cn}</Option>);
+            children.push(<Option key={item.id}>{item.name_cn}</Option>)
           }
         }
         yield put({
@@ -156,10 +156,10 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
-      const productCode = Math.floor(Math.random()*600000)
-      const newWxUser = { ...payload, createUserId, productCode,}
-      
+      const createUserId = JSON.parse(window.localStorage.getItem('guojipc_user')).roleId
+      const productCode = Math.floor(Math.random() * 600000)
+      const newWxUser = { ...payload, createUserId, productCode }
+
       const data = yield call(create, newWxUser)
       if (data.success) {
         yield put({ type: 'hideModal' })
@@ -170,20 +170,20 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      //获取对应的id
+      // 获取对应的id
       const id = yield select(({ product }) => product.currentItem.ID)
-      //获取对应的包裹类型的中文名称
+      // 获取对应的包裹类型的中文名称
       const NAME_CN = yield select(({ product }) => product.currentItem.NAME_CN)
-      //获取包裹类型的id
+      // 获取包裹类型的id
       const PACKAGE_TYPE = yield select(({ product }) => product.currentItem.PACKAGE_TYPE)
 
-      //判断提交的包裹类型是否被修改..相同则提交之前查询到的包裹类型的id..不同则提交表单传输过来的id 
-      if (payload.packageType==NAME_CN) {
+      // 判断提交的包裹类型是否被修改..相同则提交之前查询到的包裹类型的id..不同则提交表单传输过来的id
+      if (payload.packageType == NAME_CN) {
         payload.packageType = PACKAGE_TYPE
       }
-      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId
+      const createUserId = JSON.parse(window.localStorage.getItem('guojipc_user')).roleId
       const productCode = yield select(({ product }) => product.currentItem.PRODUCT_CODE)
-      const newWxUser = { ...payload, id, createUserId, productCode,}
+      const newWxUser = { ...payload, id, createUserId, productCode }
       const data = yield call(update, newWxUser)
       if (data.success) {
         message.success(data.msg)
@@ -201,7 +201,7 @@ export default modelExtend(pageModel, {
     setNation (state, { payload }) {
       return { ...state, ...payload }
     },
-    
+
     setParcelType (state, { payload }) {
       return { ...state, ...payload, productDis: false }
     },
@@ -212,7 +212,7 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false, productDis: true }
-    }
+    },
 
   },
 })

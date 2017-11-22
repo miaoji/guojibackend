@@ -35,7 +35,6 @@ const modal = ({
         key: item.key,
       }
       onOk(data)
-      
     })
   }
 

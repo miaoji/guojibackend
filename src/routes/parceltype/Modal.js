@@ -39,7 +39,7 @@ const modal = ({
     })
   }
 
-  const handleClick= async function() {
+  const handleClick = async function() {
     // await getNation()
   }
 
@@ -60,7 +60,7 @@ const modal = ({
                 message: '请输入目的地国家!',
               },
             ],
-          })(<Select placeholder='输入文字可搜索' showSearch onFocus={handleClick}>{selectNation}</Select>)}
+          })(<Select placeholder="输入文字可搜索" showSearch onFocus={handleClick}>{selectNation}</Select>)}
         </FormItem>
         <FormItem label="包裹类型中文名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('nameCn', {
@@ -125,7 +125,7 @@ modal.propTypes = {
   item: PropTypes.object,
   selectPackage: PropTypes.object,
   getPackage: PropTypes.func,
-  onOk: PropTypes.func
+  onOk: PropTypes.func,
 }
 
 export default Form.create()(modal)

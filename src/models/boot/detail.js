@@ -14,7 +14,7 @@ export default {
         if (location.pathname === '/bootdetail') {
           const match = location.search.split('?orderNo=')
           if (match) {
-            dispatch({ type: 'query', payload: { orderNo : match[1] } })
+            dispatch({ type: 'query', payload: { orderNo: match[1] } })
           }
         }
       })

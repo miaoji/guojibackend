@@ -61,7 +61,7 @@ const Wxmenudetail = ({ location, dispatch, wxmenudetail, loading }) => {
           currentItem: item,
         },
       })
-    }
+    },
   }
 
   const filterProps = {

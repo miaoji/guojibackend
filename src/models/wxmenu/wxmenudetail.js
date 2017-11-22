@@ -1,8 +1,8 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove, query, } from '../../services/wxmenus'
+import { create, update, remove, query } from '../../services/wxmenus'
 import { pageModel } from '../common'
-import { queryURL, storage, } from '../../utils'
+import { queryURL, storage } from '../../utils'
 
 export default modelExtend(pageModel, {
   namespace: 'wxmenudetail',
@@ -10,7 +10,7 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
-    modalType: 'create'
+    modalType: 'create',
   },
 
   subscriptions: {
@@ -18,8 +18,8 @@ export default modelExtend(pageModel, {
       history.listen(location => {
         if (location.pathname === '/wxmenudetail') {
           const parentId = queryURL('parentId')
-          console.log('parentId',parentId)
-          console.log('query',location.query)
+          console.log('parentId', parentId)
+          console.log('query', location.query)
           dispatch({
             type: 'query',
             payload: location.query,
@@ -32,20 +32,20 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      if(payload.parentId){
+      if (payload.parentId) {
         storage({
-          key:'parentId',
-          val:payload.parentId,
-          type:'set'
+          key: 'parentId',
+          val: payload.parentId,
+          type: 'set',
         })
-      }else{
-        payload.parentId=storage({
-          key:'parentId',
-          type:'get'
+      } else {
+        payload.parentId = storage({
+          key: 'parentId',
+          type: 'get',
         })
       }
       const data = yield call(query, payload)
-      if (data.code === 200) {  
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -57,17 +57,17 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      }else{
+      } else {
         throw data.msg
       }
     },
 
     *create ({ payload }, { call, put }) {
-      const parentId=storage({ key:'parentId',type:'get' })
+      const parentId = storage({ key: 'parentId', type: 'get' })
       const newPayload = {
         url: payload.url,
         name: payload.name,
-        type:'view',
+        type: 'view',
         parentId,
       }
       const data = yield call(create, newPayload)
@@ -85,7 +85,7 @@ export default modelExtend(pageModel, {
       const newPayload = {
         url: payload.url,
         name: payload.name,
-        id: id
+        id,
       }
       // console.log('newQr',newQr)
       // return
@@ -119,7 +119,7 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false }
-    }
+    },
 
   },
 })

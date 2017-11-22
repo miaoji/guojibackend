@@ -18,24 +18,24 @@ const Product = ({ location, dispatch, product, loading }) => {
     confirmLoading: loading.effects['product/update'],
     title: `${modalType === 'create' ? '新增产品类型' : '修改产品类型'}`,
     wrapClassName: 'vertical-center-modal',
-    selectNation: selectNation,
-    selectParcelType: selectParcelType,
-    productDis: productDis,
+    selectNation,
+    selectParcelType,
+    productDis,
     onOk (data) {
       dispatch({
         type: `product/${modalType}`,
         payload: data,
       })
     },
-    getNation(){
+    getNation () {
       dispatch({
-        type:`product/getNation`
+        type: 'product/getNation',
       })
     },
-    getParcelType(data){
+    getParcelType (data) {
       dispatch({
-        type:`product/getParcelType`,
-        payload: data
+        type: 'product/getParcelType',
+        payload: data,
       })
     },
     onCancel () {
@@ -65,7 +65,7 @@ const Product = ({ location, dispatch, product, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'product/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {
@@ -83,9 +83,9 @@ const Product = ({ location, dispatch, product, loading }) => {
         },
       })
       dispatch({
-        type:`product/getNation`
+        type: 'product/getNation',
       })
-    }
+    },
   }
 
   const filterProps = {
@@ -122,7 +122,7 @@ const Product = ({ location, dispatch, product, loading }) => {
         },
       })
       dispatch({
-        type:`product/getNation`
+        type: 'product/getNation',
       })
     },
     switchIsMotion () {

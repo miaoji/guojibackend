@@ -22,7 +22,7 @@ export async function remove (params) {
   return request({
     url: product.hide,
     method: 'delete',
-    params
+    params,
   })
 }
 

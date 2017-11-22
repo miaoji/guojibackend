@@ -14,7 +14,7 @@ export async function create (params) {
   return request({
     url: freight.create,
     method: 'post',
-    params
+    params,
   })
 }
 
@@ -22,7 +22,7 @@ export async function remove (params) {
   return request({
     url: freight.hide,
     method: 'delete',
-    params
+    params,
   })
 }
 

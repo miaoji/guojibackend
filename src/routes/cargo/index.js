@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Cargo = ({ location, dispatch, cargo, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = cargo
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany } = cargo
   const { pageSize } = pagination
 
   // 订单修改modal
@@ -20,7 +20,7 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
     confirmLoading: loading.effects['cargo/update'],
     title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
     wrapClassName: 'vertical-center-modal',
-    selectKdCompany: selectKdCompany,
+    selectKdCompany,
     onOk (data) {
       dispatch({
         type: `cargo/${modalType}`,
@@ -29,7 +29,7 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
     },
     getKdCompany () {
       dispatch({
-        type: `cargo/getKdCompany`
+        type: 'cargo/getKdCompany',
       })
     },
     onCancel () {
@@ -48,9 +48,9 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange (page,filter) {
+    onChange (page, filter) {
       const value = {
-        status:filter.STATUS?filter.STATUS[0]:undefined
+        status: filter.STATUS ? filter.STATUS[0] : undefined,
       }
       const { query, pathname } = location
       dispatch(routerRedux.push({
@@ -66,7 +66,7 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'cargo/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {
@@ -96,8 +96,8 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
       dispatch({
         type: 'cargo/showStateModal',
         payload: {
-          currentItem: item
-        }
+          currentItem: item,
+        },
       })
     },
     onCreateCtcargo (item) {
@@ -105,7 +105,7 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
         type: 'cargo/createChinacargo',
         payload: {
           id: item.ID,
-          cargoNo: item.cargo_NO
+          cargoNo: item.cargo_NO,
         },
       })
     },
@@ -116,7 +116,7 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
           ...value,
         },
       }))
-    }
+    },
   }
 
   const filterProps = {

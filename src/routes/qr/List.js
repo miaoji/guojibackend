@@ -7,7 +7,7 @@ import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { time } from '../../utils'
 import { Link } from 'dva/router'
-import copy from "copy-to-clipboard"
+import copy from 'copy-to-clipboard'
 
 const confirm = Modal.confirm
 // const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
@@ -23,7 +23,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
           title: '确定要删除吗?',
           onOk () {
             onDeleteItem(record.ID)
-          }
+          },
         })
         break
       default:
@@ -32,7 +32,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   }
 
   const copyUrl = (record, e) => {
-    const href = 'http://control.mingz-tech.com/qrdetail?TICKET=' + record.TICKET + '&name=' + record.NAME + '&parameter=' + record.TICKET
+    const href = `http://control.mingz-tech.com/qrdetail?TICKET=${record.TICKET}&name=${record.NAME}&parameter=${record.TICKET}`
     copy(href)
     window.prompt('复制成功,如果失败,请在输入框内手动复制!!!', href)
     // message.success('复制成功,如果失败,请在输入框内手动复制!!!')
@@ -47,34 +47,34 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '扫描关注人数',
       dataIndex: 'SOURCE_COUNT',
       key: 'SOURCE_COUNT',
-      render: (text)=>{
-        return <span>{ text?text:0 }</span>
-      }
-    },{
+      render: (text) => {
+        return <span>{text || 0}</span>
+      },
+    }, {
       title: '二维码参数',
       dataIndex: 'TICKET',
       key: 'TICKET',
-    },{
+    }, {
       title: '二维码图片',
       dataIndex: 'TICKETa',
       key: 'TICKETa',
       render: (text, record) => {
-        return <a href={`/qrdetail?TICKET=${record.TICKET}&name=${record.NAME}&parameter=${record.TICKET }`} target="_blank">点击查看</a>
-      }
-    },{
+        return <a href={`/qrdetail?TICKET=${record.TICKET}&name=${record.NAME}&parameter=${record.TICKET}`} target="_blank">点击查看</a>
+      },
+    }, {
       title: '关注用户详情',
       dataIndex: 'qrTICKET',
       key: 'qrTICKET',
       render: (text, record) => {
         return <Link to={`/wxuserdetail?qrTicket=${record.TICKET}`}>点击查看</Link>
-      }
-    },{
+      },
+    }, {
       title: '下单量',
       dataIndex: 'orderCount',
       key: 'orderCount',
       render: (text) => {
-        return <span>{ text?text:0 }</span>
-      }
+        return <span>{text || 0}</span>
+      },
     }, {
       title: '创建时间',
       dataIndex: 'CREATE_TIME',
@@ -82,8 +82,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       render: (text) => {
         const createtime = time.formatTime(text)
         return <span>{createtime}</span>
-      }
-    },{
+      },
+    }, {
       title: '复制图片路径',
       key: 'copy',
       render: (text, record) => {
@@ -94,7 +94,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' },{ key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '删除' }]} />
       },
     },
   ]
@@ -110,7 +110,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true})}
+        className={classnames({ [styles.table]: true })}
         bordered
         scroll={{ x: 1250 }}
         columns={columns}

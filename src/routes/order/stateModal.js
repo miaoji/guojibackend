@@ -19,14 +19,14 @@ const formItemLayout = {
   },
 }
 
-//状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
+// 状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
 const realtext = {
-  '1': '待付款',
-  '2': '付款完成',
-  '3': '国内完成',
-  '4': '国际完成',
-  '5': '异常订单',
-  '6': '取消订单'
+  1: '待付款',
+  2: '付款完成',
+  3: '国内完成',
+  4: '国际完成',
+  5: '异常订单',
+  6: '取消订单',
 }
 
 const stateModal = ({
@@ -69,7 +69,7 @@ const stateModal = ({
                 message: '请输入订单号!',
               },
             ],
-          })(<Input disabled/>)}
+          })(<Input disabled />)}
         </FormItem>
         <FormItem label="状态" hasFeedback {...formItemLayout}>
           {getFieldDecorator('state', {

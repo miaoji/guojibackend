@@ -59,7 +59,7 @@ const App = ({ children, location, dispatch, app, loading }) => {
       storage({
         key: 'navOpenKeys',
         val: JSON.stringify(openKeys),
-        type: 'set'
+        type: 'set',
       })
       dispatch({ type: 'app/handleNavOpenKeys', payload: { navOpenKeys: openKeys } })
     },

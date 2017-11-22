@@ -8,7 +8,7 @@ import { DropOption } from '../../components'
 
 const confirm = Modal.confirm
 
-const List = ({  isMotion, location, ...tableProps }) => {
+const List = ({ isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     window.open(`/bootdetail?orderNo=${record.order_no}`)
     return
@@ -27,12 +27,12 @@ const List = ({  isMotion, location, ...tableProps }) => {
       title: '收件地址',
       dataIndex: 'receiver_address',
       key: 'receiver_address',
-      width: '200'
+      width: '200',
     }, {
       title: '收件人手机',
       dataIndex: 'receiver_mobile',
-      key: 'receiver_mobile'
-    },/* {
+      key: 'receiver_mobile',
+    }, /* {
       title: '产品类型',
       dataIndex: 'type',
       key: 'type',
@@ -42,25 +42,25 @@ const List = ({  isMotion, location, ...tableProps }) => {
       key: 'weight',
       render: (text) => {
         return <span>{text}kg</span>
-      }
+      },
     }, {
       title: '体积重',
       dataIndex: 'v',
       key: 'v',
       render: (text) => {
         return <span>{text}cm³</span>
-      }
+      },
     }, {
       title: '补价次数',
       dataIndex: 'count',
-      key: 'count'
+      key: 'count',
     }, {
       title: '补价总金额',
       dataIndex: 'bootSum',
       key: 'bootSum',
       render: (text) => {
-        return <span>￥{text ? text/100 : 0}</span>
-      }
+        return <span>￥{text ? text / 100 : 0}</span>
+      },
     }, {
       title: '操作',
       key: 'operation',

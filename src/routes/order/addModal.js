@@ -55,7 +55,7 @@ const addModal = ({
                 message: '请输入寄件人姓名!',
               },
             ],
-          })(<Input/>)}
+          })(<Input />)}
         </FormItem>
         <FormItem label="寄件人手机" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderss', {
@@ -63,10 +63,10 @@ const addModal = ({
             rules: [
               {
                 required: true,
-                message: '请输入寄件人手机号码'
-              }
-            ]
-          })(<Input/>)}
+                message: '请输入寄件人手机号码',
+              },
+            ],
+          })(<Input />)}
         </FormItem>
         <FormItem label="收件人姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderaa', {
@@ -74,10 +74,10 @@ const addModal = ({
             rules: [
               {
                 required: true,
-                message: '请输入收件人姓名!'
-              }
-            ]
-          })(<Input/>)}
+                message: '请输入收件人姓名!',
+              },
+            ],
+          })(<Input />)}
         </FormItem>
         <FormItem label="收件人手机" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderaa', {
@@ -85,10 +85,10 @@ const addModal = ({
             rules: [
               {
                 required: true,
-                message: '请输入收件人手机号码!'
-              }
-            ]
-          })(<Input/>)}
+                message: '请输入收件人手机号码!',
+              },
+            ],
+          })(<Input />)}
         </FormItem>
         <FormItem label="预付总金额" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderaa', {
@@ -96,10 +96,10 @@ const addModal = ({
             rules: [
               {
                 required: true,
-                message: '请输入预付总金额!'
-              }
-            ]
-          })(<Input/>)}
+                message: '请输入预付总金额!',
+              },
+            ],
+          })(<Input />)}
         </FormItem>
         <FormItem label="快件重量(kg)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderaa', {
@@ -107,10 +107,10 @@ const addModal = ({
             rules: [
               {
                 required: true,
-                message: '请输入快件重量!'
-              }
-            ]
-          })(<Input/>)}
+                message: '请输入快件重量!',
+              },
+            ],
+          })(<Input />)}
         </FormItem>
         <FormItem label="是否保价" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderaa', {
@@ -118,10 +118,10 @@ const addModal = ({
             rules: [
               {
                 required: true,
-                message: '请选择是否保价!'
-              }
-            ]
-          })(<Input/>)}
+                message: '请选择是否保价!',
+              },
+            ],
+          })(<Input />)}
         </FormItem>
         <FormItem label="保价金额" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderaa', {
@@ -129,10 +129,10 @@ const addModal = ({
             rules: [
               {
                 required: true,
-                message: '请输入保价金额!'
-              }
-            ]
-          })(<Input/>)}
+                message: '请输入保价金额!',
+              },
+            ],
+          })(<Input />)}
         </FormItem>
         <FormItem label="寄件地址明细" hasFeedback {...formItemLayout}>
           {getFieldDecorator('priceSpread', {
@@ -143,7 +143,7 @@ const addModal = ({
                 message: '请输入寄件地址明细!',
               },
             ],
-          })(<Input/>)}
+          })(<Input />)}
         </FormItem>
         <FormItem label="收件地址明细" hasFeedback {...formItemLayout}>
           {getFieldDecorator('reason', {

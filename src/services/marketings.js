@@ -1,5 +1,5 @@
-import { request, config, pageParams,} from '../utils'
-const { wxmenu, wxuser, marketing, } = config.api
+import { request, config, pageParams } from '../utils'
+const { wxmenu, wxuser, marketing } = config.api
 
 export async function query (params) {
   params = pageParams(params)

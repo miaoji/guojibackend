@@ -10,7 +10,7 @@ function Quote ({ name, content, title, avatar }) {
       </div>
       <div className={styles.footer}>
         <div className={styles.description}>
-          <p>-{name}-</p>
+          <p>- {name} -</p>
           <p>{title}</p>
         </div>
         <div className={styles.avatar} style={{ backgroundImage: `url(${avatar})` }} />

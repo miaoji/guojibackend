@@ -2,7 +2,7 @@ import { request, config } from '../utils'
 const { api } = config
 const { province, city, county } = api
 
-export async function query ({params, type}) {
+export async function query ({ params, type }) {
   return request({
     url: api[type].show,
     method: 'get',
@@ -10,7 +10,7 @@ export async function query ({params, type}) {
   })
 }
 
-export async function create ({params, type}) {
+export async function create ({ params, type }) {
   return request({
     url: api[type].create,
     method: 'get',

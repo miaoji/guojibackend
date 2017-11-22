@@ -23,14 +23,14 @@ export async function remove (params) {
   return request({
     url: country.hide,
     method: 'delete',
-    params
+    params,
   })
 }
-//修改国家
+// 修改国家
 export async function update (params) {
   return request({
     url: country.update,
     method: 'post',
-    params
+    params,
   })
 }

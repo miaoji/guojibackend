@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Radio, Select,} from 'antd'
+import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Radio, Select } from 'antd'
 import city from '../../utils/city'
 
 const InputGroup = Input.Group
@@ -40,7 +40,7 @@ const Filter = ({
   },
 }) => {
   const handleFields = (fields) => {
-    const { createTime, status, extension, option, } = fields
+    const { createTime, status, extension, option } = fields
     if (status == 0) {
       delete fields.status
     }
@@ -49,12 +49,12 @@ const Filter = ({
       fields.startDate = fields.createTime[0]
       fields.endDate = fields.createTime[1]
       delete fields.createTime
-    }else{
+    } else {
       delete fields.createTime
     }
     if (option == 1) {
       fields.qrName = fields.extension
-    }else{
+    } else {
       fields.appName = fields.extension
     }
     delete fields.extension
@@ -65,8 +65,8 @@ const Filter = ({
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    console.log('filter231',filter)
-    onFilterChange({...fields, ...filter})
+    console.log('filter231', filter)
+    onFilterChange({ ...fields, ...filter })
   }
 
   const handleReset = () => {
@@ -99,10 +99,10 @@ const Filter = ({
     const newStarte = e.target.value
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    fields['status'] = newStarte
+    fields.status = newStarte
     // 如果查询的订单状态为全部即status==6,则不向后端传递status参数
     if (Number(newStarte) === 0) {
-      delete fields['status']
+      delete fields.status
     }
     onFilterChange(fields)
   }
@@ -126,9 +126,9 @@ const Filter = ({
     <Row gutter={24}>
       {
         selectedRowKeys.length > 0 &&
-        <Col {...ColProps} xl ={{ span: 4 }} md = {{ span: 8 }} sm = {{ span: 12}}>
+        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }} sm={{ span: 12 }}>
           <Button type="primary" size="large" onClick={handleMergeClick} style={{ marginLeft: 8 }}>合单</Button>
-          <span style={{ paddingLeft: '20px'}}>{`选中 ${selectedRowKeys.length} 条订单 `}</span>
+          <span style={{ paddingLeft: '20px' }}>{`选中 ${selectedRowKeys.length} 条订单 `}</span>
         </Col>
       }
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>

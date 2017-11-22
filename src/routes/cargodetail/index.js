@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 import BootModal from './bootModal'
 import StateModal from './stateModal'
-import { queryURL, storage, } from '../../utils'
+import { queryURL, storage } from '../../utils'
 
 const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, bootModalVisible, stateModalVisible } = cargodetail
@@ -23,7 +23,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `cargodetail/mergeOrder`,
+        type: 'cargodetail/mergeOrder',
         payload: data,
       })
     },
@@ -39,20 +39,20 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     visible: bootModalVisible,
     maskClosable: true,
     confirmLoading: loading.effects['cargodetail/setFreight'],
-    title: `确定订单运费金额`,
+    title: '确定订单运费金额',
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `cargodetail/setFreight`,
-        payload: data
+        type: 'cargodetail/setFreight',
+        payload: data,
       })
     },
     onCancel () {
       console.log('currentItem', currentItem)
       dispatch({
-        type: `cargodetail/hideBootModal`
+        type: 'cargodetail/hideBootModal',
       })
-    }
+    },
   }
 
   const stateModalProps = {
@@ -65,12 +65,12 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     onOk (data) {
       dispatch({
         type: 'cargodetail/setStatus',
-        payload: data
+        payload: data,
       })
     },
     onCancel () {
-      dispatch({type:'cargodetail/hideStateModal'})
-    }
+      dispatch({ type: 'cargodetail/hideStateModal' })
+    },
   }
 
   const listProps = {
@@ -90,10 +90,10 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         },
       }))
     },
-    onSetCancel (id) {
+    onSetCancel (data) {
       dispatch({
         type: 'cargodetail/setCancel',
-        payload: id
+        payload: data,
       })
     },
     onSetFreight (item) {
@@ -101,22 +101,22 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       dispatch({
         type: 'cargodetail/showBootModal',
         payload: {
-          currentItem: item
-        }
+          currentItem: item,
+        },
       })
     },
     onSetStatus (item) {
       dispatch({
         type: 'cargodetail/showStateModal',
         payload: {
-          currentItem: item
-        }
+          currentItem: item,
+        },
       })
     },
     onDeleteItem (id) {
       dispatch({
         type: 'cargodetail/delete',
-        payload: id
+        payload: id,
       })
     },
     rowSelection: {
@@ -134,12 +134,12 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         disabled: record.parentId !== 0 || record.status === 7,
       }),
       onSelect: (record, selected, selectedRows) => {
-        console.log(record, selected, selectedRows);
+        console.log(record, selected, selectedRows)
       },
       onSelectAll: (selected, selectedRows, changeRows) => {
-        console.log(selected, selectedRows, changeRows);
-      }
-    }
+        console.log(selected, selectedRows, changeRows)
+      },
+    },
   }
 
   const filterProps = {
@@ -174,8 +174,8 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         type: 'cargodetail/showModal',
         payload: {
           modalType: 'merge',
-          currentItem: {ids: selectedRowKeys},
-        }
+          currentItem: { ids: selectedRowKeys },
+        },
       })
     },
     onAdd () {
@@ -196,7 +196,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       type: 'cargodetail/showModal',
       payload: {
         modalType: 'update',
-        currentItem: {ids: selectedRowKeys},
+        currentItem: { ids: selectedRowKeys },
       },
     })
   }

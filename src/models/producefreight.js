@@ -57,7 +57,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
         yield put({ type: 'query' })
       } else {
-        throw data || "无法跟服务器建立有效连接"
+        throw data || '无法跟服务器建立有效连接'
       }
     },
 
@@ -114,7 +114,7 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false }
-    }
+    },
 
   },
 })

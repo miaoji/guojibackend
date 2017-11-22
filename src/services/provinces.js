@@ -6,31 +6,31 @@ export async function query (params) {
   return request({
     url: province.show,
     method: 'get',
-    params
+    params,
   })
 }
 
 export async function create (params) {
-	console.log('params', params)
-	return request({
-		url: province.create,
-		method: 'post',
-		params
-	})
+  console.log('params', params)
+  return request({
+    url: province.create,
+    method: 'post',
+    params,
+  })
 }
 
 export async function update (params) {
-	return request({
-		url: province.update,
-		method: 'post',
-		params
-	})
+  return request({
+    url: province.update,
+    method: 'post',
+    params,
+  })
 }
 
 export async function remove (params) {
-	return request({
-		url: province.hide,
-		method: 'delete',
-		params
-	})
+  return request({
+    url: province.hide,
+    method: 'delete',
+    params,
+  })
 }

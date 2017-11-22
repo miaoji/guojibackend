@@ -27,7 +27,7 @@ const modal = ({
     validateFields,
     getFieldsValue,
     setFieldsValue,
-    resetFields
+    resetFields,
   },
   ...modalProps
 }) => {
@@ -43,17 +43,17 @@ const modal = ({
       onOk(data)
     })
   }
-  const handleClick= async function() {
+  const handleClick = async function() {
     // 处理selectPackage 放入 option中
     // 获取国际信息
     // await getNation()
   }
 
-  const handleChange= async function(data){
-    //通过目的地查询包裹类型
+  const handleChange = async function(data) {
+    // 通过目的地查询包裹类型
     await getParcelType(data)
     // 当目的地的数据改变时,清空包裹类型select组件的数据
-    setFieldsValue({packageType:null})
+    setFieldsValue({ packageType: null })
   }
 
   const modalOpts = {
@@ -73,7 +73,7 @@ const modal = ({
                 message: '请输入目的地国家!',
               },
             ],
-          })(<Select placeholder='输入文字可搜索' showSearch onChange={handleChange} onFocus={handleClick}>{selectNation}</Select>)}
+          })(<Select placeholder="输入文字可搜索" showSearch onChange={handleChange} onFocus={handleClick}>{selectNation}</Select>)}
         </FormItem>
         <FormItem label="包裹类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('packageType', {
@@ -84,7 +84,7 @@ const modal = ({
                 message: '请输入包裹类型!',
               },
             ],
-          })(<Select placeholder='点击选择' value='1' disabled={productDis}>{selectParcelType}</Select>)}
+          })(<Select placeholder="点击选择" value="1" disabled={productDis}>{selectParcelType}</Select>)}
         </FormItem>
         <FormItem label="产品名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('productName', {
@@ -120,7 +120,7 @@ modal.propTypes = {
   item: PropTypes.object,
   selectNation: PropTypes.object,
   getNation: PropTypes.func,
-  onOk: PropTypes.func
+  onOk: PropTypes.func,
 }
 
 export default Form.create()(modal)

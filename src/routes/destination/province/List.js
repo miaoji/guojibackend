@@ -21,7 +21,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
           title: '确定要删除这目的地吗?',
           onOk () {
             onDeleteItem(record.id)
-          }
+          },
         })
         break
       default:
@@ -29,13 +29,13 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
     }
   }
 
-  const clickSeeProvince = ( record ) => {
+  const clickSeeProvince = (record) => {
 //  window.open(`/city?provinceid=${record.id}`)
   }
   return (
     <div>
       <ul className={styles.list}>
-        {list.show?<li>{list.name}</li>:list.map(item => (<li key={item.id}>
+        {list.show ? <li>{list.name}</li> : list.map(item => (<li key={item.id}>
           <div title={item.province} size="large" onClick={e => clickSeeProvince(item)}>
             <Link to={`/city?provinceCode=${item.province_code}`}>
                 <span>{item.province}</span>

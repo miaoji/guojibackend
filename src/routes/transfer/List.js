@@ -29,61 +29,61 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'transferName',
       key: 'transferName',
       render: (text) => <span>{text}</span>,
-    },{
+    }, {
       title: '收件人公司',
       dataIndex: 'transferCompany',
       key: 'transferCompany',
-    },{
+    }, {
       title: '收件人电话',
       dataIndex: 'transferMobile',
       key: 'transferMobile',
-    },{
+    }, {
       title: '收件人国家',
       dataIndex: 'countryName',
       key: 'countryName',
       render: (text) => <span>{text}</span>,
-    },{
+    }, {
       title: '收件人省',
       dataIndex: 'provincesName',
       key: 'provincesName',
       render: (text) => <span>{text}</span>,
-    },{
+    }, {
       title: '收件人市',
       dataIndex: 'citiesName',
       key: 'citiesName',
       render: (text) => <span>{text}</span>,
-    },{
+    }, {
       title: '收件人区',
       dataIndex: 'districtsName',
       key: 'districtsName',
       render: (text) => <span>{text}</span>,
-    },{
+    }, {
       title: '收件人详细地址',
       dataIndex: 'transferAddress',
       key: 'transfer_address',
       render: (text) => <span>{text}</span>,
-    },{
+    }, {
       title: '收件人邮编',
       dataIndex: 'transferPostcode',
       key: 'transfer_postcode',
       render: (text) => <span>{text}</span>,
-    },{
+    }, {
       title: '默认',
       dataIndex: 'isDefault',
       key: 'is_default',
       render: (text) => {
         const realDefault = {
           1: '是',
-          0: '否'
+          0: '否',
         }
         return <span>{realDefault[text]}</span>
-      }
-    },{
+      },
+    }, {
       title: '备注',
       dataIndex: 'remark',
       key: 'remark',
       render: (text) => <span>{text}</span>,
-    },{
+    }, {
       title: '操作',
       key: 'operation',
       width: 100,

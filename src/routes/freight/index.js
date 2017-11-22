@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Freight = ({ location, dispatch, freight, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectPackage, selectParcelType, selectProductType, productDis, freightDis, } = freight
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectPackage, selectParcelType, selectProductType, productDis, freightDis } = freight
   const { pageSize } = pagination
 
   const modalProps = {
@@ -18,11 +18,11 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     confirmLoading: loading.effects['freight/update'],
     title: `${modalType === 'create' ? '新增运费信息' : '修改运费信息'}`,
     wrapClassName: 'vertical-center-modal',
-    selectPackage: selectPackage,
-    selectParcelType: selectParcelType,
-    selectProductType: selectProductType,
-    productDis:productDis,
-    freightDis:freightDis,
+    selectPackage,
+    selectParcelType,
+    selectProductType,
+    productDis,
+    freightDis,
     onOk (data) {
       dispatch({
         type: `freight/${modalType}`,
@@ -31,19 +31,19 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     },
     getPackage (data) {
       dispatch({
-        type: `freight/getPackage`
+        type: 'freight/getPackage',
       })
     },
     getParcelType (data) {
       dispatch({
-        type: `freight/getParcelType`,
-        payload:data
+        type: 'freight/getParcelType',
+        payload: data,
       })
     },
     getProductType (data) {
       dispatch({
-        type: `freight/getProductType`,
-        payload:data
+        type: 'freight/getProductType',
+        payload: data,
       })
     },
     onCancel () {
@@ -73,7 +73,7 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'freight/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {
@@ -91,9 +91,9 @@ const Freight = ({ location, dispatch, freight, loading }) => {
         },
       })
       dispatch({
-        type: `freight/getPackage`
+        type: 'freight/getPackage',
       })
-    }
+    },
   }
 
   const filterProps = {
@@ -130,7 +130,7 @@ const Freight = ({ location, dispatch, freight, loading }) => {
         },
       })
       dispatch({
-        type: `freight/getPackage`
+        type: 'freight/getPackage',
       })
     },
     switchIsMotion () {

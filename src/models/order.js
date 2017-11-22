@@ -1,22 +1,22 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, remove, update, markBlack, createChinaOrder, getKdCompany, } from '../services/order'
+import { create, remove, update, markBlack, createChinaOrder, getKdCompany } from '../services/order'
 import { create as addBoot } from '../services/boot'
 import * as ordersService from '../services/orders'
 import { pageModel } from './common'
-import { config, time, } from '../utils'
+import { config, time } from '../utils'
 
 const { query } = ordersService
 const { prefix } = config
 
-//状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
+// 状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
 const realtext = {
-  '1': '待付款',
-  '2': '付款完成',
-  '3': '国内完成',
-  '4': '国际完成',
-  '5': '异常订单',
-  '6': '取消订单'
+  1: '待付款',
+  2: '付款完成',
+  3: '国内完成',
+  4: '国际完成',
+  5: '异常订单',
+  6: '取消订单',
 }
 
 export default modelExtend(pageModel, {
@@ -38,7 +38,7 @@ export default modelExtend(pageModel, {
         if (location.pathname === '/order') {
           dispatch({
             type: 'query',
-            payload: location.query
+            payload: location.query,
           })
         }
       })
@@ -50,8 +50,8 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data.code === 200) {
-        for(var item in data.obj){
-          data.obj[item].CREATE_TIME=time.formatTime(data.obj[item].CREATE_TIME)
+        for (let item in data.obj) {
+          data.obj[item].CREATE_TIME = time.formatTime(data.obj[item].CREATE_TIME)
         }
         yield put({
           type: 'querySuccess',
@@ -65,7 +65,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.msg || "无法跟服务器建立有效连接"
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
@@ -80,7 +80,7 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      payload['serialnumber'] = 'MZ' + new Date().getTime()
+      payload.serialnumber = `MZ${new Date().getTime()}`
       const data = yield call(create, payload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -97,9 +97,9 @@ export default modelExtend(pageModel, {
       const newOrder = {
         intlNo: payload.intlNo,
         kdCompanyCode,
-        id
+        id,
       }
-      console.log('newOrder',newOrder)
+      console.log('newOrder', newOrder)
       const data = yield call(update, newOrder)
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -112,14 +112,14 @@ export default modelExtend(pageModel, {
 
     *addBoot ({ payload }, { call, put }) {
       const other = {
-        'createUserId': JSON.parse(window.localStorage.getItem('guojipc_user'))['roleId'],
-        'status': 1
+        createUserId: JSON.parse(window.localStorage.getItem('guojipc_user')).roleId,
+        status: 1,
       }
       const data = yield call(addBoot, {
-        priceSpread: Number(payload.priceSpread)*100,
+        priceSpread: Number(payload.priceSpread) * 100,
         orderNo: payload.orderNo,
         reason: payload.reason,
-        ...other
+        ...other,
       })
       if (data.success && data.code === 200) {
         message.success(data.msg)
@@ -135,23 +135,23 @@ export default modelExtend(pageModel, {
       const state = yield select(({ order }) => order.currentItem.STATUS)
       // 判断是否修改state(订单状态)
       if (!Number(payload.state)) {
-        payload.state=state
+        payload.state = state
       }
       const data = yield call(update, {
-        id:id,
-        status:payload.state
+        id,
+        status: payload.state,
       })
-      if ( data.success && data.code === 200) {
+      if (data.success && data.code === 200) {
         message.success('状态修改成功')
-        yield put({ type: 'hideStateModal'})
+        yield put({ type: 'hideStateModal' })
         yield put({ type: 'query' })
-      }else{
+      } else {
         throw data.msg
       }
     },
 
     *createChinaOrder ({ payload }, { call, put }) {
-      const data = yield call(createChinaOrder, {...payload})
+      const data = yield call(createChinaOrder, { ...payload })
       if (data.success && data.code === 200) {
         message.success(data.msg)
         yield put({ type: 'hideBootModal' })
@@ -161,27 +161,27 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getKdCompany ({ payload }, { call, put,}) {
+    *getKdCompany ({ payload }, { call, put }) {
       const data = yield call(getKdCompany)
-      if (data.code === 200 ) {
+      if (data.code === 200) {
         let children = []
         if (data.obj) {
           for (let i = 0; i < data.obj.length; i++) {
             let item = data.obj[i]
-            children.push(<Option key={item.companyName+'/-/'+item.companyCode}>{item.companyName}</Option>)
+            children.push(<Option key={`${item.companyName}/-/${item.companyCode}`}>{item.companyName}</Option>)
           }
         }
         console.log('children', children)
         yield put({
           type: 'setKdCompany',
           payload: {
-            selectKdCompany: children
-          }
+            selectKdCompany: children,
+          },
         })
       } else {
         throw '获取国际段快递公司失败'
       }
-    }
+    },
 
   },
 
@@ -221,7 +221,7 @@ export default modelExtend(pageModel, {
 
     hideStateModal (state) {
       return { ...state, stateModalVisible: false }
-    }
+    },
 
   },
 })

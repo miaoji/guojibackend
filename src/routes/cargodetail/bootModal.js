@@ -54,11 +54,11 @@ const bootModal = ({
                 message: '请输入订单号!',
               },
             ],
-          })(<Input disabled/>)}
+          })(<Input disabled />)}
         </FormItem>
         <FormItem label="定价金额(元)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('totalFee', {
-            initialValue: item.totalFee/100,
+            initialValue: item.totalFee / 100,
             rules: [
               {
                 required: true,
@@ -77,7 +77,7 @@ const bootModal = ({
                 message: '请输入备注信息!',
               },
             ],
-          })(<Input placeholder='请输入备注信息' />)}
+          })(<Input placeholder="请输入备注信息" />)}
         </FormItem>
       </Form>
     </Modal>
