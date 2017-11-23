@@ -52,10 +52,11 @@ const weightModal = ({
             rules: [
               {
                 required: true,
-                message: '请输入包裹长度!',
+                pattern: /^([0-9]*)+(.[0-9]{1,2})?$/,
+                message: '请输入有效的数字!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入包裹的长度" />)}
         </FormItem>
         <FormItem label="包裹宽度(cm)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('width', {
@@ -63,10 +64,11 @@ const weightModal = ({
             rules: [
               {
                 required: true,
-                message: '请输入包裹宽度!',
+                pattern: /^([0-9]*)+(.[0-9]{1,2})?$/,
+                message: '请输入有效的数字!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入包裹的宽度" />)}
         </FormItem>
         <FormItem label="包裹高度(cm)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('height', {
@@ -74,10 +76,11 @@ const weightModal = ({
             rules: [
               {
                 required: true,
-                message: '请输入包裹高度!',
+                pattern: /^([0-9]*)+(.[0-9]{1,2})?$/,
+                message: '请输入有效的数字!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入包裹的高度" />)}
         </FormItem>
         <FormItem label="包裹重量(kg)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('weight', {
@@ -85,10 +88,11 @@ const weightModal = ({
             rules: [
               {
                 required: true,
-                message: '请输入包裹重量!',
+                pattern: /^([0-9]*)+(.[0-9]{1,2})?$/,
+                message: '请输入有效的数字!',
               },
             ],
-          })(<Input/>)}
+          })(<Input placeholder="请输入包裹的高度" />)}
         </FormItem>
       </Form>
     </Modal>

@@ -56,17 +56,17 @@ const bootModal = ({
             ],
           })(<Input disabled />)}
         </FormItem>
-        <FormItem label="定价金额(元)" hasFeedback {...formItemLayout}>
+        <FormItem label="运费金额(元)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('totalFee', {
-            initialValue: item.totalFee / 100,
+            initialValue: item.totalFee / 100 || null,
             rules: [
               {
                 required: true,
                 pattern: /^([0-9]*)+(.[0-9]{1,2})?$/,
-                message: '请输入金额!',
+                message: '请输入有效的数字!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入运费金额"/>)}
         </FormItem>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('remark', {

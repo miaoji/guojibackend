@@ -46,7 +46,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 // 当前跳转的时候获得cityid ,如果获取了 cityCode 则跟新本地存储
-// 如果没有 则从 localStorage 获取
+// 如果没有 则从 sessionStorage 获取
     *query ({ payload = {} }, { call, put }) {
       if (payload.cityCode) {
         window.sessionStorage.cityCode=payload.cityCode

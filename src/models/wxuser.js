@@ -2,7 +2,7 @@ import modelExtend from 'dva-model-extend'
 import { create, remove, update } from '../services/wxuser'
 import * as wxusersService from '../services/wxusers'
 import { pageModel } from './common'
-import { config } from '../utils'
+import { config, storage } from '../utils'
 
 const { query } = wxusersService
 const { prefix } = config
@@ -124,7 +124,12 @@ export default modelExtend(pageModel, {
     },
 
     switchIsMotion (state) {
-      localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
+      // localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
+      storage({
+        key: 'userIsMotion',
+        val: !state.isMotion,
+        type: 'set'
+      })
       return { ...state, isMotion: !state.isMotion }
     },
 

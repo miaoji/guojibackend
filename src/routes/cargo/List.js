@@ -62,7 +62,10 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
     {
       title: '客户编号',
       dataIndex: 'CUSTOMER_NO',
-      key: 'CUSTOMER_NO'
+      key: 'CUSTOMER_NO',
+      render: (text) => {
+        return <span>{ text?text:"暂无客户编号" }</span>
+      }
     }, {
       title: '批次号',
       dataIndex: 'BATCH',

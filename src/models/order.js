@@ -4,7 +4,7 @@ import { create, remove, update, markBlack, createChinaOrder, getKdCompany } fro
 import { create as addBoot } from '../services/boot'
 import * as ordersService from '../services/orders'
 import { pageModel } from './common'
-import { config, time } from '../utils'
+import { config, time, storage } from '../utils'
 
 const { query } = ordersService
 const { prefix } = config
@@ -110,7 +110,7 @@ export default modelExtend(pageModel, {
 
     *addBoot ({ payload }, { call, put }) {
       const other = {
-        createUserId: JSON.parse(window.localStorage.getItem('guojipc_user')).roleId,
+        createUserId: JSON.parse(storage({key: 'user'})).roleId,
         status: 1,
       }
       const data = yield call(addBoot, {

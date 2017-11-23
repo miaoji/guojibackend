@@ -4,7 +4,7 @@ import { create, remove, update, markBlack } from '../services/parceltype'
 import * as parceltypesService from '../services/parceltypes'
 import * as countriesService from '../services/countries'
 import { pageModel } from './common'
-import { config } from '../utils'
+import { config, storage } from '../utils'
 
 const { query } = parceltypesService
 const contryQuery = countriesService.query
@@ -123,7 +123,7 @@ export default modelExtend(pageModel, {
         return
       }
       // return
-      const createUserId = JSON.parse(window.localStorage.getItem('guojipc_user')).roleId
+      const createUserId = JSON.parse(storage({key: 'user'})).roleId
       // 用nameCn 来判断 nameEn 的值
       let nameEn = ''
       if (payload.nameCn == '包裹') {
@@ -150,7 +150,7 @@ export default modelExtend(pageModel, {
       const id = yield select(({ parceltype }) => parceltype.currentItem.ID)
       const country_cn = yield select(({ parceltype }) => parceltype.currentItem.country_cn)
       const DESTINATION = yield select(({ parceltype }) => parceltype.currentItem.DESTINATION)
-      const createUserId = JSON.parse(window.localStorage.getItem('guojipc_user')).roleId
+      const createUserId = JSON.parse(storage({key: 'user'})).roleId
       let nameEn = ''
       // 判断修改是输入的目的地国家的值有没有变化,没有变化则返回它本身的DESTINATION,改变了则通过接口获取一个国家id
       // 若没有获取到国家ID则提示用户,并return

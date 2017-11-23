@@ -142,7 +142,12 @@ export default modelExtend(pageModel, {
     },
 
     switchIsMotion (state) {
-      localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
+      // localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
+      storage({
+        key: 'userIsMotion',
+        val: !state.isMotion,
+        type: 'set'
+      })
       return { ...state, isMotion: !state.isMotion }
     },
 
