@@ -29,12 +29,16 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
-  selectKdCompany,
+  modalDis,
   getKdCompany,
+  modalRadioDis,
+  onModalDisState,
+  selectParentOrder,
   form: {
     getFieldDecorator,
     validateFields,
     getFieldsValue,
+    setFieldsValue,
   },
   ...modalProps
 }) => {
@@ -55,6 +59,14 @@ const modal = ({
     // getKdCompany()
   }
 
+  const handleChange = (e) => {
+    const data = {
+      ...getFieldsValue()
+    }
+    onModalDisState({...data,cargoType:e.target.value})
+    setFieldsValue({ parentId: undefined })
+  }
+
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,
@@ -67,17 +79,28 @@ const modal = ({
       <Form layout="horizontal">
         <FormItem label="货物类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('cargoType', {
-            initialValue: item.cargoType,
+            initialValue: '-1',
             rules: [
               {
                 required: true,
                 message: '请输入货物类型!',
               },
             ],
-          })(<Radio.Group defaultValue={'-1'}>
+          })(<Radio.Group onChange={handleChange}>
               <Radio value={'-1'}>普货</Radio>
               <Radio value={'-2'}>特货</Radio>
+              <Radio disabled={modalRadioDis} value={'1'}>合单到指定订单</Radio>
             </Radio.Group>)}
+        </FormItem>
+        <FormItem label="指定订单单号" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('parentId', {
+            rules: [
+              {
+                // required: !modalDis,
+                message: '请选择订单单号'
+              }
+            ]
+          })(<Select disabled={modalDis} showSearch placeholder="输入单号可搜索" onFocus={handleFocus} defaultValue="10" style={{ width: 286 }}>{selectParentOrder}</Select>)}
         </FormItem>
       </Form>
     </Modal>

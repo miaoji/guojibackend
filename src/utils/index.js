@@ -165,5 +165,4 @@ module.exports = {
   queryArray,
   arrayToTree,
   pageParams,
-  time,
 }

@@ -21,8 +21,18 @@ const realtext = {
   7: '未到件',
   8: '已到件',
 }
+const realColor = {
+  1: '#3728ff',
+  2: 'BlueViolet',
+  3: 'OliveDrab',
+  4: '#0094ff',
+  5: 'Red',
+  6: 'Black',
+  7: 'OrangeRed',
+  8: '#008229',
+}
 // 包裹状态: 0 还没有合单, -1 普货, -2特货
-const List = ({ filter, onSetStatus, onSetCancel, filterStatus, onDeleteItem, onSetFreight, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
+const List = ({ filter, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, filterStatus, onDeleteItem, onSetFreight, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       // 确定运费
@@ -46,9 +56,11 @@ const List = ({ filter, onSetStatus, onSetCancel, filterStatus, onDeleteItem, on
       case '3':
         onSetStatus(record)
         break
+        // 修改订单
       case '4':
-        window.open(`/bootdetail?orderNo=${record.ORDER_NO}`)
+        onModifyOrder(record)
         break
+        // 撤销合单
       case '5':
         if (record.parentId > 0) {
           confirm({
@@ -61,6 +73,10 @@ const List = ({ filter, onSetStatus, onSetCancel, filterStatus, onDeleteItem, on
           message.warn('本订单不能进行此操作!!!')
         }
         break
+        // 称重
+      case '6':
+        onSetWeight(record)
+        break
       default:
         break
     }
@@ -70,7 +86,6 @@ const List = ({ filter, onSetStatus, onSetCancel, filterStatus, onDeleteItem, on
     confirm({
       title: '确定要发送中通订单吗?',
       onOk () {
-        console.log('record', record)
         onCreateCtorder(record)
       },
     })
@@ -81,6 +96,14 @@ const List = ({ filter, onSetStatus, onSetCancel, filterStatus, onDeleteItem, on
       title: '全部订单号',
       dataIndex: 'orderNo',
       key: 'orderNo',
+      render: (text, record) => {
+        if (text) {
+          return <Link to={`/cargodetailInfo?orderNo=${record.orderNo}`}>{text}</Link>
+        } else {
+          const newText = record.cnNo || '暂无订单号'
+          return <span>{ newText }</span>
+        }
+      }
     }, {
       title: '收件人',
       dataIndex: 'receiverName',
@@ -100,14 +123,34 @@ const List = ({ filter, onSetStatus, onSetCancel, filterStatus, onDeleteItem, on
       key: 'parentId',
       render: (text) => {
         text > 0 ? text = 1 : text = text
-        const realText = {
+        const newParentId = {
           0: '待合单',
           '-1': '普货订单',
           '-2': '特货订单',
           1: '子订单',
         }
-        return <span>{realText[text]}</span>
+        return <span>{newParentId[text]}</span>
       },
+    }, {
+      title: '包裹长度',
+      dataIndex: 'length',
+      key: 'length',
+      render: (text) => <span>{text ? text + 'cm': '未称重'}</span>,
+    }, {
+      title: '包裹宽度',
+      dataIndex: 'width',
+      key: 'width',
+      render: (text) => <span>{text ? text + 'cm': '未称重'}</span>,
+    }, {
+      title: '包裹高度',
+      dataIndex: 'height',
+      key: 'height',
+      render: (text) => <span>{text ? text + 'cm': '未称重'}</span>,
+    }, {
+      title: '包裹重量',
+      dataIndex: 'weight',
+      key: 'weight',
+      render: (text) => <span>{text ? text + 'kg': '未称重'}</span>,
     }, {
       title: '订单状态',
       dataIndex: 'status',
@@ -119,19 +162,34 @@ const List = ({ filter, onSetStatus, onSetCancel, filterStatus, onDeleteItem, on
         { text: '国际完成', value: 4 },
         { text: '异常订单', value: 5 },
         { text: '取消订单', value: 6 },
+        { text: '未到件', value: 7 },
+        { text: '已到件', value: 8 },
       ],
       filterMultiple: false,
       render: (text) => {
-        return <span>{realtext[text]}</span>
+        return <span style={{color: realColor[text]}}>{realtext[text]}</span>
       },
     }, {
       title: '下单时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
-        const realText = time.formatTime(text)
-        return <span>{realText}</span>
+        const newTime = time.formatTime(text)
+        return <span>{newTime}</span>
       },
+    }, {
+      title: '到件时间',
+      dataIndex: 'confirmTime',
+      key: 'confirmTime',
+      render: (text, record) => {
+        if (record.parentId < 0) {
+          return <span>仅子订单有到件时间</span>
+        }else if (record.status === '7') {
+          return <span>订单尚未到达中转站</span>
+        }else{
+          return <span>{time.rebuildTime(text)}</span>
+        }
+      }
     }, {
       title: '操作',
       key: 'operation',
@@ -140,7 +198,7 @@ const List = ({ filter, onSetStatus, onSetCancel, filterStatus, onDeleteItem, on
         if (record.parentId === 0) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '到件处理' }, { key: '2', name: '删除订单' }]} />
         } else if (record.parentId < 0) {
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '确定运费' }]} />
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '4', name: '国际段信息' }, { key: '6', name: '称重' }, { key: '1', name: '确定运费' }]} />
         } else if (record.parentId > 0) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '撤销合单' }, { key: '2', name: '删除订单' }]} />
         }

@@ -49,16 +49,9 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
     	if (payload.provinceCode) {
-    		storage({
-    			key: 'provinceCode',
-    			val: payload.provinceCode,
-    			type: 'set',
-    		})
+    		window.sessionStorage.provinceCode=payload.provinceCode
     	} else {
-    		payload.provinceCode = storage({
-    			key: 'provinceCode',
-    			type: 'get',
-    		})
+        payload.provinceCode=window.sessionStorage.provinceCode
     	}
       const data = yield call(query, payload)
       if (data.code == '200' || data.code == '500') {

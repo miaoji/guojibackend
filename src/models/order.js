@@ -93,13 +93,11 @@ export default modelExtend(pageModel, {
 
     *update ({ payload }, { select, call, put }) {
       const id = yield select(({ order }) => order.currentItem.ID)
-      const kdCompanyCode = payload.kdCompanyCode.split('/-/')[1]
       const newOrder = {
         intlNo: payload.intlNo,
-        kdCompanyCode,
+        kdCompanyCode: payload.kdCompanyCode.split('/-/')[1],
         id,
       }
-      console.log('newOrder', newOrder)
       const data = yield call(update, newOrder)
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -171,7 +169,6 @@ export default modelExtend(pageModel, {
             children.push(<Option key={`${item.companyName}/-/${item.companyCode}`}>{item.companyName}</Option>)
           }
         }
-        console.log('children', children)
         yield put({
           type: 'setKdCompany',
           payload: {

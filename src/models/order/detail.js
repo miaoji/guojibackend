@@ -11,7 +11,7 @@ export default {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(() => {
-        if (location.pathname === '/orderdetail') {
+        if (location.pathname === '/orderdetail' || location.pathname === '/cargodetailInfo') {
           const match = location.search.split('?orderNo=')
           if (match) {
             dispatch({ type: 'setListEmpty' })

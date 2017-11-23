@@ -89,7 +89,7 @@ const modal = ({
             ],
           })(<Radio.Group onChange={handleChange} disabled={typeDis}>
             <Radio value={1}>永久有效</Radio>
-            <Radio value={0}>临时有效(最长一个的时间)</Radio>
+            <Radio value={0}>临时有效(最长一个月的时间)</Radio>
           </Radio.Group>)}
         </FormItem>
         <FormItem label="有效期(天)" hasFeedback {...formItemLayout}>

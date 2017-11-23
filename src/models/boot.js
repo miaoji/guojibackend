@@ -2,6 +2,7 @@ import modelExtend from 'dva-model-extend'
 import { create, update } from '../services/boot'
 import * as bootsService from '../services/boots'
 import { pageModel } from './common'
+import { stroage } from '../utils'
 
 const { query } = bootsService
 
@@ -52,7 +53,7 @@ export default modelExtend(pageModel, {
 
     *create ({ payload }, { call, put }) {
       const time = new Date().getTime()
-      const username = JSON.parse(window.localStorage.getItem('guojipc_user')).userId || 0
+      const username = JSON.parse(storage('user')).userId || 0
       const confirmor = username
       const newFreight = { ...payload, time, confirmor }
 
@@ -68,7 +69,7 @@ export default modelExtend(pageModel, {
     *update ({ payload }, { select, call, put }) {
       const id = yield select(({ freight }) => freight.currentItem.id)
       const time = new Date().getTime()
-      const username = JSON.parse(window.localStorage.getItem('guojipc_user')).userId || 0
+      const username = JSON.parse(stroage('user')).userId || 0
       const confirmor = username
       const newFreight = { ...payload, id, time, confirmor }
 

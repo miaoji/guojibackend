@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { query, merge, cancel, freight, getOrderInfo } from '../services/cargodetails'
-import { remove, update as status } from '../services/order'
+import { query, merge, cancel, freight, getOrderInfo, parentOrder } from '../services/cargodetails'
+import { remove, update as status, getKdCompany } from '../services/order'
 import { pageModel } from './common'
 import { config, time, storage, queryURL } from '../utils'
 
@@ -24,13 +24,22 @@ export default modelExtend(pageModel, {
 
   state: {
     currentItem: {},
+    // 合单
     modalVisible: false,
+    // 定价
     bootModalVisible: false,
+    // 到件
     stateModalVisible: false,
+    // 称重
+    weightModalVisible: false,
+    // 添加国际单号
+    modifyModalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: false,
     list: [],
+    modalDis:true,
+    modalRadioDis:false,
   },
 
   subscriptions: {
@@ -51,12 +60,15 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
+      if (payload.batch) {
+        window.sessionStorage.cargoBatch = payload.batch
+      }else{
+        payload.batch = window.sessionStorage.cargoBatch
+      }
       const data = yield call(query, payload)
       if (data.code === 200 && data.success && data.obj) {
         for (let i = 0; i < data.obj.length; i++) {
           const item = data.obj[i]
-          console.log('parentId', data.obj[i].parentId)
-          console.log('orderInfoSubset', data.obj[i].orderInfoSubset)
           if (item.orderInfoSubset.length) {
             item.children = item.orderInfoSubset
             delete item.orderInfoSubset
@@ -109,10 +121,23 @@ export default modelExtend(pageModel, {
 
     // 合单
     *mergeOrder ({ payload }, { select, call, put }) {
+      if (payload.cargoType < 0) {
+        payload.parentId = undefined
+      } else if (!payload.parentId) {
+        message.warn('请选择需指定到的订单单号')
+        return
+      } else {
+        payload.parentId = payload.parentId.split('/-/')[1]
+      }
+      // ids 选中的订单号的一个数组集合
       const ids = yield select(({ cargodetail }) => cargodetail.currentItem.ids)
       const data = yield call(merge, {
+        // cargoType -1:普货 -2:特货
         cargoType: payload.cargoType,
+        // type 1:集运订单 0:直邮订单
         type: 1,
+        // parentId: 订单父级Id
+        parentId: payload.parentId
       }, ids)
       if (data.success) {
         yield put({ type: 'hideModal' })
@@ -125,9 +150,7 @@ export default modelExtend(pageModel, {
 
     // 撤销合单
     *setCancel ({ payload }, { put, call }) {
-      console.log('parentId', payload.parentId)
       const parentData = yield call(getOrderInfo, {id: payload.parentId})
-      console.log('parentDatass', parentData)
       if (parentData.code===200&&parentData.success&&parentData.obj) {
         if (parentData.obj.status>1) {
           message.warn('已付款订单不允许撤销合单')
@@ -172,17 +195,19 @@ export default modelExtend(pageModel, {
       }
     },
 
-    // 确认是否收到用户的包裹
+    // 到件处理
     *setStatus ({ payload }, { select, put, call }) {
       const realStates = {
         未到件: 7,
         已到件: 8,
       }
       const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
-      console.log('realState[payload.status]', realStates[payload.status])
+      const date = new Date()
+      const newDate = date.getFullYear()+'-'+(date.getMonth() + 1)+'-'+date.getDate()
       const data = yield call(status, {
         id,
         status: realStates[payload.status],
+        confirmTime: newDate
       })
       if (data.code === 200 && data.success) {
         message.success('操作成功')
@@ -193,24 +218,141 @@ export default modelExtend(pageModel, {
       }
     },
 
+    // 称重
+    *setWeight ({ payload }, { select, put, call }) {
+      const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
+      const data = yield call(status, {
+        id,
+        length: payload.length,
+        width: payload.width,
+        height: payload.height,
+        weight: payload.weight
+      })
+      if (data.code === 200 && data.success) {
+        message.success('添加成功')
+        yield put({ type: 'query', payload: { batch: queryURL('batch') } })
+        yield put({ type: 'hideWeightModal' })
+      } else {
+        throw data.msg || '无法跟服务器建立有效连接'
+      }
+    },
+
+    // 设置国际段快递信息
+    *setIntlNo ({ payload }, { select, put, call }) {
+      const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
+      const data = yield call(status, {
+        intlNo: payload.intlNo,
+        kdCompanyCode: payload.kdCompanyCode.split('/-/')[1],
+        id,
+      })
+      if (data.code === 200 && data.success) {
+        message.success('添加成功')
+        yield put({ type: 'query', payload: { batch: queryURL('batch') } })
+        yield put({ type: 'hideModifyModal' })
+      } else {
+        throw data.msg || '无法跟服务器建立有效连接'
+      }
+    },
+
+    // 获取合单modal父级订单下拉框
+    *getParentOrder ({ payload }, { call, put }) {
+      const data = yield call(parentOrder, { batch: queryURL('batch') })
+      if (data.code === 200 && data.success) {
+        let children = []
+        let dis = false
+        if (data.obj) {
+          for (let i = 0; i < data.obj.length; i++) {
+            dis = false
+            let item = data.obj[i]
+            children.push(<Option key={`${item.orderNo}/-/${item.id}`}>{item.orderNo}</Option>)
+          }
+        }else{
+          dis = true
+          children.push(<Option key={'10'}>请选择其他方式合单</Option>)
+        }
+        yield put({
+          type: 'setParentOrder',
+          payload: {
+            selectParentOrder: children,
+            modalRadioDis: dis
+          },
+        })
+      } else {
+        throw '获取订单列表失败'
+      }
+    },
+
+    // 设置合单modal下拉菜单的禁用
+    *setMergeSelectState ({ payload }, { put }) {
+      if (payload.parentId !== '10' && payload.cargoType === '1') {
+        yield put({
+          type: 'setParentOrder',
+          payload: {
+            modalDis: false
+          },
+        })
+      } else {
+        yield put({
+          type: 'setParentOrder',
+          payload: {
+            modalDis: true
+          },
+        })
+      }
+    },
+
+    // 获取国际快递下拉菜单
+    *getKdCompany ({ payload }, { call, put }) {
+      const data = yield call(getKdCompany)
+      if (data.code === 200) {
+        let children = []
+        if (data.obj) {
+          for (let i = 0; i < data.obj.length; i++) {
+            let item = data.obj[i]
+            children.push(<Option key={`${item.companyName}/-/${item.companyCode}`}>{item.companyName}</Option>)
+          }
+        }
+        console.log('children', children)
+        yield put({
+          type: 'setKdCompany',
+          payload: {
+            selectKdCompany: children,
+          },
+        })
+      } else {
+        throw '获取国际段快递公司失败'
+      }
+    },
+
   },
 
   reducers: {
+    // 返回修改订单时的国际快递列表
+    setKdCompany (state, { payload }) {
+      return { ...state, ...payload }
+    },
+
+    // 返回合单时的订单下拉菜单
+    setParentOrder (state, { payload }) {
+      return { ...state, ...payload }
+    },
+
     // 在选中待合单订单进行合单动作完成后,清除订单的选中状态
     setSelectedEmpty (state, { payload }) {
-      return { ...state, selectedRowKeys: [] }
+      return { ...state, selectedRowKeys: [], selectParentOrder: [] }
     },
+
     // 解决页面加载时的缓存问题(页面加载时,会优先加载缓存)
     setListEmpty (state, { payload }) {
       return { ...state, list: [] }
     },
 
     showModal (state, { payload }) {
-      return { ...state, ...payload, modalVisible: true }
+      return { ...state, ...payload, modalVisible: true, modalDis: true }
     },
 
     hideModal (state) {
-      return { ...state, modalVisible: false }
+      return { ...state, modalVisible: false, modalDis: true }
     },
 
 
@@ -232,9 +374,31 @@ export default modelExtend(pageModel, {
       return { ...state, stateModalVisible: false }
     },
 
+    // 称重
+    showWeightModal (state, { payload }) {
+      return { ...state, ...payload, weightModalVisible: true }
+    },
+
+    hideWeightModal (state) {
+      return { ...state, weightModalVisible: false }
+    },
+
+    // 添加国际单号
+    showModifyModal (state, { payload }) {
+      return { ...state, ...payload, modifyModalVisible: true }
+    },
+
+    hideModifyModal (state) {
+      return { ...state, modifyModalVisible: false }
+    },
 
     switchIsMotion (state) {
-      localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
+      // localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
+      stroage({
+        key: 'userIsMotion',
+        val: !state.isMotion,
+        type: 'set'
+      })
       return { ...state, isMotion: !state.isMotion }
     },
 

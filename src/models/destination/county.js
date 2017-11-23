@@ -49,16 +49,9 @@ export default modelExtend(pageModel, {
 // 如果没有 则从 localStorage 获取
     *query ({ payload = {} }, { call, put }) {
       if (payload.cityCode) {
-        storage({
-          key: 'cityCode',
-          val: payload.cityCode,
-          type: 'set',
-        })
+        window.sessionStorage.cityCode=payload.cityCode
       } else {
-        payload.cityCode = storage({
-          key: 'cityCode',
-          type: 'get',
-        })
+        payload.cityCode=window.sessionStorage.cityCode
       }
       const data = yield call(query, payload)
       if (data.code == '200' || data.code == '500') {

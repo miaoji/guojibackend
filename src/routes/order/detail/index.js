@@ -55,7 +55,7 @@ const Detail = ({ orderDetail }) => {
           <span>发件人城市: {data.senderCity ? data.senderCity : '暂无'}</span>
           <span>发件人地址: {data.senderAddress ? data.senderAddress : '暂无'}</span>
           <span>发件地址邮编: {data.senderPostcode ? data.senderPostcode : '暂无'}</span>
-
+          
           <div className={styles.titleItem}>中转地址信息:</div>
           <span>中转地址名称: {data.transferName ? data.transferName : '暂无'}</span>
           <span>中转地址公司: {data.transferCompany ? data.transferCompany : '暂无'}</span>
@@ -81,6 +81,18 @@ const Detail = ({ orderDetail }) => {
           <span>保价金额: {data.insuredAmount === 0 ? '无' : `${data.insuredAmount}元`}</span>
           <span>保费: {data.insuredPrice === 0 ? '无' : `${data.insuredPrice}元`}</span>
 
+        <div className={styles.title}>包裹详情:</div>
+          <span>包裹重量: {data.weight ? data.weight + 'kg' : '包裹暂未称重'}</span>
+          <span>中文名称: {orderItemList.nameCn ? orderItemList.nameCn : '暂无'}</span>
+          <span>英文名称: {orderItemList.nameEn ? orderItemList.nameEn : '暂无'}</span>
+          <span>包裹长度: {data.length ? data.length + 'cm' : '包裹暂未测量'}</span>
+          <span>单价: {orderItemList.unitPrice ? orderItemList.unitPrice : '暂无'}</span>
+          <span>数量: {orderItemList.quantity ? orderItemList.quantity : '暂无'}</span>
+          <span>包裹宽度: {data.width ? data.width + 'cm' : '包裹暂未测量'}</span>
+          <span>价值: {orderItemList.worth ? orderItemList.worth : '暂无'}</span>
+          <span>海关编号: {orderItemList.hscode ? orderItemList.hscode : '暂无'}</span>
+          <span>包裹高度: {data.height ? data.height + 'cm' : '包裹暂未测量'}</span>
+
         <div className={styles.title}>微信详情:</div>
           <span>用户昵称: {wxUser.nickName ? wxUser.nickName : '暂无'}</span>
           <span>手机号码: {wxUser.mobile ? wxUser.mobile : '暂无'}</span>
@@ -91,15 +103,6 @@ const Detail = ({ orderDetail }) => {
           <span>消费总金额: {wxUser.totalAmount ? wxUser.totalAmount : '暂无'}</span>
           <span>黑名单: {wxUser.blacklist ? realBlackList[wxUser.blacklist] : '未知'}</span>
           <span>关注状态: {wxUser.subscribe ? wxUser.subscribe : '暂无'}</span>
-
-        <div className={styles.title}>包裹详情:</div>
-          <span>中文名称: {orderItemList.nameCn ? orderItemList.nameCn : '暂无'}</span>
-          <span>英文名称: {orderItemList.nameEn ? orderItemList.nameEn : '暂无'}</span>
-          <span>单价: {orderItemList.unitPrice ? orderItemList.unitPrice : '暂无'}</span>
-          <span>数量: {orderItemList.quantity ? orderItemList.quantity : '暂无'}</span>
-          <span>价值: {orderItemList.worth ? orderItemList.worth : '暂无'}</span>
-          <span>包裹重量: {orderItemList.itemWeight ? orderItemList.itemWeight : '暂无'}</span>
-          <span>海关编号: {orderItemList.hscode ? orderItemList.hscode : '暂无'}</span>
 
         <div className={styles.title}>国内段快递信息:</div>
           {cnExpressInfo ? cnExpressInfo.map(item => (<div><span>{item.time}</span><span>{item.context}</span></div>)) : <span>暂无快递信息</span>}

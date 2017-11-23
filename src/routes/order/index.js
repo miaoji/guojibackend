@@ -43,12 +43,12 @@ const Order = ({ location, dispatch, order, loading }) => {
     visible: modalVisible,
     maskClosable: true,
     confirmLoading: loading.effects['order/update'],
-    title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
+    title: `添加国际段快递信息`,
     wrapClassName: 'vertical-center-modal',
     selectKdCompany,
     onOk (data) {
       dispatch({
-        type: `order/${modalType}`,
+        type: `order/update`,
         payload: data,
       })
     },

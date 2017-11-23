@@ -42,18 +42,11 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-    	if (payload.countryCode) {
-    		storage({
-    			key: 'countryCode',
-    			val: payload.countryCode,
-    			type: 'set',
-    		})
-    	} else {
-    		payload.countryCode = storage({
-    			key: 'countryCode',
-    			type: 'get',
-    		})
-    	}
+      if (payload.countryCode) {
+        window.sessionStorage.countryCode=payload.countryCode
+      } else {
+        payload.countryCode=window.sessionStorage.countryCode
+      }
       const data = yield call(query, payload)
       if (data.code == '200' || data.code == '500') {
         if (data.code == '500' || data.obj == null) {
