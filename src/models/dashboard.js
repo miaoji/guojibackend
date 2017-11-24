@@ -10,7 +10,13 @@ export default {
       name: '明彰科技',
       title: '名言',
       content: '学如逆水行舟，不进则退',
-      avatar: 'http://www.feizl.com/upload2007/2011_11/111114031328587.jpg',
+      avatar: 'http://img.dongqiudi.com/uploads/avatar/2015/07/25/QM387nh7As_thumb_1437790672318.jpg',
+    },
+    quotess: {
+      name: '明彰科技',
+      title: '名言',
+      content: '心似平原放马,易放难收',
+      avatar: 'http://f.hiphotos.baidu.com/zhidao/pic/item/1ad5ad6eddc451da04b67411b0fd5266d1163283.jpg',
     },
     numbers: [
       {
