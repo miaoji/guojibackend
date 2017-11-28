@@ -106,22 +106,23 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
+      delete payload.packageType
+      delete payload.productType
       payload.wxUserId?payload.wxUserId=Number(payload.wxUserId.split('/--/')[0]):payload.wxUserId=undefined
-      payload.receiverCountry?payload.receiverCountry=JSON.parse(payload.receiverCountry).id:payload.receiverCountry=undefined
-      payload.packageType?payload.packageType=JSON.parse(payload.packageType).id:payload.packageType=undefined
-      payload.receiverCountry?payload.countryId=JSON.parse(payload.receiverCountry).id:payload.countryId=undefined
-      payload.packageType?payload.packageTypeId=JSON.parse(payload.packageType).id:payload.packageTypeId=undefined
-      payload.productType?payload.productTypeId=payload.productType:payload.productTypeId=undefined
+      payload.receiverCountry?payload.receiverCountry=JSON.parse(payload.receiverCountry).name:payload.receiverCountry=undefined
       payload.senderProv?payload.senderProv=JSON.parse(payload.senderProv).id:payload.senderProv=undefined
       payload.senderCity?payload.senderCity=JSON.parse(payload.senderCity).id:payload.senderCity=undefined
       payload.height?payload.height=Number(payload.height):payload.height=undefined
       payload.length?payload.length=Number(payload.length):payload.length=undefined
       payload.weight?payload.weight=Number(payload.weight):payload.weight=undefined
       payload.width?payload.width=Number(payload.width):payload.width=undefined
-      payload.type=0
+      payload.senderCountry = "中国"
+      payload.totalFee = Number(payload.totalFee)*100 
+      payload.type = 0
+      payload.status = 1
       const data = yield call(create, payload)
       if (data.code === 200) {
-        yield put({ type: 'hideModal' })
+        yield put({ type: 'hideAddModal' })
         message.success(data.msg)
         yield put({ type: 'query' })
       } else {
@@ -233,6 +234,7 @@ export default modelExtend(pageModel, {
             let str = {
               code: item.country_code,
               id: item.id,
+              name: item.country_cn
             }
             str = JSON.stringify(str)
             children.push(<Option key={str}>{item.country_cn}</Option>)

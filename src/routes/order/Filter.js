@@ -144,7 +144,7 @@ const Filter = ({
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
-          <div style={{ display: 'block' }}>
+          <div style={{ display: 'none' }}>
             <Button size="large" type="ghost" onClick={onAdd}>创建订单</Button>
           </div>
         </div>

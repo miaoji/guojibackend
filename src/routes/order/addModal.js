@@ -152,7 +152,7 @@ const countryChange = async function(e) {
                 message: '请输入包裹长度!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入包裹长度!" />)}
         </FormItem>
         <FormItem label="包裹宽度" hasFeedback {...formItemLayout}>
           {getFieldDecorator('width', {
@@ -162,7 +162,7 @@ const countryChange = async function(e) {
                 message: '请输入包裹宽度!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入包裹宽度!" />)}
         </FormItem>
         <FormItem label="包裹高度" hasFeedback {...formItemLayout}>
           {getFieldDecorator('height', {
@@ -172,17 +172,17 @@ const countryChange = async function(e) {
                 message: '请输入包裹高度!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入包裹高度!" />)}
         </FormItem>
         <FormItem label="包裹重量" hasFeedback {...formItemLayout}>
           {getFieldDecorator('weight', {
             rules: [
               {
-                // required: true,
+                required: true,
                 message: '请输入包裹重量!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入包裹重量!" />)}
         </FormItem>
         <FormItem label="是否退件" hasFeedback {...formItemLayout}>
           {getFieldDecorator('returnGood', {
@@ -220,157 +220,157 @@ const countryChange = async function(e) {
                 message: '请输入保价金额!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入保价金额!" />)}
         </FormItem>
         <hr className={classnames({[styles.hr]: true})}/>
         <FormItem label="寄件人姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderName', {
             rules: [
               {
-                // required: true,
+                required: true,
                 message: '请输入寄件人姓名!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入寄件人姓名!" />)}
         </FormItem>
         <FormItem label="寄件人手机号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderMobile', {
             rules: [
               {
-                // required: true,
+                required: true,
                 message: '请输入寄件人手机号!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入寄件人手机号!" />)}
         </FormItem>
-        <FormItem label="寄件人省" hasFeedback {...formItemLayout}>
+        <FormItem label="寄件人省份" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderProv', {
             rules: [
               {
-                // required: true,
-                message: '请选择寄件省!',
+                required: true,
+                message: '请选择寄件人省份!',
               },
             ],
-          })(<Select placeholder="点击选择" onChange={provinceChange}>{selectProvince}</Select>)}
+          })(<Select placeholder="请选择寄件人省份" onChange={provinceChange}>{selectProvince}</Select>)}
         </FormItem>
-        <FormItem label="寄件人市" hasFeedback {...formItemLayout}>
+        <FormItem label="寄件人市级" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderCity', {
             rules: [
               {
-                // required: true,
-                message: '请选择寄件人市!',
+                required: true,
+                message: '请选择寄件人市级!',
               },
             ],
-          })(<Select disabled={cityDis} placeholder="点击选择" onChange={cityChange}>{selectCity}</Select>)}
+          })(<Select disabled={cityDis} placeholder="请选择寄件人市级" onChange={cityChange}>{selectCity}</Select>)}
         </FormItem>
-        <FormItem label="寄件人区" hasFeedback {...formItemLayout}>
+        <FormItem label="寄件人县区" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderCounty', {
             rules: [
               {
-                // required: true,
-                message: '请选择寄件人区!',
+                required: true,
+                message: '请选择寄件人县区!',
               },
             ],
-          })(<Select disabled={districtDis} placeholder="点击选择">{selectCounty}</Select>)}
+          })(<Select disabled={districtDis} placeholder="请选择寄件人县区！">{selectCounty}</Select>)}
         </FormItem>
         <FormItem label="寄件人地址" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderAddress', {
             rules: [
               {
-                // required: true,
+                required: true,
                 message: '请输入寄件人地址!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入寄件人地址!" />)}
         </FormItem>
         <FormItem label="寄件人邮编" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderPostcode', {
             rules: [
               {
-                // required: true,
+                required: true,
                 message: '请输入寄件人邮编!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入寄件人邮编!" />)}
         </FormItem>
         <hr className={classnames({[styles.hr]: true})}/>
         <FormItem label="收件人姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverName', {
             rules: [
               {
-                // required: true,
+                required: true,
                 message: '请输入收件人姓名!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入收件人姓名!" />)}
         </FormItem>
         <FormItem label="收件人手机" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverMobile', {
             rules: [
               {
-                // required: true,
+                required: true,
                 message: '请输入收件人手机!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入收件人手机!" />)}
         </FormItem>
         <FormItem label="收件人国家" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverCountry', {
             rules: [
               {
-                // required: true,
-                message: '请输入收件人国家!',
+                required: true,
+                message: '请选择收件人国家!',
               },
             ],
-          })(<Select onChange={packageChange} placeholder="点击选择">{selectNation}</Select>)}
+          })(<Select onChange={packageChange} placeholder="请选择收件人国家">{selectNation}</Select>)}
         </FormItem>
         <FormItem label="收件人地址" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverAddress', {
             rules: [
               {
-                // required: true,
+                required: true,
                 message: '请输入收件人地址!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入收件人地址!" />)}
         </FormItem>
         <FormItem label="收件地址邮编" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverPostcode', {
             rules: [
               {
-                // required: true,
-                message: '请输入收件人地址!',
+                required: true,
+                message: '请输入收件人地址邮编!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入收件人地址邮编!" />)}
         </FormItem>
         <hr className={classnames({[styles.hr]: true})}/>
         <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('packageType', {
             rules: [
               {
-                // required: true,
+                required: true,
                 message: '请选择物品类型!',
               },
             ],
-          })(<Select placeholder="点击选择" onChange={productChange} disabled={parcelDis}>{selectParcelType}</Select>)}
+          })(<Select placeholder="请选择物品类型" onChange={productChange} disabled={parcelDis}>{selectParcelType}</Select>)}
         </FormItem>
         <FormItem label="产品类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('productType', {
             rules: [
               {
-                // required: true,
+                required: true,
                 message: '请选择产品类型!',
               },
             ],
-          })(<Select placeholder="点击选择" disabled={productDis}>{selectProductType}</Select>)}
+          })(<Select placeholder="请选择产品类型" disabled={productDis}>{selectProductType}</Select>)}
         </FormItem>
         <FormItem label="运费(元)" hasFeedback {...formItemLayout}>
           <Row gutter={24}>
             <Col span={12}>
               {getFieldDecorator('totalFee', {
                 initialValue: intlPrice.finalPrice || undefined,
-                // rules: [{ required: true, message: 'Please input the captcha you got!' }],
+                rules: [{ required: true, message: 'Please input the captcha you got!' }],
               })(
                 <Input value={intlPrice} size="large" />
               )}
@@ -388,7 +388,7 @@ const countryChange = async function(e) {
                 message: '请输入备注信息!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入备注信息!" />)}
         </FormItem>
       </Form>
     </Modal>
