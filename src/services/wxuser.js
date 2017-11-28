@@ -4,7 +4,7 @@ const { wxuser } = api
 
 export async function query (params) {
   return request({
-    url: wxuser,
+    url: wxuser.all,
     method: 'get',
     data: params,
   })

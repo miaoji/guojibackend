@@ -19,16 +19,11 @@ const formItemLayout = {
   },
 }
 
-// 状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
+// 到件状态,0:未到件,1:已到件
+
 const realtext = {
-  1: '待付款',
-  2: '付款完成',
-  3: '国内完成',
-  4: '国际完成',
-  5: '异常订单',
-  6: '取消订单',
-  7: '未到件',
-  8: '已到件',
+  0: '未到件',
+  1: '已到件'
 }
 
 const stateModal = ({
@@ -74,8 +69,8 @@ const stateModal = ({
           })(<Input disabled />)}
         </FormItem>
         <FormItem label="状态" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('status', {
-            initialValue: realtext[item.status],
+          {getFieldDecorator('cargoStatus', {
+            initialValue: realtext[item.cargoStatus],
             rules: [
               {
                 required: true,

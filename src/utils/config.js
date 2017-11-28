@@ -47,7 +47,7 @@ module.exports = {
     order: {
       all: `${APIV3}/api/orderInfo/index`, // 全部订单
       show: `${APIV1}/order/:id`,
-      create: `${APIV3}/wx/OrderInfo/addOrderInfo`, // 创建订单
+      create: `${APIV3}/api/orderInfo/addCargo`, // 创建订单
       update: `${APIV3}/wx/OrderInfo/modOrderInfo`, // 根据id更新订单
       mod: `${APIV3}/api/orderInfo/modOrderInfoById`, // 根据id更新订单 仝周
       hide: `${APIV3}/api/orderInfo/delOrderInfoById`, // 根据id更新订单 仝周
@@ -57,6 +57,7 @@ module.exports = {
       getOrderInfoByOrderNo: `${APIV3}/api/orderInfo/getOrderInfoByOrderNo`, // 根据订单号查询快件信息
       queryByCompany: `${APIV3}/api/order/queryByCompany`, // 根据快件信息查询快递信息
       getOrderInfoById: `${APIV3}/api/orderInfo/getOrderInfoById`, // 根据订单Id查询订单信息
+      getIntlPrice: `${APIV3}/api/intlPrice/getIntlPrice`, // 根据对应参数查询预付款金额
     },
     boot: {
       all: `${APIV3}/api/closingPrice/index`, // 查询所有差价(补价)信息

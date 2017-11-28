@@ -21,8 +21,8 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
-    selectedRowKeys: [],
     isMotion: false,
+    selectedRowKeys: [],
     selectNation: [],
     provinceDis: true,
     cityDis: true,
@@ -73,6 +73,7 @@ export default modelExtend(pageModel, {
       }
     },
 
+    // 获取国家信息
     *getCountry ({ payload = {} }, { call, put }) {
       const data = yield call(getCountry)
       if (data.code === 200) {
@@ -90,7 +91,7 @@ export default modelExtend(pageModel, {
           }
         }
         yield put({
-          type: 'setNation',
+          type: 'setAddress',
           payload: {
             selectNation: children,
           },
@@ -100,6 +101,7 @@ export default modelExtend(pageModel, {
       }
     },
 
+    // 获取省份信息
     *getProvince ({ payload = {} }, { call, put }) {
       payload = JSON.parse(payload).code
       const data = yield call(getProvince, { countryCode: payload })
@@ -117,9 +119,10 @@ export default modelExtend(pageModel, {
           }
         }
         yield put({
-          type: 'setProvince',
+          type: 'setAddress',
           payload: {
             selectProvince: children,
+            provinceDis: false
           },
         })
       } else {
@@ -127,6 +130,7 @@ export default modelExtend(pageModel, {
       }
     },
 
+    // 获取市级信息
     *getCity ({ payload = {} }, { call, put }) {
       payload = JSON.parse(payload).code
       const data = yield call(getCity, { provinceCode: payload })
@@ -144,9 +148,10 @@ export default modelExtend(pageModel, {
           }
         }
         yield put({
-          type: 'setCity',
+          type: 'setAddress',
           payload: {
             selectCity: children,
+            cityDis: false
           },
         })
       } else {
@@ -154,6 +159,7 @@ export default modelExtend(pageModel, {
       }
     },
 
+    // 获取县区级信息
     *getCounty ({ payload = {} }, { call, put }) {
       payload = JSON.parse(payload).code
       const data = yield call(getCounty, { cityCode: payload })
@@ -166,9 +172,10 @@ export default modelExtend(pageModel, {
           }
         }
         yield put({
-          type: 'setCounty',
+          type: 'setAddress',
           payload: {
             selectCounty: children,
+            districtDis: false
           },
         })
       } else {
@@ -239,20 +246,8 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setNation (state, { payload }) {
+    setAddress (state, { payload }) {
       return { ...state, ...payload }
-    },
-
-    setProvince (state, { payload }) {
-      return { ...state, ...payload, provinceDis: false }
-    },
-
-    setCity (state, { payload }) {
-      return { ...state, ...payload, cityDis: false }
-    },
-
-    setCounty (state, { payload }) {
-      return { ...state, ...payload, districtDis: false }
     },
 
     showModal (state, { payload }) {

@@ -11,7 +11,34 @@ import AddModal from './addModal'
 import StateModal from './stateModal'
 
 const Order = ({ location, dispatch, order, loading }) => {
-  const { list, pagination, currentItem, addModalVisible, stateModalVisible, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany } = order
+  const { 
+    list, 
+    pagination, 
+    currentItem, 
+    addModalVisible, 
+    stateModalVisible, 
+    modalVisible, 
+    bootModalVisible, 
+    modalType, 
+    isMotion, 
+    selectedRowKeys, 
+    selectKdCompany,
+    selectNation,
+    selectProvince,
+    selectCity,
+    selectCounty,
+    provinceDis,
+    cityDis,
+    districtDis,
+
+    selectParcelType,
+    selectProductType,
+    parcelDis,
+    productDis,
+
+    selectWeChatUser,
+    intlPrice
+  } = order
   const { pageSize } = pagination
 
   // 订单创建的modal
@@ -23,9 +50,65 @@ const Order = ({ location, dispatch, order, loading }) => {
     confirmLoading: loading.effects['order/create'],
     title: '创建订单',
     wrapClassName: 'vertical-center-modal',
+    selectNation,
+    selectProvince,
+    selectCity,
+    selectCounty,
+    provinceDis,
+    cityDis,
+    districtDis,
+
+    selectParcelType,
+    selectProductType,
+    parcelDis,
+    productDis,
+    
+    selectWeChatUser,
+    intlPrice,
+    getCountry (data) {
+      dispatch({
+        type: 'order/getCountry',
+      })
+    },
+    getProvince (data) {
+      dispatch({
+        type: 'order/getProvince',
+        payload: data,
+      })
+    },
+    getCity (data) {
+      dispatch({
+        type: 'order/getCity',
+        payload: data,
+      })
+    },
+    getCounty (data) {
+      dispatch({
+        type: 'order/getCounty',
+        payload: data,
+      })
+    },
+    getParcelType (data) {
+      dispatch({
+        type: 'order/getParcelType',
+        payload: data,
+      })
+    },
+    getProductType (data) {
+      dispatch({
+        type: 'order/getProductType',
+        payload: data,
+      })
+    },
+    getIntlPrice (data) {
+      dispatch({
+        type: 'order/getIntlPrice',
+        payload: data
+      })
+    },
     onOk (data) {
       dispatch({
-        type: 'order/addOrder',
+        type: 'order/create',
         payload: data,
       })
     },
@@ -203,6 +286,9 @@ const Order = ({ location, dispatch, order, loading }) => {
       }))
     },
     onAdd () {
+      dispatch({type: 'order/getCountry'})
+      dispatch({type: 'order/getProvince'})
+      dispatch({type: 'order/getWeChatUser'})
       dispatch({
         type: 'order/showAddModal',
         payload: {

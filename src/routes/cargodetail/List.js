@@ -135,17 +135,17 @@ const List = ({ filter, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, fi
       title: '包裹长度',
       dataIndex: 'length',
       key: 'length',
-      render: (text) => <span>{text ? text + 'cm': '未称重'}</span>,
+      render: (text) => <span>{text ? text + 'cm': '未测量'}</span>,
     }, {
       title: '包裹宽度',
       dataIndex: 'width',
       key: 'width',
-      render: (text) => <span>{text ? text + 'cm': '未称重'}</span>,
+      render: (text) => <span>{text ? text + 'cm': '未测量'}</span>,
     }, {
       title: '包裹高度',
       dataIndex: 'height',
       key: 'height',
-      render: (text) => <span>{text ? text + 'cm': '未称重'}</span>,
+      render: (text) => <span>{text ? text + 'cm': '未测量'}</span>,
     }, {
       title: '包裹重量',
       dataIndex: 'weight',
@@ -155,19 +155,16 @@ const List = ({ filter, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, fi
       title: '订单状态',
       dataIndex: 'status',
       key: 'status',
-      filters: [
-        { text: '待付款', value: 1 },
-        { text: '付款完成', value: 2 },
-        { text: '国内完成', value: 3 },
-        { text: '国际完成', value: 4 },
-        { text: '异常订单', value: 5 },
-        { text: '取消订单', value: 6 },
-        { text: '未到件', value: 7 },
-        { text: '已到件', value: 8 },
-      ],
-      filterMultiple: false,
-      render: (text) => {
-        return <span style={{color: realColor[text]}}>{realtext[text]}</span>
+      render: (text,record) => {
+        const realText = {
+          0: '未到件',
+          1: '已到件'
+        }
+        if (record.parentId < 0) {
+          return <span style={{color: realColor[text]}}>{realtext[text]}</span>
+        }else{
+          return <span style={{color: realColor[text]}}>{realText[record.cargoStatus]}</span>
+        }
       },
     }, {
       title: '下单时间',
@@ -184,10 +181,12 @@ const List = ({ filter, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, fi
       render: (text, record) => {
         if (record.parentId < 0) {
           return <span>仅子订单有到件时间</span>
-        }else if (record.status === '7') {
+        }else if (Number(record.status) !== 8) {
           return <span>订单尚未到达中转站</span>
-        }else{
+        }else if (Number(record.status) === 8){
           return <span>{time.rebuildTime(text)}</span>
+        }else{
+          return <span>订单尚未到达中转站</span>
         }
       }
     }, {
@@ -198,7 +197,7 @@ const List = ({ filter, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, fi
         if (record.parentId === 0) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '到件处理' }, { key: '2', name: '删除订单' }]} />
         } else if (record.parentId < 0) {
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '4', name: '国际段信息' }, { key: '6', name: '称重' }, { key: '1', name: '确定运费' }]} />
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '4', name: '国际段信息' }, { key: '6', name: '测量称重' }, { key: '1', name: '包裹定价' }]} />
         } else if (record.parentId > 0) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '撤销合单' }, { key: '2', name: '删除订单' }]} />
         }

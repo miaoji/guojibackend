@@ -66,12 +66,12 @@ export default modelExtend(pageModel, {
         payload.batch = window.sessionStorage.cargoBatch
       }
       const data = yield call(query, payload)
-      if (data.code === 200 && data.success && data.obj) {
+      if (data.code === 200 && data.obj) {
         for (let i = 0; i < data.obj.length; i++) {
           const item = data.obj[i]
-          if (item.orderInfoSubset.length) {
-            item.children = item.orderInfoSubset
-            delete item.orderInfoSubset
+          if (item.orderDetailList.length) {
+            item.children = item.orderDetailList
+            delete item.orderDetailList
           }else if (item.parentId === -1 || item.parentId === -2) {
             const data = yield call(remove, { ids: item.id })
             if (data.code===200&&data.success) {
@@ -198,15 +198,15 @@ export default modelExtend(pageModel, {
     // 到件处理
     *setStatus ({ payload }, { select, put, call }) {
       const realStates = {
-        未到件: 7,
-        已到件: 8,
+        未到件: 0,
+        已到件: 1,
       }
       const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
       const date = new Date()
       const newDate = date.getFullYear()+'-'+(date.getMonth() + 1)+'-'+date.getDate()
       const data = yield call(status, {
         id,
-        status: realStates[payload.status],
+        cargoStatus: realStates[payload.cargoStatus],
         confirmTime: newDate
       })
       if (data.code === 200 && data.success) {

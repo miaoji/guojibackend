@@ -14,7 +14,7 @@ export async function create (params) {
   return request({
     url: order.create,
     method: 'post',
-    params,
+    data: [params],
   })
 }
 
@@ -76,5 +76,14 @@ export async function queryByCompany (params) {
     url: order.queryByCompany,
     method: 'get',
     params,
+  })
+}
+
+// 根据传参查询预付款金额
+export async function getIntlPrice (params) {
+  return request({
+    url: order.getIntlPrice,
+    method: 'get',
+    params
   })
 }
