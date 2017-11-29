@@ -85,7 +85,7 @@ const modal = ({
                 message: '请选择快递公司名!',
               },
             ],
-          })(<Select showSearch placeholder="输入快递备注名可搜索" onFocus={handleFocus} defaultValue="dhlen" style={{ width: 286 }}>{selectKdCompany}</Select>)}
+          })(<Select showSearch placeholder="输入快递备注名可搜索" onFocus={handleFocus} style={{ width: 286 }}>{selectKdCompany}</Select>)}
         </FormItem>
         <FormItem label="国际段单号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('intlNo', {
