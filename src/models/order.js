@@ -207,7 +207,7 @@ export default modelExtend(pageModel, {
         if (data.obj) {
           for (let i = 0; i < data.obj.length; i++) {
             let item = data.obj[i]
-            children.push(<Option key={`${item.companyName}/-/${item.companyCode}`}>{item.companyName}</Option>)
+            children.push(<Option key={`${item.company_name}/-/${item.company_code}`}>{item.company_name}</Option>)
           }
         }
         yield put({
