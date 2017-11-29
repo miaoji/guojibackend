@@ -27,11 +27,6 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
         payload: data,
       })
     },
-    getKdCompany () {
-      dispatch({
-        type: 'cargo/getKdCompany',
-      })
-    },
     onCancel () {
       dispatch({
         type: 'cargo/hideModal',
@@ -40,9 +35,6 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
   }
 
   const listProps = {
-    filter: {
-      ...location.query,
-    },
     dataSource: list,
     loading: loading.effects['cargo/query'],
     pagination,
@@ -63,43 +55,6 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
         },
       }))
     },
-    onMarkItem (id) {
-      dispatch({
-        type: 'cargo/markBlackList',
-        payload: id,
-      })
-    },
-    onDeleteItem (id) {
-      dispatch({
-        type: 'cargo/delete',
-        payload: id,
-      })
-    },
-    onEditItem (item) {
-      dispatch({
-        type: 'cargo/showModal',
-        payload: {
-          modalType: 'update',
-          currentItem: item,
-        },
-      })
-    },
-    addBoot (item) {
-      dispatch({
-        type: 'cargo/showBootModal',
-        payload: {
-          currentItem: item,
-        },
-      })
-    },
-    showStateModal (item) {
-      dispatch({
-        type: 'cargo/showStateModal',
-        payload: {
-          currentItem: item,
-        },
-      })
-    }
   }
 
   const filterProps = {
@@ -117,7 +72,7 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
     },
     onAdd () {
       dispatch({
-        type: 'cargo/showAddModal',
+        type: 'cargo/showModal',
         payload: {
           modalType: 'create',
         },

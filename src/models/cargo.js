@@ -1,12 +1,10 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-// import { create, remove, update, markBlack, createChinaOrder, getKdCompany, } from '../services/order'
-// import { create as addBoot } from '../services/boot'
 import { query } from '../services/cargos'
+import { create } from '../services/order'
 import { pageModel } from './common'
 import { config, time } from '../utils'
 
-// const { query } = ordersService
 const { prefix } = config
 
 // 状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
@@ -29,7 +27,7 @@ export default modelExtend(pageModel, {
     bootModalVisible: false,
     stateModalVisible: false,
     selectedRowKeys: [],
-    isMotion: false,
+    isMotion: false
   },
 
   subscriptions: {

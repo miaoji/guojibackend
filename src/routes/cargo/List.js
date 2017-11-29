@@ -20,44 +20,8 @@ const realtext = {
   6: '取消订单',
 }
 
-const List = ({ filter, onDeleteItem, onEditItem, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
-  const handleMenuClick = (record, e) => {
-    switch (e.key) {
-      case '1':
-        onEditItem(record)
-        break
-      case '2':
-        confirm({
-          title: '确定要删除这一订单吗?',
-          onOk () {
-            onDeleteItem(record.ID)
-          },
-        })
-        break
-      case '3':
-        addBoot(record)
-        break
-      case '4':
-        window.open(`/bootdetail?orderNo=${record.ORDER_NO}`)
-        break
-      case '5':
-        showStateModal(record)
-        break
-      default:
-        break
-    }
-  }
-
-  const handleCreateZtorder = (record) => {
-    confirm({
-      title: '确定要发送中通订单吗?',
-      onOk () {
-        console.log('record', record)
-        onCreateCtorder(record)
-      },
-    })
-  }
-
+const List = ({ isMotion, location, ...tableProps }) => {
+  
   const columns = [
     {
       title: '客户编号',
@@ -107,10 +71,6 @@ const List = ({ filter, onDeleteItem, onEditItem, addBoot, showStateModal, isMot
 }
 
 List.propTypes = {
-  onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
-  addBoot: PropTypes.func,
-  showStateModal: PropTypes.func,
   isMotion: PropTypes.bool,
   location: PropTypes.object,
 }

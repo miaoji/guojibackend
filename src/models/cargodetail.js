@@ -207,7 +207,7 @@ export default modelExtend(pageModel, {
       }
       const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
       const date = new Date()
-      const newDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+      const newDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
       const data = yield call(status, {
         id,
         cargoStatus: realStates[payload.cargoStatus],
