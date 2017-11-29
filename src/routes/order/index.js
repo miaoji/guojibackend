@@ -106,6 +106,19 @@ const Order = ({ location, dispatch, order, loading }) => {
         payload: data
       })
     },
+    setInsuredVisiable (data) {
+      if (data === 0) {
+        dispatch({
+          type: 'order/showInsured'
+        })
+      }else if (data === 1) {
+        dispatch({
+          type: 'order/hideInsured'
+        })
+      }else{
+        return
+      }
+    },
     onOk (data) {
       dispatch({
         type: 'order/create',

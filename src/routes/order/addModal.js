@@ -39,6 +39,7 @@ const addModal = ({
   selectWeChatUser,
   getIntlPrice,
   intlPrice,
+  setInsuredVisiable,
   form: {
     getFieldDecorator,
     validateFields,
@@ -125,6 +126,11 @@ const countryChange = async function(e) {
     getIntlPrice(newdata)
   }
 
+  const insuredChange = function (e) {
+    console.log('e', e.target.value)
+    setInsuredVisiable(e.target.value)
+  }
+
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,
@@ -207,21 +213,23 @@ const countryChange = async function(e) {
                 message: '请输入是否保价!',
               },
             ],
-          })(<RadioGroup>
+          })(<RadioGroup onChange={insuredChange}>
               <Radio value={1}>是</Radio>
               <Radio value={0}>否</Radio>
             </RadioGroup>)}
         </FormItem>
-        <FormItem label="保价金额" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('insuredAmount', {
-            rules: [
-              {
-                required: false,
-                message: '请输入保价金额!',
-              },
-            ],
-          })(<Input placeholder="请输入保价金额!" />)}
-        </FormItem>
+        <div>
+          <FormItem label="保价金额" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('insuredAmount', {
+              rules: [
+                {
+                  required: false,
+                  message: '请输入保价金额!',
+                },
+              ],
+            })(<Input placeholder="请输入保价金额!" />)}
+          </FormItem>
+        </div>
         <hr className={classnames({[styles.hr]: true})}/>
         <FormItem label="寄件人姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderName', {

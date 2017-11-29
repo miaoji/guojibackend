@@ -25,7 +25,7 @@ module.exports = [
   }, {
     id: 32,
     bpid: 1,
-    mpid: 3,
+    mpid: -1,
     name: '集运批次管理',
     icon: 'tags',
     router: '/cargo',

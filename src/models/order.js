@@ -55,7 +55,9 @@ export default modelExtend(pageModel, {
     productDis: true,
 
     selectWeChatUser: [],
-    intlPrice: {}
+    intlPrice: {},
+
+    insuredVisiable: false,
   },
 
   subscriptions: {
@@ -460,6 +462,14 @@ export default modelExtend(pageModel, {
     hideStateModal (state) {
       return { ...state, stateModalVisible: false }
     },
+
+    showInsured (state) {
+      return { ...state, insuredVisiable: true }
+    },
+
+    hideInsured (state) {
+      return { ...state, insuredVisiable: false }
+    }
 
   },
 })

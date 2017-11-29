@@ -48,7 +48,7 @@ const bootModal = ({
       <Form layout="horizontal">
         <FormItem label="订单号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderNo', {
-            initialValue: item.orderNo,
+            initialValue: item.ORDER_NO,
             rules: [
               {
                 required: true,
