@@ -43,9 +43,9 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       if (payload.countryCode) {
-        window.sessionStorage.countryCode=payload.countryCode
+        window.sessionStorage.countryCode = payload.countryCode
       } else {
-        payload.countryCode=window.sessionStorage.countryCode
+        payload.countryCode = window.sessionStorage.countryCode
       }
       const data = yield call(query, payload)
       if (data.code == '200' || data.code == '500') {
@@ -146,7 +146,7 @@ export default modelExtend(pageModel, {
       storage({
         key: 'userIsMotion',
         val: !state.isMotion,
-        type: 'set'
+        type: 'set',
       })
       return { ...state, isMotion: !state.isMotion }
     },

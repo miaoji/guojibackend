@@ -23,7 +23,7 @@ const formItemLayout = {
 
 const realtext = {
   0: '未到件',
-  1: '已到件'
+  1: '已到件',
 }
 
 const stateModal = ({
@@ -57,9 +57,9 @@ const stateModal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="订单号" hasFeedback {...formItemLayout}>
+        <FormItem style={{ marginTop: '20px' }} label="订单号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderNo', {
-            initialValue: item.orderNo||item.cnNo||'暂无订单号',
+            initialValue: item.orderNo || item.cnNo || '暂无订单号',
             rules: [
               {
                 required: true,

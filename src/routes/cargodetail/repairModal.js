@@ -14,7 +14,7 @@ const formItemLayout = {
   },
 }
 
-const bootModal = ({
+const repairModal = ({
   item = {},
   onOk,
   form: {
@@ -56,9 +56,9 @@ const bootModal = ({
             ],
           })(<Input disabled />)}
         </FormItem>
-        <FormItem label="运费金额(元)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('totalFee', {
-            initialValue: item.totalFee / 100 || null,
+        <FormItem label="补价金额(元)" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('priceSpread', {
+            initialValue: item.priceSpread,
             rules: [
               {
                 required: true,
@@ -68,9 +68,9 @@ const bootModal = ({
             ],
           })(<Input placeholder="请输入运费金额" />)}
         </FormItem>
-        <FormItem label="备注信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('remark', {
-            initialValue: item.remark,
+        <FormItem label="补价原因" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('reason', {
+            initialValue: item.reason,
             rules: [
               {
                 required: true,
@@ -84,11 +84,11 @@ const bootModal = ({
   )
 }
 
-bootModal.propTypes = {
+repairModal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
 }
 
-export default Form.create()(bootModal)
+export default Form.create()(repairModal)

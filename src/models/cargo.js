@@ -49,7 +49,6 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      console.log('dataaa', data)
       if (data.code === 200) {
         for (let item in data.obj) {
           data.obj[item].CREATE_TIME = time.formatTime(data.obj[item].CREATE_TIME)

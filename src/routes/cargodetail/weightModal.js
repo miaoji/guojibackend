@@ -46,7 +46,7 @@ const weightModal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="包裹长度(cm)" hasFeedback {...formItemLayout}>
+        <FormItem style={{ marginTop: '20px' }} label="包裹长度(cm)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('length', {
             initialValue: item.length,
             rules: [

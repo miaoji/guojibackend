@@ -146,20 +146,20 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
-            <p>订单号:            {record.ORDER_NO}</p>
-            <p>国内段订单号:            {record.CN_NO}</p>
-            <p>国际段订单号:            {record.INTL_NO}</p>
-            <p>寄件人:            {record.SENDER_NAME}</p>
-            <p>收件人:            {record.RECEIVER_NAME}</p>
-            <p>收件人证件号:            {record.RECEIVER_ID}</p>
-            <p>预付总金额:            {record.TOTAL_FEE / 100}元</p>
-            <p>产品类型:            {record.PRODUCT_TYPE}</p>
-            <p>重量:            {record.WEIGHT}kg</p>
+            <p>订单号:                      {record.ORDER_NO}</p>
+            <p>国内段订单号:                      {record.CN_NO}</p>
+            <p>国际段订单号:                      {record.INTL_NO}</p>
+            <p>寄件人:                      {record.SENDER_NAME}</p>
+            <p>收件人:                      {record.RECEIVER_NAME}</p>
+            <p>收件人证件号:                      {record.RECEIVER_ID}</p>
+            <p>预付总金额:                      {record.TOTAL_FEE / 100}元</p>
+            <p>产品类型:                      {record.PRODUCT_TYPE}</p>
+            <p>重量:                      {record.WEIGHT}kg</p>
             <p>寄件地址: {record.SENDER_ADDRESS}</p>
             <p>中转地址: {record.TRANSFER_ADDRESS}</p>
             <p>收件地址: {record.RECEIVER_ADDRESS}</p>
-            <p>下单时间:            {record.CREATE_TIME}</p>
-            <p>订单状态:            {realtext[record.STATUS]}</p>
+            <p>下单时间:                      {record.CREATE_TIME}</p>
+            <p>订单状态:                      {realtext[record.STATUS]}</p>
           </div>
         }
         bordered

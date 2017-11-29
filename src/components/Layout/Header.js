@@ -51,7 +51,7 @@ const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
           }} title={< span > <Icon type="user" />
             {user.realName} < /span>}
           >
-            <Menu.Item key="logout" style={{textAlign:'center'}}>
+            <Menu.Item key="logout" style={{ textAlign: 'center' }}>
               登出
             </Menu.Item>
           </SubMenu>

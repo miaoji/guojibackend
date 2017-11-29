@@ -49,9 +49,9 @@ export default modelExtend(pageModel, {
 // 如果没有 则从 sessionStorage 获取
     *query ({ payload = {} }, { call, put }) {
       if (payload.cityCode) {
-        window.sessionStorage.cityCode=payload.cityCode
+        window.sessionStorage.cityCode = payload.cityCode
       } else {
-        payload.cityCode=window.sessionStorage.cityCode
+        payload.cityCode = window.sessionStorage.cityCode
       }
       const data = yield call(query, payload)
       if (data.code == '200' || data.code == '500') {

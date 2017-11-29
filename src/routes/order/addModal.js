@@ -40,11 +40,12 @@ const addModal = ({
   getIntlPrice,
   intlPrice,
   setInsuredVisiable,
+  insuredVisiable,
   form: {
     getFieldDecorator,
     validateFields,
     getFieldsValue,
-    setFieldsValue
+    setFieldsValue,
   },
   ...modalProps
 }) => {
@@ -61,27 +62,27 @@ const addModal = ({
     })
   }
 
-const countryChange = async function(e) {
+  const countryChange = async function(e) {
     await getProvince(e)
     setFieldsValue({
-      sendProv: null,
-      sendCity: null,
-      sendCounty: null,
+      sendProv: undefined,
+      sendCity: undefined,
+      sendCounty: undefined,
     })
   }
 
   const provinceChange = async function(e) {
     await getCity(e)
     setFieldsValue({
-      sendCity: null,
-      sendCounty: null,
+      sendCity: undefined,
+      sendCounty: undefined,
     })
   }
 
   const cityChange = async function(e) {
     await getCounty(e)
     setFieldsValue({
-      sendCounty: null,
+      sendCounty: undefined,
     })
   }
 
@@ -89,17 +90,17 @@ const countryChange = async function(e) {
     // 通过目的地查询包裹类型
     await getParcelType(data)
     setFieldsValue({
-      packageType: null,
-      productType: null,
+      packageType: undefined,
+      productType: undefined,
     })
   }
 
   const productChange = async function(data) {
     await getProductType(JSON.parse(data).id)
-    setFieldsValue({ productType: null })
+    setFieldsValue({ productType: undefined })
   }
 
-  const handleClick = function() {
+  const handleClick = function () {
     const data = getFieldsValue()
     if (!data.weight) {
       message.warn('您还没有填写包裹重量呢!!!')
@@ -129,6 +130,9 @@ const countryChange = async function(e) {
   const insuredChange = function (e) {
     console.log('e', e.target.value)
     setInsuredVisiable(e.target.value)
+    if (e.target.value === 0) {
+      setFieldsValue({ insuredAmount: undefined })
+    }
   }
 
   const modalOpts = {
@@ -139,7 +143,7 @@ const countryChange = async function(e) {
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem style={{marginTop: '6px'}} label="微信用户" hasFeedback {...formItemLayout}>
+        <FormItem style={{ marginTop: '6px' }} label="微信用户" hasFeedback {...formItemLayout}>
           {getFieldDecorator('wxUserId', {
             rules: [
               {
@@ -149,8 +153,8 @@ const countryChange = async function(e) {
             ],
           })(<Select showSearch placeholder="点击选择可按用户名和手机号码搜索">{selectWeChatUser}</Select>)}
         </FormItem>
-        <hr className={classnames({[styles.hr]: true})}/>
-        <FormItem label="包裹长度" hasFeedback {...formItemLayout}>
+        <hr className={classnames({ [styles.hr]: true })} />
+        <FormItem label="包裹长度(cm)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('length', {
             rules: [
               {
@@ -160,7 +164,7 @@ const countryChange = async function(e) {
             ],
           })(<Input placeholder="请输入包裹长度!" />)}
         </FormItem>
-        <FormItem label="包裹宽度" hasFeedback {...formItemLayout}>
+        <FormItem label="包裹宽度(cm)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('width', {
             rules: [
               {
@@ -170,7 +174,7 @@ const countryChange = async function(e) {
             ],
           })(<Input placeholder="请输入包裹宽度!" />)}
         </FormItem>
-        <FormItem label="包裹高度" hasFeedback {...formItemLayout}>
+        <FormItem label="包裹高度(cm)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('height', {
             rules: [
               {
@@ -180,7 +184,7 @@ const countryChange = async function(e) {
             ],
           })(<Input placeholder="请输入包裹高度!" />)}
         </FormItem>
-        <FormItem label="包裹重量" hasFeedback {...formItemLayout}>
+        <FormItem label="包裹重量(kg)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('weight', {
             rules: [
               {
@@ -192,7 +196,7 @@ const countryChange = async function(e) {
         </FormItem>
         <FormItem label="是否退件" hasFeedback {...formItemLayout}>
           {getFieldDecorator('returnGood', {
-            initialValue: 1,
+            initialValue: 0,
             rules: [
               {
                 required: false,
@@ -206,7 +210,7 @@ const countryChange = async function(e) {
         </FormItem>
         <FormItem label="是否保价" hasFeedback {...formItemLayout}>
           {getFieldDecorator('insured', {
-            initialValue: 1,
+            initialValue: 0,
             rules: [
               {
                 required: false,
@@ -218,7 +222,7 @@ const countryChange = async function(e) {
               <Radio value={0}>否</Radio>
             </RadioGroup>)}
         </FormItem>
-        <div>
+        <div className={classnames({ [styles.hide]: insuredVisiable })}>
           <FormItem label="保价金额" hasFeedback {...formItemLayout}>
             {getFieldDecorator('insuredAmount', {
               rules: [
@@ -230,7 +234,7 @@ const countryChange = async function(e) {
             })(<Input placeholder="请输入保价金额!" />)}
           </FormItem>
         </div>
-        <hr className={classnames({[styles.hr]: true})}/>
+        <hr className={classnames({ [styles.hr]: true })} />
         <FormItem label="寄件人姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderName', {
             rules: [
@@ -301,7 +305,7 @@ const countryChange = async function(e) {
             ],
           })(<Input placeholder="请输入寄件人邮编!" />)}
         </FormItem>
-        <hr className={classnames({[styles.hr]: true})}/>
+        <hr className={classnames({ [styles.hr]: true })} />
         <FormItem label="收件人姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverName', {
             rules: [
@@ -352,7 +356,7 @@ const countryChange = async function(e) {
             ],
           })(<Input placeholder="请输入收件人地址邮编!" />)}
         </FormItem>
-        <hr className={classnames({[styles.hr]: true})}/>
+        <hr className={classnames({ [styles.hr]: true })} />
         <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('packageType', {
             rules: [

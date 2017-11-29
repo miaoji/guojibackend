@@ -2,6 +2,7 @@ import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import { query, merge, cancel, freight, getOrderInfo, parentOrder } from '../services/cargodetails'
 import { remove, update as status, getKdCompany } from '../services/order'
+import { create as addBoot } from '../services/boot'
 import { pageModel } from './common'
 import { config, time, storage, queryURL } from '../utils'
 
@@ -38,8 +39,10 @@ export default modelExtend(pageModel, {
     selectedRowKeys: [],
     isMotion: false,
     list: [],
-    modalDis:true,
-    modalRadioDis:false,
+    modalDis: true,
+    modalRadioDis: false,
+    // 补价modal
+    repairModalVisible: false
   },
 
   subscriptions: {
@@ -62,7 +65,7 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       if (payload.batch) {
         window.sessionStorage.cargoBatch = payload.batch
-      }else{
+      } else {
         payload.batch = window.sessionStorage.cargoBatch
       }
       const data = yield call(query, payload)
@@ -72,14 +75,14 @@ export default modelExtend(pageModel, {
           if (item.orderDetailList.length) {
             item.children = item.orderDetailList
             delete item.orderDetailList
-          }else if (item.parentId === -1 || item.parentId === -2) {
+          } else if (item.parentId === -1 || item.parentId === -2) {
             const data = yield call(remove, { ids: item.id })
-            if (data.code===200&&data.success) {
-              console.log('删除订单----',data.msg)
+            if (data.code === 200 && data.success) {
+              console.log('删除订单----', data.msg)
               yield put({ type: 'query', payload: { batch: queryURL('batch') } })
-            }else{
-              console.log('删除订单失败----',data.msg)
-              console.log('错误代码----',data.code)
+            } else {
+              console.log('删除订单失败----', data.msg)
+              console.log('错误代码----', data.code)
             }
           }
         }
@@ -95,6 +98,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
+        if (data.msg === '暂未查询到信息') return
         throw data.msg || '无法跟服务器建立有效连接'
       }
     },
@@ -137,7 +141,7 @@ export default modelExtend(pageModel, {
         // type 1:集运订单 0:直邮订单
         type: 1,
         // parentId: 订单父级Id
-        parentId: payload.parentId
+        parentId: payload.parentId,
       }, ids)
       if (data.success) {
         yield put({ type: 'hideModal' })
@@ -150,13 +154,13 @@ export default modelExtend(pageModel, {
 
     // 撤销合单
     *setCancel ({ payload }, { put, call }) {
-      const parentData = yield call(getOrderInfo, {id: payload.parentId})
-      if (parentData.code===200&&parentData.success&&parentData.obj) {
-        if (parentData.obj.status>1) {
+      const parentData = yield call(getOrderInfo, { id: payload.parentId })
+      if (parentData.code === 200 && parentData.success && parentData.obj) {
+        if (parentData.obj.status > 1) {
           message.warn('已付款订单不允许撤销合单')
           return
         }
-      }else{
+      } else {
         throw parentData.msg || '无法跟服务器建立有效连接'
       }
       const data = yield call(cancel, {}, [payload.id])
@@ -203,11 +207,11 @@ export default modelExtend(pageModel, {
       }
       const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
       const date = new Date()
-      const newDate = date.getFullYear()+'-'+(date.getMonth() + 1)+'-'+date.getDate()
+      const newDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
       const data = yield call(status, {
         id,
         cargoStatus: realStates[payload.cargoStatus],
-        confirmTime: newDate
+        confirmTime: newDate,
       })
       if (data.code === 200 && data.success) {
         message.success('操作成功')
@@ -226,12 +230,31 @@ export default modelExtend(pageModel, {
         length: payload.length,
         width: payload.width,
         height: payload.height,
-        weight: payload.weight
+        weight: payload.weight,
       })
       if (data.code === 200 && data.success) {
         message.success('添加成功')
         yield put({ type: 'query', payload: { batch: queryURL('batch') } })
         yield put({ type: 'hideWeightModal' })
+      } else {
+        throw data.msg || '无法跟服务器建立有效连接'
+      }
+    },
+
+    // 补价
+    *setRepair ({ payload }, { select, put, call }) {
+      const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
+      const data = yield call(addBoot, {
+        priceSpread: Number(payload.priceSpread) * 100,
+        orderNo: payload.orderNo,
+        reason: payload.reason,
+        status: 1,
+        createUserId: JSON.parse(storage({ key: 'user' })).roleId,
+      })
+      if (data.code === 200 && data.success) {
+        message.success('添加成功')
+        yield put({ type: 'query', payload: { batch: queryURL('batch') } })
+        yield put({ type: 'hideRepairModal' })
       } else {
         throw data.msg || '无法跟服务器建立有效连接'
       }
@@ -266,7 +289,7 @@ export default modelExtend(pageModel, {
             let item = data.obj[i]
             children.push(<Option key={`${item.orderNo}/-/${item.id}`}>{item.orderNo}</Option>)
           }
-        }else{
+        } else {
           dis = true
           children.push(<Option key={'10'}>请选择其他方式合单</Option>)
         }
@@ -274,7 +297,7 @@ export default modelExtend(pageModel, {
           type: 'setParentOrder',
           payload: {
             selectParentOrder: children,
-            modalRadioDis: dis
+            modalRadioDis: dis,
           },
         })
       } else {
@@ -288,14 +311,14 @@ export default modelExtend(pageModel, {
         yield put({
           type: 'setParentOrder',
           payload: {
-            modalDis: false
+            modalDis: false,
           },
         })
       } else {
         yield put({
           type: 'setParentOrder',
           payload: {
-            modalDis: true
+            modalDis: true,
           },
         })
       }
@@ -312,7 +335,6 @@ export default modelExtend(pageModel, {
             children.push(<Option key={`${item.companyName}/-/${item.companyCode}`}>{item.companyName}</Option>)
           }
         }
-        console.log('children', children)
         yield put({
           type: 'setKdCompany',
           payload: {
@@ -392,12 +414,21 @@ export default modelExtend(pageModel, {
       return { ...state, modifyModalVisible: false }
     },
 
+    // 补价
+    showRepairModal (state, { payload }) {
+      return { ...state, ...payload, repairModalVisible: true }
+    },
+
+    hideRepairModal (state) {
+      return { ...state, repairModalVisible: false }
+    },
+
     switchIsMotion (state) {
       // localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
       storage({
         key: 'userIsMotion',
         val: !state.isMotion,
-        type: 'set'
+        type: 'set',
       })
       return { ...state, isMotion: !state.isMotion }
     },

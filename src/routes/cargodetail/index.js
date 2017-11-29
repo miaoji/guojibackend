@@ -10,25 +10,27 @@ import BootModal from './bootModal'
 import StateModal from './stateModal'
 import WeightModal from './weightModal'
 import ModifyModal from './modifyModal'
+import RepairModal from './repairModal'
 import { queryURL, storage } from '../../utils'
 
 const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
-  const { 
-    list, 
-    modalDis, 
-    modalRadioDis, 
-    pagination, 
-    currentItem, 
-    modalVisible, 
-    modalType, 
-    isMotion, 
-    selectParentOrder, 
-    selectedRowKeys, 
+  const {
+    list,
+    modalDis,
+    modalRadioDis,
+    pagination,
+    currentItem,
+    modalVisible,
+    modalType,
+    isMotion,
+    selectParentOrder,
+    selectedRowKeys,
     selectKdCompany,
-    bootModalVisible, 
-    stateModalVisible, 
-    weightModalVisible, 
-    modifyModalVisible 
+    bootModalVisible,
+    stateModalVisible,
+    weightModalVisible,
+    modifyModalVisible,
+    repairModalVisible,
   } = cargodetail
 
   const { pageSize } = pagination
@@ -40,9 +42,9 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     confirmLoading: loading.effects['cargodetail/merge'],
     title: `${modalType === 'create' ? '创建消息' : '进行集运合包'}`,
     wrapClassName: 'vertical-center-modal',
-    selectParentOrder: selectParentOrder,
-    modalDis: modalDis,
-    modalRadioDis: modalRadioDis,
+    selectParentOrder,
+    modalDis,
+    modalRadioDis,
     onOk (data) {
       dispatch({
         type: 'cargodetail/mergeOrder',
@@ -58,9 +60,9 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       console.log('state', state)
       dispatch({
         type: 'cargodetail/setMergeSelectState',
-        payload: state
+        payload: state,
       })
-    }
+    },
   }
 
   const bootModalProps = {
@@ -121,6 +123,24 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     },
   }
 
+  const repairModalProps = {
+    item: currentItem,
+    visible: repairModalVisible,
+    maskClosable: false,
+    confirmLoading: loading.effects['cargodetail/setRepair'],
+    title: '核实包裹重量及包裹的长宽高',
+    wrapClassName: 'vertical-center-modal',
+    onOk (data) {
+      dispatch({
+        type: 'cargodetail/setRepair',
+        payload: data,
+      })
+    },
+    onCancel () {
+      dispatch({ type: 'cargodetail/hideRepairModal' })
+    },
+  }
+
   const modifyModalProps = {
     item: currentItem,
     visible: modifyModalVisible,
@@ -128,7 +148,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     confirmLoading: loading.effects['cargodetail/setIntlNo'],
     title: '添加国际段快递信息',
     wrapClassName: 'vertical-center-modal',
-    selectKdCompany: selectKdCompany,
+    selectKdCompany,
     onOk (data) {
       dispatch({
         type: 'cargodetail/setIntlNo',
@@ -137,7 +157,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     },
     onCancel () {
       dispatch({ type: 'cargodetail/hideModifyModal' })
-    }
+    },
   }
 
   const listProps = {
@@ -153,14 +173,17 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         query: {
           ...query,
           page: page.current,
-          pageSize: page.pageSize
-        }
+          pageSize: page.pageSize,
+        },
       }))
+    },
+    onRowClick (data) {
+      console.log('dadata',data)
     },
     onSetCancel (data) {
       dispatch({
         type: 'cargodetail/setCancel',
-        payload: data
+        payload: data,
       })
     },
     onSetFreight (item) {
@@ -168,34 +191,42 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       dispatch({
         type: 'cargodetail/showBootModal',
         payload: {
-          currentItem: item
-        }
+          currentItem: item,
+        },
       })
     },
     onSetStatus (item) {
       dispatch({
         type: 'cargodetail/showStateModal',
         payload: {
-          currentItem: item
-        }
+          currentItem: item,
+        },
       })
     },
     onSetWeight (item) {
       dispatch({
         type: 'cargodetail/showWeightModal',
         payload: {
-          currentItem: item
-        }
+          currentItem: item,
+        },
       })
     },
     onModifyOrder (item) {
       dispatch({
         type: 'cargodetail/showModifyModal',
         payload: {
+          currentItem: item,
+        },
+      })
+      dispatch({ type: 'cargodetail/getKdCompany' })
+    },
+    onSetRepair (item) {
+      dispatch({
+        type: 'cargodetail/showRepairModal',
+        payload: {
           currentItem: item
         }
       })
-      dispatch({ type: 'cargodetail/getKdCompany' })
     },
     onDeleteItem (id) {
       dispatch({
@@ -215,7 +246,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         })
       },
       getCheckboxProps: record => ({
-        disabled: record.parentId !== 0 || record.status === 7,
+        disabled: record.parentId !== 0 || record.cargoStatus === 0,
       }),
       onSelect: (record, selected, selectedRows) => {
         console.log(record, selected, selectedRows)
@@ -261,7 +292,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
           currentItem: { ids: selectedRowKeys },
         },
       })
-      dispatch({type:'cargodetail/getParentOrder'})
+      dispatch({ type: 'cargodetail/getParentOrder' })
     },
     onAdd () {
       dispatch({
@@ -295,6 +326,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       {stateModalVisible && <StateModal {...stateModalProps} />}
       {weightModalVisible && <WeightModal {...weightModalProps} />}
       {modifyModalVisible && <ModifyModal {...modifyModalProps} />}
+      {repairModalVisible && <RepairModal {...repairModalProps} />}
     </div>
   )
 }

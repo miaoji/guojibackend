@@ -156,7 +156,7 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      const createUserId = JSON.parse(storage({key: 'user'})).roleId
+      const createUserId = JSON.parse(storage({ key: 'user' })).roleId
       const productCode = Math.floor(Math.random() * 600000)
       const newWxUser = { ...payload, createUserId, productCode }
 
@@ -181,7 +181,7 @@ export default modelExtend(pageModel, {
       if (payload.packageType == NAME_CN) {
         payload.packageType = PACKAGE_TYPE
       }
-      const createUserId = JSON.parse(storage({key: 'user'})).roleId
+      const createUserId = JSON.parse(storage({ key: 'user' })).roleId
       const productCode = yield select(({ product }) => product.currentItem.PRODUCT_CODE)
       const newWxUser = { ...payload, id, createUserId, productCode }
       const data = yield call(update, newWxUser)

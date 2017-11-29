@@ -32,7 +32,7 @@ const realColor = {
   8: '#008229',
 }
 // 包裹状态: 0 还没有合单, -1 普货, -2特货
-const List = ({ filter, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, filterStatus, onDeleteItem, onSetFreight, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
+const List = ({ filter, onSetRepair, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, filterStatus, onDeleteItem, onSetFreight, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       // 确定运费
@@ -77,6 +77,12 @@ const List = ({ filter, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, fi
       case '6':
         onSetWeight(record)
         break
+      case '7':
+        onSetRepair(record)
+        break
+      case '8':
+        window.open(`/bootdetail?orderNo=${record.orderNo}`)
+        break
       default:
         break
     }
@@ -99,11 +105,10 @@ const List = ({ filter, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, fi
       render: (text, record) => {
         if (text) {
           return <Link to={`/cargodetailInfo?orderNo=${record.orderNo}`}>{text}</Link>
-        } else {
-          const newText = record.cnNo || '暂无订单号'
-          return <span>{ newText }</span>
         }
-      }
+        const newText = record.cnNo || '暂无订单号'
+        return <span>{newText}</span>
+      },
     }, {
       title: '收件人',
       dataIndex: 'receiverName',
@@ -135,36 +140,35 @@ const List = ({ filter, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, fi
       title: '包裹长度',
       dataIndex: 'length',
       key: 'length',
-      render: (text) => <span>{text ? text + 'cm': '未测量'}</span>,
+      render: (text) => <span>{text ? `${text}cm` : '未测量'}</span>,
     }, {
       title: '包裹宽度',
       dataIndex: 'width',
       key: 'width',
-      render: (text) => <span>{text ? text + 'cm': '未测量'}</span>,
+      render: (text) => <span>{text ? `${text}cm` : '未测量'}</span>,
     }, {
       title: '包裹高度',
       dataIndex: 'height',
       key: 'height',
-      render: (text) => <span>{text ? text + 'cm': '未测量'}</span>,
+      render: (text) => <span>{text ? `${text}cm` : '未测量'}</span>,
     }, {
       title: '包裹重量',
       dataIndex: 'weight',
       key: 'weight',
-      render: (text) => <span>{text ? text + 'kg': '未称重'}</span>,
+      render: (text) => <span>{text ? `${text}kg` : '未称重'}</span>,
     }, {
       title: '订单状态',
       dataIndex: 'status',
       key: 'status',
-      render: (text,record) => {
-        const realText = {
+      render: (text, record) => {
+        const realTexts = {
           0: '未到件',
-          1: '已到件'
+          1: '已到件',
         }
         if (record.parentId < 0) {
-          return <span style={{color: realColor[text]}}>{realtext[text]}</span>
-        }else{
-          return <span style={{color: realColor[text]}}>{realText[record.cargoStatus]}</span>
+          return <span style={{ color: realColor[text] }}>{realtext[text]}</span>
         }
+        return <span style={{ color: realColor[text] }}>{realTexts[record.cargoStatus]}</span>
       },
     }, {
       title: '下单时间',
@@ -180,15 +184,28 @@ const List = ({ filter, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, fi
       key: 'confirmTime',
       render: (text, record) => {
         if (record.parentId < 0) {
-          return <span>仅子订单有到件时间</span>
-        }else if (Number(record.status) !== 8) {
-          return <span>订单尚未到达中转站</span>
-        }else if (Number(record.status) === 8){
+          return <span>请查看子订单</span>
+        } else if (Number(record.cargoStatus) === 1) {
           return <span>{time.rebuildTime(text)}</span>
-        }else{
-          return <span>订单尚未到达中转站</span>
         }
-      }
+        return <span>暂无</span>
+      },
+    }, {
+      title: '仓管费',
+      dataIndex: 'cost',
+      key: 'cost',
+      render: (text, record) => {
+        if (!record.confirmTime) {
+          return <span>0 元</span>
+        }
+        let time = new Date().getTime() - Number(record.confirmTime)
+        if (time <= 1814400000) {
+          return <span>0 元</span>
+        } else {
+          let cost = Math.ceil((time-1814400000)/86400000)
+          return <span>{cost} 元</span>
+        }
+      },
     }, {
       title: '操作',
       key: 'operation',
@@ -197,7 +214,7 @@ const List = ({ filter, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, fi
         if (record.parentId === 0) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '到件处理' }, { key: '2', name: '删除订单' }]} />
         } else if (record.parentId < 0) {
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '4', name: '国际段信息' }, { key: '6', name: '测量称重' }, { key: '1', name: '包裹定价' }]} />
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '4', name: '国际段信息' }, { key: '6', name: '测量称重' }, { key: '1', name: '包裹定价' }, { key: '7', name: '补价处理' }, { key: '8', name: '补价记录' }]} />
         } else if (record.parentId > 0) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '撤销合单' }, { key: '2', name: '删除订单' }]} />
         }

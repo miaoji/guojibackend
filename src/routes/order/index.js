@@ -11,17 +11,17 @@ import AddModal from './addModal'
 import StateModal from './stateModal'
 
 const Order = ({ location, dispatch, order, loading }) => {
-  const { 
-    list, 
-    pagination, 
-    currentItem, 
-    addModalVisible, 
-    stateModalVisible, 
-    modalVisible, 
-    bootModalVisible, 
-    modalType, 
-    isMotion, 
-    selectedRowKeys, 
+  const {
+    list,
+    pagination,
+    currentItem,
+    addModalVisible,
+    stateModalVisible,
+    modalVisible,
+    bootModalVisible,
+    modalType,
+    isMotion,
+    selectedRowKeys,
     selectKdCompany,
     selectNation,
     selectProvince,
@@ -37,7 +37,8 @@ const Order = ({ location, dispatch, order, loading }) => {
     productDis,
 
     selectWeChatUser,
-    intlPrice
+    intlPrice,
+    insuredVisiable,
   } = order
   const { pageSize } = pagination
 
@@ -62,9 +63,10 @@ const Order = ({ location, dispatch, order, loading }) => {
     selectProductType,
     parcelDis,
     productDis,
-    
+
     selectWeChatUser,
     intlPrice,
+    insuredVisiable,
     getCountry (data) {
       dispatch({
         type: 'order/getCountry',
@@ -103,19 +105,19 @@ const Order = ({ location, dispatch, order, loading }) => {
     getIntlPrice (data) {
       dispatch({
         type: 'order/getIntlPrice',
-        payload: data
+        payload: data,
       })
     },
     setInsuredVisiable (data) {
       if (data === 0) {
         dispatch({
-          type: 'order/showInsured'
+          type: 'order/showInsured',
         })
-      }else if (data === 1) {
+      } else if (data === 1) {
         dispatch({
-          type: 'order/hideInsured'
+          type: 'order/hideInsured',
         })
-      }else{
+      } else {
         return
       }
     },
@@ -139,12 +141,12 @@ const Order = ({ location, dispatch, order, loading }) => {
     visible: modalVisible,
     maskClosable: true,
     confirmLoading: loading.effects['order/update'],
-    title: `添加国际段快递信息`,
+    title: '添加国际段快递信息',
     wrapClassName: 'vertical-center-modal',
     selectKdCompany,
     onOk (data) {
       dispatch({
-        type: `order/update`,
+        type: 'order/update',
         payload: data,
       })
     },
@@ -299,9 +301,9 @@ const Order = ({ location, dispatch, order, loading }) => {
       }))
     },
     onAdd () {
-      dispatch({type: 'order/getCountry'})
-      dispatch({type: 'order/getProvince'})
-      dispatch({type: 'order/getWeChatUser'})
+      dispatch({ type: 'order/getCountry' })
+      dispatch({ type: 'order/getProvince' })
+      dispatch({ type: 'order/getWeChatUser' })
       dispatch({
         type: 'order/showAddModal',
         payload: {

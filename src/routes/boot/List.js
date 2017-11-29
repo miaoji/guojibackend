@@ -32,23 +32,19 @@ const List = ({ isMotion, location, ...tableProps }) => {
       title: '收件人手机',
       dataIndex: 'receiver_mobile',
       key: 'receiver_mobile',
-    }, /* {
-      title: '产品类型',
-      dataIndex: 'type',
-      key: 'type',
-    }, */{
+    },{
       title: '重量',
       dataIndex: 'weight',
       key: 'weight',
       render: (text) => {
-        return <span>{text}kg</span>
+        return <span>{text?text:0}kg</span>
       },
     }, {
       title: '体积重',
       dataIndex: 'v',
       key: 'v',
       render: (text) => {
-        return <span>{text}cm³</span>
+        return <span>{text?text:0}kg</span>
       },
     }, {
       title: '补价次数',
@@ -61,7 +57,18 @@ const List = ({ isMotion, location, ...tableProps }) => {
       render: (text) => {
         return <span>￥{text ? text / 100 : 0}</span>
       },
-    }, {
+    },{
+      title: '包裹类型',
+      dataIndex: 'type',
+      key: 'type',
+      render: (text) => {
+        const realText = {
+          0: '直邮订单',
+          1: '集运订单'
+        }
+        return <span>{realText[text]}</span>
+      }
+    },{
       title: '操作',
       key: 'operation',
       width: 100,

@@ -7,7 +7,7 @@ const DropOption = ({ onMenuClick, menuOptions = [], buttonStyle, dropdownProps 
   return (
   <Dropdown placement="bottomCenter" trigger={['click']} {...dropdownProps}
     overlay={
-      <Menu onClick={onMenuClick} style={{textAlign:"center"}}>{menu}</Menu>
+      <Menu onClick={onMenuClick} style={{ textAlign: 'center' }}>{menu}</Menu>
     }
   >
     <Button style={{ border: 'none', ...buttonStyle }}>

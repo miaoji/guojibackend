@@ -141,9 +141,9 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         bordered
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
-            <p>openid:            {record.OPENID}</p>
-            <p>手机号:            {record.MOBILE ? `${record.MOBILE.toString().substr(0, 3)}***${record.MOBILE.toString().substr(7, 10)}` : '未绑定手机号'}</p>
-            <p>证件号:            {record.ID_CARD ? record.ID_CARD : '未绑定证件号'}</p>
+            <p>openid:                      {record.OPENID}</p>
+            <p>手机号:                      {record.MOBILE ? `${record.MOBILE.toString().substr(0, 3)}***${record.MOBILE.toString().substr(7, 10)}` : '未绑定手机号'}</p>
+            <p>证件号:                      {record.ID_CARD ? record.ID_CARD : '未绑定证件号'}</p>
           </div>
         }
         scroll={{ x: 1250 }}

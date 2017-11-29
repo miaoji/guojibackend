@@ -48,14 +48,15 @@ const Detail = ({ orderDetail }) => {
 
           <div className={styles.titleItem}>发件人信息:</div>
           <span>发件人姓名: {data.senderName ? data.senderName : '暂无'}</span>
-          <span>发件人公司: {data.senderCompany ? data.senderCompany : '暂无'}</span>
-          <span>发件人电话: {data.senderMobile ? data.senderMobile : '暂无'}</span>
-          <span>发件人国家: {data.senderCountry ? data.senderCountry : '暂无'}</span>
           <span>发件人省份: {data.senderProv ? data.senderProv : '暂无'}</span>
-          <span>发件人城市: {data.senderCity ? data.senderCity : '暂无'}</span>
-          <span>发件人地址: {data.senderAddress ? data.senderAddress : '暂无'}</span>
           <span>发件地址邮编: {data.senderPostcode ? data.senderPostcode : '暂无'}</span>
-          
+          <span>发件人国家: {data.senderCountry ? data.senderCountry : '暂无'}</span>
+          <span>发件人城市: {data.senderCity ? data.senderCity : '暂无'}</span>
+          <span>发件人电话: {data.senderMobile ? data.senderMobile : '暂无'}</span>
+          <span>发件人公司: {data.senderCompany ? data.senderCompany : '暂无'}</span>
+          <span>发件人县区: {data.senderCounty ? data.senderCounty : '暂无'}</span>
+          <span>发件人地址: {data.senderAddress ? data.senderAddress : '暂无'}</span>
+
           <div className={styles.titleItem}>中转地址信息:</div>
           <span>中转地址名称: {data.transferName ? data.transferName : '暂无'}</span>
           <span>中转地址公司: {data.transferCompany ? data.transferCompany : '暂无'}</span>
@@ -82,16 +83,16 @@ const Detail = ({ orderDetail }) => {
           <span>保费: {data.insuredPrice === 0 ? '无' : `${data.insuredPrice}元`}</span>
 
         <div className={styles.title}>包裹详情:</div>
-          <span>包裹重量: {data.weight ? data.weight + 'kg' : '包裹暂未称重'}</span>
+          <span>包裹重量: {data.weight ? `${data.weight}kg` : '包裹暂未称重'}</span>
           <span>中文名称: {orderItemList.nameCn ? orderItemList.nameCn : '暂无'}</span>
           <span>英文名称: {orderItemList.nameEn ? orderItemList.nameEn : '暂无'}</span>
-          <span>包裹长度: {data.length ? data.length + 'cm' : '包裹暂未测量'}</span>
+          <span>包裹长度: {data.length ? `${data.length}cm` : '包裹暂未测量'}</span>
           <span>单价: {orderItemList.unitPrice ? orderItemList.unitPrice : '暂无'}</span>
           <span>数量: {orderItemList.quantity ? orderItemList.quantity : '暂无'}</span>
-          <span>包裹宽度: {data.width ? data.width + 'cm' : '包裹暂未测量'}</span>
+          <span>包裹宽度: {data.width ? `${data.width}cm` : '包裹暂未测量'}</span>
           <span>价值: {orderItemList.worth ? orderItemList.worth : '暂无'}</span>
           <span>海关编号: {orderItemList.hscode ? orderItemList.hscode : '暂无'}</span>
-          <span>包裹高度: {data.height ? data.height + 'cm' : '包裹暂未测量'}</span>
+          <span>包裹高度: {data.height ? `${data.height}cm` : '包裹暂未测量'}</span>
 
         <div className={styles.title}>微信详情:</div>
           <span>用户昵称: {wxUser.nickName ? wxUser.nickName : '暂无'}</span>

@@ -5,11 +5,11 @@ let APIV3 = ''
 // 重构API
 // 线下地址
 // APIV3 = 'http://169.254.191.166:8077'
-// APIV3 = 'http://192.168.0.231:8077'
+APIV3 = 'http://192.168.0.231:8077'
 // 线上地址(测试)
 // APIV3 = 'http://api.didalive.net/mzkd'
 // 正式地址(生产)
-APIV3 = 'http://api.mingz-tech.com'
+// APIV3 = 'http://api.mingz-tech.com'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -100,13 +100,13 @@ module.exports = {
       update: `${APIV3}/api/intlPrice/modIntlPriceById`,
       hide: `${APIV3}/api/intlPrice/delIntlPriceById`,
     },
-    	// 国家api
+    // 国家api
     country: {
-		  show: `${APIV3}/api/country/index`,
-		  create: `${APIV3}/api/country/add`,
-		  update: `${APIV3}/api/country/modCountryById`,
-		  hide: `${APIV3}/api/country/delCountryById`,
-		  getCountryId: `${APIV3}/api/country/getCountryIdByName`, // 通过国家名称获取国家id
+      show: `${APIV3}/api/country/index`,
+      create: `${APIV3}/api/country/add`,
+      update: `${APIV3}/api/country/modCountryById`,
+      hide: `${APIV3}/api/country/delCountryById`,
+      getCountryId: `${APIV3}/api/country/getCountryIdByName`, // 通过国家名称获取国家id
     },
 		// 省份/州api
     province: {
@@ -131,19 +131,19 @@ module.exports = {
     },
 		// 二维码推广接口
     qr: {
-	      all: `${APIV3}/api/qr/getQrAll`,
-	      show: `${APIV3}/wx/selectQrById`,
-	      create: `${APIV3}/api/qr/createQr`,
-	      update: `${APIV3}/api/qr/modWxQrById`,
-	      del: `${APIV3}/api/qr/delWxQrById`,
+      all: `${APIV3}/api/qr/getQrAll`,
+      show: `${APIV3}/wx/selectQrById`,
+      create: `${APIV3}/api/qr/createQr`,
+      update: `${APIV3}/api/qr/modWxQrById`,
+      del: `${APIV3}/api/qr/delWxQrById`,
     },
 		// app推广接口
     extensionapp: {
 		  all: `${APIV3}/api/app/index`,
-	      show: `${APIV3}/api/app/getWxAppById`,
-	      create: `${APIV3}/api/app/add`,
-	      update: `${APIV3}/api/app/modWxAppById`,
-	      hide: `${APIV3}/api/app/delById`,
+      show: `${APIV3}/api/app/getWxAppById`,
+      create: `${APIV3}/api/app/add`,
+      update: `${APIV3}/api/app/modWxAppById`,
+      hide: `${APIV3}/api/app/delById`,
     },
 		// 微信回复配置
     wxconfig: {
@@ -173,6 +173,6 @@ module.exports = {
       merge: `${APIV3}/api/orderInfo/mergeCargo`, // 合并订单
       cancel: `${APIV3}/api/orderInfo/cancelMergeCargo`, // 撤销合并订单
       setFreight: `${APIV3}/api/orderInfo/sendPayRemindMsg`, // 设置集运运费价格
-    },
-  },
+    }
+  }
 }

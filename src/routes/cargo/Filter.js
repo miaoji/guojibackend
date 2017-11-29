@@ -28,7 +28,6 @@ const TwoColProps = {
 const Filter = ({
   onAdd,
   isMotion,
-  switchIsMotion,
   onFilterChange,
   filter,
   form: {
@@ -116,10 +115,10 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('orderNo', { initialValue: orderNo })(<Search placeholder="按订单号搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('orderNo', { initialValue: orderNo })(<Search placeholder="按客户编号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
-        <FilterItem label="创建时间">
+        <FilterItem label="时间筛选">
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
             <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
           )}
@@ -131,8 +130,8 @@ const Filter = ({
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
-          <div style={{ display: 'none' }}>
-            <Button size="large" type="ghost" onClick={onAdd}>创建</Button>
+          <div style={{ display: 'block' }}>
+            <Button size="large" type="ghost" onClick={onAdd}>创建订单</Button>
           </div>
         </div>
       </Col>
@@ -143,7 +142,6 @@ const Filter = ({
 Filter.propTypes = {
   onAdd: PropTypes.func,
   isMotion: PropTypes.bool,
-  switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,

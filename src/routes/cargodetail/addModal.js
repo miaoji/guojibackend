@@ -46,7 +46,7 @@ const addModal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="张三" hasFeedback {...formItemLayout}>
+        <FormItem style={{ marginTop: '20px' }} label="张三" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderNo', {
             initialValue: item.ORDER_NO,
             rules: [

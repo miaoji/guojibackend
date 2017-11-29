@@ -127,7 +127,6 @@ export default modelExtend(pageModel, {
     },
 
     *getProductType ({ payload = {} }, { select, call, put }) {
-      console.log('packagid', payload)
       const packageType = { packageTypeId: payload }
       let currentItem = yield select(({ freight }) => freight.currentItem)
       const data = yield call(producttypeQuery, packageType)
@@ -155,7 +154,6 @@ export default modelExtend(pageModel, {
     },
 
     *'delete' ({ payload }, { call, put, select }) {
-      console.log('payload', payload)
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success) {
         message.success(data.msg)
@@ -188,9 +186,8 @@ export default modelExtend(pageModel, {
 
     *create ({ payload }, { call, put }) {
       const createTime = new Date().getTime()
-      const createUserId = JSON.parse(storage({key: 'user'})).roleId
+      const createUserId = JSON.parse(storage({ key: 'user' })).roleId
       let newFreight = { ...payload, createUserId }
-      console.log('newFreight1', newFreight)
       newFreight.packageType = JSON.parse(newFreight.packageType).id
       const countryId = yield call(getCountryId, { name: payload.destination.toString() })
       if (countryId.code === 200) {
@@ -199,7 +196,6 @@ export default modelExtend(pageModel, {
         throw '获取国家ID失败'
         return
       }
-      console.log('newFreight2222', newFreight)
       const data = yield call(create, newFreight)
       if (data.code == '200') {
         message.success(data.msg)
@@ -211,7 +207,7 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const createUserId = JSON.parse(storage({key: 'user'})).roleId
+      const createUserId = JSON.parse(storage({ key: 'user' })).roleId
       const id = yield select(({ freight }) => freight.currentItem.ID)// 运费id
       const destination = yield select(({ freight }) => freight.currentItem.country_cn)// 国家名称
       const packageType = yield select(({ freight }) => freight.currentItem.name_cn)// 包裹类型名称
@@ -242,9 +238,7 @@ export default modelExtend(pageModel, {
         payload.productType = PRODUCT_TYPE
       }
       let newFreight = { ...payload, id, createUserId }
-      console.log('newFreight222', newFreight)
       const data = yield call(update, newFreight)
-      console.log('data', data)
       if (data.code = '200') {
         message.success(data.msg)
         yield put({ type: 'hideModal' })

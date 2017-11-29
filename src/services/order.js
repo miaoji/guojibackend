@@ -84,6 +84,6 @@ export async function getIntlPrice (params) {
   return request({
     url: order.getIntlPrice,
     method: 'get',
-    params
+    params,
   })
 }

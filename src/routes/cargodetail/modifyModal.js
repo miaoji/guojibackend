@@ -63,7 +63,7 @@ const ModifyModal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="中转地址" hasFeedback {...formItemLayout}>
+        <FormItem style={{ marginTop: '20px' }} label="中转地址" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferAddress', {
             initialValue: item.transferAddress || '泰虹路168弄万科时一区1号楼302室',
             rules: [

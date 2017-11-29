@@ -48,7 +48,7 @@ export default modelExtend(pageModel, {
     provinceDis: true,
     cityDis: true,
     districtDis: true,
-    
+
     selectParcelType: [],
     selectProductType: [],
     parcelDis: true,
@@ -57,7 +57,7 @@ export default modelExtend(pageModel, {
     selectWeChatUser: [],
     intlPrice: {},
 
-    insuredVisiable: false,
+    insuredVisiable: true,
   },
 
   subscriptions: {
@@ -110,16 +110,20 @@ export default modelExtend(pageModel, {
     *create ({ payload }, { call, put }) {
       delete payload.packageType
       delete payload.productType
-      payload.wxUserId?payload.wxUserId=Number(payload.wxUserId.split('/--/')[0]):payload.wxUserId=undefined
-      payload.receiverCountry?payload.receiverCountry=JSON.parse(payload.receiverCountry).name:payload.receiverCountry=undefined
-      payload.senderProv?payload.senderProv=JSON.parse(payload.senderProv).id:payload.senderProv=undefined
-      payload.senderCity?payload.senderCity=JSON.parse(payload.senderCity).id:payload.senderCity=undefined
-      payload.height?payload.height=Number(payload.height):payload.height=undefined
-      payload.length?payload.length=Number(payload.length):payload.length=undefined
-      payload.weight?payload.weight=Number(payload.weight):payload.weight=undefined
-      payload.width?payload.width=Number(payload.width):payload.width=undefined
-      payload.senderCountry = "中国"
-      payload.totalFee = Number(payload.totalFee)*100 
+
+      payload.wxUserId ? payload.wxUserId = Number(payload.wxUserId.split('/--/')[0]) : payload.wxUserId = undefined
+      payload.receiverCountry ? payload.receiverCountry = JSON.parse(payload.receiverCountry).name : payload.receiverCountry = undefined
+      payload.senderProv ? payload.senderProv = JSON.parse(payload.senderProv).name : payload.senderProv = undefined
+      payload.senderCity ? payload.senderCity = JSON.parse(payload.senderCity).name : payload.senderCity = undefined
+      payload.senderCounty ? payload.senderCounty = JSON.parse(payload.senderCounty).name : payload.senderCounty = undefined
+
+      payload.height ? payload.height = Number(payload.height) : payload.height = undefined
+      payload.length ? payload.length = Number(payload.length) : payload.length = undefined
+      payload.weight ? payload.weight = Number(payload.weight) : payload.weight = undefined
+      payload.width ? payload.width = Number(payload.width) : payload.width = undefined
+
+      payload.senderCountry = '中国'
+      payload.totalFee = Number(payload.totalFee) * 100
       payload.type = 0
       payload.status = 1
       const data = yield call(create, payload)
@@ -151,7 +155,7 @@ export default modelExtend(pageModel, {
 
     *addBoot ({ payload }, { call, put }) {
       const other = {
-        createUserId: JSON.parse(storage({key: 'user'})).roleId,
+        createUserId: JSON.parse(storage({ key: 'user' })).roleId,
         status: 1,
       }
       const data = yield call(addBoot, {
@@ -165,7 +169,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'hideBootModal' })
         yield put({ type: 'query' })
       } else {
-        throw data.msg
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
@@ -207,7 +211,7 @@ export default modelExtend(pageModel, {
         if (data.obj) {
           for (let i = 0; i < data.obj.length; i++) {
             let item = data.obj[i]
-            children.push(<Option key={`${item.company_name}/-/${item.company_code}`}>{item.company_name}</Option>)
+            children.push(<Option key={`${item.companyName}/-/${item.companyCode}`}>{item.companyName}</Option>)
           }
         }
         yield put({
@@ -224,10 +228,8 @@ export default modelExtend(pageModel, {
     // 获取国家信息
     *getCountry ({ payload = {} }, { call, put }) {
       const data = yield call(getCountry)
-      console.log('datatas', data)
       if (data.code === 200) {
         delete data.obj[0]
-        console.log('ssss', data)
         let obj = data.obj
         let children = []
         if (data.obj) {
@@ -236,7 +238,7 @@ export default modelExtend(pageModel, {
             let str = {
               code: item.country_code,
               id: item.id,
-              name: item.country_cn
+              name: item.country_cn,
             }
             str = JSON.stringify(str)
             children.push(<Option key={str}>{item.country_cn}</Option>)
@@ -264,6 +266,7 @@ export default modelExtend(pageModel, {
             let str = {
               code: item.province_code,
               id: item.id,
+              name: item.province,
             }
             str = JSON.stringify(str)
             children.push(<Option key={str}>{item.province}</Option>)
@@ -273,7 +276,7 @@ export default modelExtend(pageModel, {
           type: 'setStates',
           payload: {
             selectProvince: children,
-            provinceDis: false
+            provinceDis: false,
           },
         })
       } else {
@@ -293,6 +296,7 @@ export default modelExtend(pageModel, {
             let str = {
               code: item.city_code,
               id: item.id,
+              name: item.city,
             }
             str = JSON.stringify(str)
             children.push(<Option key={str}>{item.city}</Option>)
@@ -302,7 +306,7 @@ export default modelExtend(pageModel, {
           type: 'setStates',
           payload: {
             selectCity: children,
-            cityDis: false
+            cityDis: false,
           },
         })
       } else {
@@ -319,21 +323,27 @@ export default modelExtend(pageModel, {
         if (data.obj) {
           for (let i = 0; i < data.obj.length; i++) {
             let item = data.obj[i]
-            children.push(<Option key={item.id}>{item.district}</Option>)
+            let str = {
+              code: item.district_code,
+              id: item.id,
+              name: item.district,
+            }
+            str = JSON.stringify(str)
+            children.push(<Option key={str}>{item.district}</Option>)
           }
         }
         yield put({
           type: 'setStates',
           payload: {
             selectCounty: children,
-            districtDis: false
+            districtDis: false,
           },
         })
       } else {
         throw data.msg
       }
     },
-    
+
     // 获取包裹类型
     *getParcelType ({ payload }, { select, call, put }) {
       const destNation = { countryId: JSON.parse(payload).id }
@@ -351,12 +361,11 @@ export default modelExtend(pageModel, {
             children.push(<Option key={str}>{item.name_cn}</Option>)
           }
         }
-        console.log('children', children)
         yield put({
           type: 'setStates',
           payload: {
             selectParcelType: children,
-            parcelDis: false
+            parcelDis: false,
           },
         })
       } else {
@@ -381,7 +390,7 @@ export default modelExtend(pageModel, {
           type: 'setStates',
           payload: {
             selectProductType: children,
-            productDis: false 
+            productDis: false,
           },
         })
       } else {
@@ -391,37 +400,36 @@ export default modelExtend(pageModel, {
 
     // 获取微信用户信息
     *getWeChatUser ({}, { select, call, put }) {
-      const data = yield call(quertWeChatUser,{page: 1,rows: 10000000})
-      console.log('wxdata',data)
+      const data = yield call(quertWeChatUser, { page: 1, rows: 10000000 })
       if (data.code === 200 && data.obj) {
         let obj = data.obj
         let children = []
         for (let i = 0; i < obj.length; i++) {
           let item = obj[i]
-          children.push(<Option key={item.ID+"/--/"+item.NICK_NAME+"/--/"+item.MOBILE}>{item.NICK_NAME}</Option>)
+          children.push(<Option key={`${item.ID}/--/${item.NICK_NAME}/--/${item.MOBILE}`}>{item.NICK_NAME}</Option>)
         }
         yield put({
           type: 'setStates',
           payload: {
-            selectWeChatUser: children
-          }
+            selectWeChatUser: children,
+          },
         })
       }
     },
 
     // 获取预付款信息
     *getIntlPrice ({ payload = {} }, { call, put }) {
-      const data = yield call(getIntlPrice,{...payload})
+      const data = yield call(getIntlPrice, { ...payload })
       if (data.code === 200 && data.obj) {
         const intlPrice = data.obj
         yield put({
           type: 'setStates',
           payload: {
-            intlPrice: intlPrice
-          }
+            intlPrice,
+          },
         })
       }
-    }
+    },
 
   },
 
@@ -469,7 +477,7 @@ export default modelExtend(pageModel, {
 
     hideInsured (state) {
       return { ...state, insuredVisiable: false }
-    }
+    },
 
   },
 })

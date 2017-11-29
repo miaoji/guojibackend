@@ -122,7 +122,7 @@ export default modelExtend(pageModel, {
           type: 'setAddress',
           payload: {
             selectProvince: children,
-            provinceDis: false
+            provinceDis: false,
           },
         })
       } else {
@@ -151,7 +151,7 @@ export default modelExtend(pageModel, {
           type: 'setAddress',
           payload: {
             selectCity: children,
-            cityDis: false
+            cityDis: false,
           },
         })
       } else {
@@ -175,7 +175,7 @@ export default modelExtend(pageModel, {
           type: 'setAddress',
           payload: {
             selectCounty: children,
-            districtDis: false
+            districtDis: false,
           },
         })
       } else {

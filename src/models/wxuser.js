@@ -128,7 +128,7 @@ export default modelExtend(pageModel, {
       storage({
         key: 'userIsMotion',
         val: !state.isMotion,
-        type: 'set'
+        type: 'set',
       })
       return { ...state, isMotion: !state.isMotion }
     },

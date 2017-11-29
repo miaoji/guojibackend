@@ -20,7 +20,7 @@ const realtext = {
   6: '取消订单',
 }
 
-const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
+const List = ({ filter, onDeleteItem, onEditItem, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -64,8 +64,8 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       dataIndex: 'CUSTOMER_NO',
       key: 'CUSTOMER_NO',
       render: (text) => {
-        return <span>{ text?text:"暂无客户编号" }</span>
-      }
+        return <span>{text || '暂无客户编号'}</span>
+      },
     }, {
       title: '批次号',
       dataIndex: 'BATCH',

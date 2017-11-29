@@ -99,24 +99,7 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
           currentItem: item,
         },
       })
-    },
-    onCreateCtcargo (item) {
-      dispatch({
-        type: 'cargo/createChinacargo',
-        payload: {
-          id: item.ID,
-          cargoNo: item.cargo_NO,
-        },
-      })
-    },
-    filterStatus (value) {
-      dispatch(routerRedux.push({
-        pathname: location.pathname,
-        query: {
-          ...value,
-        },
-      }))
-    },
+    }
   }
 
   const filterProps = {
@@ -139,19 +122,7 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
           modalType: 'create',
         },
       })
-    },
-    switchIsMotion () {
-      dispatch({ type: 'cargo/switchIsMotion' })
-    },
-  }
-
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'cargo/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
+    }
   }
 
   return (

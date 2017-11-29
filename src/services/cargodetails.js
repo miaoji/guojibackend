@@ -19,7 +19,7 @@ export async function parentOrder (params) {
     method: 'get',
     params: {
       parentId: -10,
-      ...params
+      ...params,
     },
   })
 }
@@ -58,6 +58,6 @@ export async function getOrderInfo (params) {
   return request({
     url: order.getOrderInfoById,
     method: 'get',
-    params
+    params,
   })
 }
