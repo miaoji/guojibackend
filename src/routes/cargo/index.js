@@ -8,22 +8,93 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Cargo = ({ location, dispatch, cargo, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany } = cargo
+  const { 
+    list,
+    pagination,
+    currentItem,
+    modalVisible,
+    modalType,
+    isMotion,
+
+    selectNation,
+
+    selectParcelType,
+    selectProductType,
+    parcelDis,
+    productDis,
+
+    selectWeChatUser,
+    intlPrice,
+    insuredVisiable,
+    packageBin,
+    selectKdCompany
+  } = cargo
   const { pageSize } = pagination
 
   // 订单修改modal
   const modalProps = {
     type: modalType,
-    item: modalType === 'create' ? {} : currentItem,
+    item: currentItem,
+    maskClosable: false,
     visible: modalVisible,
-    maskClosable: true,
-    confirmLoading: loading.effects['cargo/update'],
-    title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
+    confirmLoading: loading.effects['cargo/create'],
+    title: '创建订单',
     wrapClassName: 'vertical-center-modal',
+    selectNation,
+
+    selectParcelType,
+    selectProductType,
+    parcelDis,
+    productDis,
+
+    selectWeChatUser,
+    intlPrice,
+    insuredVisiable,
+    packageBin,
     selectKdCompany,
+    getParcelType (data) {
+      dispatch({
+        type: 'cargo/getParcelType',
+        payload: data,
+      })
+    },
+    getProductType (data) {
+      dispatch({
+        type: 'cargo/getProductType',
+        payload: data,
+      })
+    },
+    getIntlPrice (data) {
+      dispatch({
+        type: 'cargo/getIntlPrice',
+        payload: data,
+      })
+    },
+    setInsuredVisiable (data) {
+      switch(data) {
+        case 1:
+          dispatch({
+            type: 'cargo/showInsured',
+          })
+          break
+        case 0:
+          dispatch({
+            type: 'cargo/hideInsured',
+          })
+          break
+        default:
+          break
+      }
+    },
+    setPackageBin (data) {
+      dispatch({
+        type: 'cargo/setPackageBin',
+        payload: data
+      })
+    },
     onOk (data) {
       dispatch({
-        type: `cargo/${modalType}`,
+        type: 'cargo/create',
         payload: data,
       })
     },
@@ -71,6 +142,9 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
       }))
     },
     onAdd () {
+      dispatch({ type: 'cargo/getCountry' })
+      dispatch({ type: 'cargo/getWeChatUser' })
+      dispatch({ type: 'cargo/getKdCompany'})
       dispatch({
         type: 'cargo/showModal',
         payload: {

@@ -102,7 +102,7 @@ const Filter = ({
     onFilterChange(fields)
   }
 
-  const { orderNo, status } = filter
+  const { customerNo, status } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -115,7 +115,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('orderNo', { initialValue: orderNo })(<Search placeholder="按客户编号搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('customerNo', { initialValue: customerNo })(<Search placeholder="按客户编号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="时间筛选">

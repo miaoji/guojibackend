@@ -66,102 +66,15 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getNation ({ payload }, { select, call, put }) {
-      const data = yield call(contryQuery)
-      if (data) {
-        let obj = data.obj
-        let children = []
-        if (data.obj) {
-          for (let i = 0; i < obj.length; i++) {
-            let item = obj[i]
-            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>)
-          }
-        }
-        yield put({
-          type: 'setNation',
-          payload: {
-            selectNation: children,
-          },
-        })
-      } else {
-        throw data.msg
-      }
-    },
-
-    *getParcelType ({ payload = {} }, { select, call, put }) {
-      // let currentItem = yield select(({ product }) => product.currentItem)
-      // currentItem.NAME_CN = null
-      console.log('payload', payload)
-      const countryId = yield call(getCountryId, { name: payload.toString() })
-      if (countryId.code === 200) {
-        payload = countryId.obj.id
-      } else {
-        throw '获取国家ID失败'
-        return
-      }
-      console.log('payload 国家id', payload)
-      // return
-      const destNation = { countryId: payload }
-
-      const data = yield call(parceltypeQuery, destNation)
-      if (data) {
-        let obj = data.obj
-        let children = []
-        if (data.obj) {
-          for (let i = 0; i < obj.length; i++) {
-            let item = obj[i]
-            children.push(<Option key={item.id}>{item.name_cn}</Option>)
-          }
-        }
-        yield put({
-          type: 'setParcelType',
-          payload: {
-            selectParcelType: children,
-          },
-        })
-      } else {
-        throw data.msg
-      }
-    },
-
-    *'delete' ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { ids: payload.toString() })
-      if (data.success && data.code === 200) {
-        message.success(data.msg)
-        yield put({ type: 'query' })
-      } else {
-        throw data.msg || data
-      }
-    },
-
-    *'multiDelete' ({ payload }, { call, put }) {
-      const data = yield call(wxusersService.remove, payload)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *'markBlackList' ({ payload }, { call, put, select }) {
-      const newWxUser = payload
-      const data = yield call(update, newWxUser)
-      if (data.success) {
-        yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
     *create ({ payload }, { call, put }) {
       const createUserId = JSON.parse(storage({ key: 'user' })).roleId
       const productCode = Math.floor(Math.random() * 600000)
       const newWxUser = { ...payload, createUserId, productCode }
 
       const data = yield call(create, newWxUser)
-      if (data.success) {
+      console.log('data', data)
+      if (data.code === 200) {
+        message.success('新增成功')
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
@@ -191,6 +104,90 @@ export default modelExtend(pageModel, {
         yield put({ type: 'query' })
       } else {
         throw data.msg
+      }
+    },
+
+    *'delete' ({ payload }, { call, put, select }) {
+      const data = yield call(remove, { ids: payload.toString() })
+      if (data.success && data.code === 200) {
+        message.success(data.msg)
+        yield put({ type: 'query' })
+      } else {
+        throw data.msg || data
+      }
+    },
+
+    *getNation ({ payload }, { select, call, put }) {
+      const data = yield call(contryQuery)
+      if (data) {
+        let obj = data.obj
+        let children = []
+        if (data.obj) {
+          for (let i = 0; i < obj.length; i++) {
+            let item = obj[i]
+            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>)
+          }
+        }
+        yield put({
+          type: 'setNation',
+          payload: {
+            selectNation: children,
+          },
+        })
+      } else {
+        throw data.msg
+      }
+    },
+
+    *getParcelType ({ payload = {} }, { select, call, put }) {
+      const countryId = yield call(getCountryId, { name: payload.toString() })
+      if (countryId.code === 200) {
+        payload = countryId.obj.id
+      } else {
+        throw '获取国家ID失败'
+        return
+      }
+      const destNation = { countryId: payload }
+
+      const data = yield call(parceltypeQuery, destNation)
+      if (data) {
+        let obj = data.obj
+        let children = []
+        if (data.obj) {
+          for (let i = 0; i < obj.length; i++) {
+            let item = obj[i]
+            children.push(<Option key={item.id}>{item.name_cn}</Option>)
+          }
+        }
+        yield put({
+          type: 'setParcelType',
+          payload: {
+            selectParcelType: children,
+          },
+        })
+      } else {
+        throw data.msg
+      }
+    },
+
+    *'multiDelete' ({ payload }, { call, put }) {
+      const data = yield call(wxusersService.remove, payload)
+      if (data.success) {
+        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
+        yield put({ type: 'query' })
+      } else {
+        throw data
+      }
+    },
+
+    *'markBlackList' ({ payload }, { call, put, select }) {
+      const newWxUser = payload
+      const data = yield call(update, newWxUser)
+      if (data.success) {
+        yield put({ type: 'hideModal' })
+        yield put({ type: 'query' })
+      } else {
+        throw data
       }
     },
 

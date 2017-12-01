@@ -51,12 +51,16 @@ const Product = ({ location, dispatch, product, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange (page) {
+    onChange (page, filter) {
+      const value = {
+        cargoType: filter.CARGO_TYPE ? filter.CARGO_TYPE[0] : undefined,
+      }
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
         query: {
           ...query,
+          ...value,
           page: page.current,
           pageSize: page.pageSize,
         },

@@ -83,6 +83,7 @@ const Filter = ({
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }} sm={{ span: 12 }}>
         {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按目的地搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
+      <div style={{ display: 'none'}}>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="创建时间">
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
@@ -90,6 +91,7 @@ const Filter = ({
           )}
         </FilterItem>
       </Col>
+      </div>
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >

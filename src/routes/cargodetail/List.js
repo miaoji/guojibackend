@@ -22,6 +22,7 @@ const realtext = {
   8: '已到件',
 }
 const realColor = {
+  0: 'OrangeRed',
   1: '#3728ff',
   2: 'BlueViolet',
   3: 'OliveDrab',
@@ -168,7 +169,7 @@ const List = ({ filter, onSetRepair, onModifyOrder, onSetStatus, onSetWeight, on
         if (record.parentId < 0) {
           return <span style={{ color: realColor[text] }}>{realtext[text]}</span>
         }
-        return <span style={{ color: realColor[text] }}>{realTexts[record.cargoStatus]}</span>
+        return <span style={{ color: realColor[record.cargoStatus] }}>{realTexts[record.cargoStatus]}</span>
       },
     }, {
       title: '下单时间',
@@ -214,7 +215,7 @@ const List = ({ filter, onSetRepair, onModifyOrder, onSetStatus, onSetWeight, on
         if (record.parentId === 0) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '到件处理' }, { key: '2', name: '删除订单' }]} />
         } else if (record.parentId < 0) {
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '4', name: '国际段信息' }, { key: '6', name: '测量称重' }, { key: '1', name: '包裹定价' }, { key: '7', name: '补价处理' }, { key: '8', name: '补价记录' }]} />
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '4', name: '国际信息' }, { key: '6', name: '测量称重' }, { key: '1', name: '包裹定价' }, { key: '7', name: '补价处理' }, { key: '8', name: '补价记录' }]} />
         } else if (record.parentId > 0) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '撤销合单' }, { key: '2', name: '删除订单' }]} />
         }

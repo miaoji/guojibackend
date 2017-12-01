@@ -1,5 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
+import { routerRedux } from 'dva/router'
 import { query, merge, cancel, freight, getOrderInfo, parentOrder } from '../services/cargodetails'
 import { remove, update as status, getKdCompany } from '../services/order'
 import { create as addBoot } from '../services/boot'
@@ -57,7 +58,7 @@ export default modelExtend(pageModel, {
           })
         }
       })
-    },
+    }
   },
 
   effects: {
@@ -79,7 +80,7 @@ export default modelExtend(pageModel, {
             const data = yield call(remove, { ids: item.id })
             if (data.code === 200 && data.success) {
               console.log('删除订单----', data.msg)
-              yield put({ type: 'query', payload: { batch: queryURL('batch') } })
+              yield put({ type: 'query' })
             } else {
               console.log('删除订单失败----', data.msg)
               console.log('错误代码----', data.code)
@@ -97,6 +98,9 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      }else if (data.code === 200 && !data.obj) {
+        message.warn('该批次号下已经没有可用子订单!!!')
+        yield put(routerRedux.push('/cargo'))
       } else {
         if (data.msg === '暂未查询到信息') return
         throw data.msg || '无法跟服务器建立有效连接'
@@ -107,7 +111,7 @@ export default modelExtend(pageModel, {
       const data = yield call(remove, { ids: payload })
       if (data.success) {
         message.success('订单删除成功!!!')
-        yield put({ type: 'query', payload: { batch: queryURL('batch') } })
+        yield put({ type: 'query' })
       } else {
         throw data || '无法跟服务器建立有效连接'
       }
@@ -145,7 +149,7 @@ export default modelExtend(pageModel, {
       }, ids)
       if (data.success) {
         yield put({ type: 'hideModal' })
-        yield put({ type: 'query', payload: { batch: queryURL('batch') } })
+        yield put({ type: 'query' })
         yield put({ type: 'setSelectedEmpty' })
       } else {
         throw data.msg || '无法跟服务器建立有效连接'
@@ -166,7 +170,7 @@ export default modelExtend(pageModel, {
       const data = yield call(cancel, {}, [payload.id])
       if (data.code === 200 && data.success) {
         message.success('撤销成功')
-        yield put({ type: 'query', payload: { batch: queryURL('batch') } })
+        yield put({ type: 'query' })
       } else {
         throw data.msg || '无法跟服务器建立有效连接'
       }
@@ -186,7 +190,7 @@ export default modelExtend(pageModel, {
       if (data.code === 200 && data.success) {
         message.success('定价完成,已成功向用户推送付款信息!')
         yield put({ type: 'hideBootModal' })
-        yield put({ type: 'query', payload: { batch: queryURL('batch') } })
+        yield put({ type: 'query' })
       } else if (data.code === 500) {
         message.error('定价失败,用户可能取消关注,请用其他方式通知用户付款')
         yield put({ type: 'hideBootModal' })
@@ -215,7 +219,7 @@ export default modelExtend(pageModel, {
       })
       if (data.code === 200 && data.success) {
         message.success('操作成功')
-        yield put({ type: 'query', payload: { batch: queryURL('batch') } })
+        yield put({ type: 'query' })
         yield put({ type: 'hideStateModal' })
       } else {
         throw data.msg || '无法跟服务器建立有效连接'
@@ -234,7 +238,7 @@ export default modelExtend(pageModel, {
       })
       if (data.code === 200 && data.success) {
         message.success('添加成功')
-        yield put({ type: 'query', payload: { batch: queryURL('batch') } })
+        yield put({ type: 'query' })
         yield put({ type: 'hideWeightModal' })
       } else {
         throw data.msg || '无法跟服务器建立有效连接'
@@ -253,7 +257,7 @@ export default modelExtend(pageModel, {
       })
       if (data.code === 200 && data.success) {
         message.success('添加成功')
-        yield put({ type: 'query', payload: { batch: queryURL('batch') } })
+        yield put({ type: 'query' })
         yield put({ type: 'hideRepairModal' })
       } else {
         throw data.msg || '无法跟服务器建立有效连接'
@@ -270,7 +274,7 @@ export default modelExtend(pageModel, {
       })
       if (data.code === 200 && data.success) {
         message.success('添加成功')
-        yield put({ type: 'query', payload: { batch: queryURL('batch') } })
+        yield put({ type: 'query' })
         yield put({ type: 'hideModifyModal' })
       } else {
         throw data.msg || '无法跟服务器建立有效连接'

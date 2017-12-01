@@ -42,6 +42,14 @@ const List = ({ isMotion, location, ...tableProps }) => {
       dataIndex: 'NICK_NAME',
       key: 'NICK_NAME',
     }, {
+      title: '包裹总数',
+      dataIndex: 'COUNT',
+      key: 'COUNT',
+    }, {
+      title: '已到包裹数',
+      dataIndex: 'ADDIVED',
+      key: 'ADDIVED',
+    }, {
       title: '下单时间',
       dataIndex: 'CREATE_TIME',
       key: 'CREATE_TIME',

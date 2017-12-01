@@ -58,7 +58,7 @@ const List = ({ isMotion, location, ...tableProps }) => {
         return <span>￥{text ? text / 100 : 0}</span>
       },
     },{
-      title: '包裹类型',
+      title: '订单类型',
       dataIndex: 'type',
       key: 'type',
       render: (text) => {

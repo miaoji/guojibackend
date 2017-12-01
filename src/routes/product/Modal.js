@@ -75,6 +75,22 @@ const modal = ({
             ],
           })(<Select placeholder="输入文字可搜索" showSearch onChange={handleChange} onFocus={handleClick}>{selectNation}</Select>)}
         </FormItem>
+        <FormItem label="订单类型" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('cargoType', {
+            initialValue: item.CARGO_TYPE || 0,
+            rules: [
+              {
+                required: true,
+                message: '请输入包裹类型中文名称!',
+              },
+            ],
+          })(
+            <Radio.Group defaultValue={0}>
+              <Radio value={0}>直邮订单</Radio>
+              <Radio value={1}>集运订单</Radio>
+            </Radio.Group>
+          )}
+        </FormItem>
         <FormItem label="包裹类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('packageType', {
             initialValue: item.NAME_CN,

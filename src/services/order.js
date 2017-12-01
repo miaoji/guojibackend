@@ -14,7 +14,7 @@ export async function create (params) {
   return request({
     url: order.create,
     method: 'post',
-    data: [params],
+    data: params,
   })
 }
 

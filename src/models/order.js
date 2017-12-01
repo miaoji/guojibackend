@@ -126,7 +126,7 @@ export default modelExtend(pageModel, {
       payload.totalFee = Number(payload.totalFee) * 100
       payload.type = 0
       payload.status = 1
-      const data = yield call(create, payload)
+      const data = yield call(create, [payload])
       if (data.code === 200) {
         yield put({ type: 'hideAddModal' })
         message.success(data.msg)
