@@ -65,12 +65,10 @@ const Filter = ({
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    console.log('filter231', filter)
     onFilterChange({ ...fields, ...filter })
   }
 
   const handleReset = () => {
-    console.log('filter', filter)
     const fields = getFieldsValue()
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
@@ -84,7 +82,6 @@ const Filter = ({
     // 在刷新重置的时候让推广的下拉菜单有一个初始值(不会没有东西显示)
     fields.option = '1'
     setFieldsValue(fields)
-    console.log('filter', filter)
     handleSubmit()
   }
 
@@ -118,7 +115,6 @@ const Filter = ({
   }
 
   const handleMergeClick = () => {
-    console.log('这是一些很简单的数据', selectedRowKeys)
     onMergeOrder(selectedRowKeys)
   }
 

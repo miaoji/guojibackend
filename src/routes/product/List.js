@@ -49,11 +49,11 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '订单类型',
       dataIndex: 'CARGO_TYPE',
       key: 'CARGO_TYPE',
-      // filters: [
-      //   { text: '直邮', value: 0 },
-      //   { text: '集运', value: 1 }
-      // ],
-      // filterMultiple: false,
+      filters: [
+        { text: '直邮', value: 0 },
+        { text: '集运', value: 1 }
+      ],
+      filterMultiple: false,
       render: (text) => {
         const realText = {
           0: '直邮',

@@ -17,8 +17,7 @@ const realState = {
   4: '国际完成',
   5: '异常订单',
   6: '取消订单',
-  7: '未到件',
-  8: '已到件',
+  7: '国际快递已发货'
 }
 
 export default modelExtend(pageModel, {
@@ -123,7 +122,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
@@ -206,8 +205,8 @@ export default modelExtend(pageModel, {
     // 到件处理
     *setStatus ({ payload }, { select, put, call }) {
       const realStates = {
-        未到件: 0,
-        已到件: 1,
+        '未到件': 0,
+        '已到件': 1,
       }
       const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
       const date = new Date()
@@ -222,6 +221,31 @@ export default modelExtend(pageModel, {
         yield put({ type: 'query' })
         yield put({ type: 'hideStateModal' })
       } else {
+        throw data.msg || '无法跟服务器建立有效连接'
+      }
+    },
+
+    // 订单状态
+    *setOrderState ({ payload }, { call, put, select }) {
+      let state = yield select(({ cargodetail }) => cargodetail.currentItem.status)
+      const realState = {
+        '待付款': 1,
+        '已付款': 2
+      }
+      if (realState[payload.cargoStatus]) {
+        state = realState[payload.cargoStatus]
+      }
+      const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
+      const data = yield call(status, {
+        id,
+        status: state,
+        userId: JSON.parse(storage({key: 'user'})).id
+      })
+      if (data.code === 200) {
+        message.success('操作成功')
+        yield put({ type: 'query' })
+        yield put({ type: 'hideStateModal'})
+      }else{
         throw data.msg || '无法跟服务器建立有效连接'
       }
     },
@@ -270,6 +294,7 @@ export default modelExtend(pageModel, {
       const data = yield call(status, {
         intlNo: payload.intlNo,
         kdCompanyCode: payload.kdCompanyCode.split('/-/')[1],
+        status: 7,
         id,
       })
       if (data.code === 200 && data.success) {
@@ -346,7 +371,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw '获取国际段快递公司失败'
+        throw '获取国际段快递公司列表失败'
       }
     },
 

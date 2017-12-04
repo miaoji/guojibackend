@@ -18,6 +18,7 @@ const realtext = {
   4: '国际完成',
   5: '异常订单',
   6: '取消订单',
+  7: '国际快递已发货'
 }
 
 const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {

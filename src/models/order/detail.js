@@ -38,7 +38,6 @@ export default {
         }
         if (data.obj.intlNo) {
           const gjInfo = yield call(queryByCompany, { num: data.obj.intlNo || '', company: data.obj.kdCompanyCode || '', source: 'backend' })
-          console.log('gjInfo', gjInfo)
           if (gjInfo.code === 200) {
             detailDate.gjExpressInfo = gjInfo.obj.data
           }

@@ -12,9 +12,9 @@ APIV3 = 'http://192.168.0.231:8077'
 // APIV3 = 'http://api.mingz-tech.com'
 
 // 生产环境时api固定为线上url
-// if (process.env.NODE_ENV !== 'development') {
-//   APIV3 = 'http://api.mingz-tech.com'
-// }
+if (process.env.NODE_ENV !== 'development') {
+  APIV3 = 'http://api.mingz-tech.com'
+}
 
 module.exports = {
   name: '国际快递后台管理系统',

@@ -88,14 +88,15 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
 
   const stateModalProps = {
     item: currentItem,
+    modalType: modalType,
     visible: stateModalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['cargodetail/setStatus'],
-    title: '确认订单是否到件',
+    title: `${modalType === 'setOrderState' ? '设置订单状态' : '确认包裹是否到达中转站'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: 'cargodetail/setStatus',
+        type: `${modalType === 'setOrderState' ? 'cargodetail/setOrderState' : 'cargodetail/setStatus'}`,
         payload: data,
       })
     },
@@ -200,6 +201,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         type: 'cargodetail/showStateModal',
         payload: {
           currentItem: item,
+          modalType: 'setStatus'
         },
       })
     },
@@ -234,10 +236,18 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         payload: id,
       })
     },
+    onSetState (item) {
+      dispatch({
+        type: 'cargodetail/showStateModal',
+        payload: {
+          currentItem: item,
+          modalType: 'setOrderState'
+        }
+      })
+    },
     rowSelection: {
       selectedRowKeys,
       onChange: (keys) => {
-        console.log('keys', keys)
         dispatch({
           type: 'cargodetail/updateState',
           payload: {

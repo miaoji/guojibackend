@@ -14,7 +14,6 @@ const bodyStyle = {
 }
 
 function Dashboard ({ dashboard }) {
-  console.log('dashboard', dashboard)
   const { quote, quotess, numbers, user } = dashboard
   const numberCards = numbers.map((item, key) => <Col key={key} lg={6} md={12}>
     <NumberCard {...item} />

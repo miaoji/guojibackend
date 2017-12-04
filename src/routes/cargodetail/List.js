@@ -18,8 +18,7 @@ const realtext = {
   4: '国际完成',
   5: '异常订单',
   6: '取消订单',
-  7: '未到件',
-  8: '已到件',
+  7: '国际快递已发货'
 }
 const realColor = {
   0: 'OrangeRed',
@@ -33,7 +32,7 @@ const realColor = {
   8: '#008229',
 }
 // 包裹状态: 0 还没有合单, -1 普货, -2特货
-const List = ({ filter, onSetRepair, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, filterStatus, onDeleteItem, onSetFreight, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
+const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, filterStatus, onDeleteItem, onSetFreight, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       // 确定运费
@@ -83,6 +82,9 @@ const List = ({ filter, onSetRepair, onModifyOrder, onSetStatus, onSetWeight, on
         break
       case '8':
         window.open(`/bootdetail?orderNo=${record.orderNo}`)
+        break
+      case '9':
+        onSetState(record)
         break
       default:
         break
@@ -215,7 +217,7 @@ const List = ({ filter, onSetRepair, onModifyOrder, onSetStatus, onSetWeight, on
         if (record.parentId === 0) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '到件处理' }, { key: '2', name: '删除订单' }]} />
         } else if (record.parentId < 0) {
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '4', name: '国际信息' }, { key: '6', name: '测量称重' }, { key: '1', name: '包裹定价' }, { key: '7', name: '补价处理' }, { key: '8', name: '补价记录' }]} />
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '4', name: '国际信息' }, { key: '6', name: '测量称重' }, { key: '1', name: '包裹定价' }, { key: '9', name: '状态修改' }, { key: '7', name: '补价处理' }, { key: '8', name: '补价记录' }]} />
         } else if (record.parentId > 0) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '撤销合单' }, { key: '2', name: '删除订单' }]} />
         }

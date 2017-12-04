@@ -142,6 +142,7 @@ export default modelExtend(pageModel, {
         intlNo: payload.intlNo,
         kdCompanyCode: payload.kdCompanyCode.split('/-/')[1],
         id,
+        status: 7
       }
       const data = yield call(update, newOrder)
       if (data.success && data.code === 200) {
@@ -155,7 +156,7 @@ export default modelExtend(pageModel, {
 
     *addBoot ({ payload }, { call, put }) {
       const other = {
-        createUserId: JSON.parse(storage({ key: 'user' })).roleId,
+        createUserId: JSON.parse(storage({ key: 'user' })).id,
         status: 1,
       }
       const data = yield call(addBoot, {
@@ -183,6 +184,7 @@ export default modelExtend(pageModel, {
       const data = yield call(update, {
         id,
         status: payload.state,
+        userId: JSON.parse(storage({ key: 'user' })).id
       })
       if (data.success && data.code === 200) {
         message.success('状态修改成功')

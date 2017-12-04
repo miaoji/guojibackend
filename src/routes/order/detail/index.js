@@ -11,7 +11,6 @@ const Detail = ({ orderDetail }) => {
   const { data } = orderDetail
   const { wxUser, orderItemList, cnExpressInfo, gjExpressInfo } = data
 
-  console.log('data', data)
   const realSex = {
     0: '未知',
     1: '男',
@@ -111,7 +110,7 @@ const Detail = ({ orderDetail }) => {
         <div className={styles.title}>国际段快递信息:</div>
           {gjExpressInfo ? gjExpressInfo.map(item => (<div><span>{item.time}</span><span>{item.context}</span></div>)) : <span>暂无快递信息</span>}
 
-      </div> : <span>暂无订单详细信息</span>}
+      </div> : <h3>暂无订单详细信息</h3>}
     </div>
   </div>)
 }

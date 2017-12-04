@@ -24,10 +24,12 @@ const formItemLayout = {
 const realtext = {
   0: '未到件',
   1: '已到件',
+  7: '国际快递已发货'
 }
 
 const stateModal = ({
   item = {},
+  modalType,
   onOk,
   form: {
     getFieldDecorator,
@@ -70,7 +72,7 @@ const stateModal = ({
         </FormItem>
         <FormItem label="状态" hasFeedback {...formItemLayout}>
           {getFieldDecorator('cargoStatus', {
-            initialValue: realtext[item.cargoStatus],
+            initialValue: modalType === 'setOrderState' ? realtext[item.status]  : realtext[item.cargoStatus],
             rules: [
               {
                 required: true,
@@ -78,9 +80,11 @@ const stateModal = ({
               },
             ],
           })(
-            <Select>
-              <Option value="未到件">未到件</Option>
-              <Option value="已到件">已到件</Option>
+            <Select>{
+              modalType === 'setOrderState'
+                ?[<Option value="待付款">待付款</Option>,<Option value="已付款">已付款</Option>]
+                :[<Option value="未到件">未到件</Option>,<Option value="已到件">已到件</Option>]
+            }
             </Select>
           )}
         </FormItem>

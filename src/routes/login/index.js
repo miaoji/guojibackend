@@ -110,7 +110,7 @@ const Login = ({
                     <img src={verifyImage} alt="验证码" className={styles.verifyimage} />
                   </Col>
                   <Col span={8}>
-                    <Button type="primary" size="small" onClick={handleRefreshImage} >刷新</Button>
+                    <Button className={styles.button} type="primary" size="small" onClick={handleRefreshImage} >刷新</Button>
                   </Col>
                 </Row>
               </FormItem>

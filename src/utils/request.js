@@ -119,6 +119,14 @@ export default function request (options) {
       const { data, statusText } = response
       statusCode = response.status
       msg = data.message || statusText
+      // 判断token是否失效
+      if (response.status === 401) {
+        storage({type:'clear'})
+        setTimeout(() => {
+          window.location.href = window.location.origin + '/login'
+        }, 3000)
+        return { success: false, statusCode, msg: '用户登陆状态已失效,页面将在3秒后自动跳转回登录页,请登录' }
+      }
     } else {
       statusCode = 600
       msg = '网络错误'
