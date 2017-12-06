@@ -180,5 +180,12 @@ module.exports = [
     mpid: -1,
     name: '微信子菜单配置',
     router: '/wxmenudetail',
+  }, {
+    id: 8,
+    bpid: -1,
+    mpid: -1,
+    name: '分销管理',
+    icon: 'setting',
+    router: '/sale',
   },
 ]

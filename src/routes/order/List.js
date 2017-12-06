@@ -59,6 +59,7 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
     })
   }
 
+
   const columns = [
     {
       title: '全部订单号',
@@ -88,6 +89,13 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       dataIndex: 'TOTAL_FEE',
       key: 'TOTAL_FEE',
       render: (text) => <span>{text ? Number(text) / 100 : 0}元</span>,
+    }, {
+      title: '实付总金额',
+      dataIndex: 'CASH_FEE',
+      key: 'CASH_FEE',
+      render: (text) => {
+        return <span>{ text ? text/100 + '元': '0元'}</span>
+      }
     }, {
       title: '下单时间',
       dataIndex: 'CREATE_TIME',

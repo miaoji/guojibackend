@@ -240,6 +240,14 @@ const Routers = function ({ history, app }) {
             }, 'wxmenudetail')
           },
         }, {
+          path: 'sale',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/sale'))
+              cb(null, require('./routes/sale/'))
+            }, 'sale')
+          },
+        }, {
           path: '*',
           getComponent (nextState, cb) {
             require.ensure([], require => {

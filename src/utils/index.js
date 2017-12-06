@@ -153,9 +153,25 @@ export const storage = function ({ key, val, prefix = true, type = 'get' }) {
   }
 }
 
+/**
+ * [对含有 %20 的数据重新拼接]
+ * @param  {String}  key    [要转换的数据]
+ * @return {String} res     [返回重新的拼接的值]
+ */
+export const rebuildVal = function ( key ) {
+  console.log('key',key)
+  if (!key) {
+    return undefined
+  }
+  const newVal = key.split('%20')  
+  return `${newVal[0]} ${newVal[1]} ${newVal[2]}`
+}
+
+
 module.exports = {
   config,
   menu,
+  rebuildVal,
   request,
   storage,
   time,

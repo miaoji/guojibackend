@@ -121,11 +121,28 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
       dataIndex: 'receiverMobile',
       key: 'receiverMobile',
     }, {
-      title: '运费',
+      title: '预付总金额',
       dataIndex: 'totalFee',
       key: 'totalFee',
-      render: (text) => <span>{text ? Number(text) / 100 : 0}元</span>,
+      render: (text, record) => {
+        if (record.parentId < 0) {
+          return <span>{text ? Number(text) / 100 : 0}元</span>
+        }else{
+          return <span style={{color: '#bbb'}}>/</span>
+        }
+      }
     }, {
+      title: '实付总金额',
+      dataIndex: 'cashFee',
+      key: 'cashFee',
+      render: (text, record) => {
+        if (record.parentId < 0) {
+          return <span>{text ? Number(text) / 100 : 0}元</span>
+        }else{
+          return <span style={{color: '#bbb'}}>/</span>
+        }
+      }
+    },  {
       title: '包裹状态',
       dataIndex: 'parentId',
       key: 'parentId',
@@ -139,27 +156,7 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
         }
         return <span>{newParentId[text]}</span>
       },
-    }, {
-      title: '包裹长度',
-      dataIndex: 'length',
-      key: 'length',
-      render: (text) => <span>{text ? `${text}cm` : '未测量'}</span>,
-    }, {
-      title: '包裹宽度',
-      dataIndex: 'width',
-      key: 'width',
-      render: (text) => <span>{text ? `${text}cm` : '未测量'}</span>,
-    }, {
-      title: '包裹高度',
-      dataIndex: 'height',
-      key: 'height',
-      render: (text) => <span>{text ? `${text}cm` : '未测量'}</span>,
-    }, {
-      title: '包裹重量',
-      dataIndex: 'weight',
-      key: 'weight',
-      render: (text) => <span>{text ? `${text}kg` : '未称重'}</span>,
-    }, {
+    },{
       title: '订单状态',
       dataIndex: 'status',
       key: 'status',
@@ -187,7 +184,7 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
       key: 'confirmTime',
       render: (text, record) => {
         if (record.parentId < 0) {
-          return <span>请查看子订单</span>
+          return <span>/</span>
         } else if (Number(record.cargoStatus) === 1) {
           return <span>{time.rebuildTime(text)}</span>
         }
@@ -198,6 +195,10 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
       dataIndex: 'cost',
       key: 'cost',
       render: (text, record) => {
+        if (record.parentId < 0) {
+          return <span>/</span>
+          return
+        }
         if (!record.confirmTime) {
           return <span>0 元</span>
         }

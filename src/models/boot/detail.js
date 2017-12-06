@@ -1,5 +1,6 @@
 import { query } from '../../services/boot'
 import { message } from 'antd'
+import { rebuildVal } from '../../utils'
 export default {
 
   namespace: 'bootDetail',
@@ -25,8 +26,8 @@ export default {
     *query ({
       payload,
     }, { call, put }) {
+      payload.orderNo = rebuildVal(payload.orderNo)
       const data = yield call(query, payload)
-      // const { code, obj, msg } = data
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',

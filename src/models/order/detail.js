@@ -1,5 +1,6 @@
 import { getOrderInfo, getOrderInfoByOrderNo, queryByCompany } from '../../services/order'
 import { message } from 'antd'
+import { rebuildVal } from '../../utils'
 export default {
 
   namespace: 'orderDetail',
@@ -24,6 +25,7 @@ export default {
 
   effects: {
     *query ({ payload }, { call, put }) {
+      payload.orderNo = rebuildVal(payload.orderNo)
       const data = yield call(getOrderInfo, payload)
       let detailDate = data.obj
       // 获取快递信息(开始)
