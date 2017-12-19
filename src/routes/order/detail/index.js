@@ -100,7 +100,7 @@ const Detail = ({ orderDetail }) => {
           <span>寄件总次数: {wxUser.packageCount ? wxUser.packageCount : '暂无'}</span>
           <span>关注时间: {time.formatTime(wxUser.subscribeTime)}</span>
           <span>证件号: {wxUser.idCard ? wxUser.idCard : '暂无'}</span>
-          <span>消费总金额: {wxUser.totalAmount ? wxUser.totalAmount : '暂无'}</span>
+          <span>消费总金额: {wxUser.totalAmount ? wxUser.totalAmount/100 + '元' : '暂无'}</span>
           <span>黑名单: {wxUser.blacklist ? realBlackList[wxUser.blacklist] : '未知'}</span>
           <span>关注状态: {wxUser.subscribe ? wxUser.subscribe : '暂无'}</span>
 

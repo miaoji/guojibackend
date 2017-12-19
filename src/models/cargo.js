@@ -121,7 +121,9 @@ export default modelExtend(pageModel, {
             // 国内单号
             type: 1,
             // 订单类型： 0直邮， 1集运
-            status: 1
+            status: 1,
+            // 订单来源： 0微信， 1后台， 2网页未登录， 3网页已登录
+            orderType: 1
           })
         }
       }

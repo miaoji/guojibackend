@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, remove, update, markBlack, createChinaOrder, getKdCompany, getIntlPrice } from '../services/order'
+import { createOrder, remove, update, markBlack, createChinaOrder, getKdCompany, getIntlPrice } from '../services/order'
 import * as location from '../services/countries'
 import * as showPTypeByCounIdsService from '../services/showPTypeByCounIds'
 import * as showproductNamesService from '../services/showproductNames'
@@ -126,7 +126,9 @@ export default modelExtend(pageModel, {
       payload.totalFee = Number(payload.totalFee) * 100
       payload.type = 0
       payload.status = 1
-      const data = yield call(create, [payload])
+      payload.orderType = 1
+      payload.orderItems = '[]'
+      const data = yield call(createOrder, payload)
       if (data.code === 200) {
         yield put({ type: 'hideAddModal' })
         message.success(data.msg)

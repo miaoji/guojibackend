@@ -18,6 +18,14 @@ export async function create (params) {
   })
 }
 
+export async function createOrder (params) {
+  return request({
+    url: order.add,
+    method: 'post',
+    params,
+  })
+}
+
 export async function remove (params) {
   return request({
     url: order.hide,

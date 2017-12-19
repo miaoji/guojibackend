@@ -47,6 +47,7 @@ module.exports = {
     order: {
       all: `${APIV3}/api/orderInfo/index`, // 全部订单
       show: `${APIV1}/order/:id`,
+      add: `${APIV3}/api/orderInfo/add`, // 直邮订单的创建
       create: `${APIV3}/api/orderInfo/addCargo`, // 创建订单
       update: `${APIV3}/wx/OrderInfo/modOrderInfo`, // 根据id更新订单
       mod: `${APIV3}/api/orderInfo/modOrderInfoById`, // 根据id更新订单 仝周
