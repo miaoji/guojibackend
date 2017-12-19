@@ -27,6 +27,16 @@ const realtext = {
   7: '国际快递已发货'
 }
 
+const realStatus = {
+  1: '待付款',
+  2: '付款完成',
+  3: '国内完成',
+  4: '国际完成',
+  5: '异常订单',
+  6: '取消订单',
+  7: '国际快递已发货'
+}
+
 const stateModal = ({
   item = {},
   modalType,
@@ -72,7 +82,7 @@ const stateModal = ({
         </FormItem>
         <FormItem label="状态" hasFeedback {...formItemLayout}>
           {getFieldDecorator('cargoStatus', {
-            initialValue: modalType === 'setOrderState' ? realtext[item.status]  : realtext[item.cargoStatus],
+            initialValue: modalType === 'setOrderState' ? realStatus[item.status]  : realtext[item.cargoStatus],
             rules: [
               {
                 required: true,

@@ -1,6 +1,6 @@
 import { getOrderInfo, getOrderInfoByOrderNo, queryByCompany } from '../../services/order'
 import { message } from 'antd'
-import { rebuildVal } from '../../utils'
+// import { rebuildVal } from '../../utils'
 export default {
 
   namespace: 'orderDetail',
@@ -13,10 +13,12 @@ export default {
     setup ({ dispatch, history }) {
       history.listen(() => {
         if (location.pathname === '/orderdetail' || location.pathname === '/cargodetailInfo') {
-          const match = location.search.split('?orderNo=')
+          console.log('location', location)
+          console.log('location', location.search.split('?orderNo='))
+          const match = location.search.split('?orderNo=')[1]
           if (match) {
             dispatch({ type: 'setListEmpty' })
-            dispatch({ type: 'query', payload: { orderNo: match[1] } })
+            dispatch({ type: 'query', payload: { orderNo: match } })
           }
         }
       })
@@ -25,7 +27,8 @@ export default {
 
   effects: {
     *query ({ payload }, { call, put }) {
-      payload.orderNo = rebuildVal(payload.orderNo)
+      // payload.orderNo = rebuildVal(payload.orderNo)
+      console.log('demo', payload)
       const data = yield call(getOrderInfo, payload)
       let detailDate = data.obj
       // 获取快递信息(开始)
