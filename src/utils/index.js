@@ -4,6 +4,7 @@ import request from './request'
 import * as time from './time'
 import classnames from 'classnames'
 import { color } from './theme'
+import shelfNo from './shelfNoData'
 import lodash from 'lodash'
 
 const localStorage = window.localStorage
@@ -173,6 +174,7 @@ module.exports = {
   menu,
   rebuildVal,
   request,
+  shelfNo,
   storage,
   time,
   color,

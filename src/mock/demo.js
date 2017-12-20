@@ -4,26 +4,14 @@ const config = require('../utils/config')
 const { apiPrefix } = config
 
 let demosListData = Mock.mock({
-  'data|20-30': [
-    {
-      id: '@id',
-      did: /^\d{8}$/,
-      name: '@cname',
-      'storename|1': ['上海', '北京', '广东', '深圳', '安徽', '江西'],
-      nickName: '@cname',
-      phone: /^1[34578]\d{9}$/,
-      belongStore: '@county',
-      'maxweight|1-99': 1,
-      'minweight|1-99': 1,
-      'status|0-1': 1,
-      'blacklist|0-1': 1,
-      'consume|0-999': 1,
-      createTime: '@datetime',
-      avatar () {
-        return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.nickName.substr(0, 1))
-      },
-    },
-  ],
+  'data': [{
+    str: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    'list|99': [
+      {
+        "number|+1": 1,
+      }
+    ]
+  }]
 })
 
 let database = demosListData.data
@@ -57,7 +45,7 @@ module.exports = {
   [`GET ${apiPrefix}/demos`] (req, res) {
     const { query } = req
     let { pageSize, page, ...other } = query
-    pageSize = pageSize || 10
+    pageSize = pageSize || 100
     page = page || 1
 
     let newData = database
@@ -85,38 +73,8 @@ module.exports = {
     }
 
     res.status(200).json({
-      data: newData.slice((page - 1) * pageSize, page * pageSize),
-      total: newData.length,
+      data: newData.slice((page - 1) * pageSize, page * pageSize)
     })
-  },
+  }
 
-  [`GET ${apiPrefix}/demo/:id`] (req, res) {
-    const { id } = req.params
-    const data = queryArray(database, id, 'id')
-    if (data) {
-      res.status(200).json(data)
-    } else {
-      res.status(404).json(NOTFOUND)
-    }
-  },
-
-  [`PATCH ${apiPrefix}/demo/:id`] (req, res) {
-    const { id } = req.params
-    const editItem = req.body
-    let isExist = false
-
-    database = database.map((item) => {
-      if (item.id === id) {
-        isExist = true
-        return Object.assign({}, item, editItem)
-      }
-      return item
-    })
-
-    if (isExist) {
-      res.status(201).end()
-    } else {
-      res.status(404).json(NOTFOUND)
-    }
-  },
 }
