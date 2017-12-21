@@ -25,7 +25,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
-      title: '寄件人姓名',
+      title: '收件人姓名',
       dataIndex: 'transferName',
       key: 'transferName',
       render: (text) => <span>{text}</span>,

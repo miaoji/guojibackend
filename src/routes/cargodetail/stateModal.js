@@ -6,6 +6,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, Select, Modal } from 'antd'
 import { shelfNo } from '../../utils'
+import { SelectShelf } from '../../components'
 // import styles from './addModal.less'
 // import classnames from 'classnames'
 
@@ -64,6 +65,10 @@ const stateModal = ({
     })
   }
 
+  const handleChange = (val) => {
+    console.log('val', val)
+  }
+
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,
@@ -102,40 +107,14 @@ const stateModal = ({
             )}
         </FormItem>
         <FormItem label="货架号" hasFeedback {...formItemLayout} style={{ display: modalType === 'setOrderState'?'none':'block'}}>
-          {getFieldDecorator('NNN', {
+          {getFieldDecorator('nnnn', {
             rules: [
               {
                 // required: true,
                 message: '请输入补价金额!',
               },
             ],
-          })(
-            <Select showSearch style={{width:'50%'}}>
-              {
-                shelfNo.str.map((item) => {
-                  return <Option value={item}>{item}</Option>
-                })
-              }
-            </Select>
-            )}
-        </FormItem>
-        <FormItem label="货架号()" hasFeedback {...formItemLayout} style={{ display: modalType === 'setOrderState' ? 'none' : 'block' }}>
-          {getFieldDecorator('aaaaa', {
-            rules: [
-              {
-                // required: true,
-                message: '请输入补价金额!',
-              },
-            ],
-          })(
-            <Select showSearch style={{ width: '50%' }}>
-              {
-                shelfNo.number.map((item) => {
-                  return <Option value={item}>{item}</Option>
-                })
-              }
-            </Select>
-            )}
+          })(<SelectShelf aa='123' onChange={handleChange.bind()}/>)}
         </FormItem>
       </Form>
     </Modal>
