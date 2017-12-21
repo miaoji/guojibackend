@@ -204,6 +204,14 @@ export default modelExtend(pageModel, {
 
     // 到件处理
     *setStatus ({ payload }, { select, put, call }) {
+      console.log('sssss', payload)
+      if (payload.shelfNo) {
+        const shelf = JSON.parse(payload.shelfNo)
+        payload.shelfNo = shelf.str+''+shelf.num
+        console.log('aaaaa', payload)
+      }
+      console.log('sssss', payload)
+      // return
       const realStates = {
         '未到件': 0,
         '已到件': 1,
@@ -215,6 +223,7 @@ export default modelExtend(pageModel, {
         id,
         cargoStatus: realStates[payload.cargoStatus],
         confirmTime: newDate,
+        shelfNo: payload.shelfNo
       })
       if (data.code === 200 && data.success) {
         message.success('操作成功')

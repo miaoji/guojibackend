@@ -5,12 +5,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, Select, Modal } from 'antd'
-import { shelfNo } from '../../utils'
+// import { shelfNo } from '../../utils'
 import { SelectShelf } from '../../components'
 // import styles from './addModal.less'
 // import classnames from 'classnames'
 
-console.log('shelfNo', shelfNo)
+// console.log('shelfNo', shelfNo)
 
 const FormItem = Form.Item
 
@@ -49,6 +49,7 @@ const stateModal = ({
     getFieldDecorator,
     validateFields,
     getFieldsValue,
+    setFieldsValue
   },
   ...modalProps
 }) => {
@@ -66,7 +67,11 @@ const stateModal = ({
   }
 
   const handleChange = (val) => {
-    console.log('val', val)
+    const data = JSON.parse(val)
+    console.log('data11', data)
+    // setFieldsValue({
+    //   shelfNo: data.str + data.num
+    // })
   }
 
   const modalOpts = {
@@ -107,14 +112,14 @@ const stateModal = ({
             )}
         </FormItem>
         <FormItem label="货架号" hasFeedback {...formItemLayout} style={{ display: modalType === 'setOrderState'?'none':'block'}}>
-          {getFieldDecorator('nnnn', {
+          {getFieldDecorator('shelfNo', {
             rules: [
               {
                 // required: true,
                 message: '请输入补价金额!',
               },
             ],
-          })(<SelectShelf aa='123' onChange={handleChange.bind()}/>)}
+          })(<SelectShelf initValue={item.shelfNo || 'B23'} onChange={handleChange.bind()}/>)}
         </FormItem>
       </Form>
     </Modal>

@@ -10,45 +10,52 @@ const data = {}
 for (let i = 0; i < str.length; i++) {
     data[str[i]]=number
 }
-console.log('data', data)
-
-const provinceData = ['Zhejiang', 'Jiangsu'];
-const cityData = {
-    Zhejiang: ['Hangzhou', 'Ningbo', 'Wenzhou'],
-    Jiangsu: ['Nanjing', 'Suzhou', 'Zhenjiang'],
-};
 class SelectShelf extends React.Component {
     constructor(props) {
+        console.log('props', props)
         super(props)
         this.state = {
-            cities: cityData[provinceData[0]],
-            secondCity: cityData[provinceData[0]][0],
+            str: '',
+            shelfStr: props.initValue.split('')[0],
+            shelfNum: props.initValue.split('')[1] + '' + props.initValue.split('')[2]
         }
     }
-    handleProvinceChange = (value) => {
+    handlesheleStrChange = (value) => {
         this.setState({
-            cities: cityData[value],
-            secondCity: cityData[value][0],
-        });
+            str: value.split('')[0],
+            shelfStr: data[value.split('')[0]],
+            shelfNum: data[value.split('')[0]][0]
+        })
+        this.props.onChange(JSON.stringify({
+            str: value.split('')[0],
+            num: this.state.shelfNum
+        }))
     }
-    onSecondCityChange = (value) => {
+    onshelfNumChange = (value) => {
         this.setState({
-            secondCity: value,
-        });
+            shelfNum: value,
+        })
+        this.props.onChange(JSON.stringify({
+            str: this.state.str,
+            num: value
+        }))
     }
     render() {
-        const provinceOptions = provinceData.map(province => <Option key={province}>{province}</Option>);
-        const cityOptions = this.state.cities.map(city => <Option key={city}>{city}</Option>);
+        const sheleStrOptions = str.map(item => {
+            const val = item + item.toLowerCase()
+            return <Option key={val}>{item}</Option>
+        })
+        const cityOptions = data[str[0]].map(city => <Option key={city}>{city}</Option>)
         return (
             <div>
-                <Select defaultValue={provinceData[0]} style={{ width: 90 }} onChange={this.handleProvinceChange}>
-                    {provinceOptions}
+                <Select showSearch defaultValue={this.state.shelfStr} style={{ width: 100, marginRight: 20 }} onChange={this.handlesheleStrChange}>
+                    {sheleStrOptions}
                 </Select>
-                <Select value={this.state.secondCity} style={{ width: 90 }} onChange={this.onSecondCityChange}>
+                <Select showSearch value={this.state.shelfNum} style={{ width: 100 }} onChange={this.onshelfNumChange}>
                     {cityOptions}
                 </Select>
             </div>
-        );
+        )
     }
 }
 
