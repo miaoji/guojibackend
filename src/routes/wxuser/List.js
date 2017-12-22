@@ -69,6 +69,9 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       title: '消费总金额',
       dataIndex: 'TOTAL_AMOUNT',
       key: 'TOTAL_AMOUNT',
+      render: (text) => {
+        return <span>{text/100}</span>
+      }
     }, {
       title: '黑名单',
       dataIndex: 'BLACKLIST',

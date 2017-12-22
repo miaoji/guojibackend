@@ -191,6 +191,18 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
         return <span>暂无</span>
       },
     }, {
+      title: '货架号',
+      dataIndex: 'shelfNo',
+      key: 'shelfNo',
+      render: (text, record) => {
+        if (record.parentId < 0) {
+          return <span>/</span>
+        } else if (Number(record.cargoStatus) === 1) {
+          return <span>{text}</span>
+        }
+        return <span>暂无</span>
+      },
+    }, {
       title: '仓管费',
       dataIndex: 'cost',
       key: 'cost',

@@ -45,6 +45,8 @@ const stateModal = ({
   item = {},
   modalType,
   onOk,
+  handleChange,
+  disSelect,
   form: {
     getFieldDecorator,
     validateFields,
@@ -66,12 +68,10 @@ const stateModal = ({
     })
   }
 
-  const handleChange = (val) => {
-    const data = JSON.parse(val)
-    console.log('data11', data)
-    // setFieldsValue({
-    //   shelfNo: data.str + data.num
-    // })
+
+  const selectStateChange = (val) => {
+    console.log('val', val)
+    handleChange(val)
   }
 
   const modalOpts = {
@@ -103,7 +103,7 @@ const stateModal = ({
               },
             ],
           })(
-            <Select>{
+            <Select onSelect={selectStateChange}>{
               modalType === 'setOrderState'
                 ? [<Option value="待付款">待付款</Option>, <Option value="已付款">已付款</Option>]
                 : [<Option value="未到件">未到件</Option>, <Option value="已到件">已到件</Option>]
@@ -111,15 +111,16 @@ const stateModal = ({
             </Select>
             )}
         </FormItem>
-        <FormItem label="货架号" hasFeedback {...formItemLayout} style={{ display: modalType === 'setOrderState'?'none':'block'}}>
+        <FormItem label="货架号" hasFeedback {...formItemLayout} style={{ display: (modalType !== 'setOrderState' && disSelect) ? 'block' :'none'}}>
           {getFieldDecorator('shelfNo', {
+            initialValue: item.shelfNo || 'A01',
             rules: [
               {
                 // required: true,
                 message: '请输入补价金额!',
               },
             ],
-          })(<SelectShelf initValue={item.shelfNo || 'B23'} onChange={handleChange.bind()}/>)}
+          })(<SelectShelf initValue={item.shelfNo || 'A01'}/>)}
         </FormItem>
       </Form>
     </Modal>

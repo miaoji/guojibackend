@@ -205,13 +205,16 @@ export default modelExtend(pageModel, {
     // 到件处理
     *setStatus ({ payload }, { select, put, call }) {
       console.log('sssss', payload)
-      if (payload.shelfNo) {
+      if (payload.shelfNo && payload.shelfNo.length !== 3 && payload.cargoStatus === '已到件') {
         const shelf = JSON.parse(payload.shelfNo)
         payload.shelfNo = shelf.str+''+shelf.num
-        console.log('aaaaa', payload)
+      } else if (payload.cargoStatus === '未到件') {
+        payload.shelfNo = ''
+      } else if (payload.shelfNo === 'A01' ) {
+        payload.shelfNo = 'A01'
+      } else {
+        payload.shelfNo = undefined
       }
-      console.log('sssss', payload)
-      // return
       const realStates = {
         '未到件': 0,
         '已到件': 1,
@@ -219,6 +222,13 @@ export default modelExtend(pageModel, {
       const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
       const date = new Date()
       const newDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+      console.log('aaaa', {
+        id,
+        cargoStatus: realStates[payload.cargoStatus],
+        confirmTime: newDate,
+        shelfNo: payload.shelfNo
+      })
+      // return
       const data = yield call(status, {
         id,
         cargoStatus: realStates[payload.cargoStatus],

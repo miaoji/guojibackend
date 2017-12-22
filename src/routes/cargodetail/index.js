@@ -86,6 +86,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     },
   }
 
+  // let disSelect=false
   const stateModalProps = {
     item: currentItem,
     modalType: modalType,
@@ -94,6 +95,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     confirmLoading: loading.effects['cargodetail/setStatus'],
     title: `${modalType === 'setOrderState' ? '设置订单状态' : '确认包裹是否到达中转站'}`,
     wrapClassName: 'vertical-center-modal',
+    disSelect: true||currentItem.cargoStatus === 1,
     onOk (data) {
       dispatch({
         type: `${modalType === 'setOrderState' ? 'cargodetail/setOrderState' : 'cargodetail/setStatus'}`,
@@ -103,6 +105,13 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     onCancel () {
       dispatch({ type: 'cargodetail/hideStateModal' })
     },
+    handleChange (val) {
+      if(val==='已到件'){
+        // this.disSelect = true
+      }else{
+        // this.disSelect = false
+      }
+    }
   }
 
   const weightModalProps = {

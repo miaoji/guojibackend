@@ -24,11 +24,11 @@ class SelectShelf extends React.Component {
         this.setState({
             str: value.split('')[0],
             shelfStr: data[value.split('')[0]],
-            shelfNum: data[value.split('')[0]][0]
+            shelfNum: '01'
         })
         this.props.onChange(JSON.stringify({
             str: value.split('')[0],
-            num: this.state.shelfNum
+            num: '01'
         }))
     }
     onshelfNumChange = (value) => {
