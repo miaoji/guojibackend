@@ -42,7 +42,8 @@ export default modelExtend(pageModel, {
     modalDis: true,
     modalRadioDis: false,
     // 补价modal
-    repairModalVisible: false
+    repairModalVisible: false,
+    shelfDis: true
   },
 
   subscriptions: {
@@ -204,7 +205,6 @@ export default modelExtend(pageModel, {
 
     // 到件处理
     *setStatus ({ payload }, { select, put, call }) {
-      console.log('sssss', payload)
       if (payload.shelfNo && payload.shelfNo.length !== 3 && payload.cargoStatus === '已到件') {
         const shelf = JSON.parse(payload.shelfNo)
         payload.shelfNo = shelf.str+''+shelf.num
@@ -440,8 +440,13 @@ export default modelExtend(pageModel, {
       return { ...state, ...payload, stateModalVisible: true }
     },
 
+    // 控制货架号Input的显示与隐藏
+    setShelfDis (state, { payload }) {
+      return { ...state, ...payload, shelfDis: false}
+    },
+
     hideStateModal (state) {
-      return { ...state, stateModalVisible: false }
+      return { ...state, stateModalVisible: false, shelfDis: true }
     },
 
     // 称重

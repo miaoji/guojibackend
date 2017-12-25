@@ -46,7 +46,7 @@ const stateModal = ({
   modalType,
   onOk,
   handleChange,
-  disSelect,
+  shelfDis,
   form: {
     getFieldDecorator,
     validateFields,
@@ -111,7 +111,7 @@ const stateModal = ({
             </Select>
             )}
         </FormItem>
-        <FormItem label="货架号" hasFeedback {...formItemLayout} style={{ display: (modalType !== 'setOrderState' && disSelect) ? 'block' :'none'}}>
+        <FormItem label="货架号" hasFeedback {...formItemLayout} style={{ display: (modalType !== 'setOrderState' && !shelfDis) ? 'block' :'none'}}>
           {getFieldDecorator('shelfNo', {
             initialValue: item.shelfNo || 'A01',
             rules: [
