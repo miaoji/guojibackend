@@ -11,7 +11,6 @@ export async function query (params) {
 }
 // 新增国家
 export async function create (params) {
-  console.log('params', params)
   return request({
     url: country.create,
     method: 'post',

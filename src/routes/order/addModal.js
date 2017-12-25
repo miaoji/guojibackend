@@ -128,7 +128,6 @@ const addModal = ({
   }
 
   const insuredChange = function (e) {
-    console.log('e', e.target.value)
     setInsuredVisiable(e.target.value)
     if (e.target.value === 0) {
       setFieldsValue({ insuredAmount: undefined })

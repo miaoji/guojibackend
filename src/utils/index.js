@@ -160,7 +160,6 @@ export const storage = function ({ key, val, prefix = true, type = 'get' }) {
  * @return {String} res     [返回重新的拼接的值]
  */
 export const rebuildVal = function ( key ) {
-  console.log('key',key)
   if (!key) {
     return undefined
   }

@@ -72,7 +72,6 @@ export default modelExtend(pageModel, {
       const newWxUser = { ...payload, createUserId, productCode }
 
       const data = yield call(create, newWxUser)
-      console.log('data', data)
       if (data.code === 200) {
         message.success('新增成功')
         yield put({ type: 'hideModal' })

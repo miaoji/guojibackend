@@ -11,7 +11,6 @@ export async function query (params) {
 }
 
 export async function create (params) {
-  // console.log('add',params)
   return request({
     url: marketing.setmenu,
     method: 'post',
@@ -38,7 +37,6 @@ export async function remove (params) {
 }
 
 export async function setmenu (params) {
-  // console.log('params',params)
   return
   return request({
     url: marketing.setmenu,

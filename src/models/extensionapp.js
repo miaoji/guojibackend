@@ -92,8 +92,6 @@ export default modelExtend(pageModel, {
   reducers: {
 
     showModal (state, { payload }) {
-      console.log('state', state)
-      console.log('payload', payload)
       return { ...state, ...payload, modalVisible: true }
     },
 

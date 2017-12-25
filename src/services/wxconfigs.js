@@ -3,7 +3,6 @@ const { wxconfig } = config.api
 
 export async function query (params) {
   params = pageParams(params)
-  console.log('params', params)
   return request({
     url: wxconfig.all,
     method: 'get',

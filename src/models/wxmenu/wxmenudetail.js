@@ -18,8 +18,6 @@ export default modelExtend(pageModel, {
       history.listen(location => {
         if (location.pathname === '/wxmenudetail') {
           const parentId = queryURL('parentId')
-          console.log('parentId', parentId)
-          console.log('query', location.query)
           dispatch({
             type: 'query',
             payload: location.query,
@@ -87,8 +85,6 @@ export default modelExtend(pageModel, {
         name: payload.name,
         id,
       }
-      // console.log('newQr',newQr)
-      // return
       const data = yield call(update, newPayload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })

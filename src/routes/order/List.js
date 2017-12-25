@@ -53,7 +53,6 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
     confirm({
       title: '确定要发送中通订单吗?',
       onOk () {
-        console.log('record', record)
         onCreateCtorder(record)
       },
     })

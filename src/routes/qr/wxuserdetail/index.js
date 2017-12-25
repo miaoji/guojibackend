@@ -8,8 +8,6 @@ const { formatTime } = time
 
 const WxUserDetail = ({ qrWxUserDetail }) => {
   const { data } = qrWxUserDetail
-  console.log('qrWxUserDetail', qrWxUserDetail)
-  console.log('data', data)
 
   return (<div className="content-inner">
     <div className={styles.content}>

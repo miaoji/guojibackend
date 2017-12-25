@@ -58,7 +58,6 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       })
     },
     onModalDisState (state) {
-      console.log('state', state)
       dispatch({
         type: 'cargodetail/setMergeSelectState',
         payload: state,
@@ -80,7 +79,6 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       })
     },
     onCancel () {
-      console.log('currentItem', currentItem)
       dispatch({
         type: 'cargodetail/hideBootModal',
       })
@@ -124,7 +122,6 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     title: '核实包裹重量及包裹的长宽高',
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
-      console.log('data')
       dispatch({
         type: 'cargodetail/setWeight',
         payload: data,
@@ -190,7 +187,6 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       }))
     },
     onRowClick (data) {
-      console.log('dadata',data)
     },
     onSetCancel (data) {
       dispatch({
@@ -199,7 +195,6 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       })
     },
     onSetFreight (item) {
-      console.log('item啊啊啊', item)
       dispatch({
         type: 'cargodetail/showBootModal',
         payload: {
@@ -270,10 +265,8 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         disabled: record.parentId !== 0 || record.cargoStatus === 0,
       }),
       onSelect: (record, selected, selectedRows) => {
-        console.log(record, selected, selectedRows)
       },
       onSelectAll: (selected, selectedRows, changeRows) => {
-        console.log(selected, selectedRows, changeRows)
       },
     },
   }

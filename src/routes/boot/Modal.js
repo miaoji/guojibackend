@@ -33,8 +33,6 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-//    data.address = data.address.join(' ')
-      console.log('data', data)
       onOk(data)
     })
   }

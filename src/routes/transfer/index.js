@@ -59,14 +59,12 @@ const Transfer = ({ location, dispatch, transfer, loading }) => {
       })
     },
     getCity (data) {
-      console.log('data', data)
       dispatch({
         type: 'transfer/getCity',
         payload: data,
       })
     },
     getCounty (data) {
-      console.log('data', data)
       dispatch({
         type: 'transfer/getCounty',
         payload: data,

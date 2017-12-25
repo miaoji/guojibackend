@@ -68,8 +68,6 @@ export default modelExtend(pageModel, {
         content: payload.content,
         id,
       }
-      // console.log('newQr',newQr)
-      // return
       const data = yield call(update, newPayload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })

@@ -99,7 +99,6 @@ const modal = ({
   }
 
   const handleClick = function () {
-    console.log('insuredVisiable', insuredVisiable)
     const data = getFieldsValue()
     if (!data.weight) {
       message.warn('您还没有填写包裹重量呢!!!')
@@ -160,7 +159,6 @@ const modal = ({
   }
 
   const insuredChange = function (e) {
-    console.log('e', e.target.value)
     setInsuredVisiable(e.target.value)
     if (e.target.value === 0) {
       setFieldsValue({ insuredAmount: undefined })

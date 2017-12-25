@@ -10,7 +10,6 @@ import { SelectShelf } from '../../components'
 // import styles from './addModal.less'
 // import classnames from 'classnames'
 
-// console.log('shelfNo', shelfNo)
 
 const FormItem = Form.Item
 
@@ -70,7 +69,6 @@ const stateModal = ({
 
 
   const selectStateChange = (val) => {
-    console.log('val', val)
     handleChange(val)
   }
 

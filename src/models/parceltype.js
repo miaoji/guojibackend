@@ -112,8 +112,6 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      console.log('payload 1111', payload)
-      console.log('payload', payload)
       // 通过国家名称获取国家id
       const destination = yield call(getCountryId, { name: payload.destination.toString() })
       if (destination.code === 200) {
@@ -173,7 +171,6 @@ export default modelExtend(pageModel, {
         nameEn = '*'
       }
       const newFreight = { ...payload, id, createUserId, nameEn }
-      console.log('newFreight', newFreight)
       const data = yield call(update, newFreight)
       if (data.success) {
         message.success(data.msg)

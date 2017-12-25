@@ -36,7 +36,6 @@ const Destination = ({ location, dispatch, destination, loading }) => {
     title: `编辑${currentItem.name}省份信息`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
-      console.log('data', data)
       dispatch({
         type: 'destination/createProvince',
         payload: data,

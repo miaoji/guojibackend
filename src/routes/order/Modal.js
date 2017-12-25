@@ -52,8 +52,6 @@ const modal = ({
   }
 
   const handleFocus = () => {
-    // getKdCompany()
-    console.log('selectKdCompany', selectKdCompany)
   }
 
   const modalOpts = {

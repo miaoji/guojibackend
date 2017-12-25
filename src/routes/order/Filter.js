@@ -63,7 +63,6 @@ const Filter = ({
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    console.log('fields', fields)
     onFilterChange(fields)
   }
 

@@ -19,7 +19,6 @@ export async function remove (params) {
 }
 
 export async function update (params) {
-  console.log('params', params)
   return request({
     url: wxuser.update,
     method: 'post',

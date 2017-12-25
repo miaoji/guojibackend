@@ -3,7 +3,6 @@ const { api } = config
 const { boot } = api
 
 export async function query (params) {
-  console.log('params', params)
   return request({
     url: boot.show,
     method: 'get',

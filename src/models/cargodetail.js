@@ -79,11 +79,11 @@ export default modelExtend(pageModel, {
           } else if (item.parentId === -1 || item.parentId === -2) {
             const data = yield call(remove, { ids: item.id })
             if (data.code === 200 && data.success) {
-              console.log('删除订单----', data.msg)
+              console.info('删除订单----', data.msg)
               yield put({ type: 'query' })
             } else {
-              console.log('删除订单失败----', data.msg)
-              console.log('错误代码----', data.code)
+              console.info('删除订单失败----', data.msg)
+              console.info('错误代码----', data.code)
             }
           }
         }
@@ -222,13 +222,6 @@ export default modelExtend(pageModel, {
       const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
       const date = new Date()
       const newDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-      console.log('aaaa', {
-        id,
-        cargoStatus: realStates[payload.cargoStatus],
-        confirmTime: newDate,
-        shelfNo: payload.shelfNo
-      })
-      // return
       const data = yield call(status, {
         id,
         cargoStatus: realStates[payload.cargoStatus],

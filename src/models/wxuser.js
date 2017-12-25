@@ -75,7 +75,6 @@ export default modelExtend(pageModel, {
 
     *'markBlackList' ({ payload }, { call, put, select }) {
       let newWxUser = payload
-      console.log('newWxUser', newWxUser)
       // 判断有没有传过来blacklist属性,没有的传的话就默认等于1
       if (newWxUser.blacklist == null) {
         newWxUser.blacklist = 1

@@ -24,7 +24,6 @@ const statusGroup = {
 
 const Detail = ({ bootDetail }) => {
   const { data } = bootDetail
-  console.log('data.obj', data)
   if (data == null) {
     return (<div className="content-inner">
       <div className={styles.content}>

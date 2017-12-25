@@ -26,9 +26,7 @@ export default {
 
   effects: {
     *query ({ payload }, { call, put }) {
-      console.log('payload111', payload)
       const data = yield call(query, payload)
-      console.log('data', data)
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',

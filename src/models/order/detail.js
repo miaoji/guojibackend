@@ -13,8 +13,6 @@ export default {
     setup ({ dispatch, history }) {
       history.listen(() => {
         if (location.pathname === '/orderdetail' || location.pathname === '/cargodetailInfo') {
-          console.log('location', location)
-          console.log('location', location.search.split('?orderNo='))
           const match = location.search.split('?orderNo=')[1]
           if (match) {
             dispatch({ type: 'setListEmpty' })
@@ -28,7 +26,6 @@ export default {
   effects: {
     *query ({ payload }, { call, put }) {
       // payload.orderNo = rebuildVal(payload.orderNo)
-      console.log('demo', payload)
       const data = yield call(getOrderInfo, payload)
       let detailDate = data.obj
       // 获取快递信息(开始)
@@ -48,7 +45,7 @@ export default {
           }
         }
       } else {
-        console.log('error', data)
+        console.info('error', data)
         return '查询无果'
       }
       // 获取快递信息(结束)

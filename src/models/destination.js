@@ -67,7 +67,6 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      console.log('payload', payload)
       const data = yield call(create, payload)
       if (data.code === 200) {
         message.success(data.msg)
@@ -93,8 +92,6 @@ export default modelExtend(pageModel, {
 
     *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload.toString() })
-      console.log('data id', data)
-      console.log('data id', data.msg)
       if (data.success && data.code === 200) {
         message.success(data.msg)
         yield put({ type: 'query' })

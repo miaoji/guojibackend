@@ -36,7 +36,6 @@ const County = ({ location, dispatch, county, loading }) => {
     title: `编辑${currentItem.name}省份信息`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
-      console.log('data', data)
       dispatch({
         type: 'county/createProvince',
         payload: data,

@@ -12,7 +12,6 @@ for (let i = 0; i < str.length; i++) {
 }
 class SelectShelf extends React.Component {
     constructor(props) {
-        console.log('props', props)
         super(props)
         this.state = {
             str: '',

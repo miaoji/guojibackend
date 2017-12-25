@@ -3,7 +3,6 @@ const { extensionapp } = config.api
 
 export async function query (params) {
   params = pageParams(params)
-  console.log('params', params)
   return request({
     url: extensionapp.all,
     method: 'get',
