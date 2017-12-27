@@ -46,6 +46,8 @@ const stateModal = ({
   onOk,
   handleChange,
   shelfDis,
+  getShelfCount,
+  shelfCount,
   form: {
     getFieldDecorator,
     validateFields,
@@ -70,6 +72,11 @@ const stateModal = ({
 
   const selectStateChange = (val) => {
     handleChange(val)
+  }
+
+  const onSelectShelfChange = (val) => {
+    const value = JSON.parse(val).str + JSON.parse(val).num
+    getShelfCount({shelfNo: value})
   }
 
   const modalOpts = {
@@ -109,7 +116,7 @@ const stateModal = ({
             </Select>
             )}
         </FormItem>
-        <FormItem label="货架号" hasFeedback {...formItemLayout} style={{ display: (modalType !== 'setOrderState' && !shelfDis) ? 'block' :'none'}}>
+        <FormItem label="货架号" hasFeedback {...formItemLayout} style={{ display: (modalType !== 'setOrderState' && !shelfDis) ? 'block' : 'none' }}>
           {getFieldDecorator('shelfNo', {
             initialValue: item.shelfNo || 'A01',
             rules: [
@@ -118,7 +125,11 @@ const stateModal = ({
                 message: '请输入补价金额!',
               },
             ],
-          })(<SelectShelf initValue={item.shelfNo || 'A01'}/>)}
+          })(<SelectShelf onChange={onSelectShelfChange} initValue={item.shelfNo || 'A01'} />)}
+        </FormItem>
+        <FormItem label="订单数量" hasFeedback {...formItemLayout} style={{ display: (modalType !== 'setOrderState' && !shelfDis) ? 'block' : 'none' }}>
+          {getFieldDecorator('shelfNo111', {
+          })(<div style={{ paddingLeft: '14px', paddingRight: '14px' }}>{shelfCount}件(相同货架上)</div>)}
         </FormItem>
       </Form>
     </Modal>

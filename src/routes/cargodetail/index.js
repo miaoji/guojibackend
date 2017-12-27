@@ -31,7 +31,8 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     weightModalVisible,
     modifyModalVisible,
     repairModalVisible,
-    shelfDis
+    shelfDis,
+    shelfCount
   } = cargodetail
 
   const { pageSize } = pagination
@@ -94,6 +95,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     title: `${modalType === 'setOrderState' ? '设置订单状态' : '确认包裹是否到达中转站'}`,
     wrapClassName: 'vertical-center-modal',
     shelfDis,
+    shelfCount,
     onOk (data) {
       dispatch({
         type: `${modalType === 'setOrderState' ? 'cargodetail/setOrderState' : 'cargodetail/setStatus'}`,
@@ -111,6 +113,13 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       }else{
         // this.disSelect = false
       }
+    },
+    getShelfCount (val) {
+      console.log('aaa', val)
+      dispatch({
+        type: 'cargodetail/getShelfCount',
+        payload: val
+      })
     }
   }
 
@@ -209,6 +218,12 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
           currentItem: item,
           modalType: 'setStatus'
         },
+      })
+      dispatch({
+        type: 'cargodetail/getShelfCount',
+        payload: {
+          shelfNo: item.shelfNo || 'A01'
+        }
       })
     },
     onSetWeight (item) {

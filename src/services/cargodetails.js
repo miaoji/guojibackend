@@ -8,7 +8,7 @@ export async function query (params) {
   return request({
     url: cargodetail.all,
     method: 'get',
-    params,
+    params
   })
 }
 
@@ -19,8 +19,8 @@ export async function parentOrder (params) {
     method: 'get',
     params: {
       parentId: -10,
-      ...params,
-    },
+      ...params
+    }
   })
 }
 
@@ -30,7 +30,7 @@ export async function merge (params, data) {
     url: cargodetail.merge,
     method: 'post',
     params,
-    data,
+    data
   })
 }
 
@@ -40,7 +40,7 @@ export async function cancel (params, data) {
     url: cargodetail.cancel,
     method: 'post',
     params,
-    data,
+    data
   })
 }
 
@@ -49,7 +49,7 @@ export async function freight (params) {
   return request({
     url: cargodetail.setFreight,
     method: 'post',
-    params,
+    params
   })
 }
 
@@ -58,6 +58,15 @@ export async function getOrderInfo (params) {
   return request({
     url: order.getOrderInfoById,
     method: 'get',
-    params,
+    params
+  })
+}
+
+// 通过货架号shelfNo查询相同货架上的订单数量
+export async function getShelfCountByshelfNo (params) {
+  return request({
+    url: cargodetail.shelf,
+    method: 'get',
+    params
   })
 }

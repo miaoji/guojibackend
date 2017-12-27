@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
-import { query, merge, cancel, freight, getOrderInfo, parentOrder } from '../services/cargodetails'
+import { query, merge, cancel, freight, getOrderInfo, parentOrder, getShelfCountByshelfNo } from '../services/cargodetails'
 import { remove, update as status, getKdCompany } from '../services/order'
 import { create as addBoot } from '../services/boot'
 import { pageModel } from './common'
@@ -43,7 +43,8 @@ export default modelExtend(pageModel, {
     modalRadioDis: false,
     // 补价modal
     repairModalVisible: false,
-    shelfDis: true
+    shelfDis: true,
+    shelfCount: 0
   },
 
   subscriptions: {
@@ -387,11 +388,33 @@ export default modelExtend(pageModel, {
       }
     },
 
+    // 通过货架号获取该货架上的订单数量
+    *getShelfCount ({ payload }, { call, put }) {
+      console.log('payload', payload)
+      const data = yield call(getShelfCountByshelfNo, { ...payload})
+      if (data.code === 200) {
+        const shelfCount = data.obj
+        yield put({
+          type: 'setState',
+          payload: {
+            shelfCount
+          }
+        })
+      } else {
+        throw '货架信息获取失败'
+      }
+    }
+
   },
 
   reducers: {
     // 返回修改订单时的国际快递列表
-    setKdCompany (state, { payload }) {
+    setKdCompany(state, { payload }) {
+      return { ...state, ...payload }
+    },
+    
+    // 返回修改订单时的国际快递列表
+    setState(state, { payload }) {
       return { ...state, ...payload }
     },
 

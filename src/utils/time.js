@@ -35,9 +35,9 @@ export const rebuildTime = function (val) {
     const day = Math.floor(date / 86400000)
     if (day < 21) {
       return `已到件${day}天`
-    } else if (day > 21 < 22) {
+    } else if (21 < day && day < 22) {
       return '超出免费保存时间不到一天'
     }
-    return `超出免费保存时间${day - 21}天`
+    return `超出免费保存时间${day - 20}天`
   }
 }

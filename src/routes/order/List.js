@@ -71,6 +71,9 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       title: '寄件人',
       dataIndex: 'SENDER_NAME',
       key: 'SENDER_NAME',
+      render: (text) => {
+        return <span style={{ width: '80px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block' }}>{text}</span>
+      }
     }, {
       title: '寄件人手机',
       dataIndex: 'SENDER_MOBILE',
@@ -79,6 +82,9 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       title: '收件人',
       dataIndex: 'RECEIVER_NAME',
       key: 'RECEIVER_NAME',
+      render: (text) => {
+        return <span style={{width: '80px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block'}}>{text}</span>
+      }
     }, {
       title: '收件人手机',
       dataIndex: 'RECEIVER_MOBILE',
@@ -110,6 +116,7 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
         { text: '国际完成', value: 4 },
         { text: '异常订单', value: 5 },
         { text: '取消订单', value: 6 },
+        { text: '国际快递已发货', value: 7 },
       ],
       filterMultiple: false,
       render: (text) => {

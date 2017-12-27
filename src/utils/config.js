@@ -5,11 +5,11 @@ let APIV3 = ''
 // 重构API
 // 线下地址
 // APIV3 = 'http://169.254.191.166:8077'
-// APIV3 = 'http://192.168.0.231:8077'
+APIV3 = 'http://192.168.0.231:8077'
 // 线上地址(测试)
 // APIV3 = 'http://api.didalive.net/mzkd'
 // 正式地址(生产)
-APIV3 = 'http://api.mingz-tech.com'
+// APIV3 = 'http://api.mingz-tech.com'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -174,6 +174,7 @@ module.exports = {
       merge: `${APIV3}/api/orderInfo/mergeCargo`, // 合并订单
       cancel: `${APIV3}/api/orderInfo/cancelMergeCargo`, // 撤销合并订单
       setFreight: `${APIV3}/api/orderInfo/sendPayRemindMsg`, // 设置集运运费价格
+      shelf: `${APIV3}/api/orderInfo/getShelfCount`, // 根据货架号查询该货架上的订单量
     }
   }
 }
