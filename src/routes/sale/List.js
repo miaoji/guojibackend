@@ -21,7 +21,6 @@ const realtext = {
 }
 
 const List = ({ isMotion, location, ...tableProps }) => {
-  
   const columns = [
     {
       title: '分销单号',
@@ -36,7 +35,7 @@ const List = ({ isMotion, location, ...tableProps }) => {
       key: 'BATCH',
       render: (text, record) => {
         // return <Link to={`/cargodetail?batch=${record.BATCH}`}>{text}</Link>
-        return <span>{ text }</span>
+        return <span>{text}</span>
       },
     }, {
       title: '用户名',

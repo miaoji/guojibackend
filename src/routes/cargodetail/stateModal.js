@@ -15,10 +15,10 @@ const FormItem = Form.Item
 
 const formItemLayout = {
   labelCol: {
-    span: 6
+    span: 6,
   },
   wrapperCol: {
-    span: 14
+    span: 14,
   },
 }
 
@@ -27,7 +27,7 @@ const formItemLayout = {
 const realtext = {
   0: '未到件',
   1: '已到件',
-  7: '国际快递已发货'
+  7: '国际快递已发货',
 }
 
 const realStatus = {
@@ -37,7 +37,7 @@ const realStatus = {
   4: '国际完成',
   5: '异常订单',
   6: '取消订单',
-  7: '国际快递已发货'
+  7: '国际快递已发货',
 }
 
 const stateModal = ({
@@ -52,7 +52,7 @@ const stateModal = ({
     getFieldDecorator,
     validateFields,
     getFieldsValue,
-    setFieldsValue
+    setFieldsValue,
   },
   ...modalProps
 }) => {
@@ -76,7 +76,7 @@ const stateModal = ({
 
   const onSelectShelfChange = (val) => {
     const value = JSON.parse(val).str + JSON.parse(val).num
-    getShelfCount({shelfNo: value})
+    getShelfCount({ shelfNo: value })
   }
 
   const modalOpts = {

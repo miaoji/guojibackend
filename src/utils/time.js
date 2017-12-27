@@ -2,10 +2,10 @@
 // 第二个参数传入的是 字段所在的数组
 
 export const formatTime = function (val) {
-  if (val == null || val == '') {
+  if (val === null || val === '') {
     return '未知时间'
   }
-  let date = new Date(parseInt(val))
+  let date = new Date(Number(val))
   let y = date.getFullYear()
   let m = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : (date.getMonth() + 1)
   let d = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
@@ -35,9 +35,10 @@ export const rebuildTime = function (val) {
     const day = Math.floor(date / 86400000)
     if (day < 21) {
       return `已到件${day}天`
-    } else if (21 < day && day < 22) {
+    } else if (day > 21 && day < 22) {
       return '超出免费保存时间不到一天'
     }
     return `超出免费保存时间${day - 20}天`
   }
+  return '未知时间'
 }

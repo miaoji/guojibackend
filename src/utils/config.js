@@ -175,6 +175,6 @@ module.exports = {
       cancel: `${APIV3}/api/orderInfo/cancelMergeCargo`, // 撤销合并订单
       setFreight: `${APIV3}/api/orderInfo/sendPayRemindMsg`, // 设置集运运费价格
       shelf: `${APIV3}/api/orderInfo/getShelfCount`, // 根据货架号查询该货架上的订单量
-    }
-  }
+    },
+  },
 }

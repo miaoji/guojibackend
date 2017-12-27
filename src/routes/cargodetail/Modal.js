@@ -92,7 +92,7 @@ const modal = ({
               <Radio disabled={modalRadioDis} value={'1'}>合单到指定订单</Radio>
             </Radio.Group>)}
         </FormItem>
-        <div className={classnames({ [styles.hide]: modalDis})}>
+        <div className={classnames({ [styles.hide]: modalDis })}>
           <FormItem label="指定订单单号" hasFeedback {...formItemLayout}>
             {getFieldDecorator('parentId', {
               rules: [

@@ -51,7 +51,7 @@ export default modelExtend(pageModel, {
     intlPrice: {},
 
     insuredVisiable: false,
-    packageBin: []
+    packageBin: [],
   },
 
   subscriptions: {
@@ -90,13 +90,13 @@ export default modelExtend(pageModel, {
         throw data.msg || '无法跟服务器建立有效连接'
       }
     },
-    
+
     *create ({ payload }, { call, put }) {
       let ss = []
-      payload.receiverCountry?payload.receiverCountry=JSON.parse(payload.receiverCountry).name:payload.receiverCountry=undefined
-      payload.wxUserId?payload.wxUserId = payload.wxUserId.split('/--/')[0]:payload.wxUserId = undefined
+      payload.receiverCountry ? payload.receiverCountry = JSON.parse(payload.receiverCountry).name : payload.receiverCountry = undefined
+      payload.wxUserId ? payload.wxUserId = payload.wxUserId.split('/--/')[0] : payload.wxUserId = undefined
       if (payload.packageBin.length) {
-        for (let i=0; i < payload.packageBin.length; i++) {
+        for (let i = 0; i < payload.packageBin.length; i++) {
           const item = payload.packageBin[i]
           ss.push({
             wxUserId: payload.wxUserId,
@@ -123,7 +123,7 @@ export default modelExtend(pageModel, {
             // 订单类型： 0直邮， 1集运
             status: 1,
             // 订单来源： 0微信， 1后台， 2网页未登录， 3网页已登录
-            orderType: 1
+            orderType: 1,
           })
         }
       }
@@ -141,15 +141,15 @@ export default modelExtend(pageModel, {
     *setPackageBin ({ payload }, { call, put, select }) {
       const packageBin = payload.packageBin
       packageBin.push({
-        orderName:payload.orderName,
-        totalFee:payload.totalFee,
-        kdCompanyCodeCn:payload.kdCompanyCodeCn,
-        cnNo:payload.cnNo,
+        orderName: payload.orderName,
+        totalFee: payload.totalFee,
+        kdCompanyCodeCn: payload.kdCompanyCodeCn,
+        cnNo: payload.cnNo,
       })
       yield put({
         type: 'setStates',
         payload: {
-          packageBin: packageBin,
+          packageBin,
         },
       })
     },
@@ -232,7 +232,7 @@ export default modelExtend(pageModel, {
     setStates (state, { payload }) {
       return { ...state, ...payload }
     },
-    
+
     // 显示modal
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
@@ -242,7 +242,7 @@ export default modelExtend(pageModel, {
     hideModal (state) {
       return { ...state, modalVisible: false, insuredVisiable: false, parcelDis: true, productDis: true }
     },
-    
+
     // 显示modal里面的保价金额输入框
     showInsured (state) {
       return { ...state, insuredVisiable: true }

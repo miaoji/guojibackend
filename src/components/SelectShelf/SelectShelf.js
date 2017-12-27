@@ -8,44 +8,44 @@ const number = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'
 const data = {}
 
 for (let i = 0; i < str.length; i++) {
-    data[str[i]]=number
+  data[str[i]] = number
 }
 class SelectShelf extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            str: '',
-            shelfStr: props.initValue.split('')[0],
-            shelfNum: props.initValue.split('')[1] + '' + props.initValue.split('')[2]
-        }
+  constructor (props) {
+    super(props)
+    this.state = {
+      str: '',
+      shelfStr: props.initValue.split('')[0],
+      shelfNum: `${props.initValue.split('')[1]}${props.initValue.split('')[2]}`,
     }
-    handlesheleStrChange = (value) => {
-        this.setState({
-            str: value.split('')[0],
-            shelfStr: data[value.split('')[0]],
-            shelfNum: '01'
-        })
-        this.props.onChange(JSON.stringify({
-            str: value.split('')[0],
-            num: '01'
-        }))
-    }
-    onshelfNumChange = (value) => {
-        this.setState({
-            shelfNum: value,
-        })
-        this.props.onChange(JSON.stringify({
-            str: this.state.str,
-            num: value
-        }))
-    }
-    render() {
-        const sheleStrOptions = str.map(item => {
-            const val = item + item.toLowerCase()
-            return <Option key={val}>{item}</Option>
-        })
-        const cityOptions = data[str[0]].map(city => <Option key={city}>{city}</Option>)
-        return (
+  }
+  handlesheleStrChange = (value) => {
+    this.setState({
+      str: value.split('')[0],
+      shelfStr: data[value.split('')[0]],
+      shelfNum: '01',
+    })
+    this.props.onChange(JSON.stringify({
+      str: value.split('')[0],
+      num: '01',
+    }))
+  }
+  onshelfNumChange = (value) => {
+    this.setState({
+      shelfNum: value,
+    })
+    this.props.onChange(JSON.stringify({
+      str: this.state.str,
+      num: value,
+    }))
+  }
+  render () {
+    const sheleStrOptions = str.map(item => {
+      const val = item + item.toLowerCase()
+      return <Option key={val}>{item}</Option>
+    })
+    const cityOptions = data[str[0]].map(city => <Option key={city}>{city}</Option>)
+    return (
             <div>
                 <Select showSearch defaultValue={this.state.shelfStr} style={{ width: 100, marginRight: 20 }} onChange={this.handlesheleStrChange}>
                     {sheleStrOptions}
@@ -54,8 +54,8 @@ class SelectShelf extends React.Component {
                     {cityOptions}
                 </Select>
             </div>
-        )
-    }
+    )
+  }
 }
 
 export default Form.create()(SelectShelf)

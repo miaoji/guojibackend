@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
-import { YQL, CORS } from './config'
+// import { YQL, CORS } from './config'
 import jsonp from 'jsonp'
 import lodash from 'lodash'
 import pathToRegexp from 'path-to-regexp'
@@ -58,12 +58,12 @@ const fetch = (options) => {
   switch (method.toLowerCase()) {
     case 'get':
       return axios({
-      	url,
-      	method: 'get',
+        url,
+        method: 'get',
         params: cloneData || params,
         timeout: 5000,
         headers: {
-        	token: storage({ key: 'token' }),
+          token: storage({ key: 'token' }),
         },
       })
     case 'delete':
@@ -78,11 +78,11 @@ const fetch = (options) => {
       })
     case 'post':
       return axios({
-      	url,
-      	method: 'post',
-      	data: cloneData,
+        url,
+        method: 'post',
+        data: cloneData,
         params,
-      	timeout: 5000,
+        timeout: 5000,
         headers: {
           token: storage({ key: 'token' }),
         },
@@ -121,9 +121,9 @@ export default function request (options) {
       msg = data.message || statusText
       // 判断token是否失效
       if (response.status === 401) {
-        storage({type:'clear'})
+        storage({ type: 'clear' })
         setTimeout(() => {
-          window.location.href = window.location.origin + '/login'
+          window.location.href = `${window.location.origin}/login`
         }, 3000)
         return { success: false, statusCode, msg: '用户登陆状态已失效,页面将在3秒后自动跳转回登录页,请登录' }
       }

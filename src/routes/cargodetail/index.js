@@ -32,7 +32,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     modifyModalVisible,
     repairModalVisible,
     shelfDis,
-    shelfCount
+    shelfCount,
   } = cargodetail
 
   const { pageSize } = pagination
@@ -88,7 +88,7 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
 
   const stateModalProps = {
     item: currentItem,
-    modalType: modalType,
+    modalType,
     visible: stateModalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['cargodetail/setStatus'],
@@ -106,11 +106,11 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       dispatch({ type: 'cargodetail/hideStateModal' })
     },
     handleChange (val) {
-      if(val==='已到件'){
+      if (val === '已到件') {
         dispatch({
-          type: 'cargodetail/setShelfDis'
+          type: 'cargodetail/setShelfDis',
         })
-      }else{
+      } else {
         // this.disSelect = false
       }
     },
@@ -118,9 +118,9 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       console.log('aaa', val)
       dispatch({
         type: 'cargodetail/getShelfCount',
-        payload: val
+        payload: val,
       })
-    }
+    },
   }
 
   const weightModalProps = {
@@ -216,14 +216,14 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         type: 'cargodetail/showStateModal',
         payload: {
           currentItem: item,
-          modalType: 'setStatus'
+          modalType: 'setStatus',
         },
       })
       dispatch({
         type: 'cargodetail/getShelfCount',
         payload: {
-          shelfNo: item.shelfNo || 'A01'
-        }
+          shelfNo: item.shelfNo || 'A01',
+        },
       })
     },
     onSetWeight (item) {
@@ -247,8 +247,8 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       dispatch({
         type: 'cargodetail/showRepairModal',
         payload: {
-          currentItem: item
-        }
+          currentItem: item,
+        },
       })
     },
     onDeleteItem (id) {
@@ -262,8 +262,8 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         type: 'cargodetail/showStateModal',
         payload: {
           currentItem: item,
-          modalType: 'setOrderState'
-        }
+          modalType: 'setOrderState',
+        },
       })
     },
     rowSelection: {
@@ -330,9 +330,6 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
           modalType: 'create',
         },
       })
-    },
-    switchIsMotion () {
-      dispatch({ type: 'cargodetail/switchIsMotion' })
     },
   }
 

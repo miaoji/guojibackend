@@ -18,5 +18,5 @@ export {
   Editor,
   FilterItem,
   layer,
-  SelectShelf
+  SelectShelf,
  }

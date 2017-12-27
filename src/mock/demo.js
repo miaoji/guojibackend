@@ -4,14 +4,14 @@ const config = require('../utils/config')
 const { apiPrefix } = config
 
 let demosListData = Mock.mock({
-  'data': [{
+  data: [{
     str: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
     'list|99': [
       {
-        "number|+1": 1,
-      }
-    ]
-  }]
+        'number|+1': 1,
+      },
+    ],
+  }],
 })
 
 let database = demosListData.data
@@ -73,8 +73,8 @@ module.exports = {
     }
 
     res.status(200).json({
-      data: newData.slice((page - 1) * pageSize, page * pageSize)
+      data: newData.slice((page - 1) * pageSize, page * pageSize),
     })
-  }
+  },
 
 }

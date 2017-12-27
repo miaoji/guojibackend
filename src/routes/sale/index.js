@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Sale = ({ location, dispatch, sale, loading }) => {
-  const { 
+  const {
     list,
     pagination,
     currentItem,
@@ -27,7 +27,7 @@ const Sale = ({ location, dispatch, sale, loading }) => {
     intlPrice,
     insuredVisiable,
     packageBin,
-    selectKdCompany
+    selectKdCompany,
   } = sale
   const { pageSize } = pagination
 
@@ -71,7 +71,7 @@ const Sale = ({ location, dispatch, sale, loading }) => {
       })
     },
     setInsuredVisiable (data) {
-      switch(data) {
+      switch (data) {
         case 1:
           dispatch({
             type: 'sale/showInsured',
@@ -89,7 +89,7 @@ const Sale = ({ location, dispatch, sale, loading }) => {
     setPackageBin (data) {
       dispatch({
         type: 'sale/setPackageBin',
-        payload: data
+        payload: data,
       })
     },
     onOk (data) {
@@ -144,14 +144,14 @@ const Sale = ({ location, dispatch, sale, loading }) => {
     onAdd () {
       dispatch({ type: 'sale/getCountry' })
       dispatch({ type: 'sale/getWeChatUser' })
-      dispatch({ type: 'sale/getKdCompany'})
+      dispatch({ type: 'sale/getKdCompany' })
       dispatch({
         type: 'sale/showModal',
         payload: {
           modalType: 'create',
         },
       })
-    }
+    },
   }
 
   return (

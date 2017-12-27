@@ -43,7 +43,7 @@ const modal = ({
   ...modalProps
 }) => {
   const handleOk = () => {
-    if (packageBin.length===0) {
+    if (packageBin.length === 0) {
       message.warn('您还没有录入包裹信息呢!!!')
       return
     }
@@ -54,7 +54,7 @@ const modal = ({
       const data = {
         ...getFieldsValue(),
         key: item.key,
-        packageBin
+        packageBin,
       }
       onOk(data)
     })
@@ -124,7 +124,7 @@ const modal = ({
       weight: data.weight,
       countryId: JSON.parse(data.receiverCountry).id,
       packageTypeId: JSON.parse(data.packageType).id,
-      productTypeId: data.productType
+      productTypeId: data.productType,
     }
     getIntlPrice(newdata)
   }
@@ -149,13 +149,13 @@ const modal = ({
     }
 
     setPackageBin({
-      orderName:data.orderName,
-      totalFee:data.totalFee,
-      kdCompanyCodeCn:data.kdCompanyCodeCn,
-      cnNo:data.cnNo,
-      packageBin
+      orderName: data.orderName,
+      totalFee: data.totalFee,
+      kdCompanyCodeCn: data.kdCompanyCodeCn,
+      cnNo: data.cnNo,
+      packageBin,
     })
-    setFieldsValue({ orderName: undefined,totalFee: undefined,kdCompanyCodeCn: undefined,cnNo: undefined,})
+    setFieldsValue({ orderName: undefined, totalFee: undefined, kdCompanyCodeCn: undefined, cnNo: undefined })
   }
 
   const insuredChange = function (e) {
@@ -173,7 +173,7 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <p style={{textAlign:'center',marginBottom:'20px'}}>-- 选择对应用户信息 --</p>
+        <p style={{ textAlign: 'center', marginBottom: '20px' }}>-- 选择对应用户信息 --</p>
         <hr className={classnames({ [styles.hr]: true })} />
         <FormItem style={{ marginTop: '6px' }} label="微信用户" hasFeedback {...formItemLayout}>
           {getFieldDecorator('wxUserId', {
@@ -186,7 +186,7 @@ const modal = ({
           })(<Select showSearch placeholder="点击选择可按用户名和手机号码搜索">{selectWeChatUser}</Select>)}
         </FormItem>
         <hr className={classnames({ [styles.hr]: true })} />
-        <p style={{textAlign:'center',marginBottom:'20px'}}>-- 添加收件地址信息 --</p>
+        <p style={{ textAlign: 'center', marginBottom: '20px' }}>-- 添加收件地址信息 --</p>
         <hr className={classnames({ [styles.hr]: true })} />
         <FormItem label="收件人姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverName', {
@@ -238,7 +238,7 @@ const modal = ({
           })(<Input placeholder="请输入收件人地址邮编!" />)}
         </FormItem>
         <hr className={classnames({ [styles.hr]: true })} />
-        <p style={{textAlign:'center',marginBottom:'20px'}}>-- 添加包裹 --</p>
+        <p style={{ textAlign: 'center', marginBottom: '20px' }}>-- 添加包裹 --</p>
         <hr className={classnames({ [styles.hr]: true })} />
         <FormItem label="包裹品名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orderName', {
@@ -279,11 +279,11 @@ const modal = ({
         <FormItem label="确认创建" hasFeedback {...formItemLayout}>
           {getFieldDecorator('aaaa', {
             rules: [],
-          })(<Button onClick={sendClick} size="large" type='primary'>创建</Button>)}
+          })(<Button onClick={sendClick} size="large" type="primary">创建</Button>)}
         </FormItem>
-        <div className={classnames({ [styles.hide]: packageBin.length===0?true:false})}>
+        <div className={classnames({ [styles.hide]: packageBin.length === 0 })}>
           <hr className={classnames({ [styles.hr]: true })} />
-          <table className={classnames({[styles.tables]: true})}>
+          <table className={classnames({ [styles.tables]: true })}>
             <tr>
               <td>品名</td>
               <td>价值</td>

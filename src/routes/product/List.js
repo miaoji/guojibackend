@@ -51,16 +51,16 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'CARGO_TYPE',
       filters: [
         { text: '直邮', value: 0 },
-        { text: '集运', value: 1 }
+        { text: '集运', value: 1 },
       ],
       filterMultiple: false,
       render: (text) => {
         const realText = {
           0: '直邮',
-          1: '集运'
+          1: '集运',
         }
-        return <span>{ realText[text]}</span>
-      }
+        return <span>{realText[text]}</span>
+      },
     }, {
       title: '备注',
       dataIndex: 'REMARK',

@@ -21,7 +21,6 @@ const realtext = {
 }
 
 const List = ({ isMotion, location, ...tableProps }) => {
-  
   const columns = [
     {
       title: '客户编号',

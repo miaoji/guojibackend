@@ -18,7 +18,7 @@ const realtext = {
   4: '国际完成',
   5: '异常订单',
   6: '取消订单',
-  7: '国际快递已发货'
+  7: '国际快递已发货',
 }
 const realColor = {
   0: 'OrangeRed',
@@ -127,10 +127,9 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
       render: (text, record) => {
         if (record.parentId < 0) {
           return <span>{text ? Number(text) / 100 : 0}元</span>
-        }else{
-          return <span style={{color: '#bbb'}}>/</span>
         }
-      }
+        return <span style={{ color: '#bbb' }}>/</span>
+      },
     }, {
       title: '实付总金额',
       dataIndex: 'cashFee',
@@ -138,11 +137,10 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
       render: (text, record) => {
         if (record.parentId < 0) {
           return <span>{text ? Number(text) / 100 : 0}元</span>
-        }else{
-          return <span style={{color: '#bbb'}}>/</span>
         }
-      }
-    },  {
+        return <span style={{ color: '#bbb' }}>/</span>
+      },
+    }, {
       title: '包裹状态',
       dataIndex: 'parentId',
       key: 'parentId',
@@ -156,7 +154,7 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
         }
         return <span>{newParentId[text]}</span>
       },
-    },{
+    }, {
       title: '订单状态',
       dataIndex: 'status',
       key: 'status',
@@ -217,10 +215,9 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
         let time = new Date().getTime() - Number(record.confirmTime)
         if (time <= 1814400000) {
           return <span>0 元</span>
-        } else {
-          let cost = Math.ceil((time-1814400000)/86400000)
-          return <span>{cost} 元</span>
         }
+        let cost = Math.ceil((time - 1814400000) / 86400000)
+        return <span>{cost} 元</span>
       },
     }, {
       title: '操作',

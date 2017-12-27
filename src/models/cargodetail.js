@@ -17,7 +17,7 @@ const realState = {
   4: '国际完成',
   5: '异常订单',
   6: '取消订单',
-  7: '国际快递已发货'
+  7: '国际快递已发货',
 }
 
 export default modelExtend(pageModel, {
@@ -44,22 +44,33 @@ export default modelExtend(pageModel, {
     // 补价modal
     repairModalVisible: false,
     shelfDis: true,
-    shelfCount: 0
+    shelfCount: 0,
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/cargodetail') {
-          dispatch({ type: 'setSelectedEmpty' })
-          dispatch({ type: 'setListEmpty' })
+          dispatch({
+            type: 'setStates',
+            payload: {
+              selectedRowKeys: [],
+              selectParentOrder: [],
+            },
+          })
+          dispatch({
+            type: 'setStates',
+            payload: {
+              list: [],
+            },
+          })
           dispatch({
             type: 'query',
             payload: location.query,
           })
         }
       })
-    }
+    },
   },
 
   effects: {
@@ -99,7 +110,7 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      }else if (data.code === 200 && !data.obj) {
+      } else if (data.code === 200 && !data.obj) {
         message.warn('该批次号下已经没有可用子订单!!!')
         yield put(routerRedux.push('/cargo'))
       } else {
@@ -151,7 +162,13 @@ export default modelExtend(pageModel, {
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
-        yield put({ type: 'setSelectedEmpty' })
+        yield put({
+          type: 'setStates',
+          payload: {
+            selectedRowKeys: [],
+            selectParentOrder: [],
+          },
+        })
       } else {
         throw data.msg || '无法跟服务器建立有效连接'
       }
@@ -208,17 +225,17 @@ export default modelExtend(pageModel, {
     *setStatus ({ payload }, { select, put, call }) {
       if (payload.shelfNo && payload.shelfNo.length !== 3 && payload.cargoStatus === '已到件') {
         const shelf = JSON.parse(payload.shelfNo)
-        payload.shelfNo = shelf.str+''+shelf.num
+        payload.shelfNo = `${shelf.str}${shelf.num}`
       } else if (payload.cargoStatus === '未到件') {
         payload.shelfNo = ''
-      } else if (payload.shelfNo === 'A01' ) {
+      } else if (payload.shelfNo === 'A01') {
         payload.shelfNo = 'A01'
       } else {
         payload.shelfNo = undefined
       }
       const realStates = {
-        '未到件': 0,
-        '已到件': 1,
+        未到件: 0,
+        已到件: 1,
       }
       const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
       const date = new Date()
@@ -227,7 +244,7 @@ export default modelExtend(pageModel, {
         id,
         cargoStatus: realStates[payload.cargoStatus],
         confirmTime: newDate,
-        shelfNo: payload.shelfNo
+        shelfNo: payload.shelfNo,
       })
       if (data.code === 200 && data.success) {
         message.success('操作成功')
@@ -242,8 +259,8 @@ export default modelExtend(pageModel, {
     *setOrderState ({ payload }, { call, put, select }) {
       let state = yield select(({ cargodetail }) => cargodetail.currentItem.status)
       const realState = {
-        '待付款': 1,
-        '已付款': 2
+        待付款: 1,
+        已付款: 2,
       }
       if (realState[payload.cargoStatus]) {
         state = realState[payload.cargoStatus]
@@ -252,13 +269,13 @@ export default modelExtend(pageModel, {
       const data = yield call(status, {
         id,
         status: state,
-        userId: JSON.parse(storage({key: 'user'})).id
+        userId: JSON.parse(storage({ key: 'user' })).id,
       })
       if (data.code === 200) {
         message.success('操作成功')
         yield put({ type: 'query' })
-        yield put({ type: 'hideStateModal'})
-      }else{
+        yield put({ type: 'hideStateModal' })
+      } else {
         throw data.msg || '无法跟服务器建立有效连接'
       }
     },
@@ -336,7 +353,7 @@ export default modelExtend(pageModel, {
           children.push(<Option key={'10'}>请选择其他方式合单</Option>)
         }
         yield put({
-          type: 'setParentOrder',
+          type: 'setStates',
           payload: {
             selectParentOrder: children,
             modalRadioDis: dis,
@@ -351,14 +368,14 @@ export default modelExtend(pageModel, {
     *setMergeSelectState ({ payload }, { put }) {
       if (payload.parentId !== '10' && payload.cargoType === '1') {
         yield put({
-          type: 'setParentOrder',
+          type: 'setStates',
           payload: {
             modalDis: false,
           },
         })
       } else {
         yield put({
-          type: 'setParentOrder',
+          type: 'setStates',
           payload: {
             modalDis: true,
           },
@@ -378,7 +395,7 @@ export default modelExtend(pageModel, {
           }
         }
         yield put({
-          type: 'setKdCompany',
+          type: 'setStates',
           payload: {
             selectKdCompany: children,
           },
@@ -391,46 +408,26 @@ export default modelExtend(pageModel, {
     // 通过货架号获取该货架上的订单数量
     *getShelfCount ({ payload }, { call, put }) {
       console.log('payload', payload)
-      const data = yield call(getShelfCountByshelfNo, { ...payload})
+      const data = yield call(getShelfCountByshelfNo, { ...payload })
       if (data.code === 200) {
         const shelfCount = data.obj
         yield put({
-          type: 'setState',
+          type: 'setStates',
           payload: {
-            shelfCount
-          }
+            shelfCount,
+          },
         })
       } else {
         throw '货架信息获取失败'
       }
-    }
+    },
 
   },
 
   reducers: {
-    // 返回修改订单时的国际快递列表
-    setKdCompany(state, { payload }) {
+    // 修改state的参数
+    setStates (state, { payload }) {
       return { ...state, ...payload }
-    },
-    
-    // 返回修改订单时的国际快递列表
-    setState(state, { payload }) {
-      return { ...state, ...payload }
-    },
-
-    // 返回合单时的订单下拉菜单
-    setParentOrder (state, { payload }) {
-      return { ...state, ...payload }
-    },
-
-    // 在选中待合单订单进行合单动作完成后,清除订单的选中状态
-    setSelectedEmpty (state, { payload }) {
-      return { ...state, selectedRowKeys: [], selectParentOrder: [] }
-    },
-
-    // 解决页面加载时的缓存问题(页面加载时,会优先加载缓存)
-    setListEmpty (state, { payload }) {
-      return { ...state, list: [] }
     },
 
     showModal (state, { payload }) {
@@ -458,7 +455,7 @@ export default modelExtend(pageModel, {
 
     // 控制货架号Input的显示与隐藏
     setShelfDis (state, { payload }) {
-      return { ...state, ...payload, shelfDis: false}
+      return { ...state, ...payload, shelfDis: false }
     },
 
     hideStateModal (state) {
@@ -490,16 +487,6 @@ export default modelExtend(pageModel, {
 
     hideRepairModal (state) {
       return { ...state, repairModalVisible: false }
-    },
-
-    switchIsMotion (state) {
-      // localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
-      storage({
-        key: 'userIsMotion',
-        val: !state.isMotion,
-        type: 'set',
-      })
-      return { ...state, isMotion: !state.isMotion }
     },
 
   },
