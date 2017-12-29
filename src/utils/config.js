@@ -176,5 +176,19 @@ module.exports = {
       setFreight: `${APIV3}/api/orderInfo/sendPayRemindMsg`, // 设置集运运费价格
       shelf: `${APIV3}/api/orderInfo/getShelfCount`, // 根据货架号查询该货架上的订单量
     },
-  },
+    // 推广等级配置
+    grade: {
+      all: `${APIV3}/api/spreadLevel/index`, // 查询
+      create: `${APIV3}/api/spreadLevel/add`, // 新增
+      update: `${APIV3}/api/spreadLevel/modById`, // 修改
+      hide: `${APIV3}/api/spreadLevel/delById` // 删除
+    },
+    // 推广用户管理
+    spreaduser: {
+      all: `${APIV3}/api/spreadUser/index`, // 查询
+      create: `${APIV3}/api/spreadUser/add`, // 新增
+      update: `${APIV3}/api/spreadUser/modById`, // 修改
+      hide: `${APIV3}/api/spreadUser/delById`, // 删除
+    }
+  }
 }

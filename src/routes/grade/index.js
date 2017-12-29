@@ -7,39 +7,33 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Sale = ({ location, dispatch, sale, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectNation } = sale
+const Grade = ({ location, dispatch, grade, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = grade
   const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: false,
-    confirmLoading: loading.effects['sale/update'],
+    confirmLoading: loading.effects['grade/update'],
     title: `${modalType === 'create' ? '新增包裹类型' : '修改包裹类型'}`,
     wrapClassName: 'vertical-center-modal',
-    selectNation,
     onOk (data) {
       dispatch({
-        type: `sale/${modalType}`,
+        type: `grade/${modalType}`,
         payload: data,
-      })
-    },
-    getNation (data) {
-      dispatch({
-        type: 'sale/getNation',
       })
     },
     onCancel () {
       dispatch({
-        type: 'sale/hideModal',
+        type: 'grade/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['sale/query'],
+    loading: loading.effects['grade/query'],
     pagination,
     location,
     isMotion,
@@ -54,28 +48,19 @@ const Sale = ({ location, dispatch, sale, loading }) => {
         },
       }))
     },
-    onMarkItem (id) {
-      dispatch({
-        type: 'sale/markBlackList',
-        payload: id,
-      })
-    },
     onDeleteItem (id) {
       dispatch({
-        type: 'sale/delete',
+        type: 'grade/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'sale/showModal',
+        type: 'grade/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
         },
-      })
-      dispatch({
-        type: 'sale/getNation',
       })
     },
   }
@@ -97,34 +82,31 @@ const Sale = ({ location, dispatch, sale, loading }) => {
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/sale',
+        pathname: '/grade',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/sale',
+        pathname: '/grade',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'sale/showModal',
+        type: 'grade/showModal',
         payload: {
           modalType: 'create',
         },
       })
-      dispatch({
-        type: 'sale/getNation',
-      })
     },
     switchIsMotion () {
-      dispatch({ type: 'sale/switchIsMotion' })
+      dispatch({ type: 'grade/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'sale/multiDelete',
+      type: 'grade/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -134,28 +116,17 @@ const Sale = ({ location, dispatch, sale, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
-      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }
 
-Sale.propTypes = {
-  sale: PropTypes.object,
+Grade.propTypes = {
+  grade: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ sale, loading }) => ({ sale, loading }))(Sale)
+export default connect(({ grade, loading }) => ({ grade, loading }))(Grade)

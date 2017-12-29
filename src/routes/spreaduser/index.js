@@ -7,39 +7,43 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Sale = ({ location, dispatch, sale, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys, selectNation } = sale
+const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
+  const { qrTypeDis, spreadTypeDis, selectGrade, selectWxuser, list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = spreaduser
   const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: false,
-    confirmLoading: loading.effects['sale/update'],
+    confirmLoading: loading.effects['spreaduser/update'],
     title: `${modalType === 'create' ? '新增包裹类型' : '修改包裹类型'}`,
     wrapClassName: 'vertical-center-modal',
-    selectNation,
+    selectWxuser,
+    selectGrade,
+    spreadTypeDis,
+    qrTypeDis,
     onOk (data) {
       dispatch({
-        type: `sale/${modalType}`,
+        type: `spreaduser/${modalType}`,
         payload: data,
-      })
-    },
-    getNation (data) {
-      dispatch({
-        type: 'sale/getNation',
       })
     },
     onCancel () {
       dispatch({
-        type: 'sale/hideModal',
+        type: 'spreaduser/hideModal',
       })
     },
+    handleChange (val) {
+      dispatch({
+        type: 'spreaduser/updateState',
+        payload: val
+      })
+    }
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['sale/query'],
+    loading: loading.effects['spreaduser/query'],
     pagination,
     location,
     isMotion,
@@ -54,29 +58,22 @@ const Sale = ({ location, dispatch, sale, loading }) => {
         },
       }))
     },
-    onMarkItem (id) {
-      dispatch({
-        type: 'sale/markBlackList',
-        payload: id,
-      })
-    },
     onDeleteItem (id) {
       dispatch({
-        type: 'sale/delete',
+        type: 'spreaduser/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'sale/showModal',
+        type: 'spreaduser/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
         },
       })
-      dispatch({
-        type: 'sale/getNation',
-      })
+      dispatch({ type: 'spreaduser/getGradeInfo' })
+      dispatch({ type: 'spreaduser/getWxuserInfo' })
     },
   }
 
@@ -97,34 +94,33 @@ const Sale = ({ location, dispatch, sale, loading }) => {
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/sale',
+        pathname: '/spreaduser',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/sale',
+        pathname: '/spreaduser',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'sale/showModal',
+        type: 'spreaduser/showModal',
         payload: {
           modalType: 'create',
         },
       })
-      dispatch({
-        type: 'sale/getNation',
-      })
+      dispatch({ type: 'spreaduser/getGradeInfo' })
+      dispatch({ type: 'spreaduser/getWxuserInfo' })
     },
     switchIsMotion () {
-      dispatch({ type: 'sale/switchIsMotion' })
+      dispatch({ type: 'spreaduser/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'sale/multiDelete',
+      type: 'spreaduser/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -134,28 +130,17 @@ const Sale = ({ location, dispatch, sale, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
-      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }
 
-Sale.propTypes = {
-  sale: PropTypes.object,
+Spreaduser.propTypes = {
+  spreaduser: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ sale, loading }) => ({ sale, loading }))(Sale)
+export default connect(({ spreaduser, loading }) => ({ spreaduser, loading }))(Spreaduser)

@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { Link } from 'dva/router'
+import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
@@ -17,7 +18,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       confirm({
         title: '确定要删除这一条包裹类型吗?',
         onOk () {
-          onDeleteItem(record.ID)
+          onDeleteItem(record.id)
         },
       })
     }
@@ -25,39 +26,63 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
-      title: '目的地国家',
-      dataIndex: 'country_cn',
-      key: 'country_cn',
+      title: '微信用户',
+      dataIndex: 'nickName',
+      key: 'nickName',
       render: (text) => <span>{text}</span>,
     }, {
-      title: '包裹类型名称',
-      dataIndex: 'NAME_CN',
-      key: 'NAME_CN',
+      title: '推广等级',
+      dataIndex: 'spreadName',
+      key: 'spreadName',
     }, {
-      title: '包裹类型英文名',
-      dataIndex: 'NAME_EN',
-      key: 'NAME_EN',
+      title: '关注途径',
+      dataIndex: 'consumptionRatio',
+      key: 'consumptionRatio',
+      render: (text,record) => {
+        let replText = ''
+        if (record.wxQrId) {
+          replText = '二维码推广'
+        }
+        if (record.wxAppId) {
+          replText = 'APP推广'
+        }
+        return <span>{replText}</span>
+      },
     }, {
-      title: '最小重量',
-      dataIndex: 'MIN_RANGE',
-      key: 'MIN_RANGE',
-      render: (text) => <span>{text}kg</span>,
-    }, {
-      title: '最大重量',
-      dataIndex: 'MAX_RANGE',
-      key: 'MAX_RANGE',
-      render: (text) => <span>{text}kg</span>,
-    }, {
-      title: '备注',
-      dataIndex: 'REMARK',
-      key: 'REMARK',
+      title: '用户推广比例',
+      dataIndex: 'ConsumptionRatio',
+      key: 'ConsumptionRatio',
       render: (text) => <span>{text}</span>,
+    }, {
+      title: '晋级类型',
+      dataIndex: 'spreadUserType',
+      key: 'spreadUserType',
+      render: (text) => {
+        const replText = {
+          0: '自动',
+          1: '手动'
+        }
+        return <span>{replText[text]}</span>
+      },
+    }, {
+      title: '团队消费金额',
+      dataIndex: 'consumeTeam',
+      key: 'consumeTeam',
+      render: (text) => <span>{text?text:'0'}</span>,
+    }, {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
+      render: (text) => {
+        const raplTime = time.formatTime(text?text:'')
+        return <span>{raplTime}</span>
+      },
     }, {
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改类型' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },
     },
   ]

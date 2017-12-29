@@ -1,35 +1,16 @@
 import modelExtend from 'dva-model-extend'
-import { message } from 'antd'
-import { query } from '../services/cargos'
-import { create, getKdCompany } from '../services/order'
+import { message, Select } from 'antd'
+import { create, remove, update, markBlack } from '../services/parceltype'
+import * as salesService from '../services/parceltypes'
+import * as countriesService from '../services/countries'
 import { pageModel } from './common'
-import { config, time } from '../utils'
-import * as location from '../services/countries'
-import * as showPTypeByCounIdsService from '../services/showPTypeByCounIds'
-import * as showproductNamesService from '../services/showproductNames'
-import { query as quertWeChatUser } from '../services/wxuser'
-import { create as addBoot } from '../services/boot'
+import { config, storage } from '../utils'
 
+const { query } = salesService
+const contryQuery = countriesService.query
+const getCountryId = countriesService.getCountryId
 const { prefix } = config
-
-
-const getCountry = location.query // 获取国家信息
-const getProvince = location.getProvinceId // 获取省份信息
-const getCity = location.getCityId // 获取市级信息
-const getCounty = location.getCountyId // 获取县区级信息
-const getCountryId = location.getCountryId // 通过国家姓名获取国家ID
-
-const parceltypeQuery = showPTypeByCounIdsService.query // 通过国家信息获取包裹类型
-const producttypeQuery = showproductNamesService.query // 通过包裹类型获取产品类型
-// 状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
-const realtext = {
-  1: '待付款',
-  2: '付款完成',
-  3: '国内完成',
-  4: '国际完成',
-  5: '异常订单',
-  6: '取消订单',
-}
+const Option = Select.Option
 
 export default modelExtend(pageModel, {
   namespace: 'sale',
@@ -38,24 +19,13 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    selectedRowKeys: [],
     isMotion: false,
-
     selectNation: [],
-
-    selectParcelType: [],
-    selectProductType: [],
-    parcelDis: true,
-    productDis: true,
-
-    selectWeChatUser: [],
-    intlPrice: {},
-
-    insuredVisiable: false,
-    packageBin: [],
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/sale') {
           dispatch({
@@ -69,12 +39,9 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data.code === 200) {
-        for (let item in data.obj) {
-          data.obj[item].CREATE_TIME = time.formatTime(data.obj[item].CREATE_TIME)
-        }
+      if (data.code === 200 && data.success) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -91,88 +58,19 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
-      let ss = []
-      payload.receiverCountry ? payload.receiverCountry = JSON.parse(payload.receiverCountry).name : payload.receiverCountry = undefined
-      payload.wxUserId ? payload.wxUserId = payload.wxUserId.split('/--/')[0] : payload.wxUserId = undefined
-      if (payload.packageBin.length) {
-        for (let i = 0; i < payload.packageBin.length; i++) {
-          const item = payload.packageBin[i]
-          ss.push({
-            wxUserId: payload.wxUserId,
-            // 微信userId
-            receiverName: payload.receiverName,
-            // 收件人姓名
-            receiverMobile: payload.receiverMobile,
-            // 收件人手机号码
-            receiverCountry: payload.receiverCountry,
-            // 收件人国家
-            receiverAddress: payload.receiverAddress,
-            // 收件人地址
-            receiverPostcode: payload.receiverPostcode,
-            // 收件地址邮编
-            orderName: item.orderName,
-            // 包裹名称
-            totalFee: Number(item.totalFee) * 100,
-            // 价值
-            kdCompanyCodeCn: item.kdCompanyCodeCn.split('/-/')[1] || undefined,
-            // 国内快递公司
-            cnNo: item.cnNo,
-            // 国内单号
-            type: 1,
-            // 订单类型： 0直邮， 1集运
-            status: 1,
-          })
-        }
-      }
-      const data = yield call(create, ss)
+    *getNation({ payload = {} }, { call, put }) {
+      const data = yield call(contryQuery)
       if (data.code === 200) {
-        yield put({ type: 'hideModal' })
-        message.success(data.msg)
-        yield put({ type: 'query' })
-      } else {
-        throw data.msg
-      }
-    },
-
-    // 设置包裹详情内容的展示数据
-    *setPackageBin ({ payload }, { call, put, select }) {
-      const packageBin = payload.packageBin
-      packageBin.push({
-        orderName: payload.orderName,
-        totalFee: payload.totalFee,
-        kdCompanyCodeCn: payload.kdCompanyCodeCn,
-        cnNo: payload.cnNo,
-      })
-      yield put({
-        type: 'setStates',
-        payload: {
-          packageBin,
-        },
-      })
-    },
-
-    // 获取国家信息
-    *getCountry ({ payload = {} }, { call, put }) {
-      const data = yield call(getCountry)
-      if (data.code === 200) {
-        delete data.obj[0]
         let obj = data.obj
         let children = []
         if (data.obj) {
-          for (let i = 1; i < obj.length; i++) {
+          for (let i = 0; i < obj.length; i++) {
             let item = obj[i]
-            let str = {
-              code: item.country_code,
-              id: item.id,
-              name: item.country_cn,
-            }
-            str = JSON.stringify(str)
-            children.push(<Option key={str}>{item.country_cn}</Option>)
+            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>)
           }
         }
         yield put({
-          type: 'setStates',
+          type: 'setNation',
           payload: {
             selectNation: children,
           },
@@ -182,43 +80,104 @@ export default modelExtend(pageModel, {
       }
     },
 
-    // 获取微信用户信息
-    *getWeChatUser ({}, { select, call, put }) {
-      const data = yield call(quertWeChatUser, { page: 1, rows: 10000000 })
-      if (data.code === 200 && data.obj) {
-        let obj = data.obj
-        let children = []
-        for (let i = 0; i < obj.length; i++) {
-          let item = obj[i]
-          children.push(<Option key={`${item.ID}/--/${item.NICK_NAME}/--/${item.MOBILE}`}>{item.NICK_NAME}</Option>)
-        }
-        yield put({
-          type: 'setStates',
-          payload: {
-            selectWeChatUser: children,
-          },
-        })
+    *'delete'({ payload }, { call, put }) {
+      const data = yield call(remove, { ids: payload.toString() })
+      if (data.success && data.code === 200) {
+        message.success(data.msg)
+        yield put({ type: 'query' })
+      } else {
+        throw data.msg || data
       }
     },
 
-    *getKdCompany ({ payload }, { call, put }) {
-      const data = yield call(getKdCompany)
-      if (data.code === 200) {
-        let children = []
-        if (data.obj) {
-          for (let i = 0; i < data.obj.length; i++) {
-            let item = data.obj[i]
-            children.push(<Option key={`${item.companyName}/-/${item.companyCode}`}>{item.companyName}</Option>)
-          }
-        }
-        yield put({
-          type: 'setStates',
-          payload: {
-            selectKdCompany: children,
-          },
-        })
+    *'multiDelete'({ payload }, { call, put }) {
+      const data = yield call(wxusersService.remove, payload)
+      if (data.success) {
+        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
+        yield put({ type: 'query' })
       } else {
-        throw '获取国际段快递公司失败'
+        throw data
+      }
+    },
+
+    *'markBlackList'({ payload }, { call, put, select }) {
+      const newWxUser = payload
+      const data = yield call(update, newWxUser)
+      if (data.success) {
+        yield put({ type: 'hideModal' })
+        yield put({ type: 'query' })
+      } else {
+        throw data
+      }
+    },
+
+    *create({ payload }, { call, put }) {
+      // 通过国家名称获取国家id
+      const destination = yield call(getCountryId, { name: payload.destination.toString() })
+      if (destination.code === 200) {
+        payload.destination = destination.obj.id
+      } else {
+        throw '获取国家ID失败'
+        return
+      }
+      // return
+      const createUserId = JSON.parse(storage({ key: 'user' })).roleId
+      // 用nameCn 来判断 nameEn 的值
+      let nameEn = ''
+      if (payload.nameCn == '包裹') {
+        nameEn = 'P'
+      } else if (payload.nameCn == '文件') {
+        nameEn = 'D'
+      } else if (payload.nameCn == '大货') {
+        nameEn = 'PPS'
+      } else {
+        nameEn = '*'
+      }
+      const newFreight = { ...payload, createUserId, nameEn }
+      const data = yield call(create, newFreight)
+      if (data.success && data.code == '200') {
+        message.success(data.msg)
+        yield put({ type: 'hideModal' })
+        yield put({ type: 'query' })
+      } else {
+        throw data
+      }
+    },
+
+    *update({ payload }, { select, call, put }) {
+      const id = yield select(({ sale }) => sale.currentItem.ID)
+      const country_cn = yield select(({ sale }) => sale.currentItem.country_cn)
+      const DESTINATION = yield select(({ sale }) => sale.currentItem.DESTINATION)
+      const createUserId = JSON.parse(storage({ key: 'user' })).roleId
+      let nameEn = ''
+      // 判断修改是输入的目的地国家的值有没有变化,没有变化则返回它本身的DESTINATION,改变了则通过接口获取一个国家id
+      // 若没有获取到国家ID则提示用户,并return
+      if (payload.destination == country_cn) {
+        payload.destination = DESTINATION
+      } else {
+        const destination = yield call(getCountryId, { name: payload.destination.toString() })
+        if (destination.code === 200) {
+          payload.destination = destination.obj.id
+        } else {
+          throw '获取国家ID失败'
+          return
+        }
+      }
+      if (payload.nameCn == '包裹') {
+        nameEn = 'P'
+      } else if (payload.nameCn == '文件') {
+        nameEn = 'D'
+      } else {
+        nameEn = '*'
+      }
+      const newFreight = { ...payload, id, createUserId, nameEn }
+      const data = yield call(update, newFreight)
+      if (data.success) {
+        message.success(data.msg)
+        yield put({ type: 'hideModal' })
+        yield put({ type: 'query' })
+      } else {
+        throw data.msg
       }
     },
 
@@ -226,28 +185,16 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    // 设置状态
-    setStates (state, { payload }) {
+    setNation(state, { payload }) {
       return { ...state, ...payload }
     },
 
-    // 显示modal
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    // 隐藏modal
-    hideModal (state) {
-      return { ...state, modalVisible: false, insuredVisiable: false, parcelDis: true, productDis: true }
-    },
-
-    // 显示modal里面的保价金额输入框
-    showInsured (state) {
-      return { ...state, insuredVisiable: true }
-    },
-    // 隐藏modal里面的保价金额输入框
-    hideInsured (state) {
-      return { ...state, insuredVisiable: false }
+    hideModal(state) {
+      return { ...state, modalVisible: false }
     },
 
   },
