@@ -22,6 +22,7 @@ const modal = ({
   handleChange,
   spreadTypeDis,
   qrTypeDis,
+  modalType,
   form: {
     getFieldDecorator,
     validateFields,
@@ -41,7 +42,6 @@ const modal = ({
       onOk(data)
     })
   }
-  
   const spreadTypeChange = (e) => {
     console.log('e', e.target.value)
     handleChange({ spreadType: e.target.value })
@@ -49,7 +49,7 @@ const modal = ({
 
   const qrTypeChange = (e) => {
     handleChange({ qrType: e.target.value })
-    console.log('spreadTypeDis', e.target.value )
+    console.log('spreadTypeDis', e.target.value)
   }
 
   const modalOpts = {
@@ -70,6 +70,17 @@ const modal = ({
               },
             ],
           })(<Select showSearch placeholder="点击选择">{selectWxuser}</Select>)}
+        </FormItem>
+        <FormItem label="推广人姓名" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('name', {
+            initialValue: item.name,
+            rules: [
+              {
+                required: true,
+                message: '请填写推广人姓名!',
+              },
+            ],
+          })(<Input disabled={modalType !== 'create'} placeholder="请输入推广人姓名"/>)}
         </FormItem>
         <FormItem label="晋级类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('spreadType', {
@@ -99,44 +110,47 @@ const modal = ({
           </FormItem>
         </div>
         <div style={{ display: !spreadTypeDis ? 'block' : 'none' }}>
-          <FormItem label="推广费用比例" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('spreadeUserRatio', {
-              initialValue: item.spreadeUserRatio,
+          <FormItem label="分润比例(%)" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('spreadUserRatio', {
+              initialValue: item.spreadUserRatio ? item.spreadUserRatio * 100 : '10',
               rules: [
                 {
                   required: !spreadTypeDis,
-                  message: '请选择推广费用比例!',
+                  pattern: /^100$|^[1-9][0-9]$|^[1-9]$/,
+                  message: '分润比例不能大于100%!',
                 },
               ],
-            })(<Input/>)}
+            })(<Input placeholder='请输入分润比例'/>)}
           </FormItem>
         </div>
-        <FormItem label="有效时长" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('qrType', {
-            initialValue: item.qrType || 1,
-            rules: [
-              {
-                required: true,
-                message: '请选择有效时长!',
-              },
-            ],
-          })(<Radio.Group disabled={false} onChange={qrTypeChange}>
-            <Radio value={1}>永久有效</Radio>
-            <Radio value={0}>临时有效(最长一个月的时间)</Radio>
-          </Radio.Group>)}
-        </FormItem>
-        <FormItem label="有效期(天)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('seconds', {
-            initialValue: item.seconds,
-            rules: [
-              {
-                required: !qrTypeDis,
-                pattern: /(^[1-9]{1}$)|(^[0-2]{1}[0-9]{1}$)|(^30$)/,
-                message: '请输入有效期!',
-              },
-            ],
-          })(<Input disabled={qrTypeDis} />)}
-        </FormItem>
+        <div style={{ display: modalType === 'create' ? 'block' : 'none'}}>
+          <FormItem label="有效时长" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('qrType', {
+              initialValue: item.qrType || 1,
+              rules: [
+                {
+                  required: true,
+                  message: '请选择有效时长!',
+                },
+              ],
+            })(<Radio.Group disabled={false} onChange={qrTypeChange}>
+              <Radio value={1}>永久有效</Radio>
+              <Radio value={0}>临时有效(最长一个月的时间)</Radio>
+            </Radio.Group>)}
+          </FormItem>
+          <FormItem label="有效期(天)" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('seconds', {
+              initialValue: item.seconds,
+              rules: [
+                {
+                  required: !qrTypeDis,
+                  pattern: /(^[1-9]{1}$)|(^[0-2]{1}[0-9]{1}$)|(^30$)/,
+                  message: '请输入有效期!',
+                },
+              ],
+            })(<Input disabled={qrTypeDis} placeholder="请输入有效天数"/>)}
+          </FormItem>
+        </div>
       </Form>
     </Modal>
   )

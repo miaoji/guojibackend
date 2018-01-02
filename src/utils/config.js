@@ -1,10 +1,9 @@
 const APIV1 = '/api/v1'
-const APIV2 = '/api/v2'
+// const APIV2 = '/api/v2'
 let APIV3 = ''
 
 // 重构API
 // 线下地址
-// APIV3 = 'http://169.254.191.166:8077'
 APIV3 = 'http://192.168.0.231:8077'
 // 线上地址(测试)
 // APIV3 = 'http://api.didalive.net/mzkd'
@@ -111,24 +110,24 @@ module.exports = {
     },
 		// 省份/州api
     province: {
-		  show: `${APIV3}/api/provinces/index`,
-		  create: `${APIV3}/api/provinces/add`,
-		  update: `${APIV3}/api/provinces/modProvincesById`,
-		  hide: `${APIV3}/api/provinces/delProvincesById`,
+      show: `${APIV3}/api/provinces/index`,
+      create: `${APIV3}/api/provinces/add`,
+      update: `${APIV3}/api/provinces/modProvincesById`,
+      hide: `${APIV3}/api/provinces/delProvincesById`,
     },
 		// 市级api
     city: {
-		  show: `${APIV3}/api/cities/index`,
-		  create: `${APIV3}/api/cities/add`,
-		  update: `${APIV3}/api/cities/modCitiesById`,
-		  hide: `${APIV3}/api/cities/delCitiesById`,
+      show: `${APIV3}/api/cities/index`,
+      create: `${APIV3}/api/cities/add`,
+      update: `${APIV3}/api/cities/modCitiesById`,
+      hide: `${APIV3}/api/cities/delCitiesById`,
     },
 		// 区县api
     county: {
-		  show: `${APIV3}/api/districts/index`,
-		  create: `${APIV3}/api/districts/add`,
-		  update: `${APIV3}/api/districts/modDistrictsById`,
-		  hide: `${APIV3}/api/districts/delDistrictsById`,
+      show: `${APIV3}/api/districts/index`,
+      create: `${APIV3}/api/districts/add`,
+      update: `${APIV3}/api/districts/modDistrictsById`,
+      hide: `${APIV3}/api/districts/delDistrictsById`,
     },
 		// 二维码推广接口
     qr: {
@@ -140,7 +139,7 @@ module.exports = {
     },
 		// app推广接口
     extensionapp: {
-		  all: `${APIV3}/api/app/index`,
+      all: `${APIV3}/api/app/index`,
       show: `${APIV3}/api/app/getWxAppById`,
       create: `${APIV3}/api/app/add`,
       update: `${APIV3}/api/app/modWxAppById`,
@@ -181,7 +180,7 @@ module.exports = {
       all: `${APIV3}/api/spreadLevel/index`, // 查询
       create: `${APIV3}/api/spreadLevel/add`, // 新增
       update: `${APIV3}/api/spreadLevel/modById`, // 修改
-      hide: `${APIV3}/api/spreadLevel/delById` // 删除
+      hide: `${APIV3}/api/spreadLevel/delById`, // 删除
     },
     // 推广用户管理
     spreaduser: {
@@ -189,6 +188,6 @@ module.exports = {
       create: `${APIV3}/api/spreadUser/add`, // 新增
       update: `${APIV3}/api/spreadUser/modById`, // 修改
       hide: `${APIV3}/api/spreadUser/delById`, // 删除
-    }
-  }
+    },
+  },
 }

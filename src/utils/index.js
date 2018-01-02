@@ -147,6 +147,7 @@ export const storage = function ({ key, val, prefix = true, type = 'get' }) {
       localStorage.clear()
       break
     default:
+      return
       break
   }
   if (typeCheck) {

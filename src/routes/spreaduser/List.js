@@ -18,7 +18,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       confirm({
         title: '确定要删除这一条包裹类型吗?',
         onOk () {
-          onDeleteItem(record.id)
+          onDeleteItem(record.spreadUserId)
         },
       })
     }
@@ -26,7 +26,12 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
-      title: '微信用户',
+      title: '推广人姓名',
+      dataIndex: 'name',
+      key: 'name'
+    },
+    {
+      title: '微信昵称',
       dataIndex: 'nickName',
       key: 'nickName',
       render: (text) => <span>{text}</span>,
@@ -34,11 +39,18 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '推广等级',
       dataIndex: 'spreadName',
       key: 'spreadName',
+      render: (text, record) => {
+        if (record.spreadUserType === 0) {
+          return <span>{text}</span>
+        } else {
+          return <span>VIP用户</span>
+        }
+      }
     }, {
       title: '关注途径',
       dataIndex: 'consumptionRatio',
       key: 'consumptionRatio',
-      render: (text,record) => {
+      render: (text, record) => {
         let replText = ''
         if (record.wxQrId) {
           replText = '二维码推广'
@@ -47,12 +59,18 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           replText = 'APP推广'
         }
         return <span>{replText}</span>
-      },
+      }
     }, {
-      title: '用户推广比例',
+      title: '分润比例',
       dataIndex: 'ConsumptionRatio',
       key: 'ConsumptionRatio',
-      render: (text) => <span>{text}</span>,
+      render: (text, record) => {
+        if (record.spreadUserType === 0) {
+          return <span>{text*100}%</span>
+        }else{
+          return <span>{record.spreadUserRatio*100}%</span>
+        }
+      }
     }, {
       title: '晋级类型',
       dataIndex: 'spreadUserType',
@@ -60,31 +78,31 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       render: (text) => {
         const replText = {
           0: '自动',
-          1: '手动'
+          1: '手动',
         }
         return <span>{replText[text]}</span>
-      },
+      }
     }, {
       title: '团队消费金额',
       dataIndex: 'consumeTeam',
       key: 'consumeTeam',
-      render: (text) => <span>{text?text:'0'}</span>,
+      render: (text) => <span>{text || '0'}</span>,
     }, {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
-        const raplTime = time.formatTime(text?text:'')
+        const raplTime = time.formatTime(text || '')
         return <span>{raplTime}</span>
-      },
+      }
     }, {
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
-      },
-    },
+      }
+    }
   ]
 
   const getBodyWrapperProps = {

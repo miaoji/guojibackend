@@ -1,6 +1,6 @@
 import { request, config } from '../utils'
 const { api } = config
-const { parceltype, country } = api
+const { parceltype } = api
 
 export async function query (params) {
   return request({

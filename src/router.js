@@ -241,7 +241,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'sale',
-          getComponent(nextState, cb) {
+          getComponent (nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/sale'))
               cb(null, require('./routes/sale/'))
@@ -249,7 +249,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'grade',
-          getComponent(nextState, cb) {
+          getComponent (nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/grade'))
               cb(null, require('./routes/grade/'))
@@ -257,7 +257,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'spreaduser',
-          getComponent(nextState, cb) {
+          getComponent (nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/spreaduser'))
               cb(null, require('./routes/spreaduser/'))

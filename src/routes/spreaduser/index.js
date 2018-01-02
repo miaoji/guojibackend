@@ -16,12 +16,13 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
     visible: modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['spreaduser/update'],
-    title: `${modalType === 'create' ? '新增包裹类型' : '修改包裹类型'}`,
+    title: `${modalType === 'create' ? '新增推广用户' : '修改推广用户'}`,
     wrapClassName: 'vertical-center-modal',
     selectWxuser,
     selectGrade,
     spreadTypeDis,
     qrTypeDis,
+    modalType,
     onOk (data) {
       dispatch({
         type: `spreaduser/${modalType}`,
@@ -36,9 +37,9 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
     handleChange (val) {
       dispatch({
         type: 'spreaduser/updateState',
-        payload: val
+        payload: val,
       })
-    }
+    },
   }
 
   const listProps = {
@@ -72,6 +73,14 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
           currentItem: item,
         },
       })
+      // 判断晋级类型若为手动则显示分润比例输入框
+      if (item.spreadUserType === 1) {
+        console.log(item.spreadUserType)
+        dispatch({
+          type: 'spreaduser/updateState',
+          payload: { spreadType: 1 }
+        })
+      }
       dispatch({ type: 'spreaduser/getGradeInfo' })
       dispatch({ type: 'spreaduser/getWxuserInfo' })
     },

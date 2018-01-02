@@ -39,19 +39,19 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'spreadConsumption',
       key: 'spreadConsumption',
       render: (text) => {
-        return <span>{text/100}</span>
-      }
+        return <span>{text / 100}</span>
+      },
     }, {
-      title: '获取推广费用比例',
+      title: '分润比例',
       dataIndex: 'consumptionRatio',
       key: 'consumptionRatio',
-      render: (text) => <span>{text}</span>,
+      render: (text) => <span>{text*100}%</span>,
     }, {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
-        const raplTime = time.formatTime(text?text:'')
+        const raplTime = time.formatTime(text || '')
         return <span>{raplTime}</span>
       },
     }, {

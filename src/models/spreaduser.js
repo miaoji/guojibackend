@@ -19,11 +19,11 @@ export default modelExtend(pageModel, {
     selectGrade: [],
     selectWxuser: [],
     spreadTypeDis: true,
-    qrTypeDis: true
+    qrTypeDis: true,
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
+    setup ({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/spreaduser') {
           dispatch({
@@ -37,7 +37,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query({ payload = {} }, { call, put }) {
+    *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data.code === 200 && data.success) {
         yield put({
@@ -56,19 +56,21 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create({ payload }, { call, put }) {
+    *create ({ payload }, { call, put }) {
+      console.log('aa', payload)
       const wxUserId = JSON.parse(payload.wxUserId).id
-      const spreadUserRatio = payload.spreadType === 1 ? payload.spreadeUserRatio : JSON.parse(payload.spreadLevelId).consumptionRatio
+      const spreadUserRatio = payload.spreadType === 1 ? payload.spreadUserRatio/100 : undefined
       const spreadLevelId = payload.spreadType === 0 ? JSON.parse(payload.spreadLevelId).id : undefined
-      const seconds = payload.qrType=== 0 ? payload.seconds : undefined
-      
+      const seconds = payload.qrType === 0 ? payload.seconds : undefined
+
       const replPayload = {
         qrType: payload.qrType,
         spreadType: payload.spreadType,
         seconds,
         spreadUserRatio,
         spreadLevelId,
-        wxUserId
+        wxUserId,
+        name: payload.name
       }
       console.log('replPayload', replPayload)
       const data = yield call(create, replPayload)
@@ -81,10 +83,36 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update({ payload }, { select, call, put }) {
-      payload.spreadConsumption = payload.spreadConsumption * 100
-      const id = yield select(({ spreaduser }) => spreaduser.currentItem.id)
-      const data = yield call(update, { ...payload, id })
+    *update ({ payload }, { select, call, put }) {
+      console.log('payload', payload)
+      const item = yield select(({ spreaduser }) => spreaduser.currentItem)
+      if (payload.wxUserId && payload.wxUserId === item.nickName) {
+        payload.wxUserId = undefined
+        console.log('微信用户没有修改')
+      }else{
+        payload.wxUserId = JSON.parse(payload.wxUserId).id
+      }
+      const spreadLevel = payload.spreadLevelId
+      if (payload.spreadType === 0 && spreadLevel !== item.spreadName) {
+        payload.spreadLevelId = JSON.parse(spreadLevel).id
+        payload.spreadUserRatio = undefined
+      } else if (payload.spreadType === 0 && spreadLevel === item.spreadName) {
+        payload.spreadLevelId = undefined
+        payload.spreadUserRatio = undefined
+      } else {
+        payload.spreadLevelId = undefined
+      }
+      const replPayload = {
+        type: payload.spreadType,
+        spreadUserRatio: payload.spreadUserRatio ? payload.spreadUserRatio/100 : undefined,
+        spreadLevelId: payload.spreadLevelId,
+        wxUserId: payload.wxUserId,
+        name: payload.name,
+        id: item.spreadUserId
+      }
+      console.log('payload', replPayload)
+      // return
+      const data = yield call(update, replPayload)
       if (data.msg === '修改成功') {
         message.success(data.msg)
         yield put({ type: 'hideModal' })
@@ -94,9 +122,10 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete'({ payload }, { select, call, put }) {
+    *'delete' ({ payload }, { select, call, put }) {
       const id = yield select(({ spreaduser }) => spreaduser.currentItem.id)
       const data = yield call(remove, { ids: payload })
+      console.log('ssss', data)
       if (data.msg === '删除成功' && data.code === 200) {
         message.success(data.msg)
         yield put({ type: 'query' })
@@ -105,21 +134,21 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getGradeInfo({ }, { call, put }) {
+    *getGradeInfo ({ }, { call, put }) {
       const data = yield call(gradeInfo)
       if (data.code === 200) {
         let obj = data.obj
         let children = []
         if (data.obj) {
           for (let i = 0; i < obj.length; i++) {
-            let item = obj[i]
-            let str = {
+            const item = obj[i]
+            const str = {
               code: item.spreadName,
               id: item.id,
-              consumptionRatio: item.consumptionRatio
+              consumptionRatio: item.consumptionRatio,
             }
-            str = JSON.stringify(str)
-            children.push(<Option key={str}>{item.spreadName}</Option>)
+            const newStr = JSON.stringify(str)
+            children.push(<Option key={newStr}>{item.spreadName}</Option>)
           }
         }
         yield put({
@@ -133,7 +162,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getWxuserInfo({ }, { call, put }) {
+    *getWxuserInfo ({ }, { call, put }) {
       const data = yield call(wxuserInfo)
       if (data.code === 200) {
         let obj = data.obj
@@ -143,7 +172,7 @@ export default modelExtend(pageModel, {
             let item = obj[i]
             let str = {
               code: item.NICK_NAME,
-              id: item.ID
+              id: item.ID,
             }
             str = JSON.stringify(str)
             children.push(<Option key={str}>{item.NICK_NAME}</Option>)
@@ -159,22 +188,22 @@ export default modelExtend(pageModel, {
         throw data.msg
       }
     },
-    
-    *updateState({ payload }, { put }) {
+
+    *updateState ({ payload }, { put }) {
       console.log('aaa', payload)
       if (payload.spreadType && payload.spreadType === 1) {
         yield put({
           type: 'setStates',
           payload: {
-            spreadTypeDis: false
-          }
+            spreadTypeDis: false,
+          },
         })
       } else if (payload.spreadType === 0) {
         yield put({
           type: 'setStates',
           payload: {
-            spreadTypeDis: true
-          }
+            spreadTypeDis: true,
+          },
         })
       }
       if (payload.qrType && payload.qrType === 1) {
@@ -182,33 +211,33 @@ export default modelExtend(pageModel, {
         yield put({
           type: 'setStates',
           payload: {
-            qrTypeDis: true
-          }
+            qrTypeDis: true,
+          },
         })
       } else if (payload.qrType === 0) {
         console.log(2222)
         yield put({
           type: 'setStates',
           payload: {
-            qrTypeDis: false
-          }
+            qrTypeDis: false,
+          },
         })
       }
-    }
+    },
 
   },
 
   reducers: {
 
-    setStates(state, { payload }) {
+    setStates (state, { payload }) {
       return { ...state, ...payload }
     },
 
-    showModal(state, { payload }) {
+    showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal(state) {
+    hideModal (state) {
       return {
         ...state, modalVisible: false, spreadTypeDis: true, qrTypeDis: true }
     },

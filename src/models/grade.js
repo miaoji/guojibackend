@@ -55,7 +55,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete'({ payload }, { select, call, put }) {
+    *'delete' ({ payload }, { select, call, put }) {
       const id = yield select(({ grade }) => grade.currentItem.id)
       console.log('id', id)
       const data = yield call(remove, { ids: payload })
@@ -68,7 +68,8 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      payload.spreadConsumption = payload.spreadConsumption*100
+      payload.consumptionRatio = payload.consumptionRatio / 100
+      payload.spreadConsumption = payload.spreadConsumption * 100
       const data = yield call(create, payload)
       console.log('data', data)
       if (data.success && data.code == '200') {
@@ -81,9 +82,10 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
+      payload.consumptionRatio = payload.consumptionRatio / 100
       payload.spreadConsumption = payload.spreadConsumption * 100
       const id = yield select(({ grade }) => grade.currentItem.id)
-      const data = yield call(update, {...payload, id})
+      const data = yield call(update, { ...payload, id })
       if (data.msg === '修改成功') {
         message.success(data.msg)
         yield put({ type: 'hideModal' })

@@ -16,7 +16,7 @@ const Grade = ({ location, dispatch, grade, loading }) => {
     visible: modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['grade/update'],
-    title: `${modalType === 'create' ? '新增包裹类型' : '修改包裹类型'}`,
+    title: `${modalType === 'create' ? '新增等级配置' : '修改等级配置'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({

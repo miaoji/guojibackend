@@ -25,7 +25,7 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
+    setup ({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/sale') {
           dispatch({
@@ -39,7 +39,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query({ payload = {} }, { call, put }) {
+    *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data.code === 200 && data.success) {
         yield put({
@@ -58,7 +58,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getNation({ payload = {} }, { call, put }) {
+    *getNation ({ payload = {} }, { call, put }) {
       const data = yield call(contryQuery)
       if (data.code === 200) {
         let obj = data.obj
@@ -80,7 +80,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete'({ payload }, { call, put }) {
+    *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success && data.code === 200) {
         message.success(data.msg)
@@ -90,7 +90,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'multiDelete'({ payload }, { call, put }) {
+    *'multiDelete' ({ payload }, { call, put }) {
       const data = yield call(wxusersService.remove, payload)
       if (data.success) {
         yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
@@ -100,7 +100,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'markBlackList'({ payload }, { call, put, select }) {
+    *'markBlackList' ({ payload }, { call, put, select }) {
       const newWxUser = payload
       const data = yield call(update, newWxUser)
       if (data.success) {
@@ -111,7 +111,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create({ payload }, { call, put }) {
+    *create ({ payload }, { call, put }) {
       // 通过国家名称获取国家id
       const destination = yield call(getCountryId, { name: payload.destination.toString() })
       if (destination.code === 200) {
@@ -144,7 +144,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update({ payload }, { select, call, put }) {
+    *update ({ payload }, { select, call, put }) {
       const id = yield select(({ sale }) => sale.currentItem.ID)
       const country_cn = yield select(({ sale }) => sale.currentItem.country_cn)
       const DESTINATION = yield select(({ sale }) => sale.currentItem.DESTINATION)
@@ -185,15 +185,15 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setNation(state, { payload }) {
+    setNation (state, { payload }) {
       return { ...state, ...payload }
     },
 
-    showModal(state, { payload }) {
+    showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal(state) {
+    hideModal (state) {
       return { ...state, modalVisible: false }
     },
 

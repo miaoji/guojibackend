@@ -54,7 +54,7 @@ const modal = ({
                 message: '请输入推广等级!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder='请输入推广等级'/>)}
         </FormItem>
         <FormItem label="等级名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('spreadName', {
@@ -65,31 +65,31 @@ const modal = ({
                 message: '请输入等级名称!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder='请输入等级名称'/>)}
         </FormItem>
         <FormItem label="需累计消费(￥)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('spreadConsumption', {
-            initialValue: item.spreadConsumption ? item.spreadConsumption/100 : '',
+            initialValue: item.spreadConsumption ? item.spreadConsumption / 100 : '',
             rules: [
               {
                 required: true,
-                // pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
+                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
                 message: '请输入需累计消费金额!',
-              },
-            ],
-          })(<Input />)}
+              }
+            ]
+          })(<Input placeholder='请输入需累计消费金额'/>)}
         </FormItem>
-        <FormItem label="获取推广费用比例" hasFeedback {...formItemLayout}>
+        <FormItem label="分润比例(%)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('consumptionRatio', {
-            initialValue: item.consumptionRatio,
+            initialValue: item.consumptionRatio ? item.consumptionRatio * 100 : '20',
             rules: [
               {
                 required: true,
-                // pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
-                message: '请输入获取推广费用比例!',
+                pattern: /^100$|^[1-9][0-9]$|^[1-9]$/,
+                message: '请输入分润比例!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder='请输入分润比例'/>)}
         </FormItem>
       </Form>
     </Modal>
