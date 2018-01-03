@@ -5,21 +5,14 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { time } from '../../utils'
+import { time, screen } from '../../utils'
 import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
+console.log('screen', screen)
 
-// 状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
-const realtext = {
-  1: '待付款',
-  2: '付款完成',
-  3: '国内完成',
-  4: '国际完成',
-  5: '异常订单',
-  6: '取消订单',
-  7: '国际快递已发货',
-}
+const orderState = screen.orderStateByNum
+const orderStateArr = screen.orderStateByArr
 
 const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
@@ -109,18 +102,10 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       title: '订单状态',
       dataIndex: 'STATUS',
       key: 'STATUS',
-      filters: [
-        { text: '待付款', value: 1 },
-        { text: '付款完成', value: 2 },
-        { text: '国内完成', value: 3 },
-        { text: '国际完成', value: 4 },
-        { text: '异常订单', value: 5 },
-        { text: '取消订单', value: 6 },
-        { text: '国际快递已发货', value: 7 },
-      ],
+      filters: orderStateArr,
       filterMultiple: false,
       render: (text) => {
-        return <span>{realtext[text]}</span>
+        return <span>{orderState[text]}</span>
       },
     }, {
       title: '预报信息',
@@ -161,20 +146,20 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
-            <p>订单号:                                                                                            {record.ORDER_NO}</p>
-            <p>国内段订单号:                                                                                            {record.CN_NO}</p>
-            <p>国际段订单号:                                                                                            {record.INTL_NO}</p>
-            <p>寄件人:                                                                                            {record.SENDER_NAME}</p>
-            <p>收件人:                                                                                            {record.RECEIVER_NAME}</p>
-            <p>收件人证件号:                                                                                            {record.RECEIVER_ID}</p>
-            <p>预付总金额:                                                                                            {record.TOTAL_FEE / 100}元</p>
-            <p>产品类型:                                                                                            {record.PRODUCT_TYPE}</p>
-            <p>重量:                                                                                            {record.WEIGHT}kg</p>
+            <p>订单号:{record.ORDER_NO}</p>
+            <p>国内段订单号:{record.CN_NO}</p>
+            <p>国际段订单号:{record.INTL_NO}</p>
+            <p>寄件人:{record.SENDER_NAME}</p>
+            <p>收件人:{record.RECEIVER_NAME}</p>
+            <p>收件人证件号:{record.RECEIVER_ID}</p>
+            <p>预付总金额:{record.TOTAL_FEE / 100}元</p>
+            <p>产品类型:{record.PRODUCT_TYPE}</p>
+            <p>重量:{record.WEIGHT}kg</p>
             <p>寄件地址: {record.SENDER_ADDRESS}</p>
             <p>中转地址: {record.TRANSFER_ADDRESS}</p>
             <p>收件地址: {record.RECEIVER_ADDRESS}</p>
-            <p>下单时间:                                                                                            {record.CREATE_TIME}</p>
-            <p>订单状态:                                                                                            {realtext[record.STATUS]}</p>
+            <p>下单时间:{record.CREATE_TIME}</p>
+            <p>订单状态:{orderState[record.STATUS]}</p>
           </div>
         }
         bordered

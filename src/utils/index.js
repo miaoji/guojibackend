@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import { color } from './theme'
 import shelfNo from './shelfNoData'
 import lodash from 'lodash'
+import screen from './filter'
 
 const localStorage = window.localStorage
 const { localPrefix } = config
@@ -60,7 +61,7 @@ const queryURL = (name) => {
 
 /**
  * 数组内查询
- * @param   {array}      array
+ * @param   {array}     array
  * @param   {String}    id
  * @param   {String}    keyAlias
  * @return  {Array}
@@ -125,7 +126,7 @@ const pageParams = function (params) {
  * @param  {String}  val    [存储的字段值]
  * @param  {Boolean} prefix [是否加前缀，默认为true]
  * @param  {String}  type   [localStorage的操作方式 get、set、remove、clear]
- * @return {String} res     [localStorage.getItem(key)时返回的值]
+ * @return {String}  res    [localStorage.getItem(key)时返回的值]
  */
 export const storage = function ({ key, val, prefix = true, type = 'get' }) {
   let typeCheck = type === 'get'
@@ -158,7 +159,7 @@ export const storage = function ({ key, val, prefix = true, type = 'get' }) {
 /**
  * [对含有 %20 的数据重新拼接]
  * @param  {String}  key    [要转换的数据]
- * @return {String} res     [返回重新的拼接的值]
+ * @return {String}  res    [返回重新的拼接的值]
  */
 export const rebuildVal = function (key) {
   if (!key) {
@@ -175,6 +176,7 @@ module.exports = {
   rebuildVal,
   request,
   shelfNo,
+  screen,
   storage,
   time,
   color,

@@ -21,15 +21,6 @@ const getCountryId = location.getCountryId // 通过国家姓名获取国家ID
 
 const parceltypeQuery = showPTypeByCounIdsService.query // 通过国家信息获取包裹类型
 const producttypeQuery = showproductNamesService.query // 通过包裹类型获取产品类型
-// 状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
-const realtext = {
-  1: '待付款',
-  2: '付款完成',
-  3: '国内完成',
-  4: '国际完成',
-  5: '异常订单',
-  6: '取消订单',
-}
 
 export default modelExtend(pageModel, {
   namespace: 'cargo',

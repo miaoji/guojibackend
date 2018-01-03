@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { time } from '../../../utils'
+import { time, screen } from '../../../utils'
 import styles from './index.less'
 
 const { formatTime } = time
@@ -16,15 +16,9 @@ const Detail = ({ orderDetail }) => {
     1: '男',
     2: '女',
   }
-  // 状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
-  const realOrderStatus = {
-    1: '待付款',
-    2: '付款完成',
-    3: '国内完成',
-    4: '国际完成',
-    5: '异常订单',
-    6: '取消订单',
-  }
+
+  const realOrderStatus = screen.orderStateByNum
+  
   const realBlackList = {
     0: '否',
     1: '是',

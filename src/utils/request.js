@@ -61,7 +61,7 @@ const fetch = (options) => {
         url,
         method: 'get',
         params: cloneData || params,
-        timeout: 6000,
+        timeout: 60000,
         headers: {
           token: storage({ key: 'token' }),
         },
@@ -71,7 +71,7 @@ const fetch = (options) => {
         url,
         method: 'delete',
         params: cloneData || params,
-        timeout: 6000,
+        timeout: 60000,
         headers: {
           token: storage({ key: 'token' }),
         },
@@ -82,7 +82,7 @@ const fetch = (options) => {
         method: 'post',
         data: cloneData,
         params,
-        timeout: 6000,
+        timeout: 60000,
         headers: {
           token: storage({ key: 'token' }),
         },

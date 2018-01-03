@@ -5,21 +5,11 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { time } from '../../utils'
+import { time, screen } from '../../utils'
 import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
-
-// 状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
-const realtext = {
-  1: '待付款',
-  2: '付款完成',
-  3: '国内完成',
-  4: '国际完成',
-  5: '异常订单',
-  6: '取消订单',
-  7: '国际快递已发货',
-}
+const realtext = screen.orderStateByNum
 const realColor = {
   0: 'OrangeRed',
   1: '#3728ff',
@@ -32,6 +22,7 @@ const realColor = {
   8: '#008229',
 }
 // 包裹状态: 0 还没有合单, -1 普货, -2特货
+
 const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, filterStatus, onDeleteItem, onSetFreight, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {

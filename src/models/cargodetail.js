@@ -9,17 +9,6 @@ import { config, time, storage, queryURL } from '../utils'
 
 const { prefix } = config
 
-// 状态,1.待付款，2.付款完成，3.国内完成，4.国际完成，5异常订单，6取消订单
-const realState = {
-  1: '待付款',
-  2: '付款完成',
-  3: '国内完成',
-  4: '国际完成',
-  5: '异常订单',
-  6: '取消订单',
-  7: '国际快递已发货',
-}
-
 export default modelExtend(pageModel, {
   namespace: 'cargodetail',
 

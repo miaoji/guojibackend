@@ -5,7 +5,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, Select, Modal } from 'antd'
-// import { shelfNo } from '../../utils'
+import { screen } from '../../utils'
 import { SelectShelf } from '../../components'
 // import styles from './addModal.less'
 // import classnames from 'classnames'
@@ -30,15 +30,7 @@ const realtext = {
   7: '国际快递已发货',
 }
 
-const realStatus = {
-  1: '待付款',
-  2: '付款完成',
-  3: '国内完成',
-  4: '国际完成',
-  5: '异常订单',
-  6: '取消订单',
-  7: '国际快递已发货',
-}
+const realStatus = screen.orderStateByNum
 
 const stateModal = ({
   item = {},

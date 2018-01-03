@@ -159,6 +159,7 @@ const Filter = ({
               <RadioButton value="4">国际完成</RadioButton>
               <RadioButton value="5">异常订单</RadioButton>
               <RadioButton value="6">取消订单</RadioButton>
+              <RadioButton value="7">国际快递已发货</RadioButton>
             </RadioGroup>)}
         </div>
       </Col>
