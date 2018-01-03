@@ -158,10 +158,7 @@ const modal = ({
 
 modal.propTypes = {
   form: PropTypes.object.isRequired,
-  type: PropTypes.string,
   item: PropTypes.object,
-  selectPackage: PropTypes.object,
-  getPackage: PropTypes.func,
   onOk: PropTypes.func,
 }
 

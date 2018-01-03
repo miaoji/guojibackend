@@ -34,10 +34,6 @@ const Filter = ({
   },
 }) => {
   const handleFields = (fields) => {
-    // const { createTime } = fields
-    // if (createTime.length) {
-    //   fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
-    // }
     return fields
   }
 
@@ -81,7 +77,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }} sm={{ span: 12 }}>
-        {getFieldDecorator('country', { initialValue: country })(<Search placeholder="按目的地搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('country', { initialValue: country })(<Search placeholder="按推广人姓名搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>

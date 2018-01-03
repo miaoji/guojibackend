@@ -72,6 +72,17 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         }
       }
     }, {
+      title: '需累计消费',
+      dataIndex: 'spreadConsumption',
+      key: 'spreadConsumption',
+      render: (text, record) => {
+        if (record.spreadUserType === 0) {
+          return <span>{text/100}元</span>
+        } else {
+          return <span>无消费限制</span>
+        }
+      }
+    }, {
       title: '晋级类型',
       dataIndex: 'spreadUserType',
       key: 'spreadUserType',

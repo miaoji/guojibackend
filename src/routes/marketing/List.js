@@ -38,6 +38,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const columns = [
     {
+      title: '头像',
+      dataIndex: 'HEADIMGURL',
+      key: 'HEADIMGURL',
+      width: 80,
+      className: styles.avatar,
+      render: (text) => <img alt={'avatar'} width={24} src={text} />,
+    }, {
       title: '微信名',
       dataIndex: 'NICK_NAME',
       key: 'NICK_NAME',

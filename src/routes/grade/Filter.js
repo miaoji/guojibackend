@@ -81,7 +81,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }} sm={{ span: 12 }}>
-        {getFieldDecorator('country', { initialValue: country })(<Search placeholder="按目的地搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('country', { initialValue: country })(<Search placeholder="按推广等级搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>

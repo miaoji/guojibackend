@@ -32,6 +32,7 @@ export default modelExtend(pageModel, {
       const newPayload = { ...payload, parentId }
       const data = yield call(query, newPayload)
       if (data.code === 200) {
+        console.log('data', data.obj)
         yield put({
           type: 'querySuccess',
           payload: {
