@@ -37,6 +37,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '包裹类型英文名',
       dataIndex: 'NAME_EN',
       key: 'NAME_EN',
+      width: '130',
     }, {
       title: '最小重量',
       dataIndex: 'MIN_RANGE',

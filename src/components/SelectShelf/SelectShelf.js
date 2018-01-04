@@ -46,14 +46,14 @@ class SelectShelf extends React.Component {
     })
     const cityOptions = data[str[0]].map(city => <Option key={city}>{city}</Option>)
     return (
-            <div>
-                <Select showSearch defaultValue={this.state.shelfStr} style={{ width: 100, marginRight: 20 }} onChange={this.handlesheleStrChange}>
-                    {sheleStrOptions}
-                </Select>
-                <Select showSearch value={this.state.shelfNum} style={{ width: 100 }} onChange={this.onshelfNumChange}>
-                    {cityOptions}
-                </Select>
-            </div>
+      <div>
+          <Select showSearch defaultValue={this.state.shelfStr} style={{ width: 100, marginRight: 20 }} onChange={this.handlesheleStrChange}>
+              {sheleStrOptions}
+          </Select>
+          <Select showSearch value={this.state.shelfNum} style={{ width: 100 }} onChange={this.onshelfNumChange}>
+              {cityOptions}
+          </Select>
+      </div>
     )
   }
 }

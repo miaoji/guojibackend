@@ -47,7 +47,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         }
       }
     }, {
-      title: '关注途径',
+      title: '推广类型',
       dataIndex: 'consumptionRatio',
       key: 'consumptionRatio',
       render: (text, record) => {
@@ -59,6 +59,13 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           replText = 'APP推广'
         }
         return <span>{replText}</span>
+      }
+    }, {
+      title: '二维码图片',
+      dataIndex: 'qrTicket',
+      key: 'qrTicket',
+      render: (text, record) => {
+        return <a href={`/spreadqr?TICKET=${record.qrTicket}&name=${record.name}&parameter=${record.qrTicket}`} target="_blank">点击查看</a>
       }
     }, {
       title: '分润比例',

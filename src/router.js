@@ -264,6 +264,14 @@ const Routers = function ({ history, app }) {
             }, 'spreaduser')
           },
         }, {
+          path: 'spreadqr',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/qr/detail'))
+              cb(null, require('./routes/qr/detail'))
+            }, 'qr-detail')
+          },
+        }, {
           path: '*',
           getComponent (nextState, cb) {
             require.ensure([], require => {
