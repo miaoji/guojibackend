@@ -4,7 +4,6 @@ import request from './request'
 import * as time from './time'
 import classnames from 'classnames'
 import { color } from './theme'
-import shelfNo from './shelfNoData'
 import lodash from 'lodash'
 import screen from './filter'
 
@@ -175,7 +174,6 @@ module.exports = {
   menu,
   rebuildVal,
   request,
-  shelfNo,
   screen,
   storage,
   time,

@@ -19,6 +19,7 @@ const formItemLayout = {
 const addModal = ({
   item = {},
   onOk,
+  type,
   selectNation,
   selectProvince,
   selectCity,
@@ -61,33 +62,33 @@ const addModal = ({
       onOk(data)
     })
   }
-
-  const countryChange = async function(e) {
+  const countryChange = async function (e) {
     await getProvince(e)
     setFieldsValue({
-      sendProv: undefined,
-      sendCity: undefined,
-      sendCounty: undefined,
+      senderProv: undefined,
+      senderCity: undefined,
+      senderCounty: undefined,
     })
   }
 
-  const provinceChange = async function(e) {
+  const provinceChange = async function (e) {
+    console.log(11)
     await getCity(e)
     setFieldsValue({
-      sendCity: undefined,
-      sendCounty: undefined,
+      senderCity: undefined,
+      senderCounty: undefined,
     })
   }
 
-  const cityChange = async function(e) {
+  const cityChange = async function (e) {
     await getCounty(e)
     setFieldsValue({
-      sendCounty: undefined,
+      senderCounty: undefined,
     })
   }
 
-  const packageChange = async function(data) {
-    // 通过目的地查询包裹类型
+  const receiverCountryChange = async function (data) {
+    // 当收件人国家修改的时候重新获取包裹类型和产品类型
     await getParcelType(data)
     setFieldsValue({
       packageType: undefined,
@@ -95,7 +96,7 @@ const addModal = ({
     })
   }
 
-  const productChange = async function(data) {
+  const parcelChange = async function (data) {
     await getProductType(JSON.parse(data).id)
     setFieldsValue({ productType: undefined })
   }
@@ -144,6 +145,7 @@ const addModal = ({
       <Form layout="horizontal">
         <FormItem style={{ marginTop: '6px' }} label="微信用户" hasFeedback {...formItemLayout}>
           {getFieldDecorator('wxUserId', {
+            initialValue: item.wxUserId,
             rules: [
               {
                 required: false,
@@ -155,6 +157,7 @@ const addModal = ({
         <hr className={classnames({ [styles.hr]: true })} />
         <FormItem label="包裹长度(cm)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('length', {
+            initialValue: item.LENGTH,
             rules: [
               {
                 required: false,
@@ -165,6 +168,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="包裹宽度(cm)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('width', {
+            initialValue: item.WIDTH,
             rules: [
               {
                 required: false,
@@ -175,6 +179,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="包裹高度(cm)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('height', {
+            initialValue: item.HEIGHT,
             rules: [
               {
                 required: false,
@@ -185,6 +190,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="包裹重量(kg)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('weight', {
+            initialValue: item.WEIGHT,
             rules: [
               {
                 required: true,
@@ -195,6 +201,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="是否退件" hasFeedback {...formItemLayout}>
           {getFieldDecorator('returnGood', {
+            initialValue: item.RETURN_GOOD,
             initialValue: 0,
             rules: [
               {
@@ -203,12 +210,13 @@ const addModal = ({
               },
             ],
           })(<RadioGroup>
-              <Radio value={1}>是</Radio>
-              <Radio value={0}>否</Radio>
-            </RadioGroup>)}
+            <Radio value={1}>是</Radio>
+            <Radio value={0}>否</Radio>
+          </RadioGroup>)}
         </FormItem>
         <FormItem label="是否保价" hasFeedback {...formItemLayout}>
           {getFieldDecorator('insured', {
+            initialValue: item.INSURED,
             initialValue: 0,
             rules: [
               {
@@ -217,13 +225,14 @@ const addModal = ({
               },
             ],
           })(<RadioGroup onChange={insuredChange}>
-              <Radio value={1}>是</Radio>
-              <Radio value={0}>否</Radio>
-            </RadioGroup>)}
+            <Radio value={1}>是</Radio>
+            <Radio value={0}>否</Radio>
+          </RadioGroup>)}
         </FormItem>
         <div className={classnames({ [styles.hide]: insuredVisiable })}>
           <FormItem label="保价金额" hasFeedback {...formItemLayout}>
             {getFieldDecorator('insuredAmount', {
+              initialValue: item.INSURED_AMOUNT,
               rules: [
                 {
                   required: false,
@@ -236,6 +245,7 @@ const addModal = ({
         <hr className={classnames({ [styles.hr]: true })} />
         <FormItem label="寄件人姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderName', {
+            initialValue: item.SENDER_NAME,
             rules: [
               {
                 required: true,
@@ -246,6 +256,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="寄件人手机号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderMobile', {
+            initialValue: item.SENDER_MOBILE,
             rules: [
               {
                 required: true,
@@ -256,6 +267,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="寄件人省份" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderProv', {
+            initialValue: item.SENDER_PROV,
             rules: [
               {
                 required: true,
@@ -266,6 +278,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="寄件人市级" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderCity', {
+            initialValue: item.SENDER_CITY,
             rules: [
               {
                 required: true,
@@ -276,6 +289,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="寄件人县区" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderCounty', {
+            initialValue: item.SENDER_COUNTY,
             rules: [
               {
                 required: true,
@@ -286,6 +300,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="寄件人地址" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderAddress', {
+            initialValue: item.SENDER_ADDRESS,
             rules: [
               {
                 required: true,
@@ -296,6 +311,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="寄件人邮编" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderPostcode', {
+            initialValue: item.SENDER_POSTCODE,
             rules: [
               {
                 required: true,
@@ -307,6 +323,7 @@ const addModal = ({
         <hr className={classnames({ [styles.hr]: true })} />
         <FormItem label="收件人姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverName', {
+            initialValue: item.RECEIVER_NAME,
             rules: [
               {
                 required: true,
@@ -317,6 +334,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="收件人手机" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverMobile', {
+            initialValue: item.RECEIVER_MOBILE,
             rules: [
               {
                 required: true,
@@ -327,16 +345,18 @@ const addModal = ({
         </FormItem>
         <FormItem label="收件人国家" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverCountry', {
+            initialValue: item.RECEIVER_COUNTRY,
             rules: [
               {
                 required: true,
                 message: '请选择收件人国家!',
               },
             ],
-          })(<Select onChange={packageChange} placeholder="请选择收件人国家">{selectNation}</Select>)}
+          })(<Select onChange={receiverCountryChange} placeholder="请选择收件人国家">{selectNation}</Select>)}
         </FormItem>
         <FormItem label="收件人地址" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverAddress', {
+            initialValue: item.RECEIVER_ADDRESS,
             rules: [
               {
                 required: true,
@@ -347,6 +367,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="收件地址邮编" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverPostcode', {
+            initialValue: item.RECEIVER_POSTCODE,
             rules: [
               {
                 required: true,
@@ -358,16 +379,18 @@ const addModal = ({
         <hr className={classnames({ [styles.hr]: true })} />
         <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('packageType', {
+            initialValue: item.PACKAGE_TYPE,
             rules: [
               {
                 required: true,
                 message: '请选择物品类型!',
               },
             ],
-          })(<Select placeholder="请选择物品类型" onChange={productChange} disabled={parcelDis}>{selectParcelType}</Select>)}
+          })(<Select placeholder="请选择物品类型" onChange={parcelChange} disabled={parcelDis}>{selectParcelType}</Select>)}
         </FormItem>
         <FormItem label="产品类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('productType', {
+            initialValue: item.PRODUCT_TYPE,
             rules: [
               {
                 required: true,
@@ -379,20 +402,22 @@ const addModal = ({
         <FormItem label="运费(元)" hasFeedback {...formItemLayout}>
           <Row gutter={24}>
             <Col span={12}>
-              {getFieldDecorator('totalFee', {
-                initialValue: intlPrice.finalPrice || undefined,
-                rules: [{ required: true, message: 'Please input the captcha you got!' }],
-              })(
-                <Input value={intlPrice} size="large" />
-              )}
+              <p>{intlPrice.finalPrice}</p>
             </Col>
             <Col span={9}>
               <Button type="primary" size="large" onClick={handleClick}>查询运费</Button>
             </Col>
           </Row>
         </FormItem>
+        <FormItem label="确认运费(元)" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('totalFee', {
+            initialValue: item.totalFee,
+            rules: [{ required: true, message: 'Please input the captcha you got!' }],
+          })(<Input size="large" />)}
+        </FormItem>
         <FormItem label="备注" hasFeedback {...formItemLayout}>
           {getFieldDecorator('remark', {
+            initialValue: item.REMARK,
             rules: [
               {
                 required: false,

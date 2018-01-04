@@ -14,7 +14,7 @@ console.log('screen', screen)
 const orderState = screen.orderStateByNum
 const orderStateArr = screen.orderStateByArr
 
-const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
+const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showStateModal, updateOrderInfo, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -36,6 +36,9 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
         break
       case '5':
         showStateModal(record)
+        break
+      case '6':
+        updateOrderInfo(record)
         break
       default:
         break
@@ -127,7 +130,7 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '修改状态' }, { key: '1', name: '修改订单' }, { key: '3', name: '补价处理' }, { key: '4', name: '补价记录' }, { key: '2', name: '删除订单' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '修改状态' }, { key: '1', name: '发往国外' }, { key: '6', name: '修改订单' }, { key: '3', name: '补价处理' }, { key: '4', name: '补价记录' }, { key: '2', name: '删除订单' }]} />
       },
     },
   ]

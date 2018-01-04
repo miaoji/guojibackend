@@ -31,6 +31,7 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     bootModalVisible: false,
     stateModalVisible: false,
+    addModalVisible: false,
     selectedRowKeys: [],
     isMotion: false,
 
@@ -40,6 +41,7 @@ export default modelExtend(pageModel, {
     districtDis: true,
 
     selectParcelType: [],
+    selectProductType: [],
     selectProductType: [],
     parcelDis: true,
     productDis: true,
@@ -51,7 +53,7 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/order') {
           dispatch({
@@ -65,7 +67,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data.code === 200) {
         for (let item in data.obj) {
@@ -87,7 +89,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *'delete'({ payload }, { call, put, select }) {
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success && data.code === 200) {
         message.success(data.msg)
@@ -97,7 +99,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
+    *create({ payload }, { call, put }) {
       delete payload.packageType
       delete payload.productType
 
@@ -128,7 +130,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
+    *update({ payload }, { select, call, put }) {
       const id = yield select(({ order }) => order.currentItem.ID)
       const newOrder = {
         intlNo: payload.intlNo,
@@ -146,7 +148,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *addBoot ({ payload }, { call, put }) {
+    *addBoot({ payload }, { call, put }) {
       const other = {
         createUserId: JSON.parse(storage({ key: 'user' })).id,
         status: 1,
@@ -166,7 +168,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *updateState ({ payload }, { call, put, select }) {
+    *updateState({ payload }, { call, put, select }) {
       const id = yield select(({ order }) => order.currentItem.ID)
       const state = yield select(({ order }) => order.currentItem.STATUS)
       // 判断是否修改state(订单状态)
@@ -187,7 +189,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *createChinaOrder ({ payload }, { call, put }) {
+    *createChinaOrder({ payload }, { call, put }) {
       const data = yield call(createChinaOrder, { ...payload })
       if (data.success && data.code === 200) {
         message.success(data.msg)
@@ -198,7 +200,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getKdCompany ({ payload }, { call, put }) {
+    *getKdCompany({ payload }, { call, put }) {
       const data = yield call(getKdCompany)
       if (data.code === 200) {
         let children = []
@@ -220,7 +222,7 @@ export default modelExtend(pageModel, {
     },
 
     // 获取国家信息
-    *getCountry ({ payload = {} }, { call, put }) {
+    *getCountry({ payload = {} }, { call, put }) {
       const data = yield call(getCountry)
       if (data.code === 200) {
         delete data.obj[0]
@@ -250,7 +252,7 @@ export default modelExtend(pageModel, {
     },
 
     // 获取省份信息
-    *getProvince ({ payload }, { call, put }) {
+    *getProvince({ payload }, { call, put }) {
       const data = yield call(getProvince, { countryCode: 'CN' })
       if (data.code === 200) {
         let children = []
@@ -279,7 +281,16 @@ export default modelExtend(pageModel, {
     },
 
     // 获取市级信息
-    *getCity ({ payload = {} }, { call, put }) {
+    *getCity({ payload = {} }, { call, put }) {
+      yield put({
+        type: 'setStates',
+        payload: {
+          selectCity: [],
+          selectCounty: [],
+          districtDis: true,
+          cityDis: true
+        }
+      })
       payload = JSON.parse(payload).code
       const data = yield call(getCity, { provinceCode: payload })
       if (data.code === 200) {
@@ -309,7 +320,13 @@ export default modelExtend(pageModel, {
     },
 
     // 获取县区级信息
-    *getCounty ({ payload = {} }, { call, put }) {
+    *getCounty({ payload = {} }, { call, put }) {
+      yield put({
+        type: 'setStates',
+        payload: {
+          districtDis: true
+        }
+      })
       payload = JSON.parse(payload).code
       const data = yield call(getCounty, { cityCode: payload })
       if (data.code === 200) {
@@ -339,7 +356,15 @@ export default modelExtend(pageModel, {
     },
 
     // 获取包裹类型
-    *getParcelType ({ payload }, { select, call, put }) {
+    *getParcelType({ payload }, { select, call, put }) {
+      yield put({
+        type: 'setStates',
+        payload: {
+          selectProductType: [],
+          productDis: true,
+          parcelDis: true
+        }
+      })
       const destNation = { countryId: JSON.parse(payload).id }
       const data = yield call(parceltypeQuery, destNation)
       if (data.code === 200 && data.obj) {
@@ -368,7 +393,7 @@ export default modelExtend(pageModel, {
     },
 
     // 获取产品类型
-    *getProductType ({ payload = {} }, { select, call, put }) {
+    *getProductType({ payload = {} }, { select, call, put }) {
       const packageType = { packageTypeId: payload }
       const data = yield call(producttypeQuery, packageType)
       if (data.code === 200 && data.obj) {
@@ -393,7 +418,7 @@ export default modelExtend(pageModel, {
     },
 
     // 获取微信用户信息
-    *getWeChatUser ({}, { select, call, put }) {
+    *getWeChatUser({ }, { select, call, put }) {
       const data = yield call(quertWeChatUser, { page: 1, rows: 10000000 })
       if (data.code === 200 && data.obj) {
         let obj = data.obj
@@ -412,7 +437,7 @@ export default modelExtend(pageModel, {
     },
 
     // 获取预付款信息
-    *getIntlPrice ({ payload = {} }, { call, put }) {
+    *getIntlPrice({ payload = {} }, { call, put }) {
       const data = yield call(getIntlPrice, { ...payload })
       if (data.code === 200 && data.obj) {
         const intlPrice = data.obj
@@ -429,47 +454,47 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setStates (state, { payload }) {
+    setStates(state, { payload }) {
       return { ...state, ...payload }
     },
 
-    showAddModal (state, { payload }) {
+    showAddModal(state, { payload }) {
       return { ...state, ...payload, addModalVisible: true }
     },
 
-    hideAddModal (state) {
+    hideAddModal(state) {
       return { ...state, addModalVisible: false }
     },
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 
-    showBootModal (state, { payload }) {
+    showBootModal(state, { payload }) {
       return { ...state, ...payload, bootModalVisible: true }
     },
 
-    hideBootModal (state) {
+    hideBootModal(state) {
       return { ...state, bootModalVisible: false }
     },
 
-    showStateModal (state, { payload }) {
+    showStateModal(state, { payload }) {
       return { ...state, ...payload, stateModalVisible: true }
     },
 
-    hideStateModal (state) {
+    hideStateModal(state) {
       return { ...state, stateModalVisible: false }
     },
 
-    showInsured (state) {
+    showInsured(state) {
       return { ...state, insuredVisiable: true }
     },
 
-    hideInsured (state) {
+    hideInsured(state) {
       return { ...state, insuredVisiable: false }
     },
 

@@ -67,48 +67,48 @@ const Order = ({ location, dispatch, order, loading }) => {
     selectWeChatUser,
     intlPrice,
     insuredVisiable,
-    getCountry (data) {
+    getCountry(data) {
       dispatch({
         type: 'order/getCountry',
       })
     },
-    getProvince (data) {
+    getProvince(data) {
       dispatch({
         type: 'order/getProvince',
         payload: data,
       })
     },
-    getCity (data) {
+    getCity(data) {
       dispatch({
         type: 'order/getCity',
         payload: data,
       })
     },
-    getCounty (data) {
+    getCounty(data) {
       dispatch({
         type: 'order/getCounty',
         payload: data,
       })
     },
-    getParcelType (data) {
+    getParcelType(data) {
       dispatch({
         type: 'order/getParcelType',
         payload: data,
       })
     },
-    getProductType (data) {
+    getProductType(data) {
       dispatch({
         type: 'order/getProductType',
         payload: data,
       })
     },
-    getIntlPrice (data) {
+    getIntlPrice(data) {
       dispatch({
         type: 'order/getIntlPrice',
         payload: data,
       })
     },
-    setInsuredVisiable (data) {
+    setInsuredVisiable(data) {
       if (data === 0) {
         dispatch({
           type: 'order/showInsured',
@@ -121,13 +121,13 @@ const Order = ({ location, dispatch, order, loading }) => {
         return
       }
     },
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: 'order/create',
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'order/hideAddModal',
       })
@@ -144,18 +144,18 @@ const Order = ({ location, dispatch, order, loading }) => {
     title: '添加国际段快递信息',
     wrapClassName: 'vertical-center-modal',
     selectKdCompany,
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: 'order/update',
         payload: data,
       })
     },
-    getKdCompany () {
+    getKdCompany() {
       dispatch({
         type: 'order/getKdCompany',
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'order/hideModal',
       })
@@ -170,13 +170,13 @@ const Order = ({ location, dispatch, order, loading }) => {
     confirmLoading: loading.effects['order/update'],
     title: '提交补价',
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: 'order/addBoot',
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'order/hideBootModal',
       })
@@ -191,29 +191,29 @@ const Order = ({ location, dispatch, order, loading }) => {
     confirmLoading: loading.effects['order/update'],
     title: '修改状态',
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: 'order/updateState',
-        payload: data,
+        payload: data
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
-        type: 'order/hideStateModal',
+        type: 'order/hideStateModal'
       })
-    },
+    }
   }
 
   const listProps = {
     filter: {
-      ...location.query,
+      ...location.query
     },
     dataSource: list,
     loading: loading.effects['order/query'],
     pagination,
     location,
     isMotion,
-    onChange (page, filter) {
+    onChange(page, filter) {
       const value = {
         status: filter.STATUS ? filter.STATUS[0] : undefined,
       }
@@ -224,67 +224,79 @@ const Order = ({ location, dispatch, order, loading }) => {
           ...query,
           ...value,
           page: page.current,
-          pageSize: page.pageSize,
-        },
+          pageSize: page.pageSize
+        }
       }))
     },
-    onMarkItem (id) {
+    onMarkItem(id) {
       dispatch({
         type: 'order/markBlackList',
         payload: id,
       })
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'order/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'order/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
-        },
+        }
       })
       dispatch({
         type: 'order/getKdCompany',
       })
     },
-    addBoot (item) {
+    addBoot(item) {
       dispatch({
         type: 'order/showBootModal',
         payload: {
           currentItem: item,
-        },
+        }
       })
     },
-    showStateModal (item) {
+    showStateModal(item) {
       dispatch({
         type: 'order/showStateModal',
         payload: {
           currentItem: item,
-        },
+        }
       })
     },
-    onCreateCtorder (item) {
+    onCreateCtorder(item) {
       dispatch({
         type: 'order/createChinaOrder',
         payload: {
           id: item.ID,
           orderNo: item.ORDER_NO,
-        },
+        }
       })
     },
-    filterStatus (value) {
+    filterStatus(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
           ...value,
-        },
+        }
       }))
     },
+    updateOrderInfo(item) {
+      dispatch({ type: 'order/getCountry' })
+      dispatch({ type: 'order/getProvince' })
+      dispatch({ type: 'order/getWeChatUser' })
+      dispatch({
+        type: 'order/showAddModal',
+        payload: {
+          modalType: 'update',
+          currentItem: item
+        }
+      })
+    }
   }
 
   const filterProps = {
@@ -292,7 +304,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -300,7 +312,7 @@ const Order = ({ location, dispatch, order, loading }) => {
         },
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({ type: 'order/getCountry' })
       dispatch({ type: 'order/getProvince' })
       dispatch({ type: 'order/getWeChatUser' })
@@ -308,10 +320,11 @@ const Order = ({ location, dispatch, order, loading }) => {
         type: 'order/showAddModal',
         payload: {
           modalType: 'create',
+          currentItem: {}
         },
       })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'order/switchIsMotion' })
     },
   }
