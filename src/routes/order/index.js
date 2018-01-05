@@ -49,7 +49,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     maskClosable: false,
     visible: addModalVisible,
     confirmLoading: loading.effects['order/create'],
-    title: '创建订单',
+    title: modalType==='create'?'创建订单':'修改订单',
     wrapClassName: 'vertical-center-modal',
     selectNation,
     selectProvince,
@@ -122,8 +122,9 @@ const Order = ({ location, dispatch, order, loading }) => {
       }
     },
     onOk(data) {
+      console.log(`order/${modalType}order`)
       dispatch({
-        type: 'order/create',
+        type: `order/${modalType}order`,
         payload: data,
       })
     },
@@ -134,7 +135,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
   }
 
-  // 订单修改modal
+  // 发往国外modal
   const modalProps = {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
@@ -289,6 +290,9 @@ const Order = ({ location, dispatch, order, loading }) => {
       dispatch({ type: 'order/getCountry' })
       dispatch({ type: 'order/getProvince' })
       dispatch({ type: 'order/getWeChatUser' })
+      if (item.INSURED === 1){
+        dispatch({ type:'order/hideInsured'})
+      }
       dispatch({
         type: 'order/showAddModal',
         payload: {

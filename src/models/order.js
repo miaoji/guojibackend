@@ -50,6 +50,7 @@ export default modelExtend(pageModel, {
     intlPrice: {},
 
     insuredVisiable: true,
+    intlPrice: '待查询'
   },
 
   subscriptions: {
@@ -99,7 +100,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create({ payload }, { call, put }) {
+    *createorder({ payload }, { call, put }) {
       delete payload.packageType
       delete payload.productType
 
@@ -121,6 +122,59 @@ export default modelExtend(pageModel, {
       payload.orderType = 1
       payload.orderItems = '[]'
       const data = yield call(createOrder, payload)
+      if (data.code === 200) {
+        yield put({ type: 'hideAddModal' })
+        message.success(data.msg)
+        yield put({ type: 'query' })
+      } else {
+        throw data.msg
+      }
+    },
+
+    *updateorder({ payload }, { select, call, put }) {
+      const item = yield select(({ order }) => order.currentItem)
+      payload.id = item.ID
+      delete payload.packageType
+      delete payload.productType
+
+      // 判断是否修改了收件地址国家
+      if (payload.receiverCountry && payload.receiverCountry !== item.RECEIVER_COUNTRY) {
+        console.log(1)
+        payload.receiverCountry = JSON.parse(payload.receiverCountry).name
+      } else {
+        payload.receiverCountry = undefined
+      }
+      // 判断是否修改寄件地址省份
+      if (payload.senderProv && payload.senderProv !== item.SENDER_PROV) {
+        payload.senderProv = JSON.parse(payload.senderProv).name
+      } else {
+        payload.senderProv = undefined
+      }
+      // 判断是否修改寄件地址市级
+      if (payload.senderCity && payload.senderCity !== item.SENDER_CITY) {
+        payload.senderCity = JSON.parse(payload.senderCity).name
+      } else {
+        payload.senderCity = undefined
+      }
+      // 判断是否修改寄件地址县级
+      if (payload.senderCounty && payload.senderCounty !== item.SENDER_COUNTY) {
+        payload.senderCounty = JSON.parse(payload.senderCounty).name
+      } else {
+        payload.senderCounty = undefined
+      }
+
+      payload.height ? payload.height = Number(payload.height) : payload.height = 0
+      payload.length ? payload.length = Number(payload.length) : payload.length = 0
+      payload.weight ? payload.weight = Number(payload.weight) : payload.weight = 0
+      payload.width ? payload.width = Number(payload.width) : payload.width = 0
+
+      if (payload.totalFee) {
+        payload.totalFee = Number(payload.totalFee) * 100
+      } else {
+        payload.totalFee = undefined
+      }
+      console.log('uodateorder', payload)
+      const data = yield call(update, payload)
       if (data.code === 200) {
         yield put({ type: 'hideAddModal' })
         message.success(data.msg)
@@ -438,17 +492,53 @@ export default modelExtend(pageModel, {
 
     // 获取预付款信息
     *getIntlPrice({ payload = {} }, { call, put }) {
-      const data = yield call(getIntlPrice, { ...payload })
+      yield put({
+        type: 'setStates',
+        payload: {
+          intlPrice: '待查询',
+        },
+      })
+      if (!payload.weight) {
+        message.warn('您还没有填写包裹重量呢!!!')
+        return
+      }
+      if (!payload.receiverCountry) {
+        message.warn('您还没有选择收件国家呢!!!')
+        return
+      }
+      if (!payload.packageType) {
+        message.warn('您还没有选择包裹类型呢!!!')
+        return
+      }
+      if (!payload.productType) {
+        message.warn('您还没有选择产品类型呢!!!')
+        return
+      }
+      console.log('payloadaa', payload)
+      const newdata = {
+        weight: payload.weight,
+        countryId: JSON.parse(payload.receiverCountry).id,
+        packageTypeId: JSON.parse(payload.packageType).id,
+        productTypeId: payload.productType,
+      }
+      const data = yield call(getIntlPrice, { ...newdata })
       if (data.code === 200 && data.obj) {
-        const intlPrice = data.obj
+        let intlPrice = 0
+        console.log(payload.insured)
+        if (payload.insured === 1) {
+          payload.insuredAmount < 200 ? payload.insuredAmount = 200 : payload.insuredAmount = payload.insuredAmount
+          intlPrice = data.obj.finalPrice + Number(payload.insuredAmount)*0.005
+        } else {
+          intlPrice = data.obj.finalPrice
+        }
         yield put({
           type: 'setStates',
           payload: {
-            intlPrice,
-          },
+            intlPrice
+          }
         })
       }
-    },
+    }
 
   },
 
@@ -463,7 +553,7 @@ export default modelExtend(pageModel, {
     },
 
     hideAddModal(state) {
-      return { ...state, addModalVisible: false }
+      return { ...state, addModalVisible: false, intlPrice: '待查询', insuredVisiable: true }
     },
 
     showModal(state, { payload }) {
@@ -496,7 +586,7 @@ export default modelExtend(pageModel, {
 
     hideInsured(state) {
       return { ...state, insuredVisiable: false }
-    },
+    }
 
-  },
+  }
 })

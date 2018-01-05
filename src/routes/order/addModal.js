@@ -72,7 +72,6 @@ const addModal = ({
   }
 
   const provinceChange = async function (e) {
-    console.log(11)
     await getCity(e)
     setFieldsValue({
       senderCity: undefined,
@@ -103,29 +102,7 @@ const addModal = ({
 
   const handleClick = function () {
     const data = getFieldsValue()
-    if (!data.weight) {
-      message.warn('您还没有填写包裹重量呢!!!')
-      return
-    }
-    if (!data.receiverCountry) {
-      message.warn('您还没有选择收件国家呢!!!')
-      return
-    }
-    if (!data.packageType) {
-      message.warn('您还没有选择包裹类型呢!!!')
-      return
-    }
-    if (!data.productType) {
-      message.warn('您还没有选择产品类型呢!!!')
-      return
-    }
-    const newdata = {
-      weight: data.weight,
-      countryId: JSON.parse(data.receiverCountry).id,
-      packageTypeId: JSON.parse(data.packageType).id,
-      productTypeId: data.productType,
-    }
-    getIntlPrice(newdata)
+    getIntlPrice(data)
   }
 
   const insuredChange = function (e) {
@@ -143,18 +120,20 @@ const addModal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem style={{ marginTop: '6px' }} label="微信用户" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('wxUserId', {
-            initialValue: item.wxUserId,
-            rules: [
-              {
-                required: false,
-                message: '请选择微信用户!',
-              },
-            ],
-          })(<Select showSearch placeholder="点击选择可按用户名和手机号码搜索">{selectWeChatUser}</Select>)}
-        </FormItem>
-        <hr className={classnames({ [styles.hr]: true })} />
+        <div style={{ display: type === 'create' ? 'block' : 'none' }}>
+          <FormItem style={{ marginTop: '6px' }} label="微信用户" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('wxUserId', {
+              initialValue: item.wxUserId,
+              rules: [
+                {
+                  required: false,
+                  message: '请选择微信用户!',
+                },
+              ],
+            })(<Select showSearch placeholder="点击选择可按用户名和手机号码搜索">{selectWeChatUser}</Select>)}
+          </FormItem>
+          <hr className={classnames({ [styles.hr]: true })} />
+        </div>
         <FormItem label="包裹长度(cm)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('length', {
             initialValue: item.LENGTH,
@@ -217,7 +196,6 @@ const addModal = ({
         <FormItem label="是否保价" hasFeedback {...formItemLayout}>
           {getFieldDecorator('insured', {
             initialValue: item.INSURED,
-            initialValue: 0,
             rules: [
               {
                 required: false,
@@ -232,11 +210,12 @@ const addModal = ({
         <div className={classnames({ [styles.hide]: insuredVisiable })}>
           <FormItem label="保价金额" hasFeedback {...formItemLayout}>
             {getFieldDecorator('insuredAmount', {
-              initialValue: item.INSURED_AMOUNT,
+              initialValue: item.INSURED_AMOUNT || 200,
               rules: [
                 {
-                  required: false,
-                  message: '请输入保价金额!',
+                  required: !insuredVisiable,
+                  pattern: /^((1[0-9]{5})|\d{1,5}|200000)$/,
+                  message: '请输入一个有效的保价金额!',
                 },
               ],
             })(<Input placeholder="请输入保价金额!" />)}
@@ -377,44 +356,48 @@ const addModal = ({
           })(<Input placeholder="请输入收件人地址邮编!" />)}
         </FormItem>
         <hr className={classnames({ [styles.hr]: true })} />
-        <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('packageType', {
-            initialValue: item.PACKAGE_TYPE,
-            rules: [
-              {
-                required: true,
-                message: '请选择物品类型!',
-              },
-            ],
-          })(<Select placeholder="请选择物品类型" onChange={parcelChange} disabled={parcelDis}>{selectParcelType}</Select>)}
-        </FormItem>
-        <FormItem label="产品类型" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('productType', {
-            initialValue: item.PRODUCT_TYPE,
-            rules: [
-              {
-                required: true,
-                message: '请选择产品类型!',
-              },
-            ],
-          })(<Select placeholder="请选择产品类型" disabled={productDis}>{selectProductType}</Select>)}
-        </FormItem>
-        <FormItem label="运费(元)" hasFeedback {...formItemLayout}>
-          <Row gutter={24}>
-            <Col span={12}>
-              <p>{intlPrice.finalPrice}</p>
-            </Col>
-            <Col span={9}>
-              <Button type="primary" size="large" onClick={handleClick}>查询运费</Button>
-            </Col>
-          </Row>
-        </FormItem>
-        <FormItem label="确认运费(元)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('totalFee', {
-            initialValue: item.totalFee,
-            rules: [{ required: true, message: 'Please input the captcha you got!' }],
-          })(<Input size="large" />)}
-        </FormItem>
+        <div style={{ display: (type === 'update' && selectParcelType.length !== 0 || type === 'create') ? 'block' : 'none' }}>
+          <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('packageType', {
+              rules: [
+                {
+                  required: (type === 'update' && selectParcelType.length !== 0 || type === 'create'),
+                  message: '请选择物品类型!',
+                },
+              ],
+            })(<Select placeholder="请选择物品类型" onChange={parcelChange} disabled={parcelDis}>{selectParcelType}</Select>)}
+          </FormItem>
+          <FormItem label="产品类型" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('productType', {
+              rules: [
+                {
+                  required: (type === 'update' && selectParcelType.length !== 0 || type === 'create'),
+                  message: '请选择产品类型!',
+                },
+              ],
+            })(<Select placeholder="请选择产品类型" disabled={productDis}>{selectProductType}</Select>)}
+          </FormItem>
+          <FormItem label="运费(元)" hasFeedback {...formItemLayout}>
+            <Row gutter={24}>
+              <Col span={12} push={3}>
+                <p style={{ color: 'green' }}>{intlPrice}</p>
+              </Col>
+              <Col span={9}>
+                <Button type="primary" size="large" onClick={handleClick}>查询运费</Button>
+              </Col>
+            </Row>
+          </FormItem>
+          <FormItem label="确认运费(元)" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('totalFee', {
+              rules: [
+                {
+                  required: (type === 'update' && selectParcelType.length !== 0 || type === 'create'),
+                  message: '请输入运费价值!',
+                },
+              ]
+            })(<Input size="large" />)}
+          </FormItem>
+        </div>
         <FormItem label="备注" hasFeedback {...formItemLayout}>
           {getFieldDecorator('remark', {
             initialValue: item.REMARK,
@@ -423,7 +406,7 @@ const addModal = ({
                 required: false,
                 message: '请输入备注信息!',
               },
-            ],
+            ]
           })(<Input placeholder="请输入备注信息!" />)}
         </FormItem>
       </Form>
