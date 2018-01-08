@@ -114,6 +114,13 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         return <span>{raplTime}</span>
       }
     }, {
+      title: '用户管理',
+      dataIndex: 'spreadUserId',
+      key: 'spreadUserId',
+      render: (text) => {
+        return <a href={`/spreaduserlist?userId=${text}`} target="_blank">点击查看</a>
+      }
+    }, {
       title: '操作',
       key: 'operation',
       width: 100,

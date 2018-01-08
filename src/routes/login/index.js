@@ -122,7 +122,7 @@ const Login = ({
                       message: '请输入验证码',
                     },
                   ],
-                })(<Input size="large" placeholder="验证码" />)}
+                })(<Input size="large" onPressEnter={handleOk} placeholder="验证码" />)}
               </FormItem>
               <FormItem hasFeedback>
                 {getFieldDecorator('password', {

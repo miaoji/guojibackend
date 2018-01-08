@@ -257,11 +257,27 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'spreaduser',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/spreaduser'))
               cb(null, require('./routes/spreaduser/'))
             }, 'spreaduser')
+          },
+        }, {
+          path: 'spreaduserlist',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/spreaduserlist'))
+              cb(null, require('./routes/spreaduserlist/'))
+            }, 'spreaduserlist')
+          },
+        }, {
+          path: 'audit',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/audit'))
+              cb(null, require('./routes/audit/'))
+            }, 'audit')
           },
         }, {
           path: 'spreadqr',

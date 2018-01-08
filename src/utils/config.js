@@ -4,9 +4,9 @@ let APIV3 = ''
 
 // 重构API
 // 线下地址
-// APIV3 = 'http://192.168.0.231:8077'
+APIV3 = 'http://192.168.0.231:8077'
 // 线上地址(测试)
-APIV3 = 'http://api.didalive.net/mzkd'
+// APIV3 = 'http://api.didalive.net/mzkd'
 // 正式地址(生产)
 // APIV3 = 'http://api.mingz-tech.com'
 
@@ -189,5 +189,13 @@ module.exports = {
       update: `${APIV3}/api/spreadUser/modById`, // 修改
       hide: `${APIV3}/api/spreadUser/delById`, // 删除
     },
-  },
+    // 推广用户列表
+    spreaduserlist: {
+      all: `${APIV3}/api/spreadUser/getSpreadGroupUser`
+    },
+    // 提现审核
+    audit: {
+      all: `${APIV3}/api/withdrawalsRecord/index`
+    }
+  }
 }

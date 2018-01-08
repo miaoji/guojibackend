@@ -197,6 +197,13 @@ module.exports = [
     icon: 'setting',
     router: '/spreaduser',
   }, {
+    id: 86,
+    bpid: 1,
+    mpid: 8,
+    name: '提现审核',
+    icon: 'setting',
+    router: '/audit',
+  }, {
     id: 83,
     bpid: 1,
     mpid: -1,
@@ -209,5 +216,11 @@ module.exports = [
     mpid: -1,
     name: '二维码图片',
     router: '/spreadqr'
+  }, {
+    id: 85,
+    bpid: 82,
+    mpid: -1,
+    name: '用户详情',
+    router: '/spreaduserlist'
   },
 ]
