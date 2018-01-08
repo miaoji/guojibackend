@@ -19,13 +19,13 @@ export async function query (params) {
 //   })
 // }
 
-// export async function update (params) {
-//   return request({
-//     url: audit.update,
-//     method: 'post',
-//     params,
-//   })
-// }
+export async function update (params) {
+  return request({
+    url: audit.update,
+    method: 'post',
+    params,
+  })
+}
 
 // export async function remove (params) {
 //   console.log('delete', params)

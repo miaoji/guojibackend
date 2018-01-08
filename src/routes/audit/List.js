@@ -68,7 +68,8 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       render: (text) => {
         const realText = {
           0: '未提现',
-          1: '体现成功'
+          1: '体现成功',
+          2: '拒绝'
         }
         return <span>{realText[text]}</span>
       }

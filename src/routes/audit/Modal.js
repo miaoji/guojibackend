@@ -45,51 +45,33 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-      	<FormItem label="推广等级" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('spreadLevel', {
-            initialValue: item.spreadLevel,
+      	<FormItem label="状态" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('status', {
+            initialValue: item.status,
+            rules: [
+              {
+                required: true,
+                message: '请选择状态！',
+              },
+            ],
+          })(
+            <Radio.Group>
+              <Radio value={0}>未提现</Radio>
+              <Radio value={1}>体现成功</Radio>
+              <Radio value={2}>拒绝</Radio>
+            </Radio.Group>
+          )}
+        </FormItem>
+        <FormItem label="原因" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('reason', {
+            initialValue: item.reason,
             rules: [
               {
                 required: true,
                 message: '请输入推广等级!',
               },
             ],
-          })(<Input placeholder='请输入推广等级'/>)}
-        </FormItem>
-        <FormItem label="等级名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('spreadName', {
-            initialValue: item.spreadName,
-            rules: [
-              {
-                required: true,
-                message: '请输入等级名称!',
-              },
-            ],
-          })(<Input placeholder='请输入等级名称'/>)}
-        </FormItem>
-        <FormItem label="需累计消费(￥)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('spreadConsumption', {
-            initialValue: item.spreadConsumption ? item.spreadConsumption / 100 : '',
-            rules: [
-              {
-                required: true,
-                pattern: /^[0-9]{1,}([\.]{1}[0-9]{1,}){0,1}$/,
-                message: '请输入需累计消费金额!',
-              }
-            ]
-          })(<Input placeholder='请输入需累计消费金额'/>)}
-        </FormItem>
-        <FormItem label="分润比例(%)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('consumptionRatio', {
-            initialValue: item.consumptionRatio ? item.consumptionRatio * 100 : '20',
-            rules: [
-              {
-                required: true,
-                pattern: /^100$|^[1-9][0-9]$|^[1-9]$/,
-                message: '请输入分润比例!',
-              },
-            ],
-          })(<Input placeholder='请输入分润比例'/>)}
+          })(<Input />)}
         </FormItem>
       </Form>
     </Modal>

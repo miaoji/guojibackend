@@ -195,7 +195,8 @@ module.exports = {
     },
     // 提现审核
     audit: {
-      all: `${APIV3}/api/withdrawalsRecord/index`
+      all: `${APIV3}/api/withdrawalsRecord/index`,
+      update: `${APIV3}/api/withdrawalsRecord/modById`
     }
   }
 }

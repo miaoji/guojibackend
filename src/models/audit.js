@@ -92,10 +92,10 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      payload.consumptionRatio = payload.consumptionRatio / 100
-      payload.spreadConsumption = payload.spreadConsumption * 100
       const id = yield select(({ audit }) => audit.currentItem.id)
-      const data = yield call(update, { ...payload, id })
+      // CONFIRM_USER_ID
+      const confirmUserId = JSON.parse(storage({ type: 'get', key:'user'})).id
+      const data = yield call(update, { ...payload, id, confirmUserId })
       if (data.msg === '修改成功') {
         message.success(data.msg)
         yield put({ type: 'hideModal' })
