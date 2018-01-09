@@ -9,7 +9,6 @@ import { time, screen } from '../../utils'
 import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
-console.log('screen', screen)
 
 const orderState = screen.orderStateByNum
 const orderStateArr = screen.orderStateByArr

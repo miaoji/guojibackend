@@ -191,12 +191,13 @@ module.exports = {
     },
     // 推广用户列表
     spreaduserlist: {
-      all: `${APIV3}/api/spreadUser/getSpreadGroupUser`
+      all: `${APIV3}/api/spreadUser/getSpreadGroupUser`,
     },
     // 提现审核
     audit: {
       all: `${APIV3}/api/withdrawalsRecord/index`,
-      update: `${APIV3}/api/withdrawalsRecord/modById`
-    }
-  }
+      update: `${APIV3}/api/withdrawalsRecord/modById`,
+      refuse: `${APIV3}/api/withdrawalsRecord/refuseById`,
+    },
+  },
 }

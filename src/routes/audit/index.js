@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Audit = ({ location, dispatch, audit, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = audit
+  const { disReasonInput, list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = audit
   const { pageSize } = pagination
 
   const modalProps = {
@@ -18,15 +18,22 @@ const Audit = ({ location, dispatch, audit, loading }) => {
     confirmLoading: loading.effects['audit/update'],
     title: `${modalType === 'create' ? '新增等级配置' : '修改等级配置'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk(data) {
+    disReasonInput,
+    onOk (data) {
       dispatch({
         type: `audit/${modalType}`,
         payload: data,
       })
     },
-    onCancel() {
+    onCancel () {
       dispatch({
         type: 'audit/hideModal',
+      })
+    },
+    onShowReasonInput (val) {
+      dispatch({
+        type: 'audit/setStates',
+        payload: val,
       })
     },
   }
@@ -37,7 +44,7 @@ const Audit = ({ location, dispatch, audit, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange(page) {
+    onChange (page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -48,18 +55,24 @@ const Audit = ({ location, dispatch, audit, loading }) => {
         },
       }))
     },
-    onDeleteItem(id) {
+    onDeleteItem (id) {
       dispatch({
         type: 'audit/delete',
         payload: id,
       })
     },
-    onEditItem(item) {
+    onEditItem (item) {
       dispatch({
         type: 'audit/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
+        },
+      })
+      dispatch({
+        type: 'audit/setStates',
+        payload: {
+          status: item.status,
         },
       })
     },
@@ -70,8 +83,7 @@ const Audit = ({ location, dispatch, audit, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange(value) {
-      console.log('value', value)
+    onFilterChange (value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -81,7 +93,7 @@ const Audit = ({ location, dispatch, audit, loading }) => {
         },
       }))
     },
-    onSearch(fieldsValue) {
+    onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/audit',
         query: {
@@ -92,7 +104,7 @@ const Audit = ({ location, dispatch, audit, loading }) => {
         pathname: '/audit',
       }))
     },
-    onAdd() {
+    onAdd () {
       dispatch({
         type: 'audit/showModal',
         payload: {
@@ -100,19 +112,19 @@ const Audit = ({ location, dispatch, audit, loading }) => {
         },
       })
     },
-    switchIsMotion() {
+    switchIsMotion () {
       dispatch({ type: 'audit/switchIsMotion' })
     },
   }
 
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'audit/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
-  }
+  // const handleDeleteItems = () => {
+  //   dispatch({
+  //     type: 'audit/multiDelete',
+  //     payload: {
+  //       ids: selectedRowKeys,
+  //     },
+  //   })
+  // }
 
   return (
     <div className="content-inner">

@@ -11,7 +11,6 @@ export async function query (params) {
 }
 
 export async function create (params) {
-  console.log(111)
   return request({
     url: spreaduser.create,
     method: 'post',
@@ -28,7 +27,6 @@ export async function update (params) {
 }
 
 export async function remove (params) {
-  console.log('delete', params)
   return request({
     url: spreaduser.hide,
     method: 'delete',

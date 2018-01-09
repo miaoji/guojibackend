@@ -10,14 +10,13 @@ export async function query (params) {
   })
 }
 
-// export async function create (params) {
-//   console.log(111)
-//   return request({
-//     url: audit.create,
-//     method: 'post',
-//     params,
-//   })
-// }
+export async function refuse (params) {
+  return request({
+    url: audit.refuse,
+    method: 'post',
+    params,
+  })
+}
 
 export async function update (params) {
   return request({
@@ -28,7 +27,6 @@ export async function update (params) {
 }
 
 // export async function remove (params) {
-//   console.log('delete', params)
 //   return request({
 //     url: audit.hide,
 //     method: 'delete',

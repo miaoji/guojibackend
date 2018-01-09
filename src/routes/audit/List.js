@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message } from 'antd'
+import { Table, Modal } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { Link } from 'dva/router'
+// import { Link } from 'dva/router'
 import { time } from '../../utils'
 
 const confirm = Modal.confirm
@@ -34,8 +34,8 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'accountNumber',
       key: 'accountNumber',
       render: (text) => {
-        return <span>{text||'暂无'}</span>
-      }
+        return <span>{text || '暂无'}</span>
+      },
     }, {
       title: '手机号',
       dataIndex: 'mobile',
@@ -50,17 +50,17 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       render: (text) => {
         const realText = {
           0: '微信',
-          1: '支付宝'
+          1: '支付宝',
         }
         return <span>{realText[text]}</span>
-      }
+      },
     }, {
       title: '提现金额',
       dataIndex: 'cash',
       key: 'cash',
       render: (text) => {
         return <span>{text / 100 || 0} 元</span>
-      }
+      },
     }, {
       title: '状态',
       dataIndex: 'status',
@@ -69,11 +69,11 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         const realText = {
           0: '未提现',
           1: '体现成功',
-          2: '拒绝'
+          2: '拒绝',
         }
         return <span>{realText[text]}</span>
-      }
-    },{
+      },
+    }, {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
@@ -86,9 +86,9 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }]} />
       },
-    }
+    },
   ]
 
   const getBodyWrapperProps = {

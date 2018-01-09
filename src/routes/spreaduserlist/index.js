@@ -71,7 +71,6 @@ const Spreaduserlist = ({ location, dispatch, spreaduserlist, loading }) => {
       ...location.query,
     },
     onFilterChange(value) {
-      console.log('value', value)
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {

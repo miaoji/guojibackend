@@ -30,7 +30,6 @@ const Marketing = ({ location, dispatch, marketing, loading }) => {
       })
     },
   }
-console.log('list', list)
   const listProps = {
     dataSource: list,
     loading: loading.effects['marketing/query'],

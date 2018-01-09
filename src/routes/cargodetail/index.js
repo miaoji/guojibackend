@@ -115,7 +115,6 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       }
     },
     getShelfCount (val) {
-      console.log('aaa', val)
       dispatch({
         type: 'cargodetail/getShelfCount',
         payload: val,

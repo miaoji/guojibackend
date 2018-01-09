@@ -396,7 +396,6 @@ export default modelExtend(pageModel, {
 
     // 通过货架号获取该货架上的订单数量
     *getShelfCount ({ payload }, { call, put }) {
-      console.log('payload', payload)
       const data = yield call(getShelfCountByshelfNo, { ...payload })
       if (data.code === 200) {
         const shelfCount = data.obj

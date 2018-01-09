@@ -75,7 +75,6 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
       })
       // 判断晋级类型若为手动则显示分润比例输入框
       if (item.spreadUserType === 1) {
-        console.log(item.spreadUserType)
         dispatch({
           type: 'spreaduser/updateState',
           payload: { spreadType: 1 }

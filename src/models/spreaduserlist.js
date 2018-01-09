@@ -47,7 +47,6 @@ export default modelExtend(pageModel, {
         return
       }
       const data = yield call(query, { ...payload, spreadUserId })
-      console.log('data', data)
       if (data.code === 200 && data.success) {
         yield put({
           type: 'querySuccess',
@@ -67,7 +66,6 @@ export default modelExtend(pageModel, {
 
     *'delete'({ payload }, { select, call, put }) {
       const id = yield select(({ spreaduserlist }) => spreaduserlist.currentItem.id)
-      console.log('id', id)
       const data = yield call(remove, { ids: payload })
       if (data.msg === '删除成功' && data.code === 200) {
         message.success(data.msg)
@@ -81,7 +79,6 @@ export default modelExtend(pageModel, {
       payload.consumptionRatio = payload.consumptionRatio / 100
       payload.spreadConsumption = payload.spreadConsumption * 100
       const data = yield call(create, payload)
-      console.log('data', data)
       if (data.success && data.code == '200') {
         message.success(data.msg)
         yield put({ type: 'hideModal' })

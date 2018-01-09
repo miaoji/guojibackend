@@ -1,11 +1,8 @@
 import modelExtend from 'dva-model-extend'
-import { message, Select } from 'antd'
-import { query, create, remove, update } from '../services/audit'
+import { message } from 'antd'
+import { query, create, refuse, remove, update } from '../services/audit'
 import { pageModel } from './common'
-import { config, storage } from '../utils'
-
-const { prefix } = config
-const Option = Select.Option
+import { storage } from '../utils'
 
 export default modelExtend(pageModel, {
   namespace: 'audit',
@@ -16,11 +13,11 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: false,
-    selectNation: [],
+    disReasonInput: true,
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
+    setup ({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/audit') {
           dispatch({
@@ -34,7 +31,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query({ payload = {} }, { call, put }) {
+    *query ({ payload = {} }, { call, put }) {
       let spreadUserId
       if (payload.userId) {
         window.localStorage.userId = payload.userId
@@ -47,7 +44,6 @@ export default modelExtend(pageModel, {
         return
       }
       const data = yield call(query, { ...payload, spreadUserId })
-      console.log('data', data)
       if (data.code === 200 && data.success) {
         yield put({
           type: 'querySuccess',
@@ -65,9 +61,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete'({ payload }, { select, call, put }) {
-      const id = yield select(({ audit }) => audit.currentItem.id)
-      console.log('id', id)
+    *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.msg === '删除成功' && data.code === 200) {
         message.success(data.msg)
@@ -77,12 +71,11 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create({ payload }, { call, put }) {
+    *create ({ payload }, { call, put }) {
       payload.consumptionRatio = payload.consumptionRatio / 100
       payload.spreadConsumption = payload.spreadConsumption * 100
       const data = yield call(create, payload)
-      console.log('data', data)
-      if (data.success && data.code == '200') {
+      if (data.success && data.code === 200) {
         message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
@@ -91,17 +84,53 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update({ payload }, { select, call, put }) {
+    *update ({ payload }, { select, call, put }) {
+      const status = yield select(({ audit }) => audit.currentItem.status)
       const id = yield select(({ audit }) => audit.currentItem.id)
-      // CONFIRM_USER_ID
-      const confirmUserId = JSON.parse(storage({ type: 'get', key:'user'})).id
-      const data = yield call(update, { ...payload, id, confirmUserId })
-      if (data.msg === '修改成功') {
-        message.success(data.msg)
+      const cash = yield select(({ audit }) => audit.currentItem.cash)
+      const spreadUserId = yield select(({ audit }) => audit.currentItem.spreadUserId)
+      const confirmUserId = JSON.parse(storage({ type: 'get', key: 'user' })).id
+      if (payload.status === status) {
+        message.success('状态未发生改变,本次操作以取消')
         yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
+        return
+      }
+      if (payload.status && payload.status === 2) {
+        const data = yield call(refuse, { id, cash, spreadUserId, reason: payload.reason, confirmUserId })
+        if (data.msg === '修改成功' && data.code === 200) {
+          message.success(data.msg)
+          yield put({ type: 'hideModal' })
+          yield put({ type: 'query' })
+        } else {
+          throw data.msg || '无法跟服务器建立有效连接'
+        }
       } else {
-        throw data.msg || '无法跟服务器建立有效连接'
+        const data = yield call(update, { status: payload.status, id, confirmUserId })
+        if (data.msg === '修改成功' && data.code === 200) {
+          message.success(data.msg)
+          yield put({ type: 'hideModal' })
+          yield put({ type: 'query' })
+        } else {
+          throw data.msg || '无法跟服务器建立有效连接'
+        }
+      }
+    },
+
+    *setStates ({ payload }, { put }) {
+      if (payload.status && payload.status === 2) {
+        yield put({
+          type: 'setState',
+          payload: {
+            disReasonInput: false,
+          },
+        })
+      } else {
+        yield put({
+          type: 'setState',
+          payload: {
+            disReasonInput: true,
+          },
+        })
       }
     },
 
@@ -109,15 +138,15 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setNation(state, { payload }) {
+    setState (state, { payload }) {
       return { ...state, ...payload }
     },
 
-    showModal(state, { payload }) {
+    showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal(state) {
+    hideModal (state) {
       return { ...state, modalVisible: false }
     },
 

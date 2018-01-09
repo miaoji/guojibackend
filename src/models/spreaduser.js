@@ -57,9 +57,8 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      console.log('aa', payload)
       const wxUserId = JSON.parse(payload.wxUserId).id
-      const spreadUserRatio = payload.spreadType === 1 ? payload.spreadUserRatio/100 : undefined
+      const spreadUserRatio = payload.spreadType === 1 ? payload.spreadUserRatio / 100 : undefined
       const spreadLevelId = payload.spreadType === 0 ? JSON.parse(payload.spreadLevelId).id : undefined
       const seconds = payload.qrType === 0 ? payload.seconds : undefined
 
@@ -72,7 +71,6 @@ export default modelExtend(pageModel, {
         wxUserId,
         name: payload.name
       }
-      console.log('replPayload', replPayload)
       const data = yield call(create, replPayload)
       if (data.success && data.code == '200') {
         message.success(data.msg)
@@ -84,11 +82,9 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      console.log('payload', payload)
       const item = yield select(({ spreaduser }) => spreaduser.currentItem)
       if (payload.wxUserId && payload.wxUserId === item.nickName) {
         payload.wxUserId = undefined
-        console.log('微信用户没有修改')
       }else{
         payload.wxUserId = JSON.parse(payload.wxUserId).id
       }
@@ -110,7 +106,6 @@ export default modelExtend(pageModel, {
         name: payload.name,
         id: item.spreadUserId
       }
-      console.log('payload', replPayload)
       // return
       const data = yield call(update, replPayload)
       if (data.msg === '修改成功') {
@@ -125,7 +120,6 @@ export default modelExtend(pageModel, {
     *'delete' ({ payload }, { select, call, put }) {
       const id = yield select(({ spreaduser }) => spreaduser.currentItem.id)
       const data = yield call(remove, { ids: payload })
-      console.log('ssss', data)
       if (data.msg === '删除成功' && data.code === 200) {
         message.success(data.msg)
         yield put({ type: 'query' })
@@ -190,7 +184,6 @@ export default modelExtend(pageModel, {
     },
 
     *updateState ({ payload }, { put }) {
-      console.log('aaa', payload)
       if (payload.spreadType && payload.spreadType === 1) {
         yield put({
           type: 'setStates',
@@ -207,7 +200,6 @@ export default modelExtend(pageModel, {
         })
       }
       if (payload.qrType && payload.qrType === 1) {
-        console.log(111)
         yield put({
           type: 'setStates',
           payload: {
@@ -215,7 +207,6 @@ export default modelExtend(pageModel, {
           },
         })
       } else if (payload.qrType === 0) {
-        console.log(2222)
         yield put({
           type: 'setStates',
           payload: {

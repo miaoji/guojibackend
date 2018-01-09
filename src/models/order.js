@@ -139,7 +139,6 @@ export default modelExtend(pageModel, {
 
       // 判断是否修改了收件地址国家
       if (payload.receiverCountry && payload.receiverCountry !== item.RECEIVER_COUNTRY) {
-        console.log(1)
         payload.receiverCountry = JSON.parse(payload.receiverCountry).name
       } else {
         payload.receiverCountry = undefined
@@ -173,7 +172,6 @@ export default modelExtend(pageModel, {
       } else {
         payload.totalFee = undefined
       }
-      console.log('uodateorder', payload)
       const data = yield call(update, payload)
       if (data.code === 200) {
         yield put({ type: 'hideAddModal' })
@@ -514,7 +512,6 @@ export default modelExtend(pageModel, {
         message.warn('您还没有选择产品类型呢!!!')
         return
       }
-      console.log('payloadaa', payload)
       const newdata = {
         weight: payload.weight,
         countryId: JSON.parse(payload.receiverCountry).id,
@@ -524,7 +521,6 @@ export default modelExtend(pageModel, {
       const data = yield call(getIntlPrice, { ...newdata })
       if (data.code === 200 && data.obj) {
         let intlPrice = 0
-        console.log(payload.insured)
         if (payload.insured === 1) {
           payload.insuredAmount < 200 ? payload.insuredAmount = 200 : payload.insuredAmount = payload.insuredAmount
           intlPrice = data.obj.finalPrice + Number(payload.insuredAmount)*0.005

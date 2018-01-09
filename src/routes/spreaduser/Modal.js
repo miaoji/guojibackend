@@ -43,13 +43,11 @@ const modal = ({
     })
   }
   const spreadTypeChange = (e) => {
-    console.log('e', e.target.value)
     handleChange({ spreadType: e.target.value })
   }
 
   const qrTypeChange = (e) => {
     handleChange({ qrType: e.target.value })
-    console.log('spreadTypeDis', e.target.value)
   }
 
   const modalOpts = {

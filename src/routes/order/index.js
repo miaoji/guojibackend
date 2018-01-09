@@ -122,7 +122,6 @@ const Order = ({ location, dispatch, order, loading }) => {
       }
     },
     onOk(data) {
-      console.log(`order/${modalType}order`)
       dispatch({
         type: `order/${modalType}order`,
         payload: data,
