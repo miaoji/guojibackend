@@ -66,18 +66,29 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'qrTicket',
       render: (text, record) => {
         return <a href={`/spreadqr?TICKET=${record.qrTicket}&name=${record.name}&parameter=${record.qrTicket}`} target="_blank">点击查看</a>
-      }
+      },
     }, {
-      title: '分润比例',
+      title: '一级分润比例',
       dataIndex: 'ConsumptionRatio',
       key: 'ConsumptionRatio',
       render: (text, record) => {
         if (record.spreadUserType === 0) {
-          return <span>{text*100}%</span>
-        }else{
-          return <span>{record.spreadUserRatio*100}%</span>
+          return <span>{text * 100}%</span>
+        } else {
+          return <span>{record.spreadUserRatio * 100}%</span>
         }
-      }
+      },
+    }, {
+      title: '二级分润比例',
+      dataIndex: 'ConsumptionRatio',
+      key: 'ConsumptionRatio',
+      render: (text, record) => {
+        if (record.spreadUserType === 0) {
+          return <span>{text * 100}%</span>
+        } else {
+          return <span>{record.spreadUserRatio * 100}%</span>
+        }
+      },
     }, {
       title: '需累计消费',
       dataIndex: 'spreadConsumption',
