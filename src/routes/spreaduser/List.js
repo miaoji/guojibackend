@@ -73,20 +73,20 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'ConsumptionRatio',
       render: (text, record) => {
         if (record.spreadUserType === 0) {
-          return <span>{text * 100}%</span>
+          return <span>{(text || 0) * 100}%</span>
         } else {
-          return <span>{record.spreadUserRatio * 100}%</span>
+          return <span>{(record.spreadUserRatio || 0) * 100}%</span>
         }
       },
     }, {
       title: '二级分润比例',
-      dataIndex: 'ConsumptionRatio',
-      key: 'ConsumptionRatio',
+      dataIndex: 'ConsumptionRatioSec',
+      key: 'ConsumptionRatioSec',
       render: (text, record) => {
         if (record.spreadUserType === 0) {
-          return <span>{text * 100}%</span>
+          return <span>{(text || 0) * 100}%</span>
         } else {
-          return <span>{record.spreadUserRatio * 100}%</span>
+          return <span>{(record.spreadUserRatio || 0) * 100}%</span>
         }
       },
     }, {
