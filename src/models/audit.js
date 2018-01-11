@@ -32,18 +32,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      let spreadUserId
-      if (payload.userId) {
-        window.localStorage.userId = payload.userId
-        spreadUserId = payload.userId
-        delete payload.userId
-      } else if (!payload.userId && window.localStorage.userId) {
-        spreadUserId = window.localStorage.userId
-      } else if (!payload.userId && !window.localStorage.userId) {
-        message.error('您查询的用户不存在')
-        return
-      }
-      const data = yield call(query, { ...payload, spreadUserId })
+      const data = yield call(query, { ...payload })
       if (data.code === 200 && data.success) {
         yield put({
           type: 'querySuccess',
