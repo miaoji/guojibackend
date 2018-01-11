@@ -17,7 +17,7 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/audit') {
           dispatch({
@@ -31,7 +31,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put }) {
       const data = yield call(query, { ...payload })
       if (data.code === 200 && data.success) {
         yield put({
@@ -50,7 +50,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put }) {
+    *'delete'({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.msg === '删除成功' && data.code === 200) {
         message.success(data.msg)
@@ -60,7 +60,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
+    *create({ payload }, { call, put }) {
       payload.consumptionRatio = payload.consumptionRatio / 100
       payload.spreadConsumption = payload.spreadConsumption * 100
       const data = yield call(create, payload)
@@ -73,7 +73,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
+    *update({ payload }, { select, call, put }) {
       const status = yield select(({ audit }) => audit.currentItem.status)
       const id = yield select(({ audit }) => audit.currentItem.id)
       const cash = yield select(({ audit }) => audit.currentItem.cash)
@@ -105,7 +105,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *setStates ({ payload }, { put }) {
+    *setStates({ payload }, { put }) {
       if (payload.status && payload.status === 2) {
         yield put({
           type: 'setState',
@@ -127,15 +127,15 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setState (state, { payload }) {
+    setState(state, { payload }) {
       return { ...state, ...payload }
     },
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 
