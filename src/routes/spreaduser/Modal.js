@@ -78,7 +78,7 @@ const modal = ({
                 message: '请填写推广人姓名!',
               },
             ],
-          })(<Input disabled={modalType !== 'create'} placeholder="请输入推广人姓名"/>)}
+          })(<Input disabled={modalType !== 'create'} placeholder="请输入推广人姓名" />)}
         </FormItem>
         <FormItem label="晋级类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('spreadType', {
@@ -118,10 +118,10 @@ const modal = ({
                   message: '分润比例不能大于100%!',
                 },
               ],
-            })(<Input placeholder='请输入分润比例'/>)}
+            })(<Input placeholder="请输入分润比例" />)}
           </FormItem>
         </div>
-        <div style={{ display: modalType === 'create' ? 'block' : 'none'}}>
+        <div style={{ display: modalType === 'create' ? 'block' : 'none' }}>
           <FormItem label="有效时长" hasFeedback {...formItemLayout}>
             {getFieldDecorator('qrType', {
               initialValue: item.qrType || 1,
@@ -146,7 +146,7 @@ const modal = ({
                   message: '请输入有效期!',
                 },
               ],
-            })(<Input disabled={qrTypeDis} placeholder="请输入有效天数"/>)}
+            })(<Input disabled={qrTypeDis} placeholder="请输入有效天数" />)}
           </FormItem>
         </div>
       </Form>

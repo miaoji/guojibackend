@@ -85,7 +85,7 @@ export default modelExtend(pageModel, {
       const item = yield select(({ spreaduser }) => spreaduser.currentItem)
       if (payload.wxUserId && payload.wxUserId === item.nickName) {
         payload.wxUserId = undefined
-      }else{
+      } else {
         payload.wxUserId = JSON.parse(payload.wxUserId).id
       }
       const spreadLevel = payload.spreadLevelId
@@ -100,7 +100,7 @@ export default modelExtend(pageModel, {
       }
       const replPayload = {
         type: payload.spreadType,
-        spreadUserRatio: payload.spreadUserRatio ? payload.spreadUserRatio/100 : undefined,
+        spreadUserRatio: payload.spreadUserRatio ? payload.spreadUserRatio / 100 : undefined,
         spreadLevelId: payload.spreadLevelId,
         wxUserId: payload.wxUserId,
         name: payload.name,

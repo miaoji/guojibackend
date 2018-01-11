@@ -1,11 +1,7 @@
 import modelExtend from 'dva-model-extend'
-import { message, Select } from 'antd'
+import { message } from 'antd'
 import { query, create, remove, update } from '../services/grade'
 import { pageModel } from './common'
-import { config, storage } from '../utils'
-
-const { prefix } = config
-const Option = Select.Option
 
 export default modelExtend(pageModel, {
   namespace: 'grade',
@@ -53,8 +49,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { select, call, put }) {
-      const id = yield select(({ grade }) => grade.currentItem.id)
+    *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.msg === '删除成功' && data.code === 200) {
         message.success(data.msg)
@@ -68,7 +63,7 @@ export default modelExtend(pageModel, {
       payload.consumptionRatio = payload.consumptionRatio / 100
       payload.spreadConsumption = payload.spreadConsumption * 100
       const data = yield call(create, payload)
-      if (data.success && data.code == '200') {
+      if (data.success && data.code === 200) {
         message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })

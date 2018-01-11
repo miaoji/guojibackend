@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message } from 'antd'
+import { Table, Modal } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { Link } from 'dva/router'
+// import { Link } from 'dva/router'
 import { time } from '../../utils'
 
 const confirm = Modal.confirm
@@ -45,7 +45,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '分润比例',
       dataIndex: 'consumptionRatio',
       key: 'consumptionRatio',
-      render: (text) => <span>{text*100}%</span>,
+      render: (text) => <span>{text * 100}%</span>,
     }, {
       title: '创建时间',
       dataIndex: 'createTime',

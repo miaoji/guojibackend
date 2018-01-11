@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader, Select } from 'antd'
-import city from '../../utils/city'
+import { Form, Input, Modal } from 'antd'
 
 const FormItem = Form.Item
 
@@ -45,7 +44,7 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-      	<FormItem label="推广等级" hasFeedback {...formItemLayout}>
+        <FormItem label="推广等级" hasFeedback {...formItemLayout}>
           {getFieldDecorator('spreadLevel', {
             initialValue: item.spreadLevel,
             rules: [
@@ -54,7 +53,7 @@ const modal = ({
                 message: '请输入推广等级!',
               },
             ],
-          })(<Input placeholder='请输入推广等级'/>)}
+          })(<Input placeholder="请输入推广等级" />)}
         </FormItem>
         <FormItem label="等级名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('spreadName', {
@@ -65,7 +64,7 @@ const modal = ({
                 message: '请输入等级名称!',
               },
             ],
-          })(<Input placeholder='请输入等级名称'/>)}
+          })(<Input placeholder="请输入等级名称" />)}
         </FormItem>
         <FormItem label="需累计消费(￥)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('spreadConsumption', {
@@ -77,7 +76,7 @@ const modal = ({
                 message: '请输入需累计消费金额!',
               }
             ]
-          })(<Input placeholder='请输入需累计消费金额'/>)}
+          })(<Input placeholder="请输入需累计消费金额" />)}
         </FormItem>
         <FormItem label="分润比例(%)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('consumptionRatio', {
@@ -89,7 +88,7 @@ const modal = ({
                 message: '请输入分润比例!',
               },
             ],
-          })(<Input placeholder='请输入分润比例'/>)}
+          })(<Input placeholder="请输入分润比例" />)}
         </FormItem>
       </Form>
     </Modal>

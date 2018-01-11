@@ -46,7 +46,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '地址',
       dataIndex: 'url',
       key: 'url',
-    }, /*{
+    }, /* {
       title: '创建时间',
       dataIndex: 'create_time',
       key: 'create_time',

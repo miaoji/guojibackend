@@ -206,7 +206,7 @@ module.exports = [
   }, {
     id: 83,
     bpid: 1,
-    mpid: -1,
+    mpid: 8,
     name: '分销管理',
     icon: 'setting',
     router: '/sale',

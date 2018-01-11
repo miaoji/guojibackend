@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
+// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
 const Grade = ({ location, dispatch, grade, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = grade
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion } = grade
   const { pageSize } = pagination
 
   const modalProps = {
@@ -18,13 +18,13 @@ const Grade = ({ location, dispatch, grade, loading }) => {
     confirmLoading: loading.effects['grade/update'],
     title: `${modalType === 'create' ? '新增等级配置' : '修改等级配置'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: `grade/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'grade/hideModal',
       })
@@ -37,7 +37,7 @@ const Grade = ({ location, dispatch, grade, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -48,13 +48,13 @@ const Grade = ({ location, dispatch, grade, loading }) => {
         },
       }))
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'grade/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'grade/showModal',
         payload: {
@@ -70,7 +70,7 @@ const Grade = ({ location, dispatch, grade, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -80,7 +80,7 @@ const Grade = ({ location, dispatch, grade, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/grade',
         query: {
@@ -91,7 +91,7 @@ const Grade = ({ location, dispatch, grade, loading }) => {
         pathname: '/grade',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'grade/showModal',
         payload: {
@@ -99,18 +99,9 @@ const Grade = ({ location, dispatch, grade, loading }) => {
         },
       })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'grade/switchIsMotion' })
     },
-  }
-
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'grade/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
   }
 
   return (

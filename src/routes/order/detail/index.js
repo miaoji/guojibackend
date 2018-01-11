@@ -18,7 +18,7 @@ const Detail = ({ orderDetail }) => {
   }
 
   const realOrderStatus = screen.orderStateByNum
-  
+
   const realBlackList = {
     0: '否',
     1: '是',

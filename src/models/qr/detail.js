@@ -14,7 +14,7 @@ export default {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(() => {
-        if (location.pathname === '/qrdetail' || location.pathname ==='/spreadqr') {
+        if (location.pathname === '/qrdetail' || location.pathname === '/spreadqr') {
           const name = queryURL('name')
           const ticket = queryURL('ticket')
           const parameter = queryURL('parameter')

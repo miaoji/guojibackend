@@ -523,7 +523,7 @@ export default modelExtend(pageModel, {
         let intlPrice = 0
         if (payload.insured === 1) {
           payload.insuredAmount < 200 ? payload.insuredAmount = 200 : payload.insuredAmount = payload.insuredAmount
-          intlPrice = data.obj.finalPrice + Number(payload.insuredAmount)*0.005
+          intlPrice = data.obj.finalPrice + Number(payload.insuredAmount) * 0.005
         } else {
           intlPrice = data.obj.finalPrice
         }

@@ -42,9 +42,8 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       render: (text, record) => {
         if (record.spreadUserType === 0) {
           return <span>{text}</span>
-        } else {
-          return <span>VIP用户</span>
         }
+        return <span>VIP用户</span>
       }
     }, {
       title: '推广类型',
@@ -74,9 +73,8 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       render: (text, record) => {
         if (record.spreadUserType === 0) {
           return <span>{(text || 0) * 100}%</span>
-        } else {
-          return <span>{(record.spreadUserRatio || 0) * 100}%</span>
         }
+        return <span>{(record.spreadUserRatio || 0) * 100}%</span>
       },
     }, {
       title: '二级分润比例',
@@ -85,9 +83,8 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       render: (text, record) => {
         if (record.spreadUserType === 0) {
           return <span>{(text || 0) * 100}%</span>
-        } else {
-          return <span>{(record.spreadUserRatio || 0) * 100}%</span>
         }
+        return <span>{(record.spreadUserRatio || 0) * 100}%</span>
       },
     }, {
       title: '需累计消费',
@@ -95,10 +92,9 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'spreadConsumption',
       render: (text, record) => {
         if (record.spreadUserType === 0) {
-          return <span>{text/100}元</span>
-        } else {
-          return <span>无消费限制</span>
+          return <span>{text / 100}元</span>
         }
+        return <span>无消费限制</span>
       }
     }, {
       title: '晋级类型',

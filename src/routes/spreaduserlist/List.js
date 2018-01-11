@@ -51,7 +51,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '寄件次数',
       dataIndex: 'packageCount',
       key: 'packageCount',
-      render: (text) => <span>{text||0}次</span>,
+      render: (text) => <span>{text || 0}次</span>,
     }, {
       title: '总消费金额',
       dataIndex: 'totalAmount',
