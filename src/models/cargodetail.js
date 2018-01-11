@@ -1,3 +1,4 @@
+import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import { routerRedux } from 'dva/router'
@@ -5,9 +6,7 @@ import { query, merge, cancel, freight, getOrderInfo, parentOrder, getShelfCount
 import { remove, update as status, getKdCompany } from '../services/order'
 import { create as addBoot } from '../services/boot'
 import { pageModel } from './common'
-import { config, time, storage, queryURL } from '../utils'
-
-const { prefix } = config
+import { storage, queryURL } from '../utils'
 
 export default modelExtend(pageModel, {
   namespace: 'cargodetail',
@@ -37,7 +36,7 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/cargodetail') {
           dispatch({
@@ -64,7 +63,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put }) {
       if (payload.batch) {
         window.sessionStorage.cargoBatch = payload.batch
       } else {
@@ -78,13 +77,13 @@ export default modelExtend(pageModel, {
             item.children = item.orderDetailList
             delete item.orderDetailList
           } else if (item.parentId === -1 || item.parentId === -2) {
-            const data = yield call(remove, { ids: item.id })
-            if (data.code === 200 && data.success) {
-              console.info('删除订单----', data.msg)
+            const datas = yield call(remove, { ids: item.id })
+            if (datas.code === 200 && datas.success) {
+              console.info('删除订单----', datas.msg)
               yield put({ type: 'query' })
             } else {
-              console.info('删除订单失败----', data.msg)
-              console.info('错误代码----', data.code)
+              console.info('删除订单失败----', datas.msg)
+              console.info('错误代码----', datas.code)
             }
           }
         }
@@ -108,7 +107,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *'delete'({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.success) {
         message.success('订单删除成功!!!')
@@ -118,18 +117,18 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
-      const data = yield call(create, payload)
-      if (data.success) {
-        yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
-      } else {
-        throw data.msg || '无法跟服务器建立有效连接'
-      }
-    },
+    // *create({ payload }, { call, put }) {
+    //   const data = yield call(create, payload)
+    //   if (data.success) {
+    //     yield put({ type: 'hideModal' })
+    //     yield put({ type: 'query' })
+    //   } else {
+    //     throw data.msg || '无法跟服务器建立有效连接'
+    //   }
+    // },
 
     // 合单
-    *mergeOrder ({ payload }, { select, call, put }) {
+    *mergeOrder({ payload }, { select, call, put }) {
       if (payload.cargoType < 0) {
         payload.parentId = undefined
       } else if (!payload.parentId) {
@@ -164,7 +163,7 @@ export default modelExtend(pageModel, {
     },
 
     // 撤销合单
-    *setCancel ({ payload }, { put, call }) {
+    *setCancel({ payload }, { put, call }) {
       const parentData = yield call(getOrderInfo, { id: payload.parentId })
       if (parentData.code === 200 && parentData.success && parentData.obj) {
         if (parentData.obj.status > 1) {
@@ -184,7 +183,7 @@ export default modelExtend(pageModel, {
     },
 
     // 定价
-    *setFreight ({ payload }, { select, put, call }) {
+    *setFreight({ payload }, { select, put, call }) {
       const currentItem = yield select(({ cargodetail }) => cargodetail.currentItem)
       const realPayload = {
         orderId: currentItem.id,
@@ -205,16 +204,16 @@ export default modelExtend(pageModel, {
         message.error('定价失败,未查询到用户')
         yield put({ type: 'hideBootModal' })
       } else {
-        throw data.msg || '无法跟服务器建立有效连接'
         yield put({ type: 'hideBootModal' })
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
     // 到件处理
-    *setStatus ({ payload }, { select, put, call }) {
+    *setStatus({ payload }, { select, put, call }) {
       if (payload.shelfNo && payload.shelfNo.length !== 3 && payload.cargoStatus === '已到件') {
         const shelf = JSON.parse(payload.shelfNo)
-        payload.shelfNo = `${shelf.str}${shelf.num}`
+        payload.shelfNo = `${shelf.str || 'A'}${shelf.num}`
       } else if (payload.cargoStatus === '未到件') {
         payload.shelfNo = ''
       } else if (payload.shelfNo === 'A01') {
@@ -245,7 +244,7 @@ export default modelExtend(pageModel, {
     },
 
     // 订单状态
-    *setOrderState ({ payload }, { call, put, select }) {
+    *setOrderState({ payload }, { call, put, select }) {
       let state = yield select(({ cargodetail }) => cargodetail.currentItem.status)
       const realState = {
         待付款: 1,
@@ -270,7 +269,7 @@ export default modelExtend(pageModel, {
     },
 
     // 称重
-    *setWeight ({ payload }, { select, put, call }) {
+    *setWeight({ payload }, { select, put, call }) {
       const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
       const data = yield call(status, {
         id,
@@ -289,17 +288,18 @@ export default modelExtend(pageModel, {
     },
 
     // 补价
-    *setRepair ({ payload }, { select, put, call }) {
+    *setRepair({ payload }, { select, put, call }) {
       const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
       const data = yield call(addBoot, {
         priceSpread: Number(payload.priceSpread) * 100,
         orderNo: payload.orderNo,
         reason: payload.reason,
         status: 1,
+        id,
         createUserId: JSON.parse(storage({ key: 'user' })).roleId,
       })
       if (data.code === 200 && data.success) {
-        message.success('添加成功')
+        message.success(data.msg)
         yield put({ type: 'query' })
         yield put({ type: 'hideRepairModal' })
       } else {
@@ -308,7 +308,7 @@ export default modelExtend(pageModel, {
     },
 
     // 设置国际段快递信息
-    *setIntlNo ({ payload }, { select, put, call }) {
+    *setIntlNo({ payload }, { select, put, call }) {
       const id = yield select(({ cargodetail }) => cargodetail.currentItem.id)
       const data = yield call(status, {
         intlNo: payload.intlNo,
@@ -326,7 +326,7 @@ export default modelExtend(pageModel, {
     },
 
     // 获取合单modal父级订单下拉框
-    *getParentOrder ({ payload }, { call, put }) {
+    *getParentOrder({ payload }, { call, put }) {
       const data = yield call(parentOrder, { batch: queryURL('batch') })
       if (data.code === 200 && data.success) {
         let children = []
@@ -349,12 +349,12 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw '获取订单列表失败'
+        throw data.msg || '获取订单列表失败'
       }
     },
 
     // 设置合单modal下拉菜单的禁用
-    *setMergeSelectState ({ payload }, { put }) {
+    *setMergeSelectState({ payload }, { put }) {
       if (payload.parentId !== '10' && payload.cargoType === '1') {
         yield put({
           type: 'setStates',
@@ -373,7 +373,7 @@ export default modelExtend(pageModel, {
     },
 
     // 获取国际快递下拉菜单
-    *getKdCompany ({ payload }, { call, put }) {
+    *getKdCompany({ payload }, { call, put }) {
       const data = yield call(getKdCompany)
       if (data.code === 200) {
         let children = []
@@ -390,12 +390,12 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw '获取国际段快递公司列表失败'
+        throw data.msg || '获取国际段快递公司列表失败'
       }
     },
 
     // 通过货架号获取该货架上的订单数量
-    *getShelfCount ({ payload }, { call, put }) {
+    *getShelfCount({ payload }, { call, put }) {
       const data = yield call(getShelfCountByshelfNo, { ...payload })
       if (data.code === 200) {
         const shelfCount = data.obj
@@ -406,7 +406,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw '货架信息获取失败'
+        throw data.msg || '货架信息获取失败'
       }
     },
 
@@ -414,66 +414,66 @@ export default modelExtend(pageModel, {
 
   reducers: {
     // 修改state的参数
-    setStates (state, { payload }) {
+    setStates(state, { payload }) {
       return { ...state, ...payload }
     },
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true, modalDis: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false, modalDis: true }
     },
 
 
     // 确定运费
-    showBootModal (state, { payload }) {
+    showBootModal(state, { payload }) {
       return { ...state, ...payload, bootModalVisible: true }
     },
 
-    hideBootModal (state) {
+    hideBootModal(state) {
       return { ...state, bootModalVisible: false }
     },
 
     // 是否到件
-    showStateModal (state, { payload }) {
+    showStateModal(state, { payload }) {
       return { ...state, ...payload, stateModalVisible: true }
     },
 
     // 控制货架号Input的显示与隐藏
-    setShelfDis (state, { payload }) {
+    setShelfDis(state, { payload }) {
       return { ...state, ...payload, shelfDis: false }
     },
 
-    hideStateModal (state) {
+    hideStateModal(state) {
       return { ...state, stateModalVisible: false, shelfDis: true }
     },
 
     // 称重
-    showWeightModal (state, { payload }) {
+    showWeightModal(state, { payload }) {
       return { ...state, ...payload, weightModalVisible: true }
     },
 
-    hideWeightModal (state) {
+    hideWeightModal(state) {
       return { ...state, weightModalVisible: false }
     },
 
     // 添加国际单号
-    showModifyModal (state, { payload }) {
+    showModifyModal(state, { payload }) {
       return { ...state, ...payload, modifyModalVisible: true }
     },
 
-    hideModifyModal (state) {
+    hideModifyModal(state) {
       return { ...state, modifyModalVisible: false }
     },
 
     // 补价
-    showRepairModal (state, { payload }) {
+    showRepairModal(state, { payload }) {
       return { ...state, ...payload, repairModalVisible: true }
     },
 
-    hideRepairModal (state) {
+    hideRepairModal(state) {
       return { ...state, repairModalVisible: false }
     },
 

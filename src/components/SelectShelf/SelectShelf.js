@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Select, Form } from 'antd'
 const Option = Select.Option
 
@@ -11,24 +12,13 @@ for (let i = 0; i < str.length; i++) {
   data[str[i]] = number
 }
 class SelectShelf extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       str: '',
       shelfStr: props.initValue.split('')[0],
       shelfNum: `${props.initValue.split('')[1]}${props.initValue.split('')[2]}`,
     }
-  }
-  handlesheleStrChange = (value) => {
-    this.setState({
-      str: value.split('')[0],
-      shelfStr: data[value.split('')[0]],
-      shelfNum: '01',
-    })
-    this.props.onChange(JSON.stringify({
-      str: value.split('')[0],
-      num: '01',
-    }))
   }
   onshelfNumChange = (value) => {
     this.setState({
@@ -39,7 +29,18 @@ class SelectShelf extends React.Component {
       num: value,
     }))
   }
-  render () {
+  handlesheleStrChange = (value) => {
+    this.setState({
+      str: value.split('')[0],
+      shelfStr: data[value.split('')[0]],
+      shelfNum: '01',
+    })
+    this.props.onChange(JSON.stringify({
+      str: value.split('')[0],
+      num: '01'
+    }))
+  }
+  render() {
     const sheleStrOptions = str.map(item => {
       const val = item + item.toLowerCase()
       return <Option key={val}>{item}</Option>
@@ -47,15 +48,20 @@ class SelectShelf extends React.Component {
     const cityOptions = data[str[0]].map(city => <Option key={city}>{city}</Option>)
     return (
       <div>
-          <Select showSearch defaultValue={this.state.shelfStr} style={{ width: 100, marginRight: 20 }} onChange={this.handlesheleStrChange}>
-              {sheleStrOptions}
-          </Select>
-          <Select showSearch value={this.state.shelfNum} style={{ width: 100 }} onChange={this.onshelfNumChange}>
-              {cityOptions}
-          </Select>
+        <Select showSearch defaultValue={this.state.shelfStr} style={{ width: 100, marginRight: 20 }} onChange={this.handlesheleStrChange}>
+          {sheleStrOptions}
+        </Select>
+        <Select showSearch value={this.state.shelfNum} style={{ width: 100 }} onChange={this.onshelfNumChange}>
+          {cityOptions}
+        </Select>
       </div>
     )
   }
+}
+
+SelectShelf.propTypes = {
+  initValue: PropTypes.str,
+  onChange: PropTypes.func
 }
 
 export default Form.create()(SelectShelf)
