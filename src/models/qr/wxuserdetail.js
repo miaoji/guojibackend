@@ -47,7 +47,7 @@ export default {
     },
 
     querySuccess (state, { payload }) {
-      const { data } = payload
+      // const { data } = payload
       return {
         ...state,
         ...payload,

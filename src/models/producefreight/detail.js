@@ -1,5 +1,5 @@
 import pathToRegexp from 'path-to-regexp'
-import { query } from '../../services/produceFreight'
+import { query } from '../../services/producefreight'
 
 export default {
 

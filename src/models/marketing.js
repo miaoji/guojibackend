@@ -79,7 +79,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')
@@ -89,7 +89,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *setmenu ({ payload }, { call, put, select }) {
+    *setmenu ({ payload }, { call, put }) {
       const data = yield call(setmenu)
       if (data.code === 200) {
         message.success('发送优惠卷成功')

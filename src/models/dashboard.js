@@ -1,5 +1,5 @@
 import { color } from '../utils/theme'
-import { myCity, query } from '../services/dashboard'
+import { query } from '../services/dashboard'
 import { parse } from 'qs'
 
 export default {
@@ -60,8 +60,9 @@ export default {
   effects: {
     *query ({
       payload,
-    }, { call, put }) {
+    }, { call }) {
       const data = yield call(query, parse(payload))
+      console.info('data', data)
     },
   },
   reducers: {

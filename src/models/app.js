@@ -1,8 +1,8 @@
-import { query, logout } from '../services/app'
+// import { query, logout } from '../services/app'
 import { routerRedux } from 'dva/router'
-import { parse } from 'qs'
+// import { parse } from 'qs'
 import { config, storage } from '../utils'
-const { prefix } = config
+// const { prefix } = config
 
 export default {
   namespace: 'app',
@@ -30,7 +30,7 @@ export default {
   },
   effects: {
 
-    *query ({ payload }, { call, put }) {
+    *query ({ payload }, { put }) {
       const token = storage({ key: 'token' })
       if (token && token.length > 0) {
         let user = storage({ key: 'user' })

@@ -1,6 +1,5 @@
-import { getOrderInfo, getOrderInfoByOrderNo, queryByCompany } from '../../services/order'
-import { message } from 'antd'
-// import { rebuildVal } from '../../utils'
+import { getOrderInfo, queryByCompany } from '../../services/order'
+
 export default {
 
   namespace: 'orderDetail',
@@ -10,7 +9,7 @@ export default {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(() => {
         if (location.pathname === '/orderdetail' || location.pathname === '/cargodetailInfo') {
           const match = location.search.split('?orderNo=')[1]
@@ -24,8 +23,7 @@ export default {
   },
 
   effects: {
-    *query ({ payload }, { call, put }) {
-      // payload.orderNo = rebuildVal(payload.orderNo)
+    *query({ payload }, { call, put }) {
       const data = yield call(getOrderInfo, payload)
       let detailDate = data.obj
       // 获取快递信息(开始)
@@ -49,7 +47,6 @@ export default {
         return '查询无果'
       }
       // 获取快递信息(结束)
-
       if (data) {
         yield put({
           type: 'querySuccess',
@@ -57,17 +54,16 @@ export default {
             data: detailDate,
           },
         })
-      } else {
-        throw data.msg
       }
+      throw data.msg
     },
   },
 
   reducers: {
-    setListEmpty (state) {
+    setListEmpty(state) {
       return { ...state, data: {} }
     },
-    querySuccess (state, { payload }) {
+    querySuccess(state, { payload }) {
       const { data } = payload
       return {
         ...state,

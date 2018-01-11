@@ -1,26 +1,14 @@
+import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import { query } from '../services/cargos'
 import { create, getKdCompany } from '../services/order'
 import { pageModel } from './common'
-import { config, time } from '../utils'
+import { time } from '../utils'
 import * as location from '../services/countries'
-import * as showPTypeByCounIdsService from '../services/showPTypeByCounIds'
-import * as showproductNamesService from '../services/showproductNames'
 import { query as quertWeChatUser } from '../services/wxuser'
-import { create as addBoot } from '../services/boot'
-
-const { prefix } = config
-
 
 const getCountry = location.query // 获取国家信息
-const getProvince = location.getProvinceId // 获取省份信息
-const getCity = location.getCityId // 获取市级信息
-const getCounty = location.getCountyId // 获取县区级信息
-const getCountryId = location.getCountryId // 通过国家姓名获取国家ID
-
-const parceltypeQuery = showPTypeByCounIdsService.query // 通过国家信息获取包裹类型
-const producttypeQuery = showproductNamesService.query // 通过包裹类型获取产品类型
 
 export default modelExtend(pageModel, {
   namespace: 'cargo',
@@ -47,11 +35,11 @@ export default modelExtend(pageModel, {
 
   subscriptions: {
     setup ({ dispatch, history }) {
-      history.listen(location => {
-        if (location.pathname === '/cargo') {
+      history.listen(locationaddr => {
+        if (locationaddr.pathname === '/cargo') {
           dispatch({
             type: 'query',
-            payload: location.query,
+            payload: locationaddr.query,
           })
         }
       })
@@ -64,7 +52,9 @@ export default modelExtend(pageModel, {
       const data = yield call(query, payload)
       if (data.code === 200) {
         for (let item in data.obj) {
-          data.obj[item].CREATE_TIME = time.formatTime(data.obj[item].CREATE_TIME)
+          if (item) {
+            data.obj[item].CREATE_TIME = time.formatTime(data.obj[item].CREATE_TIME)
+          }
         }
         yield put({
           type: 'querySuccess',
@@ -129,7 +119,7 @@ export default modelExtend(pageModel, {
     },
 
     // 设置包裹详情内容的展示数据
-    *setPackageBin ({ payload }, { call, put, select }) {
+    *setPackageBin ({ payload }, { put }) {
       const packageBin = payload.packageBin
       packageBin.push({
         orderName: payload.orderName,
@@ -176,7 +166,7 @@ export default modelExtend(pageModel, {
     },
 
     // 获取微信用户信息
-    *getWeChatUser ({}, { select, call, put }) {
+    *getWeChatUser ({ payload }, { call, put }) {
       const data = yield call(quertWeChatUser, { page: 1, rows: 10000000 })
       if (data.code === 200 && data.obj) {
         let obj = data.obj
@@ -211,7 +201,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw '获取国际段快递公司失败'
+        throw data.msg || '获取国际段快递公司失败'
       }
     },
 

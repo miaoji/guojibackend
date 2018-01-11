@@ -1,4 +1,3 @@
-const qs = require('qs')
 const Mock = require('mockjs')
 const config = require('../utils/config')
 const { apiPrefix } = config
@@ -16,33 +15,9 @@ let demosListData = Mock.mock({
 
 let database = demosListData.data
 
-const queryArray = (array, key, keyAlias = 'key') => {
-  if (!(array instanceof Array)) {
-    return null
-  }
-  let data
-
-  for (let item of array) {
-    if (item[keyAlias] === key) {
-      data = item
-      break
-    }
-  }
-
-  if (data) {
-    return data
-  }
-  return null
-}
-
-const NOTFOUND = {
-  message: 'Not Found',
-  documentation_url: 'http://localhost:8000/request',
-}
-
 module.exports = {
 
-  [`GET ${apiPrefix}/demos`] (req, res) {
+  [`GET ${apiPrefix}/demos`](req, res) {
     const { query } = req
     let { pageSize, page, ...other } = query
     pageSize = pageSize || 100

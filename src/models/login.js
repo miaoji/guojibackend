@@ -1,8 +1,8 @@
-import { accountLogin, getVerifyImage, getVerifyCodeByMobile, mobileLogin } from '../services/login'
+import { accountLogin, getVerifyCodeByMobile, mobileLogin } from '../services/login'
 import { routerRedux } from 'dva/router'
 import { message } from 'antd'
 import { queryURL, storage } from '../utils'
-import md5 from 'js-md5'
+// import md5 from 'js-md5'
 import { api } from '../utils/config'
 
 const loginApi = api.login
@@ -46,7 +46,7 @@ export default {
       const data = yield call(accountLogin, payload)
       yield put({ type: 'hideLoginLoading' })
       if (data.status === 200) {
-      	// 将 token, user信息 保存在本地localStorage
+        // 将 token, user信息 保存在本地localStorage
         storage({
           key: 'token',
           val: data.token,

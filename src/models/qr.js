@@ -52,7 +52,7 @@ export default modelExtend(pageModel, {
 
     *create ({ payload }, { call, put }) {
       delete payload.key
-      if (payload.type && payload.type == 1) {
+      if (payload.type && payload.type === 1) {
         delete payload.seconds
       } else if (payload.seconds) {
         payload.seconds = payload.seconds * 60 * 60 * 24
@@ -86,7 +86,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')

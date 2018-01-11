@@ -5,10 +5,9 @@ import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import * as provincesService from '../../services/provinces'
 import { pageModel } from '../common'
-import { config, storage } from '../../utils'
+import { storage } from '../../utils'
 
 const { query, create, update, remove } = provincesService
-const { prefix } = config
 
 export default modelExtend(pageModel, {
   namespace: 'province',
@@ -48,8 +47,8 @@ export default modelExtend(pageModel, {
         payload.countryCode = window.sessionStorage.countryCode
       }
       const data = yield call(query, payload)
-      if (data.code == '200' || data.code == '500') {
-        if (data.code == '500' || data.obj == null) {
+      if (data.code === 200 || data.code === 500) {
+        if (data.code === 500 || data.obj === null) {
           data.obj = { show: true, name: '暂无该城市的信息' }
         }
         yield put({
@@ -88,7 +87,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'markBlackList' ({ payload }, { call, put, select }) {
+    *'markBlackList' ({ payload }, { call, put }) {
       const newprovince = payload
       const data = yield call(update, newprovince)
       if (data.success) {

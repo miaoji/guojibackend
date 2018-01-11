@@ -51,7 +51,6 @@ export default modelExtend(pageModel, {
         content: payload.parameter,
         name: payload.name,
       }
-      return
       const data = yield call(create, newPayload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -78,7 +77,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')

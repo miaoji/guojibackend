@@ -1,6 +1,7 @@
 /**
  * 目的地model
  */
+import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, Row, Col } from 'antd'
 import { create, remove, update } from '../services/destination'
@@ -27,7 +28,7 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/destination') {
           dispatch({
@@ -44,9 +45,9 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data.code == '200') {
+      if (data.code === 200) {
         if (data.obj == null) {
           data.obj = { show: true, name: '暂无该城市的信息' }
         }
@@ -66,7 +67,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
+    *create({ payload }, { call, put }) {
       const data = yield call(create, payload)
       if (data.code === 200) {
         message.success(data.msg)
@@ -77,7 +78,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
+    *update({ payload }, { select, call, put }) {
       const id = yield select(({ destination }) => destination.currentItem.id)
       const newDestination = { ...payload, id }
       const data = yield call(update, newDestination)
@@ -90,7 +91,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put }) {
+    *'delete'({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success && data.code === 200) {
         message.success(data.msg)
@@ -100,7 +101,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *queryLocation ({ payload = {} }, { select, call, put }) {
+    *queryLocation({ payload = {} }, { call, put }) {
       const countryId = payload.currentItem.id
       const params = { countryid: countryId }
       const data = yield call(queryLocation, { params, type: 'province' })
@@ -118,7 +119,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *createProvince ({ payload = {} }, { select, call, put }) {
+    *createProvince({ payload = {} }, { select, call, put }) {
       const currentItem = yield select(({ destination }) => destination.currentItem)
       const countryId = currentItem.id
       const params = { countryid: countryId, name: payload.name, englishname: payload.englishname }
@@ -143,37 +144,39 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setListEmpty (state) {
+    setListEmpty(state) {
       return { ...state, list: { show: true, name: '国家信息正在加载,请稍等...' } }
     },
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 
-    showLocationModal (state, { payload }) {
+    showLocationModal(state, { payload }) {
       let { currentItem, locationData, type } = payload
       const visible = `${type}ModalVisible`
       locationData = locationData.map((elem) => {
-        return (<Row gutter={16}>
-                <Col className="gutter-row" span={8}>
-                  <div className="gutter-box">{elem.id}</div>
-                </Col>
-                <Col className="gutter-row" span={8}>
-                  <div className="gutter-box">{elem.name}</div>
-                </Col>
-              </Row>)
+        return (
+          <Row gutter={16}>
+            <Col className="gutter-row" span={8}>
+              <div className="gutter-box">{elem.id}</div>
+            </Col>
+            <Col className="gutter-row" span={8}>
+              <div className="gutter-box">{elem.name}</div>
+            </Col>
+          </Row>
+        )
       })
       let res = { ...state, currentItem, locationData }
       res[visible] = true
       return res
     },
 
-    hideLocationModal (state, { payload }) {
+    hideLocationModal(state, { payload }) {
       const { type } = payload
       const visible = `${type}ModalVisible`
       let res = { ...state }

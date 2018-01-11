@@ -1,6 +1,4 @@
 import { query } from '../../services/boot'
-import { message } from 'antd'
-// import { rebuildVal } from '../../utils'
 export default {
 
   namespace: 'bootDetail',

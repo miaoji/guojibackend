@@ -1,13 +1,13 @@
+import React from 'react'
 import { message, Select } from 'antd'
 import modelExtend from 'dva-model-extend'
-import { create, remove, update, markBlack } from '../services/product'
+import { create, remove, update } from '../services/product'
 import * as productsService from '../services/products'
 import * as countriesService from '../services/countries'
 import * as showPTypeByCounIdsService from '../services/showPTypeByCounIds'
 import { pageModel } from './common'
-import { config, storage } from '../utils'
+import { storage } from '../utils'
 
-const { prefix } = config
 // 获取产品类型分页数据
 const { query } = productsService
 // 获取全部国家信息
@@ -90,7 +90,7 @@ export default modelExtend(pageModel, {
       const PACKAGE_TYPE = yield select(({ product }) => product.currentItem.PACKAGE_TYPE)
 
       // 判断提交的包裹类型是否被修改..相同则提交之前查询到的包裹类型的id..不同则提交表单传输过来的id
-      if (payload.packageType == NAME_CN) {
+      if (payload.packageType === NAME_CN) {
         payload.packageType = PACKAGE_TYPE
       }
       const createUserId = JSON.parse(storage({ key: 'user' })).roleId
@@ -106,7 +106,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload.toString() })
       if (data.success && data.code === 200) {
         message.success(data.msg)
@@ -116,7 +116,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getNation ({ payload }, { select, call, put }) {
+    *getNation ({ payload }, { call, put }) {
       const data = yield call(contryQuery)
       if (data) {
         let obj = data.obj
@@ -138,13 +138,12 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getParcelType ({ payload = {} }, { select, call, put }) {
+    *getParcelType ({ payload = {} }, { call, put }) {
       const countryId = yield call(getCountryId, { name: payload.toString() })
       if (countryId.code === 200) {
         payload = countryId.obj.id
       } else {
-        throw '获取国家ID失败'
-        return
+        throw countryId.msg || '获取国家ID失败'
       }
       const destNation = { countryId: payload }
 
@@ -169,17 +168,17 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'multiDelete' ({ payload }, { call, put }) {
-      const data = yield call(wxusersService.remove, payload)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
+    // *'multiDelete' ({ payload }, { call, put }) {
+    //   const data = yield call(wxusersService.remove, payload)
+    //   if (data.success) {
+    //     yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
+    //     yield put({ type: 'query' })
+    //   } else {
+    //     throw data
+    //   }
+    // },
 
-    *'markBlackList' ({ payload }, { call, put, select }) {
+    *'markBlackList' ({ payload }, { call, put }) {
       const newWxUser = payload
       const data = yield call(update, newWxUser)
       if (data.success) {

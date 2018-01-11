@@ -2,10 +2,9 @@ import modelExtend from 'dva-model-extend'
 import { create, remove, update } from '../services/wxuser'
 import * as wxusersService from '../services/wxusers'
 import { pageModel } from './common'
-import { config, storage } from '../utils'
+import { storage } from '../utils'
 
 const { query } = wxusersService
-const { prefix } = config
 
 export default modelExtend(pageModel, {
   namespace: 'wxUser',
@@ -73,7 +72,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'markBlackList' ({ payload }, { call, put, select }) {
+    *'markBlackList' ({ payload }, { call, put }) {
       let newWxUser = payload
       // 判断有没有传过来blacklist属性,没有的传的话就默认等于1
       if (newWxUser.blacklist == null) {

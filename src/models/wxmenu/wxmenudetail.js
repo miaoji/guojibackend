@@ -2,7 +2,7 @@ import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import { create, update, remove, query } from '../../services/wxmenus'
 import { pageModel } from '../common'
-import { queryURL, storage } from '../../utils'
+import { storage } from '../../utils'
 
 export default modelExtend(pageModel, {
   namespace: 'wxmenudetail',
@@ -17,7 +17,6 @@ export default modelExtend(pageModel, {
     setup ({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/wxmenudetail') {
-          const parentId = queryURL('parentId')
           dispatch({
             type: 'query',
             payload: location.query,
@@ -95,7 +94,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')

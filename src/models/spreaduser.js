@@ -1,10 +1,9 @@
+import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
 import { query, create, remove, update, gradeInfo, wxuserInfo } from '../services/spreaduser'
 import { pageModel } from './common'
-import { config, storage } from '../utils'
 
-const { prefix } = config
 const Option = Select.Option
 
 export default modelExtend(pageModel, {
@@ -23,7 +22,7 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/spreaduser') {
           dispatch({
@@ -37,7 +36,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data.code === 200 && data.success) {
         yield put({
@@ -56,7 +55,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
+    *create({ payload }, { call, put }) {
       const wxUserId = JSON.parse(payload.wxUserId).id
       const spreadUserRatio = payload.spreadType === 1 ? payload.spreadUserRatio / 100 : undefined
       const spreadLevelId = payload.spreadType === 0 ? JSON.parse(payload.spreadLevelId).id : undefined
@@ -72,7 +71,7 @@ export default modelExtend(pageModel, {
         name: payload.name
       }
       const data = yield call(create, replPayload)
-      if (data.success && data.code == '200') {
+      if (data.success && data.code === 200) {
         message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
@@ -81,7 +80,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
+    *update({ payload }, { select, call, put }) {
       const item = yield select(({ spreaduser }) => spreaduser.currentItem)
       if (payload.wxUserId && payload.wxUserId === item.nickName) {
         payload.wxUserId = undefined
@@ -117,8 +116,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { select, call, put }) {
-      const id = yield select(({ spreaduser }) => spreaduser.currentItem.id)
+    *'delete'({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.msg === '删除成功' && data.code === 200) {
         message.success(data.msg)
@@ -128,7 +126,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getGradeInfo ({ }, { call, put }) {
+    *getGradeInfo({ payload }, { call, put }) {
       const data = yield call(gradeInfo)
       if (data.code === 200) {
         let obj = data.obj
@@ -156,7 +154,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getWxuserInfo ({ }, { call, put }) {
+    *getWxuserInfo({ payload }, { call, put }) {
       const data = yield call(wxuserInfo)
       if (data.code === 200) {
         let obj = data.obj
@@ -183,7 +181,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *updateState ({ payload }, { put }) {
+    *updateState({ payload }, { put }) {
       if (payload.spreadType && payload.spreadType === 1) {
         yield put({
           type: 'setStates',
@@ -220,17 +218,18 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setStates (state, { payload }) {
+    setStates(state, { payload }) {
       return { ...state, ...payload }
     },
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return {
-        ...state, modalVisible: false, spreadTypeDis: true, qrTypeDis: true }
+        ...state, modalVisible: false, spreadTypeDis: true, qrTypeDis: true
+      }
     },
 
   },
