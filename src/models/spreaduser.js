@@ -57,15 +57,15 @@ export default modelExtend(pageModel, {
 
     *create({ payload }, { call, put }) {
       const wxUserId = JSON.parse(payload.wxUserId).id
-      const spreadUserRatio = payload.spreadType === 1 ? payload.spreadUserRatio / 100 : undefined
       const spreadLevelId = payload.spreadType === 0 ? JSON.parse(payload.spreadLevelId).id : undefined
-      const seconds = payload.qrType === 0 ? payload.seconds : undefined
+      // const seconds = payload.qrType === 0 ? payload.seconds : undefined
 
       const replPayload = {
-        qrType: payload.qrType,
-        spreadType: payload.spreadType,
-        seconds,
-        spreadUserRatio,
+        spreadUserRatio: 0.08, // 一级分润比例
+        spreadUserRatioSecond: 0.05, // 二级分润比例
+        qrType: 1, // 推广类型
+        spreadType: 1,
+        // seconds,
         spreadLevelId,
         wxUserId,
         name: payload.name

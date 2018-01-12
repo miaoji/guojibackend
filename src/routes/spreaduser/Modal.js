@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader, Select } from 'antd'
-import city from '../../utils/city'
+import { Form, Input, Radio, Modal, Select } from 'antd'
 
 const FormItem = Form.Item
 
@@ -67,7 +66,7 @@ const modal = ({
                 message: '请选择推广人微信!',
               },
             ],
-          })(<Select showSearch placeholder="点击选择">{selectWxuser}</Select>)}
+          })(<Select disabled={modalType !== 'create'} showSearch placeholder="点击选择">{selectWxuser}</Select>)}
         </FormItem>
         <FormItem label="推广人姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
@@ -82,7 +81,7 @@ const modal = ({
         </FormItem>
         <FormItem label="晋级类型" hasFeedback {...formItemLayout}>
           {getFieldDecorator('spreadType', {
-            initialValue: item.spreadUserType || 0,
+            initialValue: 0,
             rules: [
               {
                 required: true,
@@ -91,7 +90,7 @@ const modal = ({
             ],
           })(<Radio.Group disabled={false} onChange={spreadTypeChange}>
             <Radio value={0}>自动晋级</Radio>
-            <Radio value={1}>手动晋级</Radio>
+            {/* <Radio value={1}>手动晋级</Radio> */}
           </Radio.Group>)}
         </FormItem>
         <div style={{ display: spreadTypeDis ? 'block' : 'none' }}>
@@ -121,7 +120,7 @@ const modal = ({
             })(<Input placeholder="请输入分润比例" />)}
           </FormItem>
         </div>
-        <div style={{ display: modalType === 'create' ? 'block' : 'none' }}>
+        <div style={{ display: 'none' }}>
           <FormItem label="有效时长" hasFeedback {...formItemLayout}>
             {getFieldDecorator('qrType', {
               initialValue: item.qrType || 1,
@@ -158,6 +157,12 @@ modal.propTypes = {
   form: PropTypes.object.isRequired,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  selectGrade: PropTypes.array,
+  selectWxuser: PropTypes.array,
+  handleChange: PropTypes.func,
+  spreadTypeDis: PropTypes.bool,
+  qrTypeDis: PropTypes.bool,
+  modalType: PropTypes.string
 }
 
 export default Form.create()(modal)

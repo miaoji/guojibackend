@@ -42,10 +42,15 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         return <span>{text / 100}</span>
       },
     }, {
-      title: '分润比例',
+      title: '一级分红比例',
       dataIndex: 'consumptionRatio',
       key: 'consumptionRatio',
-      render: (text) => <span>{text * 100}%</span>,
+      render: (text) => <span>{text * 100}%</span>
+    }, {
+      title: '二级分红比例',
+      dataIndex: 'consumptionRatioSecond',
+      key: 'consumptionRatioSecond',
+      render: (text) => <span>{Math.floor(text * 100)}%</span>
     }, {
       title: '创建时间',
       dataIndex: 'createTime',

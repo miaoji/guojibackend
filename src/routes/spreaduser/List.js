@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message } from 'antd'
+import { Table, Modal } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { Link } from 'dva/router'
+// import { Link } from 'dva/router'
 import { time } from '../../utils'
 
 const confirm = Modal.confirm
@@ -68,23 +68,17 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       },
     }, {
       title: '一级分润比例',
-      dataIndex: 'ConsumptionRatio',
-      key: 'ConsumptionRatio',
-      render: (text, record) => {
-        if (record.spreadUserType === 0) {
-          return <span>{(text || 0) * 100}%</span>
-        }
-        return <span>{(record.spreadUserRatio || 0) * 100}%</span>
+      dataIndex: 'spreadUserRatio',
+      key: 'spreadUserRatio',
+      render: (text) => {
+        return <span>{(text || 0) * 100}%</span>
       },
     }, {
       title: '二级分润比例',
-      dataIndex: 'ConsumptionRatioSec',
-      key: 'ConsumptionRatioSec',
-      render: (text, record) => {
-        if (record.spreadUserType === 0) {
-          return <span>{(text || 0) * 100}%</span>
-        }
-        return <span>{(record.spreadUserRatio || 0) * 100}%</span>
+      dataIndex: 'spreadUserRatioSecond',
+      key: 'spreadUserRatioSecond',
+      render: (text) => {
+        return <span>{(text || 0) * 100}%</span>
       },
     }, {
       title: '需累计消费',

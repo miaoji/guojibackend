@@ -78,17 +78,29 @@ const modal = ({
             ]
           })(<Input placeholder="请输入需累计消费金额" />)}
         </FormItem>
-        <FormItem label="分润比例(%)" hasFeedback {...formItemLayout}>
+        <FormItem label="一级分红比例(%)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('consumptionRatio', {
-            initialValue: item.consumptionRatio ? item.consumptionRatio * 100 : '20',
+            initialValue: item.consumptionRatio ? item.consumptionRatio * 100 : '8',
             rules: [
               {
                 required: true,
                 pattern: /^100$|^[1-9][0-9]$|^[1-9]$/,
-                message: '请输入分润比例!',
+                message: '请输入一级分红比例!',
               },
             ],
-          })(<Input placeholder="请输入分润比例" />)}
+          })(<Input placeholder="请输入一级分红比例" />)}
+        </FormItem>
+        <FormItem label="二级分红比例(%)" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('consumptionRatioSecond', {
+            initialValue: item.consumptionRatioSecond ? item.consumptionRatioSecond * 100 : '20',
+            rules: [
+              {
+                required: true,
+                pattern: /^100$|^[1-9][0-9]$|^[1-9]$/,
+                message: '请输入二级分红比例!',
+              },
+            ],
+          })(<Input placeholder="请输入二级分红比例" />)}
         </FormItem>
       </Form>
     </Modal>
