@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message, Button } from 'antd'
+import { Table, Button } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../components'
+// import { DropOption } from '../../components'
 
-const confirm = Modal.confirm
+// const confirm = Modal.confirm
 
 const List = ({ isMotion, location, ...tableProps }) => {
-  const handleMenuClick = (record, e) => {
+  const handleMenuClick = (record) => {
     window.open(`/bootdetail?orderNo=${record.order_no}`)
     return
   }

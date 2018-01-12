@@ -43,8 +43,7 @@ const stateModal = ({
   form: {
     getFieldDecorator,
     validateFields,
-    getFieldsValue,
-    setFieldsValue,
+    getFieldsValue
   },
   ...modalProps
 }) => {
@@ -133,6 +132,11 @@ stateModal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  modalType: PropTypes.string,
+  handleChange: PropTypes.func,
+  shelfDis: PropTypes.bool,
+  getShelfCount: PropTypes.func,
+  shelfCount: PropTypes.number,
 }
 
 export default Form.create()(stateModal)

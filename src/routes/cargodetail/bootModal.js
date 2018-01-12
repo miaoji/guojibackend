@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Modal } from 'antd'
-import classnames from 'classnames'
+import { Form, Input, Modal } from 'antd'
+// import classnames from 'classnames'
 
 const FormItem = Form.Item
 

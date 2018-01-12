@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 // import styles from './Modal.less'
 // import classnames from 'classnames'
-import { Form, Input, InputNumber, Modal, Select } from 'antd'
+import { Form, Input, Modal, Select } from 'antd'
 
 const FormItem = Form.Item
-const Option = Select.Option
+// const Option = Select.Option
 
 const formItemLayout = {
   labelCol: {
@@ -49,7 +49,7 @@ const ModifyModal = ({
     onOk: handleOk,
   }
 
-  const inputDisabled = modalOpts.type === 'update'
+  // const inputDisabled = modalOpts.type === 'update'
 
   return (
     <Modal {...modalOpts}>
@@ -98,6 +98,7 @@ ModifyModal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  selectKdCompany: PropTypes.array
 }
 
 export default Form.create()(ModifyModal)

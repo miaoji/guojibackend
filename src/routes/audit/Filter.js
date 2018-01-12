@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
-import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, Input, Cascader, Switch } from 'antd'
-import city from '../../utils/city'
-import { DateRange } from '../../components'
+// // import moment from 'moment'
+// import { FilterItem } from '../../components'
+import { Form, Button, Row, Col, Input } from 'antd'
+// import city from '../../utils/city'
+// import { DateRange } from '../../components'
 
 const Search = Input.Search
 
@@ -23,8 +23,6 @@ const TwoColProps = {
 
 const Filter = ({
   onAdd,
-  isMotion,
-  switchIsMotion,
   onFilterChange,
   filter,
   form: {
@@ -69,19 +67,19 @@ const Filter = ({
   }
 
   // 时间选择器change事件
-  const handleChange = (key, values) => {
-    let fields = getFieldsValue()
-    fields[key] = values
-    fields = handleFields(fields)
-    for (let item in fields) {
-      if (/^\s*$/g.test(fields[item])) {
-        fields[item] = undefined
-      }
-    }
-    onFilterChange({ ...filter, ...fields })
-  }
+  // const handleChange = (key, values) => {
+  //   let fields = getFieldsValue()
+  //   fields[key] = values
+  //   fields = handleFields(fields)
+  //   for (let item in fields) {
+  //     if (/^\s*$/g.test(fields[item])) {
+  //       fields[item] = undefined
+  //     }
+  //   }
+  //   onFilterChange({ ...filter, ...fields })
+  // }
 
-  const { country, address } = filter
+  const { country } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -120,7 +118,6 @@ const Filter = ({
 
 Filter.propTypes = {
   onAdd: PropTypes.func,
-  isMotion: PropTypes.bool,
   switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
+// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
@@ -29,7 +29,7 @@ const Cargo = ({ location, dispatch, cargo, loading }) => {
     packageBin,
     selectKdCompany,
   } = cargo
-  const { pageSize } = pagination
+  // const { pageSize } = pagination
 
   // 订单修改modal
   const modalProps = {

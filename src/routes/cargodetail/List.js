@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Button, message } from 'antd'
+import { Table, Modal, message } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -23,7 +23,22 @@ const realColor = {
 }
 // 包裹状态: 0 还没有合单, -1 普货, -2特货
 
-const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onSetWeight, onSetCancel, filterStatus, onDeleteItem, onSetFreight, addBoot, showStateModal, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
+const List = ({
+  onSetState,
+  onSetRepair,
+  onModifyOrder,
+  onSetStatus,
+  onSetWeight,
+  onSetCancel,
+  onDeleteItem,
+  onSetFreight,
+  addBoot,
+  showStateModal,
+  isMotion,
+  location,
+  onCreateCtorder,
+  ...tableProps
+}) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       // 确定运费
@@ -34,29 +49,29 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
           message.warn('该订单不能进行此操作!!!')
         }
         break
-        // 删除订单
+      // 删除订单
       case '2':
         confirm({
           title: '确定要删除这一订单吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.id)
           },
         })
         break
-        // 修改状态
+      // 修改状态
       case '3':
         onSetStatus(record)
         break
-        // 修改订单
+      // 修改订单
       case '4':
         onModifyOrder(record)
         break
-        // 撤销合单
+      // 撤销合单
       case '5':
         if (record.parentId > 0) {
           confirm({
             title: '确定要撤销本子订单的合单操作吗?',
-            onOk () {
+            onOk() {
               onSetCancel(record)
             },
           })
@@ -64,7 +79,7 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
           message.warn('本订单不能进行此操作!!!')
         }
         break
-        // 称重
+      // 称重
       case '6':
         onSetWeight(record)
         break
@@ -82,14 +97,14 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
     }
   }
 
-  const handleCreateZtorder = (record) => {
-    confirm({
-      title: '确定要发送中通订单吗?',
-      onOk () {
-        onCreateCtorder(record)
-      },
-    })
-  }
+  // const handleCreateZtorder = (record) => {
+  //   confirm({
+  //     title: '确定要发送中通订单吗?',
+  //     onOk() {
+  //       onCreateCtorder(record)
+  //     },
+  //   })
+  // }
 
   const columns = [
     {
@@ -136,14 +151,14 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
       dataIndex: 'parentId',
       key: 'parentId',
       render: (text) => {
-        text > 0 ? text = 1 : text = text
+        const reaText = text > 0 ? 1 : text
         const newParentId = {
           0: '待合单',
           '-1': '普货订单',
           '-2': '特货订单',
           1: '子订单',
         }
-        return <span>{newParentId[text]}</span>
+        return <span>{newParentId[reaText]}</span>
       },
     }, {
       title: '订单状态',
@@ -198,16 +213,15 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
       render: (text, record) => {
         if (record.parentId < 0) {
           return <span>/</span>
-          return
         }
         if (!record.confirmTime) {
           return <span>0 元</span>
         }
-        let time = new Date().getTime() - Number(record.confirmTime)
-        if (time <= 1814400000) {
+        let times = new Date().getTime() - Number(record.confirmTime)
+        if (times <= 1814400000) {
           return <span>0 元</span>
         }
-        let cost = Math.ceil((time - 1814400000) / 86400000)
+        let cost = Math.ceil((times - 1814400000) / 86400000)
         return <span>{cost} 元</span>
       },
     }, {
@@ -222,6 +236,7 @@ const List = ({ filter, onSetState, onSetRepair, onModifyOrder, onSetStatus, onS
         } else if (record.parentId > 0) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '撤销合单' }, { key: '2', name: '删除订单' }]} />
         }
+        return false
       },
     },
   ]
@@ -256,6 +271,13 @@ List.propTypes = {
   showStateModal: PropTypes.func,
   isMotion: PropTypes.bool,
   location: PropTypes.object,
+  onSetState: PropTypes.func,
+  onSetRepair: PropTypes.func,
+  onModifyOrder: PropTypes.func,
+  onSetStatus: PropTypes.func,
+  onSetWeight: PropTypes.func,
+  onSetCancel: PropTypes.func,
+  onCreateCtorder: PropTypes.func
 }
 
 export default List

@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { message, Form, Input, InputNumber, Modal, Radio, Select, Row, Col, Button } from 'antd'
+import { message, Form, Input, Modal, Select, Button } from 'antd'
 import styles from './Modal.less'
 import classnames from 'classnames'
 
 const FormItem = Form.Item
-const RadioGroup = Radio.Group
+// const RadioGroup = Radio.Group
 
 const formItemLayout = {
   labelCol: {
@@ -20,17 +20,17 @@ const modal = ({
   item = {},
   onOk,
   selectNation,
-  selectParcelType,
-  selectProductType,
-  parcelDis,
-  productDis,
+  // selectParcelType,
+  // selectProductType,
+  // parcelDis,
+  // productDis,
   getParcelType,
   getProductType,
   selectWeChatUser,
   getIntlPrice,
-  intlPrice,
-  setInsuredVisiable,
-  insuredVisiable,
+  // intlPrice,
+  // setInsuredVisiable,
+  // insuredVisiable,
   packageBin,
   setPackageBin,
   selectKdCompany,
@@ -60,31 +60,31 @@ const modal = ({
     })
   }
 
-  const countryChange = async function(e) {
-    await getProvince(e)
-    setFieldsValue({
-      sendProv: undefined,
-      sendCity: undefined,
-      sendCounty: undefined,
-    })
-  }
+  // const countryChange = async function (e) {
+  //   await getProvince(e)
+  //   setFieldsValue({
+  //     sendProv: undefined,
+  //     sendCity: undefined,
+  //     sendCounty: undefined,
+  //   })
+  // }
 
-  const provinceChange = async function(e) {
-    await getCity(e)
-    setFieldsValue({
-      sendCity: undefined,
-      sendCounty: undefined,
-    })
-  }
+  // const provinceChange = async function (e) {
+  //   await getCity(e)
+  //   setFieldsValue({
+  //     sendCity: undefined,
+  //     sendCounty: undefined,
+  //   })
+  // }
 
-  const cityChange = async function(e) {
-    await getCounty(e)
-    setFieldsValue({
-      sendCounty: undefined,
-    })
-  }
+  // const cityChange = async function (e) {
+  //   await getCounty(e)
+  //   setFieldsValue({
+  //     sendCounty: undefined,
+  //   })
+  // }
 
-  const packageChange = async function(data) {
+  const packageChange = async function (data) {
     // 通过目的地查询包裹类型
     await getParcelType(data)
     setFieldsValue({
@@ -93,41 +93,41 @@ const modal = ({
     })
   }
 
-  const productChange = async function(data) {
-    await getProductType(JSON.parse(data).id)
-    setFieldsValue({ productType: undefined })
-  }
+  // const productChange = async function (data) {
+  //   await getProductType(JSON.parse(data).id)
+  //   setFieldsValue({ productType: undefined })
+  // }
 
-  const handleClick = function () {
-    const data = getFieldsValue()
-    if (!data.weight) {
-      message.warn('您还没有填写包裹重量呢!!!')
-      return
-    }
-    if (!data.insuredAmount && data.insured == 1) {
-      message.warn('您选择了保价,但没有填写保价金额!!!')
-      return
-    }
-    if (!data.receiverCountry) {
-      message.warn('您还没有选择收件国家呢!!!')
-      return
-    }
-    if (!data.packageType) {
-      message.warn('您还没有选择包裹类型呢!!!')
-      return
-    }
-    if (!data.productType) {
-      message.warn('您还没有选择产品类型呢!!!')
-      return
-    }
-    const newdata = {
-      weight: data.weight,
-      countryId: JSON.parse(data.receiverCountry).id,
-      packageTypeId: JSON.parse(data.packageType).id,
-      productTypeId: data.productType,
-    }
-    getIntlPrice(newdata)
-  }
+  // const handleClick = function () {
+  //   const data = getFieldsValue()
+  //   if (!data.weight) {
+  //     message.warn('您还没有填写包裹重量呢!!!')
+  //     return
+  //   }
+  //   if (!data.insuredAmount && data.insured == 1) {
+  //     message.warn('您选择了保价,但没有填写保价金额!!!')
+  //     return
+  //   }
+  //   if (!data.receiverCountry) {
+  //     message.warn('您还没有选择收件国家呢!!!')
+  //     return
+  //   }
+  //   if (!data.packageType) {
+  //     message.warn('您还没有选择包裹类型呢!!!')
+  //     return
+  //   }
+  //   if (!data.productType) {
+  //     message.warn('您还没有选择产品类型呢!!!')
+  //     return
+  //   }
+  //   const newdata = {
+  //     weight: data.weight,
+  //     countryId: JSON.parse(data.receiverCountry).id,
+  //     packageTypeId: JSON.parse(data.packageType).id,
+  //     productTypeId: data.productType,
+  //   }
+  //   getIntlPrice(newdata)
+  // }
 
   const sendClick = function () {
     const data = getFieldsValue()
@@ -158,12 +158,12 @@ const modal = ({
     setFieldsValue({ orderName: undefined, totalFee: undefined, kdCompanyCodeCn: undefined, cnNo: undefined })
   }
 
-  const insuredChange = function (e) {
-    setInsuredVisiable(e.target.value)
-    if (e.target.value === 0) {
-      setFieldsValue({ insuredAmount: undefined })
-    }
-  }
+  // const insuredChange = function (e) {
+  //   setInsuredVisiable(e.target.value)
+  //   if (e.target.value === 0) {
+  //     setFieldsValue({ insuredAmount: undefined })
+  //   }
+  // }
 
   const modalOpts = {
     ...modalProps,
@@ -291,13 +291,13 @@ const modal = ({
               <td>国内单号</td>
             </tr>
             {
-              packageBin.map((item) => {
+              packageBin.map((val) => {
                 return (<tr>
-                  <td>{item.orderName}</td>
-                  <td>{item.totalFee}</td>
-                  <td>{item.kdCompanyCodeCn.split('/-/')[0]}</td>
-                  <td>{item.cnNo}</td>
-                  </tr>)
+                  <td>{val.orderName}</td>
+                  <td>{val.totalFee}</td>
+                  <td>{val.kdCompanyCodeCn.split('/-/')[0]}</td>
+                  <td>{val.cnNo}</td>
+                </tr>)
               })
             }
           </table>
@@ -313,6 +313,14 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  selectNation: PropTypes.array,
+  getParcelType: PropTypes.func,
+  getProductType: PropTypes.func,
+  selectWeChatUser: PropTypes.array,
+  getIntlPrice: PropTypes.func,
+  setPackageBin: PropTypes.func,
+  packageBin: PropTypes.array,
+  selectKdCompany: PropTypes.array
 }
 
 export default Form.create()(modal)

@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './Modal.less'
 import classnames from 'classnames'
-import { Form, Input, InputNumber, Modal, Select, Radio } from 'antd'
-import city from '../../utils/city'
+import { Form, Modal, Select, Radio } from 'antd'
+// import city from '../../utils/city'
 
 const FormItem = Form.Item
-const Option = Select.Option
+// const Option = Select.Option
 
 const formItemLayout = {
   labelCol: {
@@ -21,7 +21,7 @@ const modal = ({
   item = {},
   onOk,
   modalDis,
-  getKdCompany,
+  // getKdCompany,
   modalRadioDis,
   onModalDisState,
   selectParentOrder,
@@ -46,9 +46,9 @@ const modal = ({
     })
   }
 
-  const handleFocus = () => {
+  // const handleFocus = () => {
     // getKdCompany()
-  }
+  // }
 
   const handleChange = (e) => {
     const data = {
@@ -63,7 +63,7 @@ const modal = ({
     onOk: handleOk,
   }
 
-  const inputDisabled = modalOpts.type === 'update'
+  // const inputDisabled = modalOpts.type === 'update'
 
   return (
     <Modal {...modalOpts}>
@@ -78,10 +78,10 @@ const modal = ({
               },
             ],
           })(<Radio.Group onChange={handleChange}>
-              <Radio value={'-1'}>普货</Radio>
-              <Radio value={'-2'}>特货</Radio>
-              <Radio disabled={modalRadioDis} value={'1'}>合单到指定订单</Radio>
-            </Radio.Group>)}
+            <Radio value={'-1'}>普货</Radio>
+            <Radio value={'-2'}>特货</Radio>
+            <Radio disabled={modalRadioDis} value={'1'}>合单到指定订单</Radio>
+          </Radio.Group>)}
         </FormItem>
         <div className={classnames({ [styles.hide]: modalDis })}>
           <FormItem label="指定订单单号" hasFeedback {...formItemLayout}>
@@ -92,7 +92,7 @@ const modal = ({
                   message: '请选择订单单号',
                 },
               ],
-            })(<Select disabled={modalDis} showSearch placeholder="输入单号可搜索" onFocus={handleFocus} defaultValue="10" style={{ width: 286 }}>{selectParentOrder}</Select>)}
+            })(<Select disabled={modalDis} showSearch placeholder="输入单号可搜索" defaultValue="10" style={{ width: 286 }}>{selectParentOrder}</Select>)}
           </FormItem>
         </div>
       </Form>
@@ -105,6 +105,10 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  modalDis: PropTypes.bool,
+  modalRadioDis: PropTypes.bool,
+  onModalDisState: PropTypes.func,
+  selectParentOrder: PropTypes.array,
 }
 
 export default Form.create()(modal)

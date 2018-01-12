@@ -2,14 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Radio, Select } from 'antd'
-import city from '../../utils/city'
+import { Form, Button, Row, Col, DatePicker, Input } from 'antd'
+// import city from '../../utils/city'
 
-const InputGroup = Input.Group
-const Option = Select.Option
+// const InputGroup = Input.Group
+// const Option = Select.Option
 const Search = Input.Search
-const RadioButton = Radio.Button
-const RadioGroup = Radio.Group
+// const RadioButton = Radio.Button
+// const RadioGroup = Radio.Group
 const { RangePicker } = DatePicker
 
 const ColProps = {
@@ -26,8 +26,8 @@ const TwoColProps = {
 }
 
 const Filter = ({
-  onAdd,
-  isMotion,
+  // onAdd,
+  // isMotion,
   onFilterChange,
   selectedRowKeys,
   onMergeOrder,
@@ -39,8 +39,8 @@ const Filter = ({
   },
 }) => {
   const handleFields = (fields) => {
-    const { createTime, status, extension, option } = fields
-    if (status == 0) {
+    const { createTime, status, option } = fields
+    if (status === 0) {
       delete fields.status
     }
     if (createTime.length) {
@@ -51,7 +51,7 @@ const Filter = ({
     } else {
       delete fields.createTime
     }
-    if (option == 1) {
+    if (option === 1) {
       fields.qrName = fields.extension
     } else {
       fields.appName = fields.extension
@@ -91,19 +91,19 @@ const Filter = ({
     onFilterChange(fields, ...filter)
   }
 
-  const onChangeRadio = (e) => {
-    const newStarte = e.target.value
-    let fields = getFieldsValue()
-    fields = handleFields(fields)
-    fields.status = newStarte
-    // 如果查询的订单状态为全部即status==6,则不向后端传递status参数
-    if (Number(newStarte) === 0) {
-      delete fields.status
-    }
-    onFilterChange(fields)
-  }
+  // const onChangeRadio = (e) => {
+  //   const newStarte = e.target.value
+  //   let fields = getFieldsValue()
+  //   fields = handleFields(fields)
+  //   fields.status = newStarte
+  //   // 如果查询的订单状态为全部即status==6,则不向后端传递status参数
+  //   if (Number(newStarte) === 0) {
+  //     delete fields.status
+  //   }
+  //   onFilterChange(fields)
+  // }
 
-  const { orderNo, status } = filter
+  const { orderNo } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -119,8 +119,7 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      {
-        selectedRowKeys.length > 0 &&
+      {selectedRowKeys.length > 0 &&
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }} sm={{ span: 12 }}>
           <Button type="primary" size="large" onClick={handleMergeClick} style={{ marginLeft: 8 }}>合单</Button>
           <span style={{ paddingLeft: '20px' }}>{`选中 ${selectedRowKeys.length} 条订单 `}</span>
@@ -149,11 +148,13 @@ const Filter = ({
 }
 
 Filter.propTypes = {
-  onAdd: PropTypes.func,
-  isMotion: PropTypes.bool,
+  // onAdd: PropTypes.func,
+  // isMotion: PropTypes.bool,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  selectedRowKeys: PropTypes.array,
+  onMergeOrder: PropTypes.func
 }
 
 export default Form.create()(Filter)

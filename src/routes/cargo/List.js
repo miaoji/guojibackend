@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Button } from 'antd'
+import { Table } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../components'
-import { time } from '../../utils'
+// import { DropOption } from '../../components'
+// import { time } from '../../utils'
 import { Link } from 'dva/router'
 
-const confirm = Modal.confirm
+// const confirm = Modal.confirm
 
 const List = ({ isMotion, location, ...tableProps }) => {
   const columns = [

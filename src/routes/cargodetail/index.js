@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
+// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
@@ -11,7 +11,7 @@ import StateModal from './stateModal'
 import WeightModal from './weightModal'
 import ModifyModal from './modifyModal'
 import RepairModal from './repairModal'
-import { queryURL, storage } from '../../utils'
+// import { queryURL, storage } from '../../utils'
 
 const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
   const {
@@ -194,8 +194,8 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         },
       }))
     },
-    onRowClick (data) {
-    },
+    // onRowClick (data) {
+    // },
     onSetCancel (data) {
       dispatch({
         type: 'cargodetail/setCancel',
@@ -278,10 +278,10 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
       getCheckboxProps: record => ({
         disabled: record.parentId !== 0 || record.cargoStatus === 0,
       }),
-      onSelect: (record, selected, selectedRows) => {
-      },
-      onSelectAll: (selected, selectedRows, changeRows) => {
-      },
+      // onSelect: (record, selected, selectedRows) => {
+      // },
+      // onSelectAll: (selected, selectedRows, changeRows) => {
+      // },
     },
   }
 
@@ -312,12 +312,12 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
         pathname: '/cargodetail',
       }))
     },
-    onMergeOrder (selectedRowKeys) {
+    onMergeOrder (val) {
       dispatch({
         type: 'cargodetail/showModal',
         payload: {
           modalType: 'merge',
-          currentItem: { ids: selectedRowKeys },
+          currentItem: { ids: val },
         },
       })
       dispatch({ type: 'cargodetail/getParentOrder' })
@@ -332,15 +332,15 @@ const Cargodetail = ({ location, dispatch, cargodetail, loading }) => {
     },
   }
 
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'cargodetail/showModal',
-      payload: {
-        modalType: 'update',
-        currentItem: { ids: selectedRowKeys },
-      },
-    })
-  }
+  // const handleDeleteItems = () => {
+  //   dispatch({
+  //     type: 'cargodetail/showModal',
+  //     payload: {
+  //       modalType: 'update',
+  //       currentItem: { ids: selectedRowKeys },
+  //     },
+  //   })
+  // }
 
   return (
     <div className="content-inner">
