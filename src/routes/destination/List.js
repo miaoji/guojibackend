@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Button, Icon, message } from 'antd'
+import { Modal } from 'antd'
 import styles from './List.less'
-import classnames from 'classnames'
-import AnimTableBody from '../../components/DataTable/AnimTableBody'
+// import classnames from 'classnames'
+// import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 
-const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tableProps }) => {
+const List = ({ onDeleteItem, onEditItem, list }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -18,7 +18,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
       case '2':
         confirm({
           title: '确定要删除这目的地吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.id)
           },
         })
@@ -34,7 +34,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
         {list.show ? <span>{list.name}</span> : list.map(item => (<li key={item.id}>
           <div title={item.country_cn} size="large">
             <Link to={`/province?countryCode=${item.country_code}`}>
-                <span>{item.country_cn} - {item.sort || 0}</span>
+              <span>{item.country_cn} - {item.sort || 0}</span>
             </Link>
             <DropOption onMenuClick={e => handleMenuClick(item, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
           </div>
