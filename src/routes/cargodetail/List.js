@@ -1,0 +1,283 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Table, Modal, message } from 'antd'
+import styles from './List.less'
+import classnames from 'classnames'
+import AnimTableBody from '../../components/DataTable/AnimTableBody'
+import { DropOption } from '../../components'
+import { time, screen } from '../../utils'
+import { Link } from 'dva/router'
+
+const confirm = Modal.confirm
+const realtext = screen.orderStateByNum
+const realColor = {
+  0: 'OrangeRed',
+  1: '#3728ff',
+  2: 'BlueViolet',
+  3: 'OliveDrab',
+  4: '#0094ff',
+  5: 'Red',
+  6: 'Black',
+  7: 'OrangeRed',
+  8: '#008229',
+}
+// 包裹状态: 0 还没有合单, -1 普货, -2特货
+
+const List = ({
+  onSetState,
+  onSetRepair,
+  onModifyOrder,
+  onSetStatus,
+  onSetWeight,
+  onSetCancel,
+  onDeleteItem,
+  onSetFreight,
+  addBoot,
+  showStateModal,
+  isMotion,
+  location,
+  onCreateCtorder,
+  ...tableProps
+}) => {
+  const handleMenuClick = (record, e) => {
+    switch (e.key) {
+      // 确定运费
+      case '1':
+        if (record.parentId < 0) {
+          onSetFreight(record)
+        } else {
+          message.warn('该订单不能进行此操作!!!')
+        }
+        break
+      // 删除订单
+      case '2':
+        confirm({
+          title: '确定要删除这一订单吗?',
+          onOk() {
+            onDeleteItem(record.id)
+          },
+        })
+        break
+      // 修改状态
+      case '3':
+        onSetStatus(record)
+        break
+      // 修改订单
+      case '4':
+        onModifyOrder(record)
+        break
+      // 撤销合单
+      case '5':
+        if (record.parentId > 0) {
+          confirm({
+            title: '确定要撤销本子订单的合单操作吗?',
+            onOk() {
+              onSetCancel(record)
+            },
+          })
+        } else {
+          message.warn('本订单不能进行此操作!!!')
+        }
+        break
+      // 称重
+      case '6':
+        onSetWeight(record)
+        break
+      case '7':
+        onSetRepair(record)
+        break
+      case '8':
+        window.open(`/bootdetail?orderNo=${record.orderNo}`)
+        break
+      case '9':
+        onSetState(record)
+        break
+      default:
+        break
+    }
+  }
+
+  // const handleCreateZtorder = (record) => {
+  //   confirm({
+  //     title: '确定要发送中通订单吗?',
+  //     onOk() {
+  //       onCreateCtorder(record)
+  //     },
+  //   })
+  // }
+
+  const columns = [
+    {
+      title: '全部订单号',
+      dataIndex: 'orderNo',
+      key: 'orderNo',
+      render: (text, record) => {
+        if (text) {
+          return <Link to={`/cargodetailInfo?orderNo=${record.orderNo}`}>{text}</Link>
+        }
+        const newText = record.cnNo || '暂无订单号'
+        return <span>{newText}</span>
+      },
+    }, {
+      title: '收件人',
+      dataIndex: 'receiverName',
+      key: 'receiverName',
+    }, {
+      title: '收件人手机',
+      dataIndex: 'receiverMobile',
+      key: 'receiverMobile',
+    }, {
+      title: '预付总金额',
+      dataIndex: 'totalFee',
+      key: 'totalFee',
+      render: (text, record) => {
+        if (record.parentId < 0) {
+          return <span>{text ? Number(text) / 100 : 0}元</span>
+        }
+        return <span style={{ color: '#bbb' }}>/</span>
+      },
+    }, {
+      title: '实付总金额',
+      dataIndex: 'cashFee',
+      key: 'cashFee',
+      render: (text, record) => {
+        if (record.parentId < 0) {
+          return <span>{text ? Number(text) / 100 : 0}元</span>
+        }
+        return <span style={{ color: '#bbb' }}>/</span>
+      },
+    }, {
+      title: '包裹状态',
+      dataIndex: 'parentId',
+      key: 'parentId',
+      render: (text) => {
+        const reaText = text > 0 ? 1 : text
+        const newParentId = {
+          0: '待合单',
+          '-1': '普货订单',
+          '-2': '特货订单',
+          1: '子订单',
+        }
+        return <span>{newParentId[reaText]}</span>
+      },
+    }, {
+      title: '订单状态',
+      dataIndex: 'status',
+      key: 'status',
+      render: (text, record) => {
+        const realTexts = {
+          0: '未到件',
+          1: '已到件',
+        }
+        if (record.parentId < 0) {
+          return <span style={{ color: realColor[text] }}>{realtext[text]}</span>
+        }
+        return <span style={{ color: realColor[record.cargoStatus] }}>{realTexts[record.cargoStatus]}</span>
+      },
+    }, {
+      title: '下单时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
+      render: (text) => {
+        const newTime = time.formatTime(text)
+        return <span>{newTime}</span>
+      },
+    }, {
+      title: '到件时间',
+      dataIndex: 'confirmTime',
+      key: 'confirmTime',
+      render: (text, record) => {
+        if (record.parentId < 0) {
+          return <span>/</span>
+        } else if (Number(record.cargoStatus) === 1) {
+          return <span>{time.rebuildTime(text)}</span>
+        }
+        return <span>暂无</span>
+      },
+    }, {
+      title: '货架号',
+      dataIndex: 'shelfNo',
+      key: 'shelfNo',
+      render: (text, record) => {
+        if (record.parentId < 0) {
+          return <span>/</span>
+        } else if (Number(record.cargoStatus) === 1) {
+          return <span>{text}</span>
+        }
+        return <span>暂无</span>
+      },
+    }, {
+      title: '仓管费',
+      dataIndex: 'cost',
+      key: 'cost',
+      render: (text, record) => {
+        if (record.parentId < 0) {
+          return <span>/</span>
+        }
+        if (!record.confirmTime) {
+          return <span>0 元</span>
+        }
+        let times = new Date().getTime() - Number(record.confirmTime)
+        if (times <= 1814400000) {
+          return <span>0 元</span>
+        }
+        let cost = Math.ceil((times - 1814400000) / 86400000)
+        return <span>{cost} 元</span>
+      },
+    }, {
+      title: '操作',
+      key: 'operation',
+      width: 100,
+      render: (text, record) => {
+        if (record.parentId === 0) {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '到件处理' }, { key: '2', name: '删除订单' }]} />
+        } else if (record.parentId < 0) {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '4', name: '国际信息' }, { key: '6', name: '测量称重' }, { key: '1', name: '包裹定价' }, { key: '9', name: '状态修改' }, { key: '7', name: '补价处理' }, { key: '8', name: '补价记录' }]} />
+        } else if (record.parentId > 0) {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '撤销合单' }, { key: '2', name: '删除订单' }]} />
+        }
+        return false
+      },
+    },
+  ]
+
+  const getBodyWrapperProps = {
+    page: location.query.page,
+    current: tableProps.pagination.current,
+  }
+
+  const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
+
+  return (
+    <div>
+      <Table
+        {...tableProps}
+        className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
+        bordered
+        scroll={{ x: 1250 }}
+        columns={columns}
+        simple
+        rowKey={record => record.id}
+        getBodyWrapper={getBodyWrapper}
+      />
+    </div>
+  )
+}
+
+List.propTypes = {
+  onDeleteItem: PropTypes.func,
+  onSetFreight: PropTypes.func,
+  addBoot: PropTypes.func,
+  showStateModal: PropTypes.func,
+  isMotion: PropTypes.bool,
+  location: PropTypes.object,
+  onSetState: PropTypes.func,
+  onSetRepair: PropTypes.func,
+  onModifyOrder: PropTypes.func,
+  onSetStatus: PropTypes.func,
+  onSetWeight: PropTypes.func,
+  onSetCancel: PropTypes.func,
+  onCreateCtorder: PropTypes.func
+}
+
+export default List

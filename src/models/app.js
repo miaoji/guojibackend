@@ -1,8 +1,8 @@
-import { query, logout } from '../services/app'
+// import { query, logout } from '../services/app'
 import { routerRedux } from 'dva/router'
-import { parse } from 'qs'
+// import { parse } from 'qs'
 import { config, storage } from '../utils'
-const { prefix } = config
+// const { prefix } = config
 
 export default {
   namespace: 'app',
@@ -30,12 +30,10 @@ export default {
   },
   effects: {
 
-    *query ({
-      payload,
-    }, { call, put }) {
-      const token = storage({key: 'token'})
+    *query ({ payload }, { put }) {
+      const token = storage({ key: 'token' })
       if (token && token.length > 0) {
-        let user = storage({key: 'user'})
+        let user = storage({ key: 'user' })
         user = typeof user === 'string' && JSON.parse(user)
         yield put({
           type: 'querySuccess',
@@ -52,16 +50,12 @@ export default {
       }
     },
 
-    *logout ({
-      payload,
-    }, { put }) {
-      storage({type: 'clear'})
+    *logout ({ payload }, { put }) {
+      storage({ type: 'clear' })
       yield put({ type: 'query' })
     },
 
-    *changeNavbar ({
-      payload,
-    }, { put, select }) {
+    *changeNavbar ({ payload }, { put, select }) {
       const { app } = yield(select(_ => _))
       const isNavbar = document.body.clientWidth < 769
       if (isNavbar !== app.isNavbar) {
@@ -82,7 +76,7 @@ export default {
       storage({
         key: 'siderFold',
         val: !state.siderFold,
-        type: 'set'
+        type: 'set',
       })
       return {
         ...state,
@@ -94,7 +88,7 @@ export default {
       storage({
         key: 'darkTheme',
         val: !state.darkTheme,
-        type: 'set'
+        type: 'set',
       })
       return {
         ...state,

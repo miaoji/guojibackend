@@ -37,6 +37,6 @@ export async function getwxuserdetail (params) {
   return request({
     url: wxuser.all,
     method: 'get',
-    params
+    params,
   })
 }

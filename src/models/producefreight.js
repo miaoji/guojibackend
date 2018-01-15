@@ -1,11 +1,9 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update, markBlack } from '../services/producefreight'
+import { create, remove, update } from '../services/producefreight'
 import * as producefreightsService from '../services/producefreights'
 import { pageModel } from './common'
-import { config } from '../utils'
 
 const { query } = producefreightsService
-const { prefix } = config
 
 export default modelExtend(pageModel, {
   namespace: 'producefreight',
@@ -57,21 +55,21 @@ export default modelExtend(pageModel, {
         yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
         yield put({ type: 'query' })
       } else {
-        throw data
+        throw data || '无法跟服务器建立有效连接'
       }
     },
 
-    *'multiDelete' ({ payload }, { call, put }) {
-      const data = yield call(wxusersService.remove, payload)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
+    // *'multiDelete' ({ payload }, { call, put }) {
+    //   const data = yield call(wxusersService.remove, payload)
+    //   if (data.success) {
+    //     yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
+    //     yield put({ type: 'query' })
+    //   } else {
+    //     throw data
+    //   }
+    // },
 
-    *'markBlackList' ({ payload }, { call, put, select }) {
+    *'markBlackList' ({ payload }, { call, put }) {
       const newWxUser = payload
       const data = yield call(update, newWxUser)
       if (data.success) {
@@ -114,7 +112,7 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false }
-    }
+    },
 
   },
 })

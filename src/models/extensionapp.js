@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove, query, } from '../services/extensionapps'
+import { create, update, remove, query } from '../services/extensionapps'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -9,7 +9,7 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
-    modalType: 'create'
+    modalType: 'create',
   },
 
   subscriptions: {
@@ -29,7 +29,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data.code === 200) {  
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -41,15 +41,15 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      }else{
-        throw data.msg
+      } else {
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
     *create ({ payload }, { call, put }) {
       const newQr = {
         param: payload.parameter,
-        name: payload.name
+        name: payload.name,
       }
       const data = yield call(create, newQr)
       if (data.code === 200) {
@@ -65,7 +65,7 @@ export default modelExtend(pageModel, {
       const id = yield select(({ extensionapp }) => extensionapp.currentItem.id)
       const newQr = {
         name: payload.name,
-        id
+        id,
       }
       const data = yield call(update, newQr)
       if (data.code === 200) {
@@ -77,7 +77,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')
@@ -92,14 +92,12 @@ export default modelExtend(pageModel, {
   reducers: {
 
     showModal (state, { payload }) {
-      console.log('state', state)
-      console.log('payload', payload)
       return { ...state, ...payload, modalVisible: true }
     },
 
     hideModal (state) {
       return { ...state, modalVisible: false }
-    }
+    },
 
   },
 })

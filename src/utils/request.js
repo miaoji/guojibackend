@@ -1,11 +1,12 @@
 import axios from 'axios'
 import qs from 'qs'
-import { YQL, CORS } from './config'
+// import { YQL, CORS } from './config'
 import jsonp from 'jsonp'
 import lodash from 'lodash'
 import pathToRegexp from 'path-to-regexp'
 import { message } from 'antd'
 import { browserHistory } from 'dva/router'
+import { storage } from '../utils'
 
 const fetch = (options) => {
   let {
@@ -14,6 +15,7 @@ const fetch = (options) => {
     params,
     fetchType,
     url,
+    timeout = 60000,
   } = options
 
   const cloneData = lodash.cloneDeep(data)
@@ -41,7 +43,7 @@ const fetch = (options) => {
       jsonp(url, {
         param: `${qs.stringify(data)}&callback`,
         name: `jsonp_${new Date().getTime()}`,
-        timeout: 4000,
+        timeout,
       }, (error, result) => {
         if (error) {
           reject(error)
@@ -57,34 +59,34 @@ const fetch = (options) => {
   switch (method.toLowerCase()) {
     case 'get':
       return axios({
-      	url,
-      	method: 'get',
+        url,
+        method: 'get',
         params: cloneData || params,
-        timeout: 5000,
+        timeout,
         headers: {
-        	'token': window.localStorage.getItem('guojipc_token')
-        }
+          token: storage({ key: 'token' }),
+        },
       })
     case 'delete':
       return axios({
         url,
         method: 'delete',
         params: cloneData || params,
-        timeout: 5000,
+        timeout,
         headers: {
-          'token': window.localStorage.getItem('guojipc_token')
-        }
+          token: storage({ key: 'token' }),
+        },
       })
     case 'post':
       return axios({
-      	url,
-      	method: 'post',
-      	data: cloneData,
+        url,
+        method: 'post',
+        data: cloneData,
         params,
-      	timeout: 5000,
+        timeout,
         headers: {
-          'token': window.localStorage.getItem('guojipc_token')
-        }
+          token: storage({ key: 'token' }),
+        },
       })
     case 'put':
       return axios.put(url, cloneData)
@@ -96,11 +98,10 @@ const fetch = (options) => {
 }
 
 export default function request (options) {
-  //判断如果不是登陆页 在localStorage 中没有token的话  就跳转到login页面上
+  // 判断如果不是登陆页 在localStorage 中没有token的话  就跳转到login页面上
   if (window.location.pathname !== '/login') {
-    const token = window.localStorage.getItem('guojipc_token')
-    if(!token||token === '')
-    return browserHistory.push('/login')  	
+    const token = storage({ key: 'token' })
+    if (!token || token === '') { return browserHistory.push('/login') }
   }
   return fetch(options).then((response) => {
     const { statusText, status } = response
@@ -109,7 +110,7 @@ export default function request (options) {
       success: true,
       message: statusText,
       statusCode: status,
-      ...data
+      ...data,
     }
   }).catch((error) => {
     const { response } = error
@@ -119,6 +120,14 @@ export default function request (options) {
       const { data, statusText } = response
       statusCode = response.status
       msg = data.message || statusText
+      // 判断token是否失效
+      if (response.status === 401) {
+        storage({ type: 'clear' })
+        setTimeout(() => {
+          window.location.href = `${window.location.origin}/login`
+        }, 3000)
+        return { success: false, statusCode, msg: '用户登陆状态已失效,页面将在3秒后自动跳转回登录页,请登录' }
+      }
     } else {
       statusCode = 600
       msg = '网络错误'

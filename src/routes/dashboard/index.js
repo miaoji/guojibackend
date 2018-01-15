@@ -14,7 +14,7 @@ const bodyStyle = {
 }
 
 function Dashboard ({ dashboard }) {
-  const { quote, numbers, user } = dashboard
+  const { quote, quotess, numbers, user } = dashboard
   const numberCards = numbers.map((item, key) => <Col key={key} lg={6} md={12}>
     <NumberCard {...item} />
   </Col>)
@@ -33,9 +33,18 @@ function Dashboard ({ dashboard }) {
             <Card bordered={false} className={styles.quote} bodyStyle={{
               padding: 0,
               height: 204,
-              background: color.peach,
+              background: color.blue,
             }}>
               <Quote {...quote} />
+            </Card>
+          </Col>
+          <Col lg={24} md={12}>
+            <Card bordered={false} className={styles.quote} bodyStyle={{
+              padding: 0,
+              height: 204,
+              background: color.red,
+            }}>
+              <Quote {...quotess} />
             </Card>
           </Col>
         </Row>

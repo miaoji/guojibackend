@@ -25,40 +25,53 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   }
 
   const columns = [
-    /*{title: '产品名称编号',
-      dataIndex: 'PRODUCT_CODE',
-      key: 'PRODUCT_CODE',
-    },*/{
+    {
       title: '目的地国家',
       dataIndex: 'country_cn',
       key: 'country_cn',
-    },{
+    }, {
       title: '包裹类型',
       dataIndex: 'NAME_CN',
       key: 'NAME_CN',
-    },{
+    }, {
       title: '产品类型',
       dataIndex: 'PRODUCT_NAME',
       key: 'PRODUCT_NAME',
-    },{
+    }, {
       title: '创建时间',
       dataIndex: 'CREATE_TIME',
       key: 'CREATE_TIME',
       render: (text) => {
-      	const createtime =time.formatTime(text)
+      	const createtime = time.formatTime(text)
       	return <span>{createtime}</span>
-      }
-    },{
+      },
+    }, {
+      title: '订单类型',
+      dataIndex: 'CARGO_TYPE',
+      key: 'CARGO_TYPE',
+      filters: [
+        { text: '直邮', value: 0 },
+        { text: '集运', value: 1 },
+      ],
+      filterMultiple: false,
+      render: (text) => {
+        const realText = {
+          0: '直邮',
+          1: '集运',
+        }
+        return <span>{realText[text]}</span>
+      },
+    }, {
       title: '备注',
       dataIndex: 'REMARK',
       key: 'REMARK',
-      render:(text) => <span>{text}</span>,
-    },{
+      render: (text) => <span>{text}</span>,
+    }, {
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改类型'}, { key: '2', name: '删除'}]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改类型' }, { key: '2', name: '删除' }]} />
       },
     },
   ]
@@ -75,22 +88,6 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       <Table
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
-//      expandedRowRender={record =>
-//        <div className={classnames({ [styles.p]: true })}>
-//          <p>寄件人:  {record.wxName}</p>
-//          <p>收件人:  {record.wxName}</p>
-//          <p>证件类型:  {record.wxName}</p>
-//          <p>证件号:  {record.wxName}</p>
-//          <p>重量:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//          <p>体积:  {record.wxName}</p>
-//        </div>
-//      }
         bordered
         scroll={{ x: 1250 }}
         columns={columns}

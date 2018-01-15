@@ -12,7 +12,8 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
-    modalType: 'create'
+    inputDis: true,
+    modalType: 'create',
   },
 
   subscriptions: {
@@ -31,8 +32,8 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      const data = yield call(query, payload)
-      if (data.code === 200) {  
+      const data = yield call(query, { ...payload, type: 1 })
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -44,17 +45,19 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      }else{
-        throw data.msg
+      } else {
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
     *create ({ payload }, { call, put }) {
-      const newQr = {
-        param: payload.parameter,
-        name: payload.name
+      delete payload.key
+      if (payload.type && payload.type === 1) {
+        delete payload.seconds
+      } else if (payload.seconds) {
+        payload.seconds = payload.seconds * 60 * 60 * 24
       }
-      const data = yield call(create, newQr)
+      const data = yield call(create, payload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.msg)
@@ -65,11 +68,14 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
+      // 获取当前要修改数据的id
       const id = yield select(({ qr }) => qr.currentItem.ID)
-      const newQr = {
-        name: payload.name,
-        id
-      }
+
+      // 删除多余的参数
+      delete payload.key
+      delete payload.seconds
+      delete payload.type
+      const newQr = { ...payload, id }
       const data = yield call(update, newQr)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -80,7 +86,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')
@@ -95,14 +101,20 @@ export default modelExtend(pageModel, {
   reducers: {
 
     showModal (state, { payload }) {
-      console.log('state', state)
-      console.log('payload', payload)
-      return { ...state, ...payload, modalVisible: true }
+      return { ...state, ...payload, modalVisible: true, inputDis: true }
     },
 
     hideModal (state) {
-      return { ...state, modalVisible: false }
-    }
+      return { ...state, modalVisible: false, inputDis: false }
+    },
+
+    showInput (state) {
+      return { ...state, inputDis: false }
+    },
+
+    hideInput (state) {
+      return { ...state, inputDis: true }
+    },
 
   },
 })

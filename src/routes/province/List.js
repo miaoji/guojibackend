@@ -21,7 +21,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
           title: '确定要删除这目的地吗?',
           onOk () {
             onDeleteItem(record.id)
-          }
+          },
         })
         break
       default:
@@ -29,7 +29,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
     }
   }
 
-  const clickSeeProvince = ( record ) => {
+  const clickSeeProvince = (record) => {
     window.open(`/province?countryid=${record.id}`)
   }
 

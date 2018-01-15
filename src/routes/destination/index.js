@@ -2,62 +2,61 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
+// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
 const Destination = ({ location, dispatch, destination, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, provinceModalVisible, locationData } = destination
-  const { pageSize } = pagination
+  const { list, pagination, currentItem, modalVisible, modalType } = destination
+  // const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     title: `${modalType === 'create' ? '创建国家信息' : '修改国家信息'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: `destination/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'destination/hideModal',
       })
     },
   }
 
-  const provinceModalProps = {
-    item: currentItem,
-    list: locationData,
-    visible: provinceModalVisible,
-    title: `编辑${currentItem.name}省份信息`,
-    wrapClassName: 'vertical-center-modal',
-    onOk (data) {
-      console.log('data', data)
-      dispatch({
-        type: `destination/createProvince`,
-        payload: data,
-      })
-    },
-    onCancel () {
-      dispatch({
-        type: 'destination/hideLocationModal',
-        payload: {
-          type: 'province'
-        }
-      })
-    },
-  }
+  // const provinceModalProps = {
+  //   item: currentItem,
+  //   list: locationData,
+  //   visible: provinceModalVisible,
+  //   title: `编辑${currentItem.name}省份信息`,
+  //   wrapClassName: 'vertical-center-modal',
+  //   onOk(data) {
+  //     dispatch({
+  //       type: 'destination/createProvince',
+  //       payload: data,
+  //     })
+  //   },
+  //   onCancel() {
+  //     dispatch({
+  //       type: 'destination/hideLocationModal',
+  //       payload: {
+  //         type: 'province',
+  //       },
+  //     })
+  //   },
+  // }
 
   const listProps = {
     loading: loading.effects['destination/query'],
     list,
     pagination,
     location,
-    onChange (page) {
+    onChange() {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -66,7 +65,7 @@ const Destination = ({ location, dispatch, destination, loading }) => {
         },
       }))
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'destination/showModal',
         payload: {
@@ -75,28 +74,28 @@ const Destination = ({ location, dispatch, destination, loading }) => {
         },
       })
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'destination/delete',
         payload: id,
       })
     },
-    showModal (item, type) {
+    showModal(item, type) {
       dispatch({
         type: 'destination/queryLocation',
         payload: {
           currentItem: item,
-          type
+          type,
         },
       })
-    }
+    },
   }
 
   const filterProps = {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -104,7 +103,7 @@ const Destination = ({ location, dispatch, destination, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/destination',
         query: {
@@ -115,14 +114,14 @@ const Destination = ({ location, dispatch, destination, loading }) => {
         pathname: '/destination',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'destination/showModal',
         payload: {
           modalType: 'create',
         },
       })
-    }
+    },
   }
 
   return (
@@ -130,7 +129,7 @@ const Destination = ({ location, dispatch, destination, loading }) => {
       <Filter {...filterProps} />
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
-      {provinceModalVisible && <ProvinceModal {...provinceModalProps} />}
+      {/* {provinceModalVisible && <ProvinceModal {...provinceModalProps} />} */}
     </div>
   )
 }

@@ -41,49 +41,49 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '首重价格',
       dataIndex: 'INIT_PRICE',
       key: 'INIT_PRICE',
-      render:(text) => <span>¥{text}</span>,
+      render: (text) => <span>¥{text}</span>,
     }, {
       title: '首重重量',
       dataIndex: 'INIT_WEIGHT',
       key: 'INIT_WEIGHT',
       render: (text) => <span>{text}kg</span>,
-    },{
+    }, {
       title: '续重价格',
       dataIndex: 'STEPPING_PRICE',
       key: 'STEPPING_PRICE',
       render: (text) => <span>¥{text}</span>,
-    },{
+    }, {
       title: '步进重量',
       dataIndex: 'STEPPING_WEIGHT',
       key: 'STEPPING_WEIGHT',
       render: (text) => <span>{text}kg</span>,
-    },{
+    }, {
       title: '燃油附加费',
       dataIndex: 'FUEL_CHARGE',
       key: 'FUEL_CHARGE',
       render: (text) => <span>¥{text}</span>,
-    },{
+    }, {
       title: '邮编段',
       dataIndex: 'POSTCODE',
       key: 'POSTCODE',
       render: (text) => <span>{text}</span>,
-    },{
+    }, {
       title: '创建时间',
       dataIndex: 'CREATE_TIME',
       key: 'CREATE_TIME',
       render: (text) => {
-      	const createtime =time.formatTime(text)
+      	const createtime = time.formatTime(text)
       	return <span>{createtime}</span>
-      }
-    },{
+      },
+    }, {
       title: '操作人',
       dataIndex: 'CREATE_USER_ID',
       key: 'CREATE_USER_ID',
-    },{
+    }, {
       title: '备注',
       dataIndex: 'REMARK',
       key: 'REMARK',
-    },{
+    }, {
       title: '操作',
       key: 'operation',
       width: 100,

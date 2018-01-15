@@ -5,6 +5,7 @@ import * as time from './time'
 import classnames from 'classnames'
 import { color } from './theme'
 import lodash from 'lodash'
+import screen from './filter'
 
 const localStorage = window.localStorage
 const { localPrefix } = config
@@ -31,7 +32,7 @@ Date.prototype.format = function (format) {
     'm+': this.getMinutes(),
     's+': this.getSeconds(),
     'q+': Math.floor((this.getMonth() + 3) / 3),
-    S: this.getMilliseconds(),
+    S: this.getMilliseconds()
   }
   if (/(y+)/.test(format)) {
     format = format.replace(RegExp.$1, `${this.getFullYear()}`.substr(4 - RegExp.$1.length))
@@ -59,7 +60,7 @@ const queryURL = (name) => {
 
 /**
  * 数组内查询
- * @param   {array}      array
+ * @param   {array}     array
  * @param   {String}    id
  * @param   {String}    keyAlias
  * @return  {Array}
@@ -109,13 +110,13 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
  * @return  {params} Object
  */
 const pageParams = function (params) {
-      params = params ? params : {
-        page: 1,
-        rows: 10
-      }
-      params.page = params.page || 1
-      params.rows = params.pageSize || 10
-      return params
+  params = params || {
+    page: 1,
+    rows: 10,
+  }
+  params.page = params.page || 1
+  params.rows = params.pageSize || 10
+  return params
 }
 
 /**
@@ -124,9 +125,9 @@ const pageParams = function (params) {
  * @param  {String}  val    [存储的字段值]
  * @param  {Boolean} prefix [是否加前缀，默认为true]
  * @param  {String}  type   [localStorage的操作方式 get、set、remove、clear]
- * @return {String} res     [localStorage.getItem(key)时返回的值]
+ * @return {String}  res    [localStorage.getItem(key)时返回的值]
  */
-export const storage = function ({key, val, prefix = true, type = 'get'}) {
+export const storage = function ({ key, val, prefix = true, type = 'get' }) {
   let typeCheck = type === 'get'
   if (prefix) {
     key = localPrefix + key
@@ -151,12 +152,29 @@ export const storage = function ({key, val, prefix = true, type = 'get'}) {
   if (typeCheck) {
     return res
   }
+  return false
 }
+
+/**
+ * [对含有 %20 的数据重新拼接]
+ * @param  {String}  key    [要转换的数据]
+ * @return {String}  res    [返回重新的拼接的值]
+ */
+export const rebuildVal = function (key) {
+  if (!key) {
+    return undefined
+  }
+  const newVal = key.split('%20')
+  return `${newVal[0]} ${newVal[1]} ${newVal[2]}`
+}
+
 
 module.exports = {
   config,
   menu,
+  rebuildVal,
   request,
+  screen,
   storage,
   time,
   color,
@@ -165,5 +183,4 @@ module.exports = {
   queryArray,
   arrayToTree,
   pageParams,
-  time
 }

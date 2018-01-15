@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Radio, Select,} from 'antd'
+import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Radio, Select } from 'antd'
 import city from '../../utils/city'
 
 const InputGroup = Input.Group
@@ -38,8 +38,8 @@ const Filter = ({
   },
 }) => {
   const handleFields = (fields) => {
-    const { createTime, status, extension, option, } = fields
-    if (status == 6) {
+    const { createTime, status, extension, option } = fields
+    if (status == 0) {
       delete fields.status
     }
     if (createTime.length) {
@@ -47,12 +47,12 @@ const Filter = ({
       fields.startDate = fields.createTime[0]
       fields.endDate = fields.createTime[1]
       delete fields.createTime
-    }else{
+    } else {
       delete fields.createTime
     }
     if (option == 1) {
       fields.qrName = fields.extension
-    }else{
+    } else {
       fields.appName = fields.extension
     }
     delete fields.extension
@@ -63,7 +63,6 @@ const Filter = ({
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    console.log('fields',fields)
     onFilterChange(fields)
   }
 
@@ -95,10 +94,10 @@ const Filter = ({
     const newStarte = e.target.value
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    fields['status'] = newStarte
+    fields.status = newStarte
     // 如果查询的订单状态为全部即status==6,则不向后端传递status参数
-    if (Number(newStarte) === 6) {
-      delete fields['status']
+    if (Number(newStarte) === 0) {
+      delete fields.status
     }
     onFilterChange(fields)
   }
@@ -128,7 +127,7 @@ const Filter = ({
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }}>
           <InputGroup compact size="large">
           {getFieldDecorator('option', { initialValue: '1' })(
-              <Select defaultValue="1" style={{ width:'80px' }}>
+              <Select defaultValue="1" style={{ width: '80px' }}>
                 <Option value="1">推广人</Option>
                 <Option value="2">APP</Option>
               </Select>
@@ -144,21 +143,23 @@ const Filter = ({
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
-          <div style={{ display: 'none' }}>
-            <Button size="large" type="ghost" onClick={onAdd}>创建</Button>
+          <div style={{ display: 'block' }}>
+            <Button size="large" type="ghost" onClick={onAdd}>创建订单</Button>
           </div>
         </div>
       </Col>
       <Col {...TwoColProps} xl={{ span: 24 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          {getFieldDecorator('status', { initialValue: "6" })(
+          {getFieldDecorator('status', { initialValue: '0' })(
             <RadioGroup onChange={onChangeRadio}>
-              <RadioButton value="6">全部</RadioButton>
+              <RadioButton value="0">全部</RadioButton>
               <RadioButton value="1">待付款</RadioButton>
-              <RadioButton value="2">已付款</RadioButton>
-              <RadioButton value="3">国内</RadioButton>
-              <RadioButton value="0">国际</RadioButton>
-              <RadioButton value="4">异常</RadioButton>
+              <RadioButton value="2">付款完成</RadioButton>
+              <RadioButton value="3">国内完成</RadioButton>
+              <RadioButton value="4">国际完成</RadioButton>
+              <RadioButton value="5">异常订单</RadioButton>
+              <RadioButton value="6">取消订单</RadioButton>
+              <RadioButton value="7">国际快递已发货</RadioButton>
             </RadioGroup>)}
         </div>
       </Col>

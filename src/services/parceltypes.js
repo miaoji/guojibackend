@@ -3,7 +3,7 @@ const { api } = config
 const { parceltype } = api
 
 export async function query (params) {
-	params = pageParams(params)
+  params = pageParams(params)
   return request({
     url: parceltype.all,
     method: 'get',

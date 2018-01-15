@@ -8,13 +8,11 @@ const { formatTime } = time
 
 const WxUserDetail = ({ qrWxUserDetail }) => {
   const { data } = qrWxUserDetail
-  console.log('qrWxUserDetail',qrWxUserDetail)
-  console.log('data',data)
 
   return (<div className="content-inner">
     <div className={styles.content}>
     <div className={styles.title}>微信用户详情</div>
-    { data.map((item) => (<div className={styles.titleItem}>
+    {data.map((item) => (<div className={styles.titleItem}>
       <span>微信名: {item.NICK_NAME}</span>
       <span>手机号: {item.MOBILE}</span>
       <span>性别: {item.SEX}</span>
@@ -24,7 +22,7 @@ const WxUserDetail = ({ qrWxUserDetail }) => {
       <span>关注状态: {item.SUBSCRIBE}</span>
       <span>关注时间: {item.SUBSCRIBE_TIME}</span>
       <span>推广人: {item.qrName}</span>
-      </div>)) }
+      </div>))}
     </div>
   </div>)
 }

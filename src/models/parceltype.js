@@ -1,15 +1,15 @@
+import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
-import { create, remove, update, markBlack, } from '../services/parceltype'
+import { create, remove, update } from '../services/parceltype'
 import * as parceltypesService from '../services/parceltypes'
 import * as countriesService from '../services/countries'
 import { pageModel } from './common'
-import { config } from '../utils'
+import { storage } from '../utils'
 
 const { query } = parceltypesService
 const contryQuery = countriesService.query
-const  getCountryId = countriesService. getCountryId
-const { prefix } = config
+const getCountryId = countriesService.getCountryId
 const Option = Select.Option
 
 export default modelExtend(pageModel, {
@@ -21,7 +21,7 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: false,
-    selectNation:[],
+    selectNation: [],
   },
 
   subscriptions: {
@@ -54,11 +54,11 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.msg
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
-     *getNation ({ payload = {} }, { call, put }) {
+    *getNation ({ payload = {} }, { call, put }) {
       const data = yield call(contryQuery)
       if (data.code === 200) {
         let obj = data.obj
@@ -66,7 +66,7 @@ export default modelExtend(pageModel, {
         if (data.obj) {
           for (let i = 0; i < obj.length; i++) {
             let item = obj[i]
-            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>);
+            children.push(<Option key={item.country_cn}>{item.country_cn}</Option>)
           }
         }
         yield put({
@@ -90,17 +90,17 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'multiDelete' ({ payload }, { call, put }) {
-      const data = yield call(wxusersService.remove, payload)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
+    // *'multiDelete' ({ payload }, { call, put }) {
+    //   const data = yield call(wxusersService.remove, payload)
+    //   if (data.success) {
+    //     yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
+    //     yield put({ type: 'query' })
+    //   } else {
+    //     throw data
+    //   }
+    // },
 
-    *'markBlackList' ({ payload }, { call, put, select }) {
+    *'markBlackList' ({ payload }, { call, put }) {
       const newWxUser = payload
       const data = yield call(update, newWxUser)
       if (data.success) {
@@ -112,30 +112,29 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      console.log('payload 1111',payload)
-      console.log('payload',payload)
       // 通过国家名称获取国家id
-      const destination = yield call(getCountryId,{name:payload.destination.toString()})
+      const destination = yield call(getCountryId, { name: payload.destination.toString() })
       if (destination.code === 200) {
-        payload.destination=destination.obj.id
-      }else{
-        throw '获取国家ID失败'
-        return
+        payload.destination = destination.obj.id
+      } else {
+        throw destination.msg || '获取国家ID失败'
       }
       // return
-      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId 
+      const createUserId = JSON.parse(storage({ key: 'user' })).roleId
       // 用nameCn 来判断 nameEn 的值
       let nameEn = ''
-      if (payload.nameCn=='包裹') {
-        nameEn = "P"
-      }else if (payload.nameCn=="文件") {
-        nameEn = "D"
-      }else{
-        nameEn = "*"
+      if (payload.nameCn === '包裹') {
+        nameEn = 'P'
+      } else if (payload.nameCn === '文件') {
+        nameEn = 'D'
+      } else if (payload.nameCn === '大货') {
+        nameEn = 'PPS'
+      } else {
+        nameEn = '*'
       }
-      const newFreight = {...payload, createUserId, nameEn, }
+      const newFreight = { ...payload, createUserId, nameEn }
       const data = yield call(create, newFreight)
-      if (data.success && data.code == '200') {
+      if (data.success && data.code === 200) {
         message.success(data.msg)
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
@@ -146,32 +145,30 @@ export default modelExtend(pageModel, {
 
     *update ({ payload }, { select, call, put }) {
       const id = yield select(({ parceltype }) => parceltype.currentItem.ID)
-      const country_cn = yield select(({ parceltype }) => parceltype.currentItem.country_cn)
+      const countryCn = yield select(({ parceltype }) => parceltype.currentItem.country_cn)
       const DESTINATION = yield select(({ parceltype }) => parceltype.currentItem.DESTINATION)
-      const createUserId = JSON.parse(window.localStorage.getItem("guojipc_user")).roleId 
+      const createUserId = JSON.parse(storage({ key: 'user' })).roleId
       let nameEn = ''
       // 判断修改是输入的目的地国家的值有没有变化,没有变化则返回它本身的DESTINATION,改变了则通过接口获取一个国家id
       // 若没有获取到国家ID则提示用户,并return
-      if (payload.destination==country_cn) {
+      if (payload.destination === countryCn) {
         payload.destination = DESTINATION
-      }else{
-        const destination = yield call(getCountryId,{name:payload.destination.toString()})
+      } else {
+        const destination = yield call(getCountryId, { name: payload.destination.toString() })
         if (destination.code === 200) {
           payload.destination = destination.obj.id
-        }else{
-          throw '获取国家ID失败'
-          return
+        } else {
+          throw destination.msg || '获取国家ID失败'
         }
       }
-      if (payload.nameCn=='包裹') {
-        nameEn = "P"
-      }else if (payload.nameCn=="文件") {
-        nameEn = "D"
-      }else{
-        nameEn = "*"
+      if (payload.nameCn === '包裹') {
+        nameEn = 'P'
+      } else if (payload.nameCn === '文件') {
+        nameEn = 'D'
+      } else {
+        nameEn = '*'
       }
-      const newFreight = {...payload, id, createUserId, nameEn, }
-      console.log('newFreight', newFreight)
+      const newFreight = { ...payload, id, createUserId, nameEn }
       const data = yield call(update, newFreight)
       if (data.success) {
         message.success(data.msg)
@@ -196,7 +193,7 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false }
-    }
+    },
 
   },
 })

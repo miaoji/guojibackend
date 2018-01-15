@@ -2,15 +2,6 @@ import { request, config } from '../utils'
 const { api } = config
 const { order } = api
 
-const statusGroup = {
-  '待付款': '1',
-  '付款完成': '2',
-  '中通完成': '3',
-  'fpx完成': '0',
-  '异常订单': '4',
-  '取消订单': '5',
-}
-
 export async function query (params) {
   return request({
     url: order.show,
@@ -23,6 +14,14 @@ export async function create (params) {
   return request({
     url: order.create,
     method: 'post',
+    data: params,
+  })
+}
+
+export async function createOrder (params) {
+  return request({
+    url: order.add,
+    method: 'post',
     params,
   })
 }
@@ -31,21 +30,16 @@ export async function remove (params) {
   return request({
     url: order.hide,
     method: 'delete',
-    params
+    params,
   })
 }
 
+// 修改订单
 export async function update (params) {
-  const newParams = {
-    id: params.id,
-    status: statusGroup[params.starte] ? statusGroup[params.starte] : params.starte,
-    intlNo: params.FPXNO,
-    transferCompany: params.nation_express_com
-  }
   return request({
     url: order.mod,
     method: 'post',
-    params: newParams,
+    params,
   })
 }
 
@@ -63,7 +57,7 @@ export async function getKdCompany (params) {
   return request({
     url: order.getKdCompany,
     method: 'get',
-    params
+    params,
   })
 }
 // 获取orderdetail页面信息
@@ -71,7 +65,7 @@ export async function getOrderInfo (params) {
   return request({
     url: order.getOrderInfo,
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -80,7 +74,7 @@ export async function getOrderInfoByOrderNo (params) {
   return request({
     url: order.getOrderInfoByOrderNo,
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -89,6 +83,15 @@ export async function queryByCompany (params) {
   return request({
     url: order.queryByCompany,
     method: 'get',
-    params
+    params,
+  })
+}
+
+// 根据传参查询预付款金额
+export async function getIntlPrice (params) {
+  return request({
+    url: order.getIntlPrice,
+    method: 'get',
+    params,
   })
 }

@@ -1,4 +1,3 @@
-const qs = require('qs')
 const Mock = require('mockjs')
 const config = require('../utils/config')
 const { apiPrefix } = config
@@ -7,22 +6,22 @@ let freightsListData = Mock.mock({
   'data|40-50': [
     {
       id: '@id',
-      did:/^\d{8}$/,
+      did: /^\d{8}$/,
       wxName: '@cname',
       czr: '@cname',
-      'mddgj|1':['中国','澳大利亚','美国','英国','中国','中国'],//目的地国家
+      'mddgj|1': ['中国', '澳大利亚', '美国', '英国', '中国', '中国'], // 目的地国家
       nickName: '@cname',
-      wplx:"未定义",//物品类型
-      cplx:"未定义",//产品类型
+      wplx: '未定义', // 物品类型
+      cplx: '未定义', // 产品类型
       phone: /^1[34578]\d{9}$/,
       belongStore: '@county',
-      'newmoney|1-99': 1,//初始价格
-      'sz|5-10': 1,//首重
-      'xz|5-10': 1,//续重
-      'bj|5-10': 1,//步进范围
-      'myc|30-50':1,//燃油附加费
-      yb:/^\d{6}$/,
-      remark:"暂无",//备注
+      'newmoney|1-99': 1, // 初始价格
+      'sz|5-10': 1, // 首重
+      'xz|5-10': 1, // 续重
+      'bj|5-10': 1, // 步进范围
+      'myc|30-50': 1, // 燃油附加费
+      yb: /^\d{6}$/,
+      remark: '暂无', // 备注
       'minweight|1-99': 1,
       'status|0-1': 1,
       'blacklist|0-1': 1,

@@ -43,11 +43,11 @@ const Login = ({
    * @return {[type]} [description]
    */
   function switchLoginType () {
-    dispatch({ 
+    dispatch({
       type: 'login/switchLoginType',
       payload: {
-        loginType
-      }
+        loginType,
+      },
     })
   }
 
@@ -57,21 +57,21 @@ const Login = ({
    */
   function handleGetCode () {
     validateFieldsAndScroll((errors, values) => {
-      if (!values['mobile']) {
+      if (!values.mobile) {
         return
       }
       dispatch({
         type: 'login/getVerifyCodeByMobile',
         payload: {
-          mobile: values['mobile']
-        }
+          mobile: values.mobile,
+        },
       })
-      setTimeout(function () {
+      setTimeout(() => {
         dispatch({
           type: 'login/setCodeAuth',
           payload: {
-            getCodeAuth: true
-          }
+            getCodeAuth: true,
+          },
         })
       }, 30000)
     })
@@ -79,7 +79,7 @@ const Login = ({
 
   return (
     <div>
-      <canvas id='background'></canvas>
+      <canvas id="background"></canvas>
       <div className={styles.form}>
         <h3 className={styles.switch} onClick={switchLoginType}>
           {
@@ -92,7 +92,7 @@ const Login = ({
           <span>{config.name}</span>
         </div>
         {
-          loginType === 'account' ? 
+          loginType === 'account' ?
             <form>
               <FormItem hasFeedback>
                 {getFieldDecorator('username', {
@@ -107,10 +107,10 @@ const Login = ({
               <FormItem hasFeedback>
                 <Row type="flex" align="middle">
                   <Col span={16}>
-                    <img src={verifyImage} alt="验证码" className={styles.verifyimage}  />
+                    <img src={verifyImage} alt="验证码" className={styles.verifyimage} />
                   </Col>
                   <Col span={8}>
-                    <Button type="primary" size="small" onClick={handleRefreshImage} >刷新</Button>
+                    <Button className={styles.button} type="primary" size="small" onClick={handleRefreshImage} >刷新</Button>
                   </Col>
                 </Row>
               </FormItem>
@@ -122,7 +122,7 @@ const Login = ({
                       message: '请输入验证码',
                     },
                   ],
-                })(<Input size="large" placeholder="验证码" />)}
+                })(<Input size="large" onPressEnter={handleOk} placeholder="验证码" />)}
               </FormItem>
               <FormItem hasFeedback>
                 {getFieldDecorator('password', {
@@ -147,12 +147,12 @@ const Login = ({
                     {
                       required: true,
                       message: '请输入手机号',
-                      pattern: /^1[3456789]\d{9}$/
-                    }
+                      pattern: /^1[3456789]\d{9}$/,
+                    },
                   ],
                 })(<Input size="large" type="number" onPressEnter={handleOk} placeholder="手机号" />)}
               </FormItem>
-              <FormItem 
+              <FormItem
                 hasFeedback
                 extra="请输入获取到的验证码"
               >
@@ -169,7 +169,7 @@ const Login = ({
                   </Col>
                   <Col span={8}>
                     <Button size="large" onClick={handleGetCode} disabled={!getCodeAuth} loading={codeLoading}>
-                      { getCodeAuth ? '点击获取' : '30s后重新获取'}
+                      {getCodeAuth ? '点击获取' : '30s后重新获取'}
                     </Button>
                   </Col>
                 </Row>

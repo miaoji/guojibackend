@@ -18,16 +18,16 @@ const Parceltype = ({ location, dispatch, parceltype, loading }) => {
     confirmLoading: loading.effects['parceltype/update'],
     title: `${modalType === 'create' ? '新增包裹类型' : '修改包裹类型'}`,
     wrapClassName: 'vertical-center-modal',
-    selectNation: selectNation,
+    selectNation,
     onOk (data) {
       dispatch({
         type: `parceltype/${modalType}`,
         payload: data,
       })
     },
-    getNation(data){
+    getNation (data) {
       dispatch({
-        type:`parceltype/getNation`
+        type: 'parceltype/getNation',
       })
     },
     onCancel () {
@@ -57,7 +57,7 @@ const Parceltype = ({ location, dispatch, parceltype, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'parceltype/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {
@@ -75,9 +75,9 @@ const Parceltype = ({ location, dispatch, parceltype, loading }) => {
         },
       })
       dispatch({
-        type:`parceltype/getNation`
+        type: 'parceltype/getNation',
       })
-    }
+    },
   }
 
   const filterProps = {
@@ -114,7 +114,7 @@ const Parceltype = ({ location, dispatch, parceltype, loading }) => {
         },
       })
       dispatch({
-        type:`parceltype/getNation`
+        type: 'parceltype/getNation',
       })
     },
     switchIsMotion () {

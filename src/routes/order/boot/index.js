@@ -11,14 +11,14 @@ const detailCN = {
   reason: '补价原因',
   status: '状态',
   createTime: '创建时间',
-  serialNumber: '订单号'
+  serialNumber: '订单号',
 }
 
 const statusGroup = {
-  '0': '补价信息已创建,但未成功通知到用户',
-  '1': '补价中',
-  '2': '补价完成',
-  '3': '模板消息推送失败'
+  0: '补价信息已创建,但未成功通知到用户',
+  1: '补价中',
+  2: '补价完成',
+  3: '模板消息推送失败',
 }
 
 const Detail = ({ orderbootDetail }) => {
@@ -35,7 +35,7 @@ const Detail = ({ orderbootDetail }) => {
   detail.push(<h2 className={styles.item}>订单{serialnumber}改价记录</h2>)
   for (let i = 0; i < detailData.length; i++) {
     let item = detailData[i]
-    detail.push(<h3 className={styles.item}>第{i +1}条记录</h3>)
+    detail.push(<h3 className={styles.item}>第{i + 1}条记录</h3>)
     for (let key in item) {
       if ({}.hasOwnProperty.call(item, key)) {
         let content
@@ -48,7 +48,7 @@ const Detail = ({ orderbootDetail }) => {
             content = (<div>{String(statusGroup[item[key]])}</div>)
             break
           case 'boot':
-            content = (<div>{item[key]/100}元</div>)
+            content = (<div>{item[key] / 100}元</div>)
             break
           case 'createTime':
             content = (<div>{formatTime(item[key])}</div>)
@@ -61,7 +61,7 @@ const Detail = ({ orderbootDetail }) => {
             }
             break
         }
-        detail.push(<div key={i+ key} className={styles.item}>
+        detail.push(<div key={i + key} className={styles.item}>
           <div>{detailCN[key]}</div>
           {content}
         </div>)

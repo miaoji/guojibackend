@@ -16,7 +16,7 @@ const Extensionapp = ({ location, dispatch, extensionapp, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增二维码' : '修改二维码'}`,
+    title: `${modalType === 'create' ? '新增APP推广链接' : '修改推广主体名称'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
@@ -61,7 +61,7 @@ const Extensionapp = ({ location, dispatch, extensionapp, loading }) => {
           currentItem: item,
         },
       })
-    }
+    },
   }
 
   const filterProps = {

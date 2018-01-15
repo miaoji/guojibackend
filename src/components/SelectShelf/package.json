@@ -1,0 +1,6 @@
+{
+    "name": "SelectShelf",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./SelectShelf.js"
+}

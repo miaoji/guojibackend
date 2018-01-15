@@ -8,55 +8,154 @@ import Filter from './Filter'
 import Modal from './Modal'
 import BootModal from './bootModal'
 import AddModal from './addModal'
+import StateModal from './stateModal'
 
 const Order = ({ location, dispatch, order, loading }) => {
-  const { list, pagination, currentItem, addModalVisible, modalVisible, bootModalVisible, modalType, isMotion, selectedRowKeys, selectKdCompany, } = order
+  const {
+    list,
+    pagination,
+    currentItem,
+    addModalVisible,
+    stateModalVisible,
+    modalVisible,
+    bootModalVisible,
+    modalType,
+    isMotion,
+    selectedRowKeys,
+    selectKdCompany,
+    selectNation,
+    selectProvince,
+    selectCity,
+    selectCounty,
+    provinceDis,
+    cityDis,
+    districtDis,
+
+    selectParcelType,
+    selectProductType,
+    parcelDis,
+    productDis,
+
+    selectWeChatUser,
+    intlPrice,
+    insuredVisiable,
+  } = order
   const { pageSize } = pagination
 
   // 订单创建的modal
   const addModelProps = {
     type: modalType,
     item: currentItem,
+    maskClosable: false,
     visible: addModalVisible,
-    confirmLoading: loading.effects['order/update'],
-    title: '创建订单',
+    confirmLoading: loading.effects['order/create'],
+    title: modalType === 'create' ? '创建订单' : '修改订单',
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
-      // console.log('update data', data)
+    selectNation,
+    selectProvince,
+    selectCity,
+    selectCounty,
+    provinceDis,
+    cityDis,
+    districtDis,
+
+    selectParcelType,
+    selectProductType,
+    parcelDis,
+    productDis,
+
+    selectWeChatUser,
+    intlPrice,
+    insuredVisiable,
+    getCountry(data) {
       dispatch({
-        type: `order/addOrder`,
+        type: 'order/getCountry',
+      })
+    },
+    getProvince(data) {
+      dispatch({
+        type: 'order/getProvince',
         payload: data,
       })
     },
-    onCancel () {
+    getCity(data) {
+      dispatch({
+        type: 'order/getCity',
+        payload: data,
+      })
+    },
+    getCounty(data) {
+      dispatch({
+        type: 'order/getCounty',
+        payload: data,
+      })
+    },
+    getParcelType(data) {
+      dispatch({
+        type: 'order/getParcelType',
+        payload: data,
+      })
+    },
+    getProductType(data) {
+      dispatch({
+        type: 'order/getProductType',
+        payload: data,
+      })
+    },
+    getIntlPrice(data) {
+      dispatch({
+        type: 'order/getIntlPrice',
+        payload: data,
+      })
+    },
+    setInsuredVisiable(data) {
+      if (data === 0) {
+        dispatch({
+          type: 'order/showInsured',
+        })
+      } else if (data === 1) {
+        dispatch({
+          type: 'order/hideInsured',
+        })
+      } else {
+        return
+      }
+    },
+    onOk(data) {
+      dispatch({
+        type: `order/${modalType}order`,
+        payload: data,
+      })
+    },
+    onCancel() {
       dispatch({
         type: 'order/hideAddModal',
       })
     },
   }
 
-  // 订单修改modal
+  // 发往国外modal
   const modalProps = {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: true,
     confirmLoading: loading.effects['order/update'],
-    title: `${modalType === 'create' ? '创建订单' : '修改订单'}`,
+    title: '添加国际段快递信息',
     wrapClassName: 'vertical-center-modal',
-    selectKdCompany: selectKdCompany,
-    onOk (data) {
+    selectKdCompany,
+    onOk(data) {
       dispatch({
-        type: `order/${modalType}`,
+        type: 'order/update',
         payload: data,
       })
     },
-    getKdCompany () {
+    getKdCompany() {
       dispatch({
-        type: `order/getKdCompany`
+        type: 'order/getKdCompany',
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'order/hideModal',
       })
@@ -71,73 +170,134 @@ const Order = ({ location, dispatch, order, loading }) => {
     confirmLoading: loading.effects['order/update'],
     title: '提交补价',
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
-      // console.log('update data', data)
+    onOk(data) {
       dispatch({
-        type: `order/addBoot`,
+        type: 'order/addBoot',
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'order/hideBootModal',
       })
     },
   }
 
+  // 改状态modal
+  const stateModalProps = {
+    type: modalType,
+    item: currentItem,
+    visible: stateModalVisible,
+    confirmLoading: loading.effects['order/update'],
+    title: '修改状态',
+    wrapClassName: 'vertical-center-modal',
+    onOk(data) {
+      dispatch({
+        type: 'order/updateState',
+        payload: data
+      })
+    },
+    onCancel() {
+      dispatch({
+        type: 'order/hideStateModal'
+      })
+    }
+  }
+
   const listProps = {
+    filter: {
+      ...location.query
+    },
     dataSource: list,
     loading: loading.effects['order/query'],
     pagination,
     location,
     isMotion,
-    onChange (page) {
+    onChange(page, filter) {
+      const value = {
+        status: filter.STATUS ? filter.STATUS[0] : undefined,
+      }
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
         query: {
           ...query,
+          ...value,
           page: page.current,
-          pageSize: page.pageSize,
-        },
+          pageSize: page.pageSize
+        }
       }))
     },
-    onMarkItem (id) {
+    onMarkItem(id) {
       dispatch({
         type: 'order/markBlackList',
-        payload: id
+        payload: id,
       })
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'order/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'order/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
-        },
+        }
+      })
+      dispatch({
+        type: 'order/getKdCompany',
       })
     },
-    addBoot (item) {
+    addBoot(item) {
       dispatch({
         type: 'order/showBootModal',
         payload: {
           currentItem: item,
-        },
+        }
       })
     },
-    onCreateCtorder (item) {
+    showStateModal(item) {
+      dispatch({
+        type: 'order/showStateModal',
+        payload: {
+          currentItem: item,
+        }
+      })
+    },
+    onCreateCtorder(item) {
       dispatch({
         type: 'order/createChinaOrder',
         payload: {
           id: item.ID,
-          orderNo: item.ORDER_NO
-        },
+          orderNo: item.ORDER_NO,
+        }
+      })
+    },
+    filterStatus(value) {
+      dispatch(routerRedux.push({
+        pathname: location.pathname,
+        query: {
+          ...value,
+        }
+      }))
+    },
+    updateOrderInfo(item) {
+      dispatch({ type: 'order/getCountry' })
+      dispatch({ type: 'order/getProvince' })
+      dispatch({ type: 'order/getWeChatUser' })
+      if (item.INSURED === 1) {
+        dispatch({ type: 'order/hideInsured' })
+      }
+      dispatch({
+        type: 'order/showAddModal',
+        payload: {
+          modalType: 'update',
+          currentItem: item
+        }
       })
     }
   }
@@ -147,36 +307,27 @@ const Order = ({ location, dispatch, order, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
           ...value,
-          page: 1,
-          pageSize,
         },
       }))
     },
-    onSearch (fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/order',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/order',
-      }))
-    },
-    onAdd () {
+    onAdd() {
+      dispatch({ type: 'order/getCountry' })
+      dispatch({ type: 'order/getProvince' })
+      dispatch({ type: 'order/getWeChatUser' })
       dispatch({
         type: 'order/showAddModal',
         payload: {
           modalType: 'create',
+          currentItem: {}
         },
       })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'order/switchIsMotion' })
     },
   }
@@ -193,21 +344,11 @@ const Order = ({ location, dispatch, order, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
-      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
       {bootModalVisible && <BootModal {...bootModalProps} />}
-      {addModalVisible && <AddModal {...addModelProps}/>}
+      {stateModalVisible && <StateModal {...stateModalProps} />}
+      {addModalVisible && <AddModal {...addModelProps} />}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, InputNumber, Modal } from 'antd'
-import styles from './bootModal.less'
+import styles from './Modal.less'
 import classnames from 'classnames'
 
 const FormItem = Form.Item

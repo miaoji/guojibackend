@@ -1,5 +1,5 @@
 import { color } from '../utils/theme'
-import { myCity, query } from '../services/dashboard'
+import { query } from '../services/dashboard'
 import { parse } from 'qs'
 
 export default {
@@ -7,10 +7,16 @@ export default {
   state: {
     sales: [],
     quote: {
-      name: '明彰',
+      name: '明彰科技',
       title: '名言',
-      content: '逆水行舟，不进则退',
-      // avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',
+      content: '学如逆水行舟，不进则退',
+      avatar: './img003.jpg',
+    },
+    quotess: {
+      name: '明彰科技',
+      title: '名言',
+      content: '心似平原放马,易放难收',
+      avatar: './img002.jpg',
     },
     numbers: [
       {
@@ -42,8 +48,8 @@ export default {
     cpu: {},
     user: {
       name: '管理员',
-      email: '2467254599@qq.com',
-      // avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',
+      email: 'winner@qq.com',
+      avatar: './img001.jpg',
     },
   },
   subscriptions: {
@@ -54,9 +60,10 @@ export default {
   effects: {
     *query ({
       payload,
-    }, { call, put }) {
+    }, { call }) {
       const data = yield call(query, parse(payload))
-    }
+      console.info('data', data)
+    },
   },
   reducers: {
   },

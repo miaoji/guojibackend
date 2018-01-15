@@ -29,6 +29,9 @@
   <script>
     // background canvas
     window.addEventListener("load", function() {
+      if (!document.getElementById('background')) {
+        return
+      }
       var ctx = document.getElementById('background').getContext('2d');
       //gradient
       var options =

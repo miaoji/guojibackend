@@ -2,10 +2,9 @@ import modelExtend from 'dva-model-extend'
 import { create, remove, update } from '../services/wxuser'
 import * as wxusersService from '../services/wxusers'
 import { pageModel } from './common'
-import { config } from '../utils'
+import { storage } from '../utils'
 
 const { query } = wxusersService
-const { prefix } = config
 
 export default modelExtend(pageModel, {
   namespace: 'wxUser',
@@ -21,7 +20,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/wxuser' || location.pathname === '/wxuserdetail' ) {
+        if (location.pathname === '/wxuser' || location.pathname === '/wxuserdetail') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -48,7 +47,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.msg
+        throw data.msg || '无法跟服务器建立有效连接'
       }
     },
 
@@ -73,12 +72,11 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'markBlackList' ({ payload }, { call, put, select }) {
+    *'markBlackList' ({ payload }, { call, put }) {
       let newWxUser = payload
-      console.log('newWxUser', newWxUser)
       // 判断有没有传过来blacklist属性,没有的传的话就默认等于1
-      if (newWxUser.blacklist==null) {
-        newWxUser.blacklist=1
+      if (newWxUser.blacklist == null) {
+        newWxUser.blacklist = 1
       }
       const data = yield call(update, newWxUser)
       if (data.success) {
@@ -124,7 +122,12 @@ export default modelExtend(pageModel, {
     },
 
     switchIsMotion (state) {
-      localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
+      // localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
+      storage({
+        key: 'userIsMotion',
+        val: !state.isMotion,
+        type: 'set',
+      })
       return { ...state, isMotion: !state.isMotion }
     },
 

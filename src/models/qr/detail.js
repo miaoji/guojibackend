@@ -8,21 +8,21 @@ export default {
   state: {
     name: '',
     ticket: '',
-    parameter: ''
+    parameter: '',
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(() => {
-        if (location.pathname === '/qrdetail') {
+        if (location.pathname === '/qrdetail' || location.pathname === '/spreadqr') {
           const name = queryURL('name')
           const ticket = queryURL('ticket')
           const parameter = queryURL('parameter')
-          dispatch({ type: 'querySuccess', payload: { 
+          dispatch({ type: 'querySuccess', payload: {
             name,
             ticket,
-            parameter
-          }})
+            parameter,
+          } })
         }
       })
     },
@@ -49,7 +49,7 @@ export default {
 
   reducers: {
     querySuccess (state, { payload }) {
-      const { data } = payload
+      // const { data } = payload
       return {
         ...state,
         ...payload,

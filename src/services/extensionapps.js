@@ -1,9 +1,8 @@
-import { request, config, pageParams,} from '../utils'
+import { request, config, pageParams } from '../utils'
 const { extensionapp } = config.api
 
 export async function query (params) {
   params = pageParams(params)
-  console.log('params',params)
   return request({
     url: extensionapp.all,
     method: 'get',

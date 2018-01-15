@@ -40,7 +40,7 @@ const Filter = ({
       fields.startDate = fields.createTime[0]
       fields.endDate = fields.createTime[1]
       delete fields.createTime
-    }else{
+    } else {
       delete fields.createTime
     }
     return fields

@@ -29,30 +29,30 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'country_cn',
       key: 'country_cn',
       render: (text) => <span>{text}</span>,
-    },{
+    }, {
       title: '包裹类型名称',
       dataIndex: 'NAME_CN',
       key: 'NAME_CN',
-    },{
+    }, {
       title: '包裹类型英文名',
       dataIndex: 'NAME_EN',
       key: 'NAME_EN',
-    },{
+    }, {
       title: '最小重量',
       dataIndex: 'MIN_RANGE',
       key: 'MIN_RANGE',
       render: (text) => <span>{text}kg</span>,
-    },{
+    }, {
       title: '最大重量',
       dataIndex: 'MAX_RANGE',
       key: 'MAX_RANGE',
       render: (text) => <span>{text}kg</span>,
-    },{
+    }, {
       title: '备注',
       dataIndex: 'REMARK',
       key: 'REMARK',
       render: (text) => <span>{text}</span>,
-    },{
+    }, {
       title: '操作',
       key: 'operation',
       width: 100,

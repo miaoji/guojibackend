@@ -3,10 +3,11 @@
   "rules": {
     "semi": [2, "never"],
     "no-console": 0,
-    "comma-dangle": [2, "always-multiline"],
+    "comma-dangle": 0,
+    "no-useless-escape": 0,
     "max-len": 0,
     "react/jsx-first-prop-new-line": 0,
-    "space-before-function-paren": [2, "always"],
+    "space-before-function-paren": 0,
     "no-unused-expressions": [0, {
       "allowShortCircuit": true,
       "allowTernary": true
@@ -21,7 +22,7 @@
     "react/jsx-no-bind": 0,
     "no-unused-vars": [2, { "ignoreRestSiblings": true }],
     "no-underscore-dangle": 0,
-    "global-require": 0,
+    "global-require": 0
   },
   "parser": "babel-eslint",
   "parserOptions": {

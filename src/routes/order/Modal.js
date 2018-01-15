@@ -8,15 +8,6 @@ import city from '../../utils/city'
 const FormItem = Form.Item
 const Option = Select.Option
 
-const statusGroup = {
-  '1': '待付款',
-  '2': '付款完成',
-  '3': '中通完成',
-  '0': 'fpx完成',
-  '4': '异常订单',
-  '5': '取消订单',
-}
-
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -52,8 +43,6 @@ const modal = ({
   }
 
   const handleFocus = () => {
-    getKdCompany()
-    // alert(1)
   }
 
   const modalOpts = {
@@ -67,8 +56,8 @@ const modal = ({
     <Modal {...modalOpts}>
       <Form layout="horizontal">
         <FormItem label="中转地址" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('transferAddr', {
-            initialValue: item.transferAddr || '泰虹路168弄万科时一区1号楼302室',
+          {getFieldDecorator('transferAddress', {
+            initialValue: item.TRANSFER_ADDRESS || '泰虹路168弄万科时一区1号楼302室',
             rules: [
               {
                 required: true,
@@ -78,41 +67,27 @@ const modal = ({
           })(<Input disabled />)}
         </FormItem>
         <FormItem label="国际段快递公司" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('nation_express_com', {
-            initialValue: item.nation_express_com,
+          {getFieldDecorator('kdCompanyCode', {
+            initialValue: item.KD_COMPANY_CODE,
             rules: [
               {
-                required: false,
+                required: true,
                 message: '请选择快递公司名!',
               },
             ],
-          })(<Select showSearch placeholder='输入快递备注名可搜索' onFocus={handleFocus} defaultValue="dhlen" style={{ width: 286 }}>{ selectKdCompany }</Select>)}
+          })(<Select showSearch placeholder="输入快递公司名称可搜索" onFocus={handleFocus} style={{ width: 286 }}>{selectKdCompany}</Select>)}
         </FormItem>
         <FormItem label="国际段单号" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('FPXNO', {
-            initialValue: item.FPXNO,
+          {getFieldDecorator('intlNo', {
+            initialValue: item.INTL_NO,
             rules: [
               {
-                required: false,
+                required: true,
                 pattern: /^[A-Za-z0-9]{0,}$/,
                 message: '请输入国际段单号!',
               },
             ],
           })(<Input />)}
-        </FormItem>
-        <FormItem label="订单状态" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('starte', {
-            initialValue: statusGroup[item.STATUS],
-            rules: [
-              {
-                required: true,
-                message: '请输入订单状态!',
-              },
-            ],
-          })(<Select defaultValue="1" style={{ width: 120 }} disabled={item.starte !== 1}>
-            <Option value="1">待付款</Option>
-            <Option value="2">已付款</Option>
-          </Select>)}
         </FormItem>
       </Form>
     </Modal>

@@ -16,15 +16,14 @@ const detailCN = {
 
 const statusGroup = {
   '-1': '补价状态信息未获取',
-  '0': '补价信息已创建,但未成功通知到用户',
-  '1': '补价中',
-  '2': '补价完成',
-  '3': '模板消息推送失败'
+  0: '补价信息已创建,但未成功通知到用户',
+  1: '补价中',
+  2: '补价完成',
+  3: '模板消息推送失败',
 }
 
 const Detail = ({ bootDetail }) => {
   const { data } = bootDetail
-  console.log('data.obj',data)
   if (data == null) {
     return (<div className="content-inner">
       <div className={styles.content}>
@@ -36,7 +35,7 @@ const Detail = ({ bootDetail }) => {
   const detail = []
   for (let i = 0; i < detailData.length; i++) {
     let item = detailData[i]
-    detail.push(<h3 className={styles.item}>第{i +1}条记录</h3>)
+    detail.push(<h3 className={styles.item}>第{i + 1}条记录</h3>)
     for (let key in item) {
       if ({}.hasOwnProperty.call(item, key)) {
         let content
@@ -50,7 +49,7 @@ const Detail = ({ bootDetail }) => {
             content = (<div>{String(statusGroup[item[key]])}</div>)
             break
           case 'priceSpread':
-            content = (<div>{item[key]/100}元</div>)
+            content = (<div>{item[key] / 100}元</div>)
             break
           case 'createTime':
             content = (<div>{formatTime(item[key])}</div>)
@@ -63,7 +62,7 @@ const Detail = ({ bootDetail }) => {
             }
             break
         }
-        detail.push(<div key={i+ key} className={styles.item}>
+        detail.push(<div key={i + key} className={styles.item}>
           <div>{detailCN[key]}</div>
           {content}
         </div>)

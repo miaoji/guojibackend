@@ -51,7 +51,7 @@ const Boot = ({ location, dispatch, boot, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'boot/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {
@@ -68,7 +68,7 @@ const Boot = ({ location, dispatch, boot, loading }) => {
           currentItem: item,
         },
       })
-    }
+    },
   }
 
   const filterProps = {

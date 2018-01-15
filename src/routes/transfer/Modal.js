@@ -49,31 +49,31 @@ const modal = ({
     })
   }
 
-  const handleClick= async function() {
+  const handleClick = async function() {
     // await getCountry()
   }
 
-  const countryChange = async function(e){
+  const countryChange = async function(e) {
     await getProvince(e)
     setFieldsValue({
       transferProv: null,
       transferCity: null,
-      transferCounty: null
+      transferCounty: null,
     })
   }
 
-  const provinceChange = async function(e){
+  const provinceChange = async function(e) {
     await getCity(e)
     setFieldsValue({
       transferCity: null,
-      transferCounty: null
+      transferCounty: null,
     })
   }
 
-  const cityChange = async function(e){
+  const cityChange = async function(e) {
     await getCounty(e)
     setFieldsValue({
-      transferCounty: null
+      transferCounty: null,
     })
   }
 
@@ -128,7 +128,7 @@ const modal = ({
                 message: '请选择收件人国家!',
               },
             ],
-          })(<Select onChange={countryChange} placeholder='点击选择' onFocus={handleClick}>{selectNation}</Select>)}
+          })(<Select onChange={countryChange} placeholder="点击选择" onFocus={handleClick}>{selectNation}</Select>)}
         </FormItem>
         <FormItem label="收件人省" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferProv', {
@@ -139,7 +139,7 @@ const modal = ({
                 message: '请选择收件省!',
               },
             ],
-          })(<Select disabled={provinceDis} placeholder='点击选择' onChange={provinceChange}>{selectProvince}</Select>)}
+          })(<Select disabled={provinceDis} placeholder="点击选择" onChange={provinceChange}>{selectProvince}</Select>)}
         </FormItem>
         <FormItem label="收件人市" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferCity', {
@@ -150,7 +150,7 @@ const modal = ({
                 message: '请选择收件人市!',
               },
             ],
-          })(<Select disabled={cityDis} placeholder='点击选择' onChange={cityChange}>{selectCity}</Select>)}
+          })(<Select disabled={cityDis} placeholder="点击选择" onChange={cityChange}>{selectCity}</Select>)}
         </FormItem>
         <FormItem label="收件人区" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferCounty', {
@@ -161,7 +161,7 @@ const modal = ({
                 message: '请选择收件人区!',
               },
             ],
-          })(<Select disabled={districtDis} placeholder='点击选择'>{selectCounty}</Select>)}
+          })(<Select disabled={districtDis} placeholder="点击选择">{selectCounty}</Select>)}
         </FormItem>
         <FormItem label="收件人详细地址" hasFeedback {...formItemLayout}>
           {getFieldDecorator('transferAddress', {
@@ -208,7 +208,7 @@ modal.propTypes = {
   item: PropTypes.object,
   selectPackage: PropTypes.object,
   getPackage: PropTypes.func,
-  onOk: PropTypes.func
+  onOk: PropTypes.func,
 }
 
 export default Form.create()(modal)
