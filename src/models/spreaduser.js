@@ -64,7 +64,7 @@ export default modelExtend(pageModel, {
         spreadUserRatio: 0.08, // 一级分润比例
         spreadUserRatioSecond: 0.05, // 二级分润比例
         qrType: 1, // 推广类型
-        spreadType: 1,
+        spreadType: 0,
         // seconds,
         spreadLevelId,
         wxUserId,
