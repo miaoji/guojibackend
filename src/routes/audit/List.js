@@ -65,6 +65,17 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '状态',
       dataIndex: 'status',
       key: 'status',
+      filters: [
+        { text: '未提现', value: 0 },
+        { text: '提现成功', value: 1 },
+        { text: '拒绝', value: 2 }
+      ],
+      filterMultiple: false,
+      onFilter: (value, record) => {
+        // console.log('record', record)
+        // console.log('value', record.status.toString().indexOf(value.toString()))
+        return record.status.toString().indexOf(value.toString()) === 0
+      },
       render: (text) => {
         const realText = {
           0: '未提现',

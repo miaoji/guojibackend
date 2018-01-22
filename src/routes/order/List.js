@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Button } from 'antd'
+import { Table, Modal, Button } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { time, screen } from '../../utils'
+import { screen } from '../../utils'
 import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
@@ -13,7 +13,7 @@ const confirm = Modal.confirm
 const orderState = screen.orderStateByNum
 const orderStateArr = screen.orderStateByArr
 
-const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showStateModal, updateOrderInfo, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
+const List = ({ filter, onDeleteItem, onEditItem, addBoot, showStateModal, updateOrderInfo, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -122,7 +122,7 @@ const List = ({ filter, filterStatus, onDeleteItem, onEditItem, addBoot, showSta
         }
         return (<Button type="primary" size="default" ghost disabled>
             发送
-          </Button>)
+        </Button>)
       },
     }, {
       title: '操作',
@@ -182,6 +182,10 @@ List.propTypes = {
   showStateModal: PropTypes.func,
   isMotion: PropTypes.bool,
   location: PropTypes.object,
+  filter: PropTypes.object,
+  updateOrderInfo: PropTypes.func,
+  onCreateCtorder: PropTypes.func,
+  ztorderLoading: PropTypes.bool
 }
 
 export default List
