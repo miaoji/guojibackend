@@ -59,7 +59,7 @@ const modal = ({
           })(
             <Radio.Group onChange={handleChange}>
               <Radio value={0}>未提现</Radio>
-              <Radio value={1}>提现成功</Radio>
+              <Radio value={1}>体现成功</Radio>
               <Radio value={2}>拒绝</Radio>
             </Radio.Group>
           )}

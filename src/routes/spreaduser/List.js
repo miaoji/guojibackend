@@ -102,10 +102,10 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         return <span>{replText[text]}</span>
       }
     }, {
-      title: '团队消费金额',
+      title: '团队消费金额/元',
       dataIndex: 'consumeTeam',
       key: 'consumeTeam',
-      render: (text) => <span>{text || '0'}</span>,
+      render: (text) => <span>{text / 100 || '0'}</span>,
     }, {
       title: '创建时间',
       dataIndex: 'createTime',
