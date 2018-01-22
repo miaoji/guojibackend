@@ -5,7 +5,7 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { Link } from 'dva/router'
+// import { Link } from 'dva/router'
 import { time } from '../../utils'
 
 const confirm = Modal.confirm
@@ -17,7 +17,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
     } else if (e.key === '2') {
       confirm({
         title: '确定要将这一用户打入黑名单吗?(可在更新中修改)',
-        onOk () {
+        onOk() {
           onMarkItem(record.id)
         },
       })
@@ -109,7 +109,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       dataIndex: 'SUBSCRIBE_TIME',
       key: 'SUBSCRIBE_TIME',
       render: (text) => {
-        const renderTime = time.formatTime(text)
+        const renderTime = text ? time.formatTime(text) : '未知时间'
         return <span>{renderTime}</span>
       },
     }, {
@@ -144,9 +144,9 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         bordered
         expandedRowRender={record =>
           <div className={classnames({ [styles.p]: true })}>
-            <p>openid:                                                                                                                          {record.OPENID}</p>
-            <p>手机号:                                                                                                                          {record.MOBILE ? `${record.MOBILE.toString().substr(0, 3)}***${record.MOBILE.toString().substr(7, 10)}` : '未绑定手机号'}</p>
-            <p>证件号:                                                                                                                          {record.ID_CARD ? record.ID_CARD : '未绑定证件号'}</p>
+            <p>openid:{record.OPENID}</p>
+            <p>手机号:{record.MOBILE ? `${record.MOBILE.toString().substr(0, 3)}***${record.MOBILE.toString().substr(7, 10)}` : '未绑定手机号'}</p>
+            <p>证件号:{record.ID_CARD ? record.ID_CARD : '未绑定证件号'}</p>
           </div>
         }
         scroll={{ x: 1250 }}

@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet'
 import '../themes/index.less'
 import './app.less'
 import NProgress from 'nprogress'
-const { prefix } = config
+// const { prefix } = config
 
 const { Header, Bread, Footer, Sider, styles } = Layout
 let lastHref

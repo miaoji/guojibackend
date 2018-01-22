@@ -25,8 +25,8 @@ const Detail = ({ storeUserDetail }) => {
       let content
       if (String(detailData[key]).match(/png/g)) {
         content = (<div>
-                    <img src={String(detailData[key])} alt={detailCN[key]} />
-                  </div>)
+          <img src={String(detailData[key])} alt={detailCN[key]} />
+        </div>)
       } else {
         content = (<div>{String(detailData[key])}</div>)
       }

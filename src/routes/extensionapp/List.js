@@ -1,6 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message, Button } from 'antd'
+import copy from 'copy-to-clipboard'
+import {
+  // Menu,
+  Table,
+  Modal,
+  // Icon,
+  message,
+  Button
+} from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -30,11 +38,20 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     }
   }
 
-  const copyUrl = (record, e) => {
+  const copyUrl = (record) => {
     const href = `http://www.mingz-tech.com/wechat/#/send?appid=${record.appid}`
-    let temp = window.prompt('使用Ctrl+C复制到剪切板', href)
-    temp.select()
-    document.execCommand('copy', false)
+    // let temp = window.prompt('使用Ctrl+C复制到剪切板', href)
+    // temp.select()
+    // document.execCommand('copy', false)
+    let copyInfo = copy(href, {
+      debug: true,
+      message: '复制失败'
+    })
+    if (copyInfo === true) {
+      message.success('已复制到剪切板')
+    } else {
+      message.warn('复制到剪切板失败,请稍后重试')
+    }
   }
 
   const columns = [

@@ -2,14 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
+// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
 const County = ({ location, dispatch, county, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, provinceModalVisible, locationData } = county
-  const { pageSize } = pagination
+  const { list, pagination, currentItem, modalVisible, modalType,
+    // provinceModalVisible,
+    // locationData
+  } = county
+  // const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
@@ -29,34 +32,34 @@ const County = ({ location, dispatch, county, loading }) => {
     },
   }
 
-  const provinceModalProps = {
-    item: currentItem,
-    list: locationData,
-    visible: provinceModalVisible,
-    title: `编辑${currentItem.name}省份信息`,
-    wrapClassName: 'vertical-center-modal',
-    onOk (data) {
-      dispatch({
-        type: 'county/createProvince',
-        payload: data,
-      })
-    },
-    onCancel () {
-      dispatch({
-        type: 'county/hideLocationModal',
-        payload: {
-          type: 'province',
-        },
-      })
-    },
-  }
+  // const provinceModalProps = {
+  //   item: currentItem,
+  //   list: locationData,
+  //   visible: provinceModalVisible,
+  //   title: `编辑${currentItem.name}省份信息`,
+  //   wrapClassName: 'vertical-center-modal',
+  //   onOk (data) {
+  //     dispatch({
+  //       type: 'county/createProvince',
+  //       payload: data,
+  //     })
+  //   },
+  //   onCancel () {
+  //     dispatch({
+  //       type: 'county/hideLocationModal',
+  //       payload: {
+  //         type: 'province',
+  //       },
+  //     })
+  //   },
+  // }
 
   const listProps = {
     loading: loading.effects['county/query'],
     list,
     pagination,
     location,
-    onChange (page) {
+    onChange () {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -129,7 +132,7 @@ const County = ({ location, dispatch, county, loading }) => {
       <Filter {...filterProps} />
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
-      {provinceModalVisible && <ProvinceModal {...provinceModalProps} />}
+      {/* {provinceModalVisible && <ProvinceModal {...provinceModalProps} />} */}
     </div>
   )
 }

@@ -1,8 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Button, Icon, message } from 'antd'
+import {
+  // Menu,
+  // Table,
+  Modal,
+  // Button,
+  // Icon,
+  // message
+} from 'antd'
 import styles from './List.less'
-import classnames from 'classnames'
+// import classnames from 'classnames'
 // import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
 import { Link } from 'dva/router'
@@ -10,7 +17,12 @@ import { Link } from 'dva/router'
 const confirm = Modal.confirm
 
 
-const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tableProps }) => {
+const List = ({ onDeleteItem, onEditItem,
+  // showModal,
+  // location,
+  list,
+  // ...tableProps
+}) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -19,7 +31,7 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
       case '2':
         confirm({
           title: '确定要删除这目的地吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.id)
           },
         })
@@ -29,16 +41,16 @@ const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tablePro
     }
   }
 
-  const clickSeeProvince = (record) => {
-//  window.open(`/city?provinceid=${record.id}`)
+  const clickSeeProvince = () => {
+    //  window.open(`/city?provinceid=${record.id}`)
   }
   return (
     <div>
       <ul className={styles.list}>
         {list.show ? <li>{list.name}</li> : list.map(item => (<li key={item.id}>
-          <div title={item.province} size="large" onClick={e => clickSeeProvince(item)}>
+          <div title={item.province} size="large" onClick={() => clickSeeProvince(item)}>
             <Link to={`/city?provinceCode=${item.province_code}`}>
-                <span>{item.province}</span>
+              <span>{item.province}</span>
             </Link>
             <DropOption onMenuClick={e => handleMenuClick(item, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
           </div>

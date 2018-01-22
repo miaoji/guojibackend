@@ -1,15 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Button, Icon, message } from 'antd'
+import {
+  // Menu,
+  // Table,
+  Modal,
+  // Button,
+  // Icon,
+  // message
+} from 'antd'
 import styles from './List.less'
-import classnames from 'classnames'
+// import classnames from 'classnames'
 // import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
-import { Link } from 'dva/router'
+// import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
 
-const List = ({ onDeleteItem, onEditItem, showModal, location, list, ...tableProps }) => {
+const List = ({ onDeleteItem, onEditItem,
+  // showModal,
+  // location,
+  list,
+  // ...tableProps
+}) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':

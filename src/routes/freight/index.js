@@ -23,30 +23,30 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     selectProductType,
     productDis,
     freightDis,
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: `freight/${modalType}`,
         payload: data,
       })
     },
-    getPackage (data) {
+    getPackage() {
       dispatch({
         type: 'freight/getPackage',
       })
     },
-    getParcelType (data) {
+    getParcelType(data) {
       dispatch({
         type: 'freight/getParcelType',
         payload: data,
       })
     },
-    getProductType (data) {
+    getProductType(data) {
       dispatch({
         type: 'freight/getProductType',
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'freight/hideModal',
       })
@@ -59,7 +59,7 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -70,19 +70,19 @@ const Freight = ({ location, dispatch, freight, loading }) => {
         },
       }))
     },
-    onMarkItem (id) {
+    onMarkItem(id) {
       dispatch({
         type: 'freight/markBlackList',
         payload: id,
       })
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'freight/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'freight/showModal',
         payload: {
@@ -101,7 +101,7 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -111,7 +111,7 @@ const Freight = ({ location, dispatch, freight, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/freight',
         query: {
@@ -122,7 +122,7 @@ const Freight = ({ location, dispatch, freight, loading }) => {
         pathname: '/freight',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'freight/showModal',
         payload: {
@@ -133,7 +133,7 @@ const Freight = ({ location, dispatch, freight, loading }) => {
         type: 'freight/getPackage',
       })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'freight/switchIsMotion' })
     },
   }
@@ -151,15 +151,14 @@ const Freight = ({ location, dispatch, freight, loading }) => {
     <div className="content-inner">
       <Filter {...filterProps} />
       {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
+        selectedRowKeys.length > 0 && <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
+          <Col>
+            {`选中 ${selectedRowKeys.length} 个微信用户 `}
+            <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
+              <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
+            </Popconfirm>
+          </Col>
+        </Row>
       }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}

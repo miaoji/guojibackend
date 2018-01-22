@@ -6,17 +6,17 @@ import Menus from './Menu'
 
 const SubMenu = Menu.SubMenu
 
-const Header = ({ 
-  user, 
+const Header = ({
+  user,
   logout,
-  switchSider, 
-  siderFold, 
-  isNavbar, 
-  menuPopoverVisible, 
-  location, 
-  switchMenuPopover, 
-  navOpenKeys, 
-  changeOpenKeys, 
+  switchSider,
+  siderFold,
+  isNavbar,
+  menuPopoverVisible,
+  location,
+  switchMenuPopover,
+  navOpenKeys,
+  changeOpenKeys,
   menu
 }) => {
   let handleClickMenu = e => e.key === 'logout' && logout()

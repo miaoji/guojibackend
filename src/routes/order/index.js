@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
+// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
@@ -21,7 +21,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     bootModalVisible,
     modalType,
     isMotion,
-    selectedRowKeys,
+    // selectedRowKeys,
     selectKdCompany,
     selectNation,
     selectProvince,
@@ -40,7 +40,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     intlPrice,
     insuredVisiable,
   } = order
-  const { pageSize } = pagination
+  // const { pageSize } = pagination
 
   // 订单创建的modal
   const addModelProps = {
@@ -67,7 +67,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     selectWeChatUser,
     intlPrice,
     insuredVisiable,
-    getCountry(data) {
+    getCountry() {
       dispatch({
         type: 'order/getCountry',
       })
@@ -332,14 +332,14 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
   }
 
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'order/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
-  }
+  // const handleDeleteItems = () => {
+  //   dispatch({
+  //     type: 'order/multiDelete',
+  //     payload: {
+  //       ids: selectedRowKeys,
+  //     },
+  //   })
+  // }
 
   return (
     <div className="content-inner">

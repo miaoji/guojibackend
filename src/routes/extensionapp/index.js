@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
+// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
@@ -102,14 +102,14 @@ const Extensionapp = ({ location, dispatch, extensionapp, loading }) => {
     },
   }
 
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'extensionapp/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
-  }
+  // const handleDeleteItems = () => {
+  //   dispatch({
+  //     type: 'extensionapp/multiDelete',
+  //     payload: {
+  //       ids: selectedRowKeys,
+  //     },
+  //   })
+  // }
 
   return (
     <div className="content-inner">

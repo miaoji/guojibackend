@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, Modal, Select } from 'antd'
-import city from '../../utils/city'
+// import city from '../../utils/city'
 
 const FormItem = Form.Item
-const Option = Select.Option
+// const Option = Select.Option
 
 const formItemLayout = {
   labelCol: {
@@ -47,12 +47,12 @@ const modal = ({
     })
   }
 
-  const handleClick = async function() {
+  const handleClick = async function () {
     // 处理selectPackage 放入 option中
     // await getPackage()
   }
 
-  const handleChange = async function(data) {
+  const handleChange = async function (data) {
     // 通过目的地查询包裹类型
     await getParcelType(data)
     setFieldsValue({
@@ -61,7 +61,7 @@ const modal = ({
     })
   }
 
-  const productChange = async function(data) {
+  const productChange = async function (data) {
     await getProductType(JSON.parse(data).id)
     setFieldsValue({ productType: null })
   }
@@ -203,6 +203,10 @@ modal.propTypes = {
   freightDis: PropTypes.Blooean,
   selectPackage: PropTypes.object,
   getPackage: PropTypes.func,
+  selectParcelType: PropTypes.array,
+  getParcelType: PropTypes.array,
+  selectProductType: PropTypes.array,
+  getProductType: PropTypes.array,
   onOk: PropTypes.func,
 }
 

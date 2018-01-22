@@ -1,11 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message } from 'antd'
+import {
+  // Menu,
+  Table,
+  Modal,
+  // Icon,
+  // message
+} from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { Link } from 'dva/router'
+// import { Link } from 'dva/router'
 import { time } from '../../utils'
 
 const confirm = Modal.confirm
@@ -17,7 +23,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     } else if (e.key === '2') {
       confirm({
         title: '确定要删除这一条运费吗?',
-        onOk () {
+        onOk() {
           onDeleteItem(record.ID)
         },
       })
@@ -72,8 +78,8 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'CREATE_TIME',
       key: 'CREATE_TIME',
       render: (text) => {
-      	const createtime = time.formatTime(text)
-      	return <span>{createtime}</span>
+        const createtime = time.formatTime(text)
+        return <span>{createtime}</span>
       },
     }, {
       title: '操作人',

@@ -1,10 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
-import city from '../../utils/city'
+import {
+  Form,
+  Input,
+  // InputNumber,
+  // Radio,
+  Modal,
+  // Cascader
+} from 'antd'
+// import city from '../../utils/city'
 
 const FormItem = Form.Item
-const TextArea = Input
+// const TextArea = Input
 
 const formItemLayout = {
   labelCol: {
@@ -44,7 +51,7 @@ const modal = ({
     onOk: handleOk,
   }
 
-  const paramDisabled = type === 'update'
+  // const paramDisabled = type === 'update'
 
   return (
     <Modal {...modalOpts}>

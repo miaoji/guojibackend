@@ -2,7 +2,7 @@
 // 第二个参数传入的是 字段所在的数组
 
 export const formatTime = function (val) {
-  if (val === null || val === '') {
+  if (!val || val === null || val === '') {
     return '未知时间'
   }
   let date = new Date(Number(val))

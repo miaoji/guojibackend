@@ -21,7 +21,7 @@ const Login = ({
    * [帐号密码登录]
    * @return {[type]} [description]
    */
-  function handleOk () {
+  function handleOk() {
     validateFieldsAndScroll((errors, values) => {
       if (errors) {
         return
@@ -34,7 +34,7 @@ const Login = ({
    * [刷新二维码]
    * @return {[type]} [description]
    */
-  function handleRefreshImage () {
+  function handleRefreshImage() {
     dispatch({ type: 'login/handleRefreshImage' })
   }
 
@@ -42,7 +42,7 @@ const Login = ({
    * [切换登录方式]
    * @return {[type]} [description]
    */
-  function switchLoginType () {
+  function switchLoginType() {
     dispatch({
       type: 'login/switchLoginType',
       payload: {
@@ -55,7 +55,7 @@ const Login = ({
    * [获取手机号验证码]
    * @return {[type]} [description]
    */
-  function handleGetCode () {
+  function handleGetCode() {
     validateFieldsAndScroll((errors, values) => {
       if (!values.mobile) {
         return
@@ -140,7 +140,7 @@ const Login = ({
                 </Button>
               </Row>
             </form>
-          : <form>
+            : <form>
               <FormItem hasFeedback>
                 {getFieldDecorator('mobile', {
                   rules: [

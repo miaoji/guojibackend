@@ -2,8 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Radio, Select } from 'antd'
-import city from '../../utils/city'
+import {
+  Form, Button, Row, Col, DatePicker, Input,
+  // Cascader,
+  // Switch,
+  Radio,
+  Select
+} from 'antd'
+// import city from '../../utils/city'
 
 const InputGroup = Input.Group
 const Option = Select.Option
@@ -27,8 +33,8 @@ const TwoColProps = {
 
 const Filter = ({
   onAdd,
-  isMotion,
-  switchIsMotion,
+  // isMotion,
+  // switchIsMotion,
   onFilterChange,
   filter,
   form: {
@@ -38,8 +44,13 @@ const Filter = ({
   },
 }) => {
   const handleFields = (fields) => {
-    const { createTime, status, extension, option } = fields
-    if (status == 0) {
+    const {
+      createTime,
+      status,
+      // extension,
+      option
+    } = fields
+    if (status === 0) {
       delete fields.status
     }
     if (createTime.length) {
@@ -50,7 +61,7 @@ const Filter = ({
     } else {
       delete fields.createTime
     }
-    if (option == 1) {
+    if (option === 1) {
       fields.qrName = fields.extension
     } else {
       fields.appName = fields.extension
@@ -102,7 +113,9 @@ const Filter = ({
     onFilterChange(fields)
   }
 
-  const { orderNo, status } = filter
+  const { orderNo,
+    // status
+  } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -125,17 +138,17 @@ const Filter = ({
         </FilterItem>
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }}>
-          <InputGroup compact size="large">
+        <InputGroup compact size="large">
           {getFieldDecorator('option', { initialValue: '1' })(
-              <Select defaultValue="1" style={{ width: '80px' }}>
-                <Option value="1">推广人</Option>
-                <Option value="2">APP</Option>
-              </Select>
+            <Select defaultValue="1" style={{ width: '80px' }}>
+              <Option value="1">推广人</Option>
+              <Option value="2">APP</Option>
+            </Select>
           )}
           {getFieldDecorator('extension')(
             <Search style={{ width: '50%' }} placeholder="按推广条件搜索" size="large" onSearch={handleSubmit} />
           )}
-          </InputGroup>
+        </InputGroup>
       </Col>
       <Col {...TwoColProps} xl={{ span: 5 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>

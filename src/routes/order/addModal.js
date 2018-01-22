@@ -1,6 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { message, Form, Input, InputNumber, Modal, Radio, Select, Row, Col, Button } from 'antd'
+import {
+  // message,
+  Form,
+  Input,
+  // InputNumber,
+  Modal,
+  Radio,
+  Select,
+  Row,
+  Col,
+  Button
+} from 'antd'
 import styles from './Modal.less'
 import classnames from 'classnames'
 
@@ -62,14 +73,14 @@ const addModal = ({
       onOk(data)
     })
   }
-  const countryChange = async function (e) {
-    await getProvince(e)
-    setFieldsValue({
-      senderProv: undefined,
-      senderCity: undefined,
-      senderCounty: undefined,
-    })
-  }
+  // const countryChange = async function (e) {
+  //   await getProvince(e)
+  //   setFieldsValue({
+  //     senderProv: undefined,
+  //     senderCity: undefined,
+  //     senderCounty: undefined,
+  //   })
+  // }
 
   const provinceChange = async function (e) {
     await getCity(e)
@@ -180,7 +191,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="是否退件" hasFeedback {...formItemLayout}>
           {getFieldDecorator('returnGood', {
-            initialValue: item.RETURN_GOOD,
+            // initialValue: item.RETURN_GOOD,
             initialValue: 0,
             rules: [
               {
@@ -419,6 +430,28 @@ addModal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  selectNation: PropTypes.array,
+  selectProvince: PropTypes.array,
+  selectCity: PropTypes.array,
+  selectCounty: PropTypes.array,
+  provinceDis: PropTypes.bool,
+  cityDis: PropTypes.bool,
+  districtDis: PropTypes.bool,
+  getCountry: PropTypes.func,
+  getProvince: PropTypes.func,
+  getCity: PropTypes.func,
+  getCounty: PropTypes.func,
+  selectParcelType: PropTypes.array,
+  selectProductType: PropTypes.array,
+  parcelDis: PropTypes.bool,
+  productDis: PropTypes.bool,
+  getParcelType: PropTypes.func,
+  getProductType: PropTypes.func,
+  selectWeChatUser: PropTypes.array,
+  getIntlPrice: PropTypes.func,
+  intlPrice: PropTypes.string,
+  setInsuredVisiable: PropTypes.array,
+  insuredVisiable: PropTypes.bool,
 }
 
 export default Form.create()(addModal)

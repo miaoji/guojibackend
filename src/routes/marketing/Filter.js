@@ -1,12 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
-import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Modal } from 'antd'
-import city from '../../utils/city'
+// import moment from 'moment'
+// import { FilterItem } from '../../components'
+import {
+  Form,
+  Button,
+  Row,
+  Col,
+  // DatePicker,
+  Input,
+  // Cascader,
+  // Switch,
+  Modal
+} from 'antd'
+// import city from '../../utils/city'
 
 const Search = Input.Search
-const { RangePicker } = DatePicker
+// const { RangePicker } = DatePicker
 const confirm = Modal.confirm
 
 const ColProps = {
@@ -66,13 +76,16 @@ const Filter = ({
     handleSubmit()
   }
 
-  const handleChange = (key, values) => {
-    let fields = getFieldsValue()
-    fields[key] = values
-    fields = handleFields(fields)
-    onFilterChange(fields)
-  }
-  const { name, address } = filter
+  // const handleChange = (key, values) => {
+  //   let fields = getFieldsValue()
+  //   fields[key] = values
+  //   fields = handleFields(fields)
+  //   onFilterChange(fields)
+  // }
+  const {
+    name,
+    // address
+  } = filter
 
   return (
     <Row gutter={24}>
