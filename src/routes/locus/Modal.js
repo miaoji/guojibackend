@@ -1,13 +1,10 @@
-/*
- * 修改状态Modal
- */
-
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Select, Modal } from 'antd'
-import { screen } from '../../utils'
+import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
+import city from '../../utils/city'
 
 const FormItem = Form.Item
+const TextArea = Input
 
 const formItemLayout = {
   labelCol: {
@@ -18,9 +15,7 @@ const formItemLayout = {
   },
 }
 
-const realtext = screen.orderStateByNum
-
-const stateModal = ({
+const modal = ({
   item = {},
   onOk,
   form: {
@@ -28,6 +23,7 @@ const stateModal = ({
     validateFields,
     getFieldsValue,
   },
+  type,
   ...modalProps
 }) => {
   const handleOk = () => {
@@ -48,51 +44,45 @@ const stateModal = ({
     onOk: handleOk,
   }
 
+  const paramDisabled = type === 'update'
+
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="订单号" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('orderNo', {
-            initialValue: item.ORDER_NO,
+        <FormItem label="按钮名称" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('name', {
+            initialValue: item.name,
             rules: [
               {
                 required: true,
-                message: '请输入订单号!',
+                // pattern: /^[\u4e00-\u9fa5]{0,}$/,
+                message: '请输入按钮名称!',
               },
             ],
-          })(<Input disabled />)}
+          })(<Input />)}
         </FormItem>
-        <FormItem label="状态" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('state', {
-            initialValue: realtext[item.STATUS],
+        <FormItem label="地址" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('url', {
+            initialValue: item.url,
             rules: [
               {
                 required: true,
-                message: '请输入补价金额!',
+                // pattern: /^[\u4e00-\u9fa5]{0,}$/,
+                message: '请输入url地址!',
               },
             ],
-          })(
-            <Select>
-              <Option value="1">待付款</Option>
-              <Option value="2">付款完成</Option>
-            </Select>
-          )}
+          })(<Input />)}
         </FormItem>
       </Form>
     </Modal>
   )
 }
 
-// <Option value="3">国内完成</Option>
-// <Option value="4">国际完成</Option>
-// <Option value="5">异常订单</Option>
-// <Option value="6">取消订单</Option>
-
-stateModal.propTypes = {
+modal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
 }
 
-export default Form.create()(stateModal)
+export default Form.create()(modal)

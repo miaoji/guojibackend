@@ -47,7 +47,8 @@ export default modelExtend(pageModel, {
     selectWeChatUser: [],
 
     insuredVisiable: true,
-    intlPrice: '待查询'
+    intlPrice: '待查询',
+    locusModalVisible: false
   },
 
   subscriptions: {
@@ -100,6 +101,11 @@ export default modelExtend(pageModel, {
     },
 
     *createorder({ payload }, { call, put }) {
+      if (payload.modalType === 'bengal') {
+        payload.orderType = 4
+      } else {
+        payload.orderType = 1
+      }
       delete payload.packageType
       delete payload.productType
 
@@ -118,7 +124,7 @@ export default modelExtend(pageModel, {
       payload.totalFee = Number(payload.totalFee) * 100
       payload.type = 0
       payload.status = 1
-      payload.orderType = 1
+      // payload.orderType = 1
       payload.orderItems = '[]'
       const data = yield call(createOrder, payload)
       if (data.code === 200) {
@@ -581,6 +587,14 @@ export default modelExtend(pageModel, {
 
     hideInsured(state) {
       return { ...state, insuredVisiable: false }
+    },
+
+    showLocusModal(state, { payload }) {
+      return { ...state, ...payload, locusModalVisible: true }
+    },
+
+    hideLocusModal(state) {
+      return { ...state, locusModalVisible: false }
     }
 
   }

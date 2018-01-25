@@ -1,11 +1,12 @@
 /*
- * 修改状态Modal
+ * 创建轨迹Modal
  */
 
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, Select, Modal } from 'antd'
 import { screen } from '../../utils'
+// import classnames from 'classnames'
 
 const FormItem = Form.Item
 
@@ -20,7 +21,7 @@ const formItemLayout = {
 
 const realtext = screen.orderStateByNum
 
-const stateModal = ({
+const locusModal = ({
   item = {},
   onOk,
   form: {
@@ -76,23 +77,18 @@ const stateModal = ({
               <Option value="1">待付款</Option>
               <Option value="2">付款完成</Option>
             </Select>
-          )}
+            )}
         </FormItem>
       </Form>
     </Modal>
   )
 }
 
-// <Option value="3">国内完成</Option>
-// <Option value="4">国际完成</Option>
-// <Option value="5">异常订单</Option>
-// <Option value="6">取消订单</Option>
-
-stateModal.propTypes = {
+locusModal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
 }
 
-export default Form.create()(stateModal)
+export default Form.create()(locusModal)

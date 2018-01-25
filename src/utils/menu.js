@@ -23,6 +23,12 @@ module.exports = [
     icon: 'tag',
     router: '/order',
   }, {
+    id: 311,
+    bpid: 31,
+    mpid: -1,
+    name: '订单轨迹管理',
+    router: '/locus',
+  }, {
     id: 32,
     bpid: 1,
     mpid: 3,

@@ -9,6 +9,7 @@ import Modal from './Modal'
 import BootModal from './bootModal'
 import AddModal from './addModal'
 import StateModal from './stateModal'
+import LocusModal from './locusModal'
 
 const Order = ({ location, dispatch, order, loading }) => {
   const {
@@ -39,9 +40,17 @@ const Order = ({ location, dispatch, order, loading }) => {
     selectWeChatUser,
     intlPrice,
     insuredVisiable,
+    locusModalVisible,
   } = order
   // const { pageSize } = pagination
-
+  let addTitle = ''
+  if (modalType === 'create') {
+    addTitle = '创建订单'
+  } else if (modalType === 'bengal') {
+    addTitle = '创建孟加拉订单'
+  } else {
+    addTitle = '修改订单'
+  }
   // 订单创建的modal
   const addModelProps = {
     type: modalType,
@@ -49,7 +58,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     maskClosable: false,
     visible: addModalVisible,
     confirmLoading: loading.effects['order/create'],
-    title: modalType === 'create' ? '创建订单' : '修改订单',
+    title: addTitle,
     wrapClassName: 'vertical-center-modal',
     selectNation,
     selectProvince,
@@ -123,8 +132,8 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
     onOk(data) {
       dispatch({
-        type: `order/${modalType}order`,
-        payload: data,
+        type: `order/${modalType === 'update' ? 'update' : 'create'}order`,
+        payload: { ...data, modalType }
       })
     },
     onCancel() {
@@ -204,6 +213,29 @@ const Order = ({ location, dispatch, order, loading }) => {
     }
   }
 
+  // 改状态modal
+  const locusModalProps = {
+    type: modalType,
+    item: currentItem,
+    visible: locusModalVisible,
+    confirmLoading: loading.effects['order/update'],
+    title: '修改状态',
+    wrapClassName: 'vertical-center-modal',
+    onOk(data) {
+      // alert('你是想提交吗')
+      console.log('data', data)
+      // dispatch({
+      //   type: 'order/updateState',
+      //   payload: data
+      // })
+    },
+    onCancel() {
+      dispatch({
+        type: 'order/hideLocusModal'
+      })
+    }
+  }
+
   const listProps = {
     filter: {
       ...location.query
@@ -259,6 +291,16 @@ const Order = ({ location, dispatch, order, loading }) => {
           currentItem: item,
         }
       })
+    },
+    showLocusModal(item) {
+      console.log('item', item)
+      // window.open('/locus?orderType=2')
+      dispatch(routerRedux.push({
+        pathname: `/locus?orderType=${item.ID}`,
+        // query: {
+        //   orderType: item.id
+        // }
+      }))
     },
     showStateModal(item) {
       dispatch({
@@ -327,6 +369,18 @@ const Order = ({ location, dispatch, order, loading }) => {
         },
       })
     },
+    onBengalAdd() {
+      dispatch({ type: 'order/getCountry' })
+      dispatch({ type: 'order/getProvince' })
+      dispatch({ type: 'order/getWeChatUser' })
+      dispatch({
+        type: 'order/showAddModal',
+        payload: {
+          modalType: 'bengal',
+          currentItem: {}
+        },
+      })
+    },
     switchIsMotion() {
       dispatch({ type: 'order/switchIsMotion' })
     },
@@ -349,6 +403,7 @@ const Order = ({ location, dispatch, order, loading }) => {
       {bootModalVisible && <BootModal {...bootModalProps} />}
       {stateModalVisible && <StateModal {...stateModalProps} />}
       {addModalVisible && <AddModal {...addModelProps} />}
+      {locusModalVisible && <LocusModal {...locusModalProps} />}
     </div>
   )
 }

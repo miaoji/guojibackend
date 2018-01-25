@@ -367,12 +367,12 @@ const addModal = ({
           })(<Input placeholder="请输入收件人地址邮编!" />)}
         </FormItem>
         <hr className={classnames({ [styles.hr]: true })} />
-        <div style={{ display: (type === 'update' && selectParcelType.length !== 0 || type === 'create') ? 'block' : 'none' }}>
+        <div style={{ display: (type === 'update' && selectParcelType.length !== 0 || type === 'create' !== 0 || type === 'bengal') ? 'block' : 'none' }}>
           <FormItem label="物品(包裹)类型" hasFeedback {...formItemLayout}>
             {getFieldDecorator('packageType', {
               rules: [
                 {
-                  required: (type === 'update' && selectParcelType.length !== 0 || type === 'create'),
+                  required: (type === 'update' && selectParcelType.length !== 0 || type === 'create' !== 0 || type === 'bengal'),
                   message: '请选择物品类型!',
                 },
               ],
@@ -382,7 +382,7 @@ const addModal = ({
             {getFieldDecorator('productType', {
               rules: [
                 {
-                  required: (type === 'update' && selectParcelType.length !== 0 || type === 'create'),
+                  required: (type === 'update' && selectParcelType.length !== 0 || type === 'create' !== 0 || type === 'bengal'),
                   message: '请选择产品类型!',
                 },
               ],
@@ -402,7 +402,7 @@ const addModal = ({
             {getFieldDecorator('totalFee', {
               rules: [
                 {
-                  required: (type === 'update' && selectParcelType.length !== 0 || type === 'create'),
+                  required: (type === 'update' && selectParcelType.length !== 0 || type === 'create' !== 0 || type === 'bengal'),
                   message: '请输入运费价值!',
                 },
               ]

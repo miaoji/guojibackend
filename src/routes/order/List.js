@@ -13,7 +13,7 @@ const confirm = Modal.confirm
 const orderState = screen.orderStateByNum
 const orderStateArr = screen.orderStateByArr
 
-const List = ({ filter, onDeleteItem, onEditItem, addBoot, showStateModal, updateOrderInfo, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
+const List = ({ filter, onDeleteItem, showLocusModal, onEditItem, addBoot, showStateModal, updateOrderInfo, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -22,7 +22,7 @@ const List = ({ filter, onDeleteItem, onEditItem, addBoot, showStateModal, updat
       case '2':
         confirm({
           title: '确定要删除这一订单吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.ID)
           },
         })
@@ -39,6 +39,9 @@ const List = ({ filter, onDeleteItem, onEditItem, addBoot, showStateModal, updat
       case '6':
         updateOrderInfo(record)
         break
+      case '7':
+        showLocusModal(record)
+        break
       default:
         break
     }
@@ -47,7 +50,7 @@ const List = ({ filter, onDeleteItem, onEditItem, addBoot, showStateModal, updat
   const handleCreateZtorder = (record) => {
     confirm({
       title: '确定要发送中通订单吗?',
-      onOk () {
+      onOk() {
         onCreateCtorder(record)
       },
     })
@@ -121,7 +124,7 @@ const List = ({ filter, onDeleteItem, onEditItem, addBoot, showStateModal, updat
           </Button>)
         }
         return (<Button type="primary" size="default" ghost disabled>
-            发送
+          发送
         </Button>)
       },
     }, {
@@ -129,7 +132,25 @@ const List = ({ filter, onDeleteItem, onEditItem, addBoot, showStateModal, updat
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '5', name: '修改状态' }, { key: '1', name: '发往国外' }, { key: '6', name: '修改订单' }, { key: '3', name: '补价处理' }, { key: '4', name: '补价记录' }, { key: '2', name: '删除订单' }]} />
+        if (record.ORDER_TYPE === 4) {
+          return (<DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[
+            { key: '5', name: '修改状态' },
+            { key: '1', name: '发往国外' },
+            { key: '6', name: '修改订单' },
+            { key: '3', name: '补价处理' },
+            { key: '4', name: '补价记录' },
+            { key: '2', name: '删除订单' },
+            { key: '7', name: '快递轨迹' }
+          ]} />)
+        }
+        return (<DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[
+          { key: '5', name: '修改状态' },
+          { key: '1', name: '发往国外' },
+          { key: '6', name: '修改订单' },
+          { key: '3', name: '补价处理' },
+          { key: '4', name: '补价记录' },
+          { key: '2', name: '删除订单' }
+        ]} />)
       },
     },
   ]

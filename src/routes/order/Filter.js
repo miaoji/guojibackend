@@ -33,6 +33,7 @@ const TwoColProps = {
 
 const Filter = ({
   onAdd,
+  onBengalAdd,
   // isMotion,
   // switchIsMotion,
   onFilterChange,
@@ -105,7 +106,12 @@ const Filter = ({
     const newStarte = e.target.value
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    fields.status = newStarte
+    if (newStarte === '8') {
+      fields.orderType = 4
+      delete fields.status
+    } else {
+      fields.status = newStarte
+    }
     // 如果查询的订单状态为全部即status==6,则不向后端传递status参数
     if (Number(newStarte) === 0) {
       delete fields.status
@@ -150,7 +156,7 @@ const Filter = ({
           )}
         </InputGroup>
       </Col>
-      <Col {...TwoColProps} xl={{ span: 5 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
@@ -158,6 +164,9 @@ const Filter = ({
           </div>
           <div style={{ display: 'block' }}>
             <Button size="large" type="ghost" onClick={onAdd}>创建订单</Button>
+          </div>
+          <div style={{ display: 'block' }}>
+            <Button size="large" type="ghost" onClick={onBengalAdd}>创建孟加拉订单</Button>
           </div>
         </div>
       </Col>
@@ -173,6 +182,7 @@ const Filter = ({
               <RadioButton value="5">异常订单</RadioButton>
               <RadioButton value="6">取消订单</RadioButton>
               <RadioButton value="7">国际快递已发货</RadioButton>
+              <RadioButton value="8">孟加拉订单</RadioButton>
             </RadioGroup>)}
         </div>
       </Col>
@@ -182,6 +192,7 @@ const Filter = ({
 
 Filter.propTypes = {
   onAdd: PropTypes.func,
+  onBengalAdd: PropTypes.func,
   isMotion: PropTypes.bool,
   switchIsMotion: PropTypes.func,
   form: PropTypes.object,

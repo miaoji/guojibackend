@@ -54,8 +54,10 @@ export default {
             data: detailDate,
           },
         })
+      } else {
+        throw data.msg
       }
-      throw data.msg
+      return false
     },
   },
 

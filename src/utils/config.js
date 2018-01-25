@@ -199,6 +199,13 @@ module.exports = {
       all: `${APIV3}/api/withdrawalsRecord/index`,
       update: `${APIV3}/api/withdrawalsRecord/modById`,
       refuse: `${APIV3}/api/withdrawalsRecord/refuseById`
+    },
+    // 路由轨迹的增删改查
+    locus: {
+      all: `${APIV3}/api/route/getByOrderId`,
+      create: `${APIV3}/api/route/add`,
+      update: `${APIV3}/api/route/modById`,
+      hide: `${APIV3}/api/route/delById`,
     }
   }
 }
