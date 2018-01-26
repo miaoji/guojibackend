@@ -2,12 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Modal } from 'antd'
-import city from '../../utils/city'
+import { Form, Button, Row, Col, DatePicker, Input } from 'antd'
+// import city from '../../utils/city'
 
 const Search = Input.Search
 const { RangePicker } = DatePicker
-const confirm = Modal.confirm
 
 const ColProps = {
   xs: 24,
@@ -24,7 +23,6 @@ const TwoColProps = {
 
 const Filter = ({
   onAdd,
-  onSubmitWeChat,
   onFilterChange,
   filter,
   form: {
@@ -33,14 +31,6 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
-  const onSubmit = () => {
-    confirm({
-      title: '确定要提交到微信吗?',
-      onOk () {
-        onSubmitWeChat()
-      },
-    })
-  }
   const handleFields = (fields) => {
     const { createTime } = fields
     if (createTime.length) {
@@ -76,7 +66,7 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-  const { name, address } = filter
+  const { name } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -105,9 +95,6 @@ const Filter = ({
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
           <div style={{ display: 'block' }}>
-            <Button size="large" type="ghost" onClick={onSubmit}>更新到微信</Button>
-          </div>
-          <div style={{ display: 'block' }}>
             <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
           </div>
         </div>
@@ -118,7 +105,6 @@ const Filter = ({
 
 Filter.propTypes = {
   onAdd: PropTypes.func,
-  onSubmitWeChat: PropTypes.func,
   switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,

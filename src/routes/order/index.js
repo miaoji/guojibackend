@@ -293,13 +293,11 @@ const Order = ({ location, dispatch, order, loading }) => {
       })
     },
     showLocusModal(item) {
-      console.log('item', item)
-      // window.open('/locus?orderType=2')
       dispatch(routerRedux.push({
-        pathname: `/locus?orderType=${item.ID}`,
-        // query: {
-        //   orderType: item.id
-        // }
+        pathname: '/locus',
+        query: {
+          orderId: item.ID
+        }
       }))
     },
     showStateModal(item) {

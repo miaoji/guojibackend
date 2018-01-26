@@ -1,15 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message, Button } from 'antd'
+import { Table, Modal } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { time } from '../../utils'
-import { Link } from 'dva/router'
+// import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
-// const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
 
 const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
@@ -30,25 +29,18 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     }
   }
 
-  const copyUrl = (record, e) => {
-    const href = `http://www.mingz-tech.com/wechat/#/send?appid=${record.appid}`
-    let temp = window.prompt('使用Ctrl+C复制到剪切板', href)
-    temp.select()
-    document.execCommand('copy', false)
-  }
-
   const columns = [
     {
-      title: '按钮名称',
-      dataIndex: 'name',
-      key: 'name',
-      render: (text, record) => {
-        return <Link to={`/wxmenudetail?parentId=${record.id}`}>{text}</Link>
-      },
+      title: '路由信息',
+      dataIndex: 'route',
+      key: 'route',
     }, {
-      title: 'URL地址',
-      dataIndex: 'url',
-      key: 'url',
+      title: '路由时间',
+      dataIndex: 'routeTime',
+      key: 'routeTime',
+      render: (text) => {
+        return <span>{time.formatTime(text)}</span>
+      }
     }, {
       title: '操作',
       key: 'operation',

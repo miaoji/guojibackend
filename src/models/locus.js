@@ -13,7 +13,7 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         console.log('sss')
         console.log('location', location)
@@ -30,11 +30,13 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
-      console.log('payload', payload)
-      const parentId = '0'
-      const newPayload = { ...payload, parentId }
-      const data = yield call(query, newPayload)
+    *query({ payload = {} }, { call, put }) {
+      if (payload.orderId) {
+        window.sessionStorage.orderId = payload.orderId
+      } else {
+        payload.orderId = window.sessionStorage.orderId
+      }
+      const data = yield call(query, payload)
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -52,14 +54,12 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
-      const newPayload = {
-        url: payload.url,
-        name: payload.name,
-        type: 'view',
-        parentId: '0',
-      }
-      const data = yield call(create, newPayload)
+    *create({ payload }, { call, put }) {
+      console.log('payload', payload)
+      payload.routeTime = payload.routeTime._d.getTime()
+      payload.orderInfoId = Number(window.sessionStorage.orderId)
+      console.log('payload', payload)
+      const data = yield call(create, payload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.msg)
@@ -69,14 +69,11 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
+    *update({ payload }, { select, call, put }) {
       const id = yield select(({ locus }) => locus.currentItem.id)
-      const newPayload = {
-        url: payload.url,
-        name: payload.name,
-        id,
-      }
-      const data = yield call(update, newPayload)
+      payload.routeTime = payload.routeTime._d.getTime()
+      console.log('payload', payload)
+      const data = yield call(update, { ...payload, id })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('修改成功')
@@ -86,7 +83,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put }) {
+    *'delete'({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')
@@ -96,7 +93,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *setmenu ({ payload }, { call, put }) {
+    *setmenu({ payload }, { call, put }) {
       const data = yield call(setmenu)
       if (data.code === 200) {
         message.success('设置微信菜单成功')
@@ -110,11 +107,11 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 

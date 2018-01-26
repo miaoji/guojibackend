@@ -14,7 +14,7 @@ export async function create (params) {
   return request({
     url: locus.create,
     method: 'post',
-    params,
+    data: [params],
   })
 }
 
@@ -22,7 +22,7 @@ export async function update (params) {
   return request({
     url: locus.update,
     method: 'post',
-    params,
+    data: params
   })
 }
 

@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
-import city from '../../utils/city'
+import { Form, Input, Modal, DatePicker } from 'antd'
+import moment from 'moment'
 
 const FormItem = Form.Item
-const TextArea = Input
 
 const formItemLayout = {
   labelCol: {
@@ -38,40 +37,49 @@ const modal = ({
       onOk(data)
     })
   }
-
+  const onChange = (value, dateString) => {
+    console.log('这是value', value._d.getTime())
+    console.log('这是另一个时间', dateString)
+  }
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,
   }
 
-  const paramDisabled = type === 'update'
-
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="按钮名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name', {
-            initialValue: item.name,
+        <FormItem label="路由信息" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('route', {
+            initialValue: item.route,
             rules: [
               {
                 required: true,
                 // pattern: /^[\u4e00-\u9fa5]{0,}$/,
-                message: '请输入按钮名称!',
+                message: '请输入路由信息!',
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入路由信息" />)}
         </FormItem>
-        <FormItem label="地址" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('url', {
-            initialValue: item.url,
+        <FormItem label="路由时间" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('routeTime', {
+            initialValue: moment(item.routeTime),
             rules: [
               {
                 required: true,
                 // pattern: /^[\u4e00-\u9fa5]{0,}$/,
-                message: '请输入url地址!',
+                message: '请选择路由时间!',
               },
             ],
-          })(<Input />)}
+          })(<DatePicker
+            showTime
+            defaultValue={moment(item.routeTime)}
+            format="YYYY-MM-DD HH:mm:ss"
+            placeholder="请选择路由时间"
+            style={{ width: '100%' }}
+            onChange={onChange}
+            // onOk={onOk}
+          />)}
         </FormItem>
       </Form>
     </Modal>
