@@ -61,9 +61,7 @@ export default modelExtend(pageModel, {
 
     *create ({ payload }, { call, put }) {
       payload.consumptionRatio = payload.consumptionRatio / 100
-      console.log('consumptionRatioSecond', payload.consumptionRatioSecond)
       payload.consumptionRatioSecond = Number(payload.consumptionRatioSecond) / 100
-      console.log('consumptionRatioSecond', payload.consumptionRatioSecond)
       payload.spreadConsumption = payload.spreadConsumption * 100
       const data = yield call(create, payload)
       if (data.success && data.code === 200) {
@@ -76,10 +74,8 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      console.log('consumptionRatioSecond', payload.consumptionRatioSecond)
       payload.consumptionRatio = payload.consumptionRatio / 100
       payload.consumptionRatioSecond = payload.consumptionRatioSecond / 100
-      console.log('consumptionRatioSecond', payload.consumptionRatioSecond)
       payload.spreadConsumption = payload.spreadConsumption * 100
       const id = yield select(({ grade }) => grade.currentItem.id)
       const data = yield call(update, { ...payload, id })

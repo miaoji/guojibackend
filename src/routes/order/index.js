@@ -221,14 +221,13 @@ const Order = ({ location, dispatch, order, loading }) => {
     confirmLoading: loading.effects['order/update'],
     title: '修改状态',
     wrapClassName: 'vertical-center-modal',
-    onOk(data) {
-      // alert('你是想提交吗')
-      console.log('data', data)
-      // dispatch({
-      //   type: 'order/updateState',
-      //   payload: data
-      // })
-    },
+    // onOk(data) {
+    //   // alert('你是想提交吗')
+    //   // dispatch({
+    //   //   type: 'order/updateState',
+    //   //   payload: data
+    //   // })
+    // },
     onCancel() {
       dispatch({
         type: 'order/hideLocusModal'

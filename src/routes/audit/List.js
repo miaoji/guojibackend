@@ -72,8 +72,6 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       ],
       filterMultiple: false,
       onFilter: (value, record) => {
-        // console.log('record', record)
-        // console.log('value', record.status.toString().indexOf(value.toString()))
         return record.status.toString().indexOf(value.toString()) === 0
       },
       render: (text) => {

@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove, query, setmenu } from '../services/locus'
+import { create, update, remove, query } from '../services/locus'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -10,15 +10,13 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    locusDate: [],
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        console.log('sss')
-        console.log('location', location)
         if (location.pathname === '/locus') {
-          console.log('ssssss')
           dispatch({
             type: 'query',
             payload: location.query,
@@ -55,13 +53,26 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      console.log('payload', payload)
-      payload.routeTime = payload.routeTime._d.getTime()
       payload.orderInfoId = Number(window.sessionStorage.orderId)
-      console.log('payload', payload)
-      const data = yield call(create, payload)
+      let locusDateInfo = null
+      if (payload.locusDate.length !== 0) {
+        locusDateInfo = payload.locusDate.map((item) => {
+          return { ...item, orderInfoId: Number(window.sessionStorage.orderId) }
+        })
+      } else {
+        payload.routeTime = payload.routeTime._d.getTime()
+        delete payload.locusDate
+        locusDateInfo = [payload]
+      }
+      const data = yield call(create, locusDateInfo)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
+        yield put({
+          type: 'setStates',
+          payload: {
+            locusDate: []
+          }
+        })
         message.success(data.msg)
         yield put({ type: 'query' })
       } else {
@@ -72,7 +83,7 @@ export default modelExtend(pageModel, {
     *update({ payload }, { select, call, put }) {
       const id = yield select(({ locus }) => locus.currentItem.id)
       payload.routeTime = payload.routeTime._d.getTime()
-      console.log('payload', payload)
+      delete payload.locusDate
       const data = yield call(update, { ...payload, id })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -93,26 +104,29 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *setmenu({ payload }, { call, put }) {
-      const data = yield call(setmenu)
-      if (data.code === 200) {
-        message.success('设置微信菜单成功')
-        yield put({ type: 'query' })
-      } else {
-        throw data.msg || data
-      }
+    *setLocusData({ payload }, { put }) {
+      yield put({
+        type: 'setStates',
+        payload: {
+          locusDate: payload,
+        },
+      })
     },
 
   },
 
   reducers: {
 
+    setStates(state, { payload }) {
+      return { ...state, ...payload }
+    },
+
     showModal(state, { payload }) {
-      return { ...state, ...payload, modalVisible: true }
+      return { ...state, ...payload, modalVisible: true, locusDate: [] }
     },
 
     hideModal(state) {
-      return { ...state, modalVisible: false }
+      return { ...state, modalVisible: false, locusDate: [] }
     },
 
   },

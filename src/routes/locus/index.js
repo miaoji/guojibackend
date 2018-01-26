@@ -2,15 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
 const Locus = ({ location, dispatch, locus, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType } = locus
+  const { list, pagination, currentItem, modalVisible, locusDate, modalType } = locus
   const { pageSize } = pagination
-
   const modalProps = {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
@@ -18,17 +16,24 @@ const Locus = ({ location, dispatch, locus, loading }) => {
     confirmLoading: loading.effects['boot/update'],
     title: `${modalType === 'create' ? '新增微信菜单配置' : '修改微信菜单配置'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    locusDate,
+    onOk(data) {
       dispatch({
         type: `locus/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'locus/hideModal',
       })
     },
+    onSetLocusData(payload) {
+      dispatch({
+        type: 'locus/setLocusData',
+        payload
+      })
+    }
   }
 
   const listProps = {
@@ -36,7 +41,7 @@ const Locus = ({ location, dispatch, locus, loading }) => {
     loading: loading.effects['locus/query'],
     pagination,
     location,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -47,13 +52,13 @@ const Locus = ({ location, dispatch, locus, loading }) => {
         },
       }))
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'locus/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'locus/showModal',
         payload: {
@@ -68,7 +73,7 @@ const Locus = ({ location, dispatch, locus, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -78,7 +83,7 @@ const Locus = ({ location, dispatch, locus, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/locus',
         query: {
@@ -89,7 +94,7 @@ const Locus = ({ location, dispatch, locus, loading }) => {
         pathname: '/locus',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'locus/showModal',
         payload: {
@@ -97,24 +102,15 @@ const Locus = ({ location, dispatch, locus, loading }) => {
         },
       })
     },
-    onSubmitWeChat () {
+    onSubmitWeChat() {
       dispatch({
         type: 'locus/setmenu',
       })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'locus/switchIsMotion' })
     },
   }
-
-  // const handleDeleteItems = () => {
-  //   dispatch({
-  //     type: 'locus/multiDelete',
-  //     payload: {
-  //       ids: selectedRowKeys,
-  //     },
-  //   })
-  // }
 
   return (
     <div className="content-inner">
@@ -130,6 +126,7 @@ Locus.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  locusDate: PropTypes.array
 }
 
 export default connect(({ locus, loading }) => ({ locus, loading }))(Locus)
