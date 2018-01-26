@@ -134,13 +134,13 @@ const List = ({ filter, onDeleteItem, showLocusModal, onEditItem, addBoot, showS
       render: (text, record) => {
         if (record.ORDER_TYPE === 4) {
           return (<DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[
+            { key: '7', name: '快递轨迹' },
             { key: '5', name: '修改状态' },
             { key: '1', name: '发往国外' },
             { key: '6', name: '修改订单' },
             { key: '3', name: '补价处理' },
             { key: '4', name: '补价记录' },
             { key: '2', name: '删除订单' },
-            { key: '7', name: '快递轨迹' }
           ]} />)
         }
         return (<DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[
