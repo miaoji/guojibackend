@@ -1,8 +1,8 @@
 import { request, config } from '../utils'
 const { api } = config
-const { order } = api
+const { order, locus } = api
 
-export async function query (params) {
+export async function query(params) {
   return request({
     url: order.show,
     method: 'get',
@@ -10,7 +10,7 @@ export async function query (params) {
   })
 }
 
-export async function create (params) {
+export async function create(params) {
   return request({
     url: order.create,
     method: 'post',
@@ -18,7 +18,7 @@ export async function create (params) {
   })
 }
 
-export async function createOrder (params) {
+export async function createOrder(params) {
   return request({
     url: order.add,
     method: 'post',
@@ -26,7 +26,7 @@ export async function createOrder (params) {
   })
 }
 
-export async function remove (params) {
+export async function remove(params) {
   return request({
     url: order.hide,
     method: 'delete',
@@ -35,7 +35,7 @@ export async function remove (params) {
 }
 
 // 修改订单
-export async function update (params) {
+export async function update(params) {
   return request({
     url: order.mod,
     method: 'post',
@@ -44,7 +44,7 @@ export async function update (params) {
 }
 
 // 新增国内(中通)订单
-export async function createChinaOrder (params) {
+export async function createChinaOrder(params) {
   return request({
     url: order.createChinaOrder,
     method: 'post',
@@ -53,7 +53,7 @@ export async function createChinaOrder (params) {
 }
 
 // 动态获取国际段快递公司
-export async function getKdCompany (params) {
+export async function getKdCompany(params) {
   return request({
     url: order.getKdCompany,
     method: 'get',
@@ -61,7 +61,7 @@ export async function getKdCompany (params) {
   })
 }
 // 获取orderdetail页面信息
-export async function getOrderInfo (params) {
+export async function getOrderInfo(params) {
   return request({
     url: order.getOrderInfo,
     method: 'get',
@@ -70,7 +70,7 @@ export async function getOrderInfo (params) {
 }
 
 // 根据订单号获取快件信息
-export async function getOrderInfoByOrderNo (params) {
+export async function getOrderInfoByOrderNo(params) {
   return request({
     url: order.getOrderInfoByOrderNo,
     method: 'get',
@@ -79,7 +79,7 @@ export async function getOrderInfoByOrderNo (params) {
 }
 
 // 根据订单号获取快递信息
-export async function queryByCompany (params) {
+export async function queryByCompany(params) {
   return request({
     url: order.queryByCompany,
     method: 'get',
@@ -88,10 +88,18 @@ export async function queryByCompany (params) {
 }
 
 // 根据传参查询预付款金额
-export async function getIntlPrice (params) {
+export async function getIntlPrice(params) {
   return request({
     url: order.getIntlPrice,
     method: 'get',
     params,
+  })
+}
+
+export async function getOrderXnLocus(params) {
+  return request({
+    url: locus.all,
+    method: 'get',
+    params
   })
 }

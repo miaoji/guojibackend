@@ -1,4 +1,4 @@
-import { getOrderInfo, queryByCompany } from '../../services/order'
+import { getOrderInfo, queryByCompany, getOrderXnLocus } from '../../services/order'
 
 export default {
 
@@ -29,6 +29,12 @@ export default {
       // 获取快递信息(开始)
       // 未查询到数据的时候 data返回的code也是200,但是没有obj
       if (data.code === 200 && data.obj) {
+        if (data.obj.orderType && data.obj.orderType === 4) {
+          const xnInfo = yield call(getOrderXnLocus, { orderId: data.obj.id })
+          if (xnInfo.code === 200) {
+            detailDate.xnExpressInfo = xnInfo.obj
+          }
+        }
         if (data.obj.cnNo) {
           const cnInfo = yield call(queryByCompany, { num: data.obj.cnNo || '', company: data.obj.kdCompanyCodeCn || 'zhongtong', source: 'backend' })
           // 未查询到快递轨迹的时候,返回的code是500
