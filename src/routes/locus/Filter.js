@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input } from 'antd'
+// import { FilterItem } from '../../components'
+import { Form, Button, Row, Col
+  // DatePicker, Input
+} from 'antd'
 // import city from '../../utils/city'
 
-const Search = Input.Search
-const { RangePicker } = DatePicker
+// const Search = Input.Search
+// const { RangePicker } = DatePicker
 
 const ColProps = {
   xs: 24,
@@ -26,14 +28,14 @@ const Filter = ({
   onFilterChange,
   filter,
   form: {
-    getFieldDecorator,
+    // getFieldDecorator,
     getFieldsValue,
     setFieldsValue,
   },
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime.length) {
+    if (createTime && createTime.length) {
       fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
     }
     return fields
@@ -60,13 +62,13 @@ const Filter = ({
     handleSubmit()
   }
 
-  const handleChange = (key, values) => {
-    let fields = getFieldsValue()
-    fields[key] = values
-    fields = handleFields(fields)
-    onFilterChange(fields)
-  }
-  const { name } = filter
+  // const handleChange = (key, values) => {
+  //   let fields = getFieldsValue()
+  //   fields[key] = values
+  //   fields = handleFields(fields)
+  //   onFilterChange(fields)
+  // }
+  // const { name } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
