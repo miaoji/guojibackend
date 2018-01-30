@@ -51,7 +51,7 @@ const Filter = ({
       // extension,
       option
     } = fields
-    if (status === 0) {
+    if (status === '0') {
       delete fields.status
     }
     if (createTime.length) {
