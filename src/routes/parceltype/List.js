@@ -15,7 +15,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       onEditItem(record)
     } else if (e.key === '2') {
       confirm({
-        title: '确定要删除这一条包裹类型吗?',
+        title: '确定要删除吗?',
         onOk () {
           onDeleteItem(record.ID)
         },
