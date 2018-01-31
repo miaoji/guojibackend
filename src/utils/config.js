@@ -6,14 +6,14 @@ let APIV3 = ''
 // 线下地址
 // APIV3 = 'http://192.168.0.231:8077'
 // 线上地址(测试)
-// APIV3 = 'http://api.didalive.net/mzkd'
+APIV3 = 'http://api.didalive.net/mzkd'
 // 正式地址(生产)
-APIV3 = 'http://api.mingz-tech.com'
+// APIV3 = 'http://api.mingz-tech.com'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
-  APIV3 = 'http://api.mingz-tech.com'
-  // APIV3 = 'http://api.didalive.net/mzkd'
+  // APIV3 = 'http://api.mingz-tech.com'
+  APIV3 = 'http://api.didalive.net/mzkd'
 }
 
 module.exports = {
@@ -188,7 +188,8 @@ module.exports = {
       all: `${APIV3}/api/spreadUser/index`, // 查询
       create: `${APIV3}/api/spreadUser/add`, // 新增
       update: `${APIV3}/api/spreadUser/modById`, // 修改
-      hide: `${APIV3}/api/spreadUser/delById` // 删除
+      hide: `${APIV3}/api/spreadUser/delById`, // 删除
+      setPushTime: `${APIV3}/api/quartz/modQuartzTrigger` // 设置推送时间
     },
     // 推广用户列表
     spreaduserlist: {

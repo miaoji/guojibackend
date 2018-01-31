@@ -49,3 +49,11 @@ export async function wxuserInfo () {
     params: { page: 1, rows: 100000 },
   })
 }
+
+export async function setPushTime (params) {
+  return request({
+    url: spreaduser.setPushTime,
+    method: 'post',
+    params
+  })
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
-import { query, create, remove, update, gradeInfo, wxuserInfo } from '../services/spreaduser'
+import { query, create, remove, update, gradeInfo, wxuserInfo, setPushTime } from '../services/spreaduser'
 import { pageModel } from './common'
 
 const Option = Select.Option
@@ -12,6 +12,7 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
+    timeModalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
     isMotion: false,
@@ -181,6 +182,18 @@ export default modelExtend(pageModel, {
       }
     },
 
+    *updatePushTime({ payload }, { call, put, select }) {
+      const spreadUserId = yield select(({ spreaduser }) => spreaduser.currentItem.spreadUserId)
+      const cron = `0 ${payload.pushtime[1]} ${payload.pushtime[0]} * * ? *`
+      const data = yield call(setPushTime, { spreadUserId, cron })
+      console.log('data', data)
+      if (data.code === 200) {
+        message.success(data.msg)
+        yield put({ type: 'query' })
+        yield put({ type: 'hideTimeModal' })
+      }
+    },
+
     *updateState({ payload }, { put }) {
       if (payload.spreadType && payload.spreadType === 1) {
         yield put({
@@ -229,6 +242,16 @@ export default modelExtend(pageModel, {
     hideModal(state) {
       return {
         ...state, modalVisible: false, spreadTypeDis: true, qrTypeDis: true
+      }
+    },
+
+    showTimeModal(state, { payload }) {
+      return { ...state, ...payload, timeModalVisible: true }
+    },
+
+    hideTimeModal(state) {
+      return {
+        ...state, timeModalVisible: false, spreadTypeDis: true, qrTypeDis: true
       }
     },
 

@@ -10,17 +10,19 @@ import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
-const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({ onDeleteItem, onShowTimeModal, onEditItem, isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
       onEditItem(record)
     } else if (e.key === '2') {
       confirm({
         title: '确定要删除吗?',
-        onOk () {
+        onOk() {
           onDeleteItem(record.spreadUserId)
         },
       })
+    } else if (e.key === '3') {
+      onShowTimeModal(record)
     }
   }
 
@@ -126,7 +128,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '推送时间' }, { key: '2', name: '删除' }]} />
       }
     }
   ]
@@ -159,6 +161,7 @@ List.propTypes = {
   onEditItem: PropTypes.func,
   isMotion: PropTypes.bool,
   location: PropTypes.object,
+  onShowTimeModal: PropTypes.func,
 }
 
 export default List

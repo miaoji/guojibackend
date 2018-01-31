@@ -2,13 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
+// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
+import TimeModal from './TimeModal'
 
 const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
-  const { qrTypeDis, spreadTypeDis, selectGrade, selectWxuser, list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = spreaduser
+  const { timeModalVisible, qrTypeDis, spreadTypeDis, selectGrade, selectWxuser, list, pagination, currentItem, modalVisible, modalType, isMotion } = spreaduser
   const { pageSize } = pagination
 
   const modalProps = {
@@ -23,18 +24,49 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
     spreadTypeDis,
     qrTypeDis,
     modalType,
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: `spreaduser/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'spreaduser/hideModal',
       })
     },
-    handleChange (val) {
+    handleChange(val) {
+      dispatch({
+        type: 'spreaduser/updateState',
+        payload: val,
+      })
+    },
+  }
+  console.log('timeModalVisible', timeModalVisible)
+  const timeModalProps = {
+    item: currentItem,
+    visible: timeModalVisible,
+    maskClosable: false,
+    confirmLoading: loading.effects['spreaduser/update'],
+    title: '修改推送时间',
+    wrapClassName: 'vertical-center-modal',
+    selectWxuser,
+    selectGrade,
+    spreadTypeDis,
+    qrTypeDis,
+    modalType,
+    onOk(data) {
+      dispatch({
+        type: 'spreaduser/updatePushTime',
+        payload: data,
+      })
+    },
+    onCancel() {
+      dispatch({
+        type: 'spreaduser/hideTimeModal',
+      })
+    },
+    handleChange(val) {
       dispatch({
         type: 'spreaduser/updateState',
         payload: val,
@@ -58,6 +90,14 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
           pageSize: page.pageSize,
         },
       }))
+    },
+    onShowTimeModal (item) {
+      dispatch({
+        type: 'spreaduser/showTimeModal',
+        payload: {
+          currentItem: item
+        }
+      })
     },
     onDeleteItem (id) {
       dispatch({
@@ -126,20 +166,12 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
     },
   }
 
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'spreaduser/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
-  }
-
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
+      {timeModalVisible && <TimeModal {...timeModalProps} />}
     </div>
   )
 }
