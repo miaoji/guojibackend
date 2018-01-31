@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
+import { Table, Modal, Button } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -10,7 +10,7 @@ import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
-const List = ({ onDeleteItem, onShowTimeModal, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({ onQuery, onDeleteItem, onShowTimeModal, onEditItem, isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
       onEditItem(record)
@@ -24,6 +24,10 @@ const List = ({ onDeleteItem, onShowTimeModal, onEditItem, isMotion, location, .
     } else if (e.key === '3') {
       onShowTimeModal(record)
     }
+  }
+
+  const handleClick = (text) => {
+    onQuery({ parentId: text })
   }
 
   const columns = [
@@ -121,7 +125,8 @@ const List = ({ onDeleteItem, onShowTimeModal, onEditItem, isMotion, location, .
       dataIndex: 'spreadUserId',
       key: 'spreadUserId',
       render: (text) => {
-        return <a href={`/spreaduserlist?userId=${text}`} target="_blank">点击查看</a>
+        // return <Button type="primary" onClick={e => handleClick(text, e)}>点击查看</Button>
+        return <a href={`/spreaduser?parentId=${text}`} target="_blank">点击查看</a>
       }
     }, {
       title: '操作',
@@ -162,6 +167,7 @@ List.propTypes = {
   isMotion: PropTypes.bool,
   location: PropTypes.object,
   onShowTimeModal: PropTypes.func,
+  onQuery: PropTypes.func
 }
 
 export default List

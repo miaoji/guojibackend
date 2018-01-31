@@ -42,7 +42,6 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
       })
     },
   }
-  console.log('timeModalVisible', timeModalVisible)
   const timeModalProps = {
     item: currentItem,
     visible: timeModalVisible,
@@ -80,6 +79,12 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
     pagination,
     location,
     isMotion,
+    onQuery(data) {
+      dispatch({
+        type: 'spreaduser/query',
+        payload: data
+      })
+    },
     onChange (page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
