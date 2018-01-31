@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal,
+import {
+  Table, Modal,
   // Button
 } from 'antd'
 import styles from './List.less'
@@ -123,12 +124,22 @@ const List = ({ onQuery, onDeleteItem, onShowTimeModal, onEditItem, isMotion, lo
         return <span>{raplTime}</span>
       }
     }, {
+      title: '用户数量',
+      dataIndex: 'count',
+      key: 'count',
+      render: (text) => {
+        return <span>{text || '无'}</span>
+      }
+    }, {
       title: '用户管理',
       dataIndex: 'spreadUserId',
       key: 'spreadUserId',
-      render: (text) => {
+      render: (text, record) => {
+        if (record.count > 0) {
+          return <a href={`/spreaduser?parentId=${text}`} target="_blank">点击查看</a>
+        }
+        return <span>无</span>
         // return <Button type="primary" onClick={e => handleClick(text, e)}>点击查看</Button>
-        return <a href={`/spreaduser?parentId=${text}`} target="_blank">点击查看</a>
       }
     }, {
       title: '操作',
