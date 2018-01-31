@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal, Button } from 'antd'
+import { Table, Modal,
+  // Button
+} from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -26,9 +28,9 @@ const List = ({ onQuery, onDeleteItem, onShowTimeModal, onEditItem, isMotion, lo
     }
   }
 
-  const handleClick = (text) => {
-    onQuery({ parentId: text })
-  }
+  // const handleClick = (text) => {
+  //   onQuery({ parentId: text })
+  // }
 
   const columns = [
     {

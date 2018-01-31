@@ -33,11 +33,16 @@ const Filter = ({
     return fields
   }
 
+  const { parentId } = filter
+  console.log('parentId', parentId)
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
+    fields.parentId = parentId || 0
+    console.log('fields', fields)
     onFilterChange(fields)
   }
+
 
   const handleReset = () => {
     const fields = getFieldsValue()
@@ -46,6 +51,10 @@ const Filter = ({
         if (fields[item] instanceof Array) {
           fields[item] = []
         } else {
+          if (item === 'parentId') {
+            console.log('parentId', fields.parentId)
+            return
+          }
           fields[item] = undefined
         }
       }
@@ -54,7 +63,6 @@ const Filter = ({
     handleSubmit()
   }
 
-  const { country } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -67,7 +75,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }} sm={{ span: 12 }}>
-        {getFieldDecorator('country', { initialValue: country })(<Search placeholder="按推广人姓名搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: '' })(<Search placeholder="按推广人姓名搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
