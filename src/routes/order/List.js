@@ -206,7 +206,8 @@ List.propTypes = {
   filter: PropTypes.object,
   updateOrderInfo: PropTypes.func,
   onCreateCtorder: PropTypes.func,
-  ztorderLoading: PropTypes.bool
+  ztorderLoading: PropTypes.bool,
+  showLocusModal: PropTypes.func
 }
 
 export default List
