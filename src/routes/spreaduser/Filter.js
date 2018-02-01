@@ -34,12 +34,10 @@ const Filter = ({
   }
 
   const { parentId } = filter
-  console.log('parentId', parentId)
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
     fields.parentId = parentId || 0
-    console.log('fields', fields)
     onFilterChange(fields)
   }
 
@@ -52,7 +50,6 @@ const Filter = ({
           fields[item] = []
         } else {
           if (item === 'parentId') {
-            console.log('parentId', fields.parentId)
             return
           }
           fields[item] = undefined

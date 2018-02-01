@@ -44,7 +44,6 @@ const modal = ({
       options[i].children.push({ value: j, label: `${j}分` })
     }
   }
-  console.log('options', options)
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,

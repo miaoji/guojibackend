@@ -29,7 +29,7 @@ export async function update (params) {
 export async function remove (params) {
   return request({
     url: spreaduser.hide,
-    method: 'delete',
+    method: 'post',
     params,
   })
 }

@@ -10,7 +10,6 @@ const { formatTime } = time
 const Detail = ({ orderDetail }) => {
   const { data } = orderDetail
   const { wxUser, orderItemList, cnExpressInfo, gjExpressInfo, xnExpressInfo } = data
-  console.log('xnExpressInfo', xnExpressInfo)
   const realSex = {
     0: '未知',
     1: '男',

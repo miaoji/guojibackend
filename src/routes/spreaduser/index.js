@@ -55,9 +55,10 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
     qrTypeDis,
     modalType,
     onOk(data) {
+      const { query } = location
       dispatch({
         type: 'spreaduser/updatePushTime',
-        payload: data,
+        payload: { ...data, ...query },
       })
     },
     onCancel() {
@@ -85,7 +86,7 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
         payload: data
       })
     },
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -96,7 +97,7 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
         },
       }))
     },
-    onShowTimeModal (item) {
+    onShowTimeModal(item) {
       dispatch({
         type: 'spreaduser/showTimeModal',
         payload: {
@@ -104,13 +105,14 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
         }
       })
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
+      const { query } = location
       dispatch({
         type: 'spreaduser/delete',
-        payload: id,
+        payload: { id, ...query },
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'spreaduser/showModal',
         payload: {
@@ -135,7 +137,7 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -145,7 +147,7 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/spreaduser',
         query: {
@@ -156,7 +158,7 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
         pathname: '/spreaduser',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'spreaduser/showModal',
         payload: {
@@ -166,7 +168,7 @@ const Spreaduser = ({ location, dispatch, spreaduser, loading }) => {
       dispatch({ type: 'spreaduser/getGradeInfo' })
       dispatch({ type: 'spreaduser/getWxuserInfo' })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'spreaduser/switchIsMotion' })
     },
   }

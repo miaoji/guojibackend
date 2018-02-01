@@ -188,7 +188,8 @@ module.exports = {
       all: `${APIV3}/api/spreadUser/index`, // 查询
       create: `${APIV3}/api/spreadUser/add`, // 新增
       update: `${APIV3}/api/spreadUser/modById`, // 修改
-      hide: `${APIV3}/api/spreadUser/delById`, // 删除
+      hide: `${APIV3}/api/quartz/pauseJob`, // 暂停通知
+      // hide: `${APIV3}/api/spreadUser/delById`, // 删除
       setPushTime: `${APIV3}/api/quartz/modQuartzTrigger` // 设置推送时间
     },
     // 推广用户列表

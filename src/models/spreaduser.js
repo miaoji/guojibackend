@@ -118,10 +118,10 @@ export default modelExtend(pageModel, {
     },
 
     *'delete'({ payload }, { call, put }) {
-      const data = yield call(remove, { ids: payload })
-      if (data.msg === '删除成功' && data.code === 200) {
+      const data = yield call(remove, { spreadUserId: payload.id })
+      if (data.code === 200) {
         message.success(data.msg)
-        yield put({ type: 'query' })
+        yield put({ type: 'query', payload: { parentId: payload.parentId || 0 } })
       } else {
         throw data.msg || data
       }
@@ -186,11 +186,12 @@ export default modelExtend(pageModel, {
       const spreadUserId = yield select(({ spreaduser }) => spreaduser.currentItem.spreadUserId)
       const cron = `0 ${payload.pushtime[1]} ${payload.pushtime[0]} * * ? *`
       const data = yield call(setPushTime, { spreadUserId, cron })
-      console.log('data', data)
       if (data.code === 200) {
         message.success(data.msg)
-        yield put({ type: 'query' })
+        yield put({ type: 'query', payload: { parentId: payload.parentId || 0 } })
         yield put({ type: 'hideTimeModal' })
+      } else {
+        throw data.msg || '网络故障'
       }
     },
 

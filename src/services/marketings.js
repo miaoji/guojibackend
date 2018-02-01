@@ -1,7 +1,7 @@
 import { request, config, pageParams } from '../utils'
 const { wxmenu, wxuser, marketing } = config.api
 
-export async function query (params) {
+export async function query(params) {
   params = pageParams(params)
   return request({
     url: wxuser.all,
@@ -10,7 +10,7 @@ export async function query (params) {
   })
 }
 
-export async function create (params) {
+export async function create(params) {
   return request({
     url: marketing.setmenu,
     method: 'post',
@@ -18,7 +18,7 @@ export async function create (params) {
   })
 }
 
-export async function update (params) {
+export async function update(params) {
   return
   return request({
     url: wxmenu.update,
@@ -27,7 +27,7 @@ export async function update (params) {
   })
 }
 
-export async function remove (params) {
+export async function remove(params) {
   return
   return request({
     url: wxmenu.hide,
@@ -36,7 +36,7 @@ export async function remove (params) {
   })
 }
 
-export async function setmenu (params) {
+export async function setmenu(params) {
   return
   return request({
     url: marketing.setmenu,

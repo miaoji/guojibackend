@@ -8,7 +8,6 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-// import { Link } from 'dva/router'
 import { time } from '../../utils'
 
 const confirm = Modal.confirm
@@ -19,7 +18,7 @@ const List = ({ onQuery, onDeleteItem, onShowTimeModal, onEditItem, isMotion, lo
       onEditItem(record)
     } else if (e.key === '2') {
       confirm({
-        title: '确定要删除吗?',
+        title: '确定要暂停通知吗?',
         onOk() {
           onDeleteItem(record.spreadUserId)
         },
@@ -90,16 +89,6 @@ const List = ({ onQuery, onDeleteItem, onShowTimeModal, onEditItem, isMotion, lo
         return <span>{(text || 0) * 100}%</span>
       },
     }, {
-      title: '需累计消费',
-      dataIndex: 'spreadConsumption',
-      key: 'spreadConsumption',
-      render: (text, record) => {
-        if (record.spreadUserType === 0) {
-          return <span>{text / 100}元</span>
-        }
-        return <span>无消费限制</span>
-      }
-    }, {
       title: '晋级类型',
       dataIndex: 'spreadUserType',
       key: 'spreadUserType',
@@ -146,7 +135,7 @@ const List = ({ onQuery, onDeleteItem, onShowTimeModal, onEditItem, isMotion, lo
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '推送时间' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '推送时间' }, { key: '2', name: '暂停推送' }]} />
       }
     }
   ]
