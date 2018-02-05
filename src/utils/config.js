@@ -51,6 +51,7 @@ module.exports = {
       create: `${APIV3}/api/orderInfo/addCargo`, // 创建订单
       update: `${APIV3}/wx/OrderInfo/modOrderInfo`, // 根据id更新订单
       mod: `${APIV3}/api/orderInfo/modOrderInfoById`, // 根据id更新订单 仝周
+      modIntlNoById: `${APIV3}/api/orderInfo/modIntlNoById`, // 添加国际快递信息
       hide: `${APIV3}/api/orderInfo/delOrderInfoById`, // 根据id更新订单 仝周
       createChinaOrder: `${APIV3}/api/order/createOrder`, // 新增国内(中通)订单
       getKdCompany: `${APIV3}/api/kdCompany/index`, // 动态获取国际段快递公司

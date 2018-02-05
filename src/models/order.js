@@ -1,7 +1,7 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { createOrder, remove, update, createChinaOrder, getKdCompany, getIntlPrice } from '../services/order'
+import { createOrder, remove, update, createChinaOrder, getKdCompany, getIntlPrice, modIntlNoById } from '../services/order'
 import * as location from '../services/countries'
 import * as showPTypeByCounIdsService from '../services/showPTypeByCounIds'
 import * as showproductNamesService from '../services/showproductNames'
@@ -195,7 +195,7 @@ export default modelExtend(pageModel, {
         id,
         status: 7,
       }
-      const data = yield call(update, newOrder)
+      const data = yield call(modIntlNoById, newOrder)
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.msg)

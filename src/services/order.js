@@ -43,6 +43,15 @@ export async function update(params) {
   })
 }
 
+// 修改国际快递信息
+export async function modIntlNoById(params) {
+  return request({
+    url: order.modIntlNoById,
+    method: 'post',
+    params,
+  })
+}
+
 // 新增国内(中通)订单
 export async function createChinaOrder(params) {
   return request({
