@@ -42,3 +42,32 @@ export const rebuildTime = function (val) {
   }
   return '未知时间'
 }
+
+// 弥补创建时间控件获取的时间戳是带当前时间的问题
+// @val  [type:number] 13的时间戳
+// @type [type:string] 要转换的时间是开始时间还是结束时间
+
+export const repairTime = function (val) {
+  if (val[0] !== null && val[1] !== null) {
+    const date = new Date(val[0]._d)
+    const h = date.getHours()
+    const m = date.getMinutes()
+    const s = date.getSeconds()
+    const ms = date.getMilliseconds()
+
+    const times = (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000) + ms
+
+    const startTime = new Date(val[0]._d).getTime() - times
+    const endTime = new Date(val[1]._d).getTime() - times
+    return {
+      startTime,
+      endTime,
+    }
+  }
+  const startTime = undefined
+  const endTime = undefined
+  return {
+    startTime,
+    endTime,
+  }
+}
