@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-// import { Row, Col, Button, Popconfirm } from 'antd'
+import { notification } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
@@ -325,6 +325,14 @@ const Order = ({ location, dispatch, order, loading }) => {
       }))
     },
     updateOrderInfo(item) {
+      console.log('item', item)
+      if (item.STATUS>2) {
+        notification.warning({
+          message: '订单修改限制！',
+          description: '仅允许修改未到达中转站的订单'
+        })
+        return
+      }
       dispatch({ type: 'order/getCountry' })
       dispatch({ type: 'order/getProvince' })
       dispatch({ type: 'order/getWeChatUser' })

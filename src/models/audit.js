@@ -80,12 +80,16 @@ export default modelExtend(pageModel, {
       const spreadUserId = yield select(({ audit }) => audit.currentItem.spreadUserId)
       const confirmUserId = JSON.parse(storage({ type: 'get', key: 'user' })).id
       if (payload.status === status) {
-        message.success('状态未发生改变,本次操作以取消')
+        message.warn('状态未发生改变,本次操作以取消')
         yield put({ type: 'hideModal' })
         return
       }
+      if (status !== 0) {
+        message.warn('禁止修改提现成功或者拒绝的审核状态')
+        return
+      }
       if (payload.status && payload.status === 2) {
-        const data = yield call(refuse, { id, cash, spreadUserId, reason: payload.reason, confirmUserId })
+        const data = yield call(update, { id, status: payload.status, cash, spreadUserId, reason: payload.reason, confirmUserId })
         if (data.msg === '修改成功' && data.code === 200) {
           message.success(data.msg)
           yield put({ type: 'hideModal' })
@@ -94,7 +98,7 @@ export default modelExtend(pageModel, {
           throw data.msg || '无法跟服务器建立有效连接'
         }
       } else {
-        const data = yield call(update, { status: payload.status, id, confirmUserId })
+        const data = yield call(update, { status: payload.status, spreadUserId, cash, id, confirmUserId, reason: '' })
         if (data.msg === '修改成功' && data.code === 200) {
           message.success(data.msg)
           yield put({ type: 'hideModal' })

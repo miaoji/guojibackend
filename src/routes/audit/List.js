@@ -17,7 +17,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     } else if (e.key === '2') {
       confirm({
         title: '确定要删除吗?',
-        onOk () {
+        onOk() {
           onDeleteItem(record.id)
         },
       })
@@ -95,7 +95,10 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }]} />
+        if (record.status === 0) {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }]} />
+        }
+        return <span>禁止操作</span>
       },
     },
   ]

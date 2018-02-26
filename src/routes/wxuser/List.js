@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
+import { Table, Modal, Avatar } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -31,7 +31,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       key: 'HEADIMGURL',
       width: 64,
       className: styles.avatar,
-      render: (text) => <img alt={'avatar'} width={24} src={text} />,
+      render: (text) => <Avatar alt={'avatar'} width={24} src={text} />,
     }, {
       title: '微信名',
       dataIndex: 'NICK_NAME',
