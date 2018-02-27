@@ -66,6 +66,14 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       dataIndex: 'PACKAGE_COUNT',
       key: 'PACKAGE_COUNT',
     }, {
+      title: '直邮总次数',
+      dataIndex: 'DIRECT_COUNT',
+      key: 'DIRECT_COUNT',
+    }, {
+      title: '集运总次数',
+      dataIndex: 'CARGO_COUNT',
+      key: 'CARGO_COUNT',
+    }, {
       title: '消费总金额',
       dataIndex: 'TOTAL_AMOUNT',
       key: 'TOTAL_AMOUNT',
