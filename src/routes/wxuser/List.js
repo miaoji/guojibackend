@@ -31,7 +31,14 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       key: 'HEADIMGURL',
       width: 64,
       className: styles.avatar,
-      render: (text) => <Avatar alt={'avatar'} width={24} src={text} />,
+      render: (text, record) => {
+        if (record.SEX === '1') {
+          return <Avatar alt={'avatar'} width={24} src={text} icon="man" />
+        }else if (record.SEX === '2') {
+          return <Avatar alt={'avatar'} width={24} src={text} icon="woman" />
+        }
+        return <Avatar alt={'avatar'} width={24} src={text} icon="user" />
+      }
     }, {
       title: '微信名',
       dataIndex: 'NICK_NAME',
