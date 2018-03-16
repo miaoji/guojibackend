@@ -67,8 +67,8 @@ export default modelExtend(pageModel, {
       // const seconds = payload.qrType === 0 ? payload.seconds : undefined
 
       const replPayload = {
-        spreadUserRatio: 0.08, // 一级分润比例
-        spreadUserRatioSecond: 0.05, // 二级分润比例
+        spreadUserRatio: 0.06, // 一级分润比例
+        spreadUserRatioSecond: 0.03, // 二级分润比例
         qrType: 1, // 推广类型
         spreadType: 0,
         // seconds,
