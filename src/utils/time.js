@@ -71,3 +71,23 @@ export const repairTime = function (val) {
     endTime,
   }
 }
+
+// val 时间戳
+export function getToday(val) {
+  let date = new Date(val)
+  let y = date.getFullYear()
+  let m = date.getMonth() + 1
+  m = m > 9 ? m : `0${m}`
+  let d = date.getDate()
+  d = d > 9 ? d : `0${d}`
+  return (`${y}-${m}-${d}`)
+}
+
+export function getLineTime() {
+  let date = []
+
+  for (let i = 0; i < 30; i++) {
+    date.unshift(getToday((new Date().getTime() - (86400000 * (i + 1)))))
+  }
+  return date
+}

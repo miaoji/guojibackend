@@ -5,6 +5,7 @@ import { Row, Col, Card } from 'antd'
 import { NumberCard, Quote, User } from './components'
 import styles from './index.less'
 import { color } from '../../utils'
+import SimpleChartComponent from './components/Echart/SimpleChartComponent'
 
 const bodyStyle = {
   bodyStyle: {
@@ -15,19 +16,26 @@ const bodyStyle = {
 
 function Dashboard ({ dashboard }) {
   const { quote, quotess, numbers, user } = dashboard
-  const numberCards = numbers.map((item, key) => <Col key={key} lg={6} md={12}>
+  const numberCards = numbers.map((item, key) => <Col key={key} lg={8} md={12}>
     <NumberCard {...item} />
   </Col>)
 
   return (
     <Row gutter={24}>
       {numberCards}
-      <Col lg={18} md={24}>
+      <Col lg={24} md={24}>
+        <Card>
+          <SimpleChartComponent />
+        </Card>
+      </Col>
+      {/* 首页中心提示信息 */}
+      <Col lg={18} md={24} style={{ display: 'none' }}>
         <Card bordered={false} bodyStyle={{ ...bodyStyle.bodyStyle, padding: 0 }}>
           <User {...user} />
         </Card>
       </Col>
-      <Col lg={6} md={24}>
+      {/* 首页中心提示信息 */}
+      <Col lg={6} md={24} style={{ display: 'none' }}>
         <Row gutter={24}>
           <Col lg={24} md={12}>
             <Card bordered={false} className={styles.quote} bodyStyle={{

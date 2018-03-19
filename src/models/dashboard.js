@@ -22,22 +22,17 @@ export default {
       {
         icon: 'pay-circle-o',
         color: color.green,
-        title: '今日收入',
-        number: 2781,
+        title: '累计收入',
+        number: 5582,
       }, {
         icon: 'team',
         color: color.blue,
-        title: '新增用户',
+        title: '所有用户',
         number: 3241,
-      }, {
-        icon: 'message',
-        color: color.purple,
-        title: '在线人数',
-        number: 253,
       }, {
         icon: 'shopping-cart',
         color: color.red,
-        title: '今日购买',
+        title: '今日收入',
         number: 4324,
       },
     ],
