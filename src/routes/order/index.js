@@ -325,8 +325,7 @@ const Order = ({ location, dispatch, order, loading }) => {
       }))
     },
     updateOrderInfo(item) {
-      console.log('item', item)
-      if (item.STATUS>2) {
+      if (item.STATUS > 2) {
         notification.warning({
           message: '订单修改限制！',
           description: '仅允许修改未到达中转站的订单'

@@ -16,9 +16,17 @@ export async function queryWeather (params) {
   })
 }
 
-export async function query (params) {
+export async function query(params) {
   return request({
-    url: dashboard,
+    url: dashboard.all,
+    method: 'get',
+    data: params,
+  })
+}
+
+export async function line(params) {
+  return request({
+    url: dashboard.line,
     method: 'get',
     data: params,
   })

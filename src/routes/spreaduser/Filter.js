@@ -34,7 +34,6 @@ const Filter = ({
   const handleFields = (fields) => {
     const { createTime } = fields
     if (createTime && createTime[0] && createTime[1] && createTime.length === 2) {
-      console.log('createtime', createTime)
       const repairTime = time.repairTime(fields.createTime)
       fields.startDate = new Date(repairTime.startTime).format('yyyy-MM-dd')
       fields.endDate = new Date(repairTime.endTime).format('yyyy-MM-dd')

@@ -29,7 +29,10 @@ module.exports = {
   openPages: ['/login'],
   apiPrefix: '/api/v1',
   api: {
-    dashboard: `${APIV1}/dashboard`,
+    dashboard: {
+      all: `${APIV1}/dashboard`,
+      line: `${APIV3}/api/orderInfo/getOrderCount`
+    },
     // 根据国家查询包裹类型
     showPTypeByCounId: `${APIV3}/api/packageType/getPackageTypeByCountry`,
     // 根据包裹类型id获取对应的产品类型

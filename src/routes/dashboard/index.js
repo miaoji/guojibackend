@@ -15,17 +15,20 @@ const bodyStyle = {
 }
 
 function Dashboard ({ dashboard }) {
-  const { quote, quotess, numbers, user } = dashboard
+  const { quote, quotess, numbers, user, cargoLine, orderLine } = dashboard
   const numberCards = numbers.map((item, key) => <Col key={key} lg={8} md={12}>
     <NumberCard {...item} />
   </Col>)
-
+  const echartProps = {
+    cargoLine,
+    orderLine
+  }
   return (
     <Row gutter={24}>
       {numberCards}
       <Col lg={24} md={24}>
         <Card>
-          <SimpleChartComponent />
+          <SimpleChartComponent {...echartProps} />
         </Card>
       </Col>
       {/* 首页中心提示信息 */}

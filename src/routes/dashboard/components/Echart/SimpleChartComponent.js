@@ -1,10 +1,12 @@
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
+import PropTypes from 'prop-types'
 import './theme/macarons.js'
 import { time } from '../../../../utils'
-import { mockEchartData } from '../../../../utils/mock'
+// import { mockEchartData } from '../../../../utils/mock'
 
-const SimpleChartComponent = () => {
+const SimpleChartComponent = (props) => {
+  const { orderLine, cargoLine } = props
   const dataname = time.getLineTime()
   const option = {
     backgroundColor: '#fff',
@@ -60,7 +62,8 @@ const SimpleChartComponent = () => {
             rotate: '36'
           }
         },
-        data: mockEchartData(180)
+        data: orderLine,
+        // data: mockEchartData(180)
       },
       {
         name: '集运订单',
@@ -73,7 +76,8 @@ const SimpleChartComponent = () => {
             rotate: '36'
           }
         },
-        data: mockEchartData(100)
+        data: cargoLine,
+        // data: mockEchartData(100)
       }
     ],
   }
@@ -90,6 +94,9 @@ const SimpleChartComponent = () => {
     </div>
   )
 }
-
+SimpleChartComponent.propTypes = {
+  orderLine: PropTypes.array,
+  cargoLine: PropTypes.array,
+}
 
 export default SimpleChartComponent

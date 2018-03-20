@@ -1,10 +1,13 @@
+import { message } from 'antd'
 import { color } from '../utils/theme'
-import { query } from '../services/dashboard'
+import { query, line } from '../services/dashboard'
 import { parse } from 'qs'
 
 export default {
   namespace: 'dashboard',
   state: {
+    orderLine: [],
+    cargoLine: [],
     sales: [],
     quote: {
       name: '明彰科技',
@@ -48,18 +51,56 @@ export default {
     },
   },
   subscriptions: {
-    setup ({ dispatch }) {
+    setup({ dispatch }) {
       dispatch({ type: 'query' })
+      dispatch({ type: 'getOrderLineData' })
+      dispatch({ type: 'getCargoLineData' })
     },
   },
   effects: {
-    *query ({
+    *query({
       payload,
     }, { call }) {
       const data = yield call(query, parse(payload))
       console.info('data', data)
     },
+    // type 0直邮 1集运
+    *getOrderLineData(_, { call, put }) {
+      const data = yield call(line)
+      if (data.code === 200 && data.obj) {
+        const lineData = data.obj.map((item) => {
+          const { createTime, count } = item
+          return [createTime, Number(count) * 10]
+        })
+        yield put({
+          type: 'setStates',
+          payload: {
+            orderLine: lineData
+          }
+        })
+      } else {
+        message.warning(data.msg || '当前网络无法使用')
+      }
+    },
+    *getCargoLineData(_, { call, put }) {
+      const data = call(line, { type: 1 })
+      if (data.code === 200 && data.obj) {
+        const lineData = data.obj.map((item) => {
+          const { createTime, count } = item
+          return [createTime, Number(count) * 10]
+        })
+        yield put({
+          type: 'setStates',
+          payload: {
+            cargoLine: lineData
+          }
+        })
+      }
+    }
   },
   reducers: {
+    setStates(state, { payload }) {
+      return { ...state, ...payload }
+    }
   },
 }
