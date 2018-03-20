@@ -77,7 +77,7 @@ export default {
           let tmparr = [item, 0]
           data.obj.map((value) => {
             if (value.createTime === item) {
-              tmparr[1] = value.count * 10
+              tmparr[1] = value.count
             }
             return value
           })
