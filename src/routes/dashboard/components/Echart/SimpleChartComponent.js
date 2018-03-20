@@ -12,7 +12,7 @@ const SimpleChartComponent = (props) => {
     backgroundColor: '#fff',
     color: ['#f0f', '#90f', '#09f', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],
     title: {
-      text: '三十日内订单详情',
+      text: '三十日内订单统计表',
     },
     tooltip: {
       trigger: 'axis',

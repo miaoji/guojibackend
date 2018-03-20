@@ -1,7 +1,8 @@
 import { message } from 'antd'
 import { color } from '../utils/theme'
-import { query, line } from '../services/dashboard'
-import { parse } from 'qs'
+import { line } from '../services/dashboard'
+import { time } from '../utils'
+
 
 export default {
   namespace: 'dashboard',
@@ -52,51 +53,57 @@ export default {
   },
   subscriptions: {
     setup({ dispatch }) {
-      dispatch({ type: 'query' })
-      dispatch({ type: 'getOrderLineData' })
-      dispatch({ type: 'getCargoLineData' })
+      dispatch({
+        type: 'getLineData',
+        payload: {
+          type: 0
+        }
+      })
+      dispatch({
+        type: 'getLineData',
+        payload: {
+          type: 1
+        }
+      })
     },
   },
   effects: {
-    *query({
-      payload,
-    }, { call }) {
-      const data = yield call(query, parse(payload))
-      console.info('data', data)
-    },
     // type 0直邮 1集运
-    *getOrderLineData(_, { call, put }) {
-      const data = yield call(line)
+    *getLineData({ payload }, { call, put }) {
+      const data = yield call(line, payload)
       if (data.code === 200 && data.obj) {
-        const lineData = data.obj.map((item) => {
-          const { createTime, count } = item
-          return [createTime, Number(count) * 10]
+        const times = time.getLineTime()
+        const lineData = times.map((item) => {
+          let tmparr = [item, 0]
+          data.obj.map((value) => {
+            if (value.createTime === item) {
+              tmparr[1] = value.count * 10
+            }
+            return value
+          })
+          return tmparr
         })
-        yield put({
-          type: 'setStates',
-          payload: {
-            orderLine: lineData
-          }
-        })
+        // type为0的时候更新直邮信息
+        if (payload.type === 0) {
+          yield put({
+            type: 'setStates',
+            payload: {
+              orderLine: lineData
+            }
+          })
+          // type为1时更新集运信息
+        } else if (payload.type === 1) {
+          yield put({
+            type: 'setStates',
+            payload: {
+              cargoLine: lineData
+            }
+          })
+        }
       } else {
         message.warning(data.msg || '当前网络无法使用')
       }
     },
-    *getCargoLineData(_, { call, put }) {
-      const data = call(line, { type: 1 })
-      if (data.code === 200 && data.obj) {
-        const lineData = data.obj.map((item) => {
-          const { createTime, count } = item
-          return [createTime, Number(count) * 10]
-        })
-        yield put({
-          type: 'setStates',
-          payload: {
-            cargoLine: lineData
-          }
-        })
-      }
-    }
   },
   reducers: {
     setStates(state, { payload }) {
