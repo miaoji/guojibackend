@@ -94,7 +94,7 @@ const Login = ({
         {
           loginType === 'account' ?
             <form>
-              <FormItem hasFeedback>
+              <FormItem label="用户名:" hasFeedback>
                 {getFieldDecorator('username', {
                   rules: [
                     {
@@ -103,6 +103,16 @@ const Login = ({
                     },
                   ],
                 })(<Input size="large" onPressEnter={handleOk} placeholder="用户名" />)}
+              </FormItem>
+              <FormItem label="密码" hasFeedback>
+                {getFieldDecorator('password', {
+                  rules: [
+                    {
+                      required: true,
+                      message: '请输入密码',
+                    },
+                  ],
+                })(<Input size="large" type="password" onPressEnter={handleOk} placeholder="密码" />)}
               </FormItem>
               <FormItem hasFeedback>
                 <Row type="flex" align="middle">
@@ -114,7 +124,7 @@ const Login = ({
                   </Col>
                 </Row>
               </FormItem>
-              <FormItem hasFeedback>
+              <FormItem label="验证码" hasFeedback>
                 {getFieldDecorator('imageCode', {
                   rules: [
                     {
@@ -123,16 +133,6 @@ const Login = ({
                     },
                   ],
                 })(<Input size="large" onPressEnter={handleOk} placeholder="验证码" />)}
-              </FormItem>
-              <FormItem hasFeedback>
-                {getFieldDecorator('password', {
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入密码',
-                    },
-                  ],
-                })(<Input size="large" type="password" onPressEnter={handleOk} placeholder="密码" />)}
               </FormItem>
               <Row>
                 <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>
