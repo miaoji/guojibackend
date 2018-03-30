@@ -1,12 +1,10 @@
 /*
- * 创建轨迹Modal
+ * 添加孟加拉关联单号
  */
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Select, Modal } from 'antd'
-import { screen } from '../../utils'
-// import classnames from 'classnames'
+import { Form, Input, Modal } from 'antd'
 
 const FormItem = Form.Item
 
@@ -18,8 +16,6 @@ const formItemLayout = {
     span: 14,
   },
 }
-
-const realtext = screen.orderStateByNum
 
 const locusModal = ({
   item = {},
@@ -63,21 +59,16 @@ const locusModal = ({
             ],
           })(<Input disabled />)}
         </FormItem>
-        <FormItem label="状态" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('state', {
-            initialValue: realtext[item.STATUS],
+        <FormItem label="关联单号" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('MCBDNo', {
+            initialValue: item.MCBDNo,
             rules: [
               {
                 required: true,
-                message: '请输入补价金额!',
+                message: '请填写你要关联的单号!',
               },
             ],
-          })(
-            <Select>
-              <Option value="1">待付款</Option>
-              <Option value="2">付款完成</Option>
-            </Select>
-            )}
+          })(<Input placeholder="请填写你要关联的单号" />)}
         </FormItem>
       </Form>
     </Modal>

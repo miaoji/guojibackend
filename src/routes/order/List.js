@@ -13,7 +13,21 @@ const confirm = Modal.confirm
 const orderState = screen.orderStateByNum
 const orderStateArr = screen.orderStateByArr
 
-const List = ({ filter, onDeleteItem, showLocusModal, onEditItem, addBoot, showStateModal, updateOrderInfo, isMotion, location, onCreateCtorder, ztorderLoading, ...tableProps }) => {
+const List = ({
+  filter,
+  onDeleteItem,
+  showLocusModal,
+  onEditItem,
+  addBoot,
+  showStateModal,
+  updateOrderInfo,
+  isMotion,
+  location,
+  onCreateCtorder,
+  ztorderLoading,
+  onBindOrderNo,
+  ...tableProps
+}) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -41,6 +55,9 @@ const List = ({ filter, onDeleteItem, showLocusModal, onEditItem, addBoot, showS
         break
       case '7':
         showLocusModal(record)
+        break
+      case '8':
+        onBindOrderNo(record)
         break
       default:
         break
@@ -134,6 +151,7 @@ const List = ({ filter, onDeleteItem, showLocusModal, onEditItem, addBoot, showS
       render: (text, record) => {
         if (record.ORDER_TYPE === 4) {
           return (<DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[
+            { key: '8', name: '单号绑定' },
             { key: '7', name: '快递轨迹' },
             { key: '5', name: '修改状态' },
             { key: '1', name: '发往国外' },
@@ -207,7 +225,8 @@ List.propTypes = {
   updateOrderInfo: PropTypes.func,
   onCreateCtorder: PropTypes.func,
   ztorderLoading: PropTypes.bool,
-  showLocusModal: PropTypes.func
+  showLocusModal: PropTypes.func,
+  onBindOrderNo: PropTypes.func
 }
 
 export default List

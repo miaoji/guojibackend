@@ -219,15 +219,14 @@ const Order = ({ location, dispatch, order, loading }) => {
     item: currentItem,
     visible: locusModalVisible,
     confirmLoading: loading.effects['order/update'],
-    title: '修改状态',
+    title: 'dan',
     wrapClassName: 'vertical-center-modal',
-    // onOk(data) {
-    //   // alert('你是想提交吗')
-    //   // dispatch({
-    //   //   type: 'order/updateState',
-    //   //   payload: data
-    //   // })
-    // },
+    onOk(data) {
+      dispatch({
+        type: 'order/bindOrderNo',
+        payload: data
+      })
+    },
     onCancel() {
       dispatch({
         type: 'order/hideLocusModal'
@@ -244,6 +243,14 @@ const Order = ({ location, dispatch, order, loading }) => {
     pagination,
     location,
     isMotion,
+    onBindOrderNo(item) {
+      dispatch({
+        type: 'order/showLocusModal',
+        payload: {
+          currentItem: item,
+        }
+      })
+    },
     onChange(page, filter) {
       const value = {
         status: filter.STATUS ? filter.STATUS[0] : undefined,
