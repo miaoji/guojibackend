@@ -1,12 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-// // import moment from 'moment'
-// import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, Input } from 'antd'
-// import city from '../../utils/city'
-// import { DateRange } from '../../components'
-
-const Search = Input.Search
+import { Form, Button, Row, Col } from 'antd'
+import { handleFields } from '../../utils/time'
 
 const ColProps = {
   xs: 24,
@@ -26,21 +21,10 @@ const Filter = ({
   onFilterChange,
   filter,
   form: {
-    getFieldDecorator,
     getFieldsValue,
     setFieldsValue,
   },
 }) => {
-  const handleFields = (fields) => {
-    const { createTime } = fields
-    if (createTime && createTime.length) {
-      fields.startDate = createTime[1].format('YYYY-MM-DD')
-      fields.endDate = createTime[1].format('YYYY-MM-DD')
-      delete fields.createTime
-    }
-    return fields
-  }
-
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
@@ -66,21 +50,6 @@ const Filter = ({
     handleSubmit()
   }
 
-  // 时间选择器change事件
-  // const handleChange = (key, values) => {
-  //   let fields = getFieldsValue()
-  //   fields[key] = values
-  //   fields = handleFields(fields)
-  //   for (let item in fields) {
-  //     if (/^\s*$/g.test(fields[item])) {
-  //       fields[item] = undefined
-  //     }
-  //   }
-  //   onFilterChange({ ...filter, ...fields })
-  // }
-
-  const { country } = filter
-
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
     initialCreateTime[0] = filter.createTime[0]
@@ -91,20 +60,9 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      {/*<Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }} sm={{ span: 12 }}>
-              {getFieldDecorator('country', { initialValue: country })(<Search placeholder="按推广等级搜索" size="large" onSearch={handleSubmit} />)}
-            </Col>*/}
-      {/* <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-          <div style={{ display: 'none' }} >
-            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
-          </div>
-        )}
-      </Col> */}
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            {/*<Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>*/}
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
           <div>

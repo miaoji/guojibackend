@@ -1,12 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styles from './Modal.less'
-import classnames from 'classnames'
-import { Form, Input, InputNumber, Modal, Select } from 'antd'
-import city from '../../utils/city'
+import { Form, Input, Modal, Select } from 'antd'
 
 const FormItem = Form.Item
-const Option = Select.Option
 
 const formItemLayout = {
   labelCol: {
@@ -21,7 +17,6 @@ const modal = ({
   item = {},
   onOk,
   selectKdCompany,
-  getKdCompany,
   form: {
     getFieldDecorator,
     validateFields,
@@ -49,8 +44,6 @@ const modal = ({
     ...modalProps,
     onOk: handleOk,
   }
-
-  const inputDisabled = modalOpts.type === 'update'
 
   return (
     <Modal {...modalOpts}>
@@ -99,6 +92,7 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  selectKdCompany: PropTypes.array
 }
 
 export default Form.create()(modal)

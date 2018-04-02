@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
 import {
-  Form, Button, Row, Col, DatePicker, Input,
-  // Cascader,
-  // Switch,
+  Form,
+  Button,
+  Row,
+  Col,
+  DatePicker,
+  Input,
   Radio,
   Select
 } from 'antd'
-// import city from '../../utils/city'
 
 const InputGroup = Input.Group
 const Option = Select.Option
@@ -34,8 +36,6 @@ const TwoColProps = {
 const Filter = ({
   onAdd,
   onBengalAdd,
-  // isMotion,
-  // switchIsMotion,
   onFilterChange,
   filter,
   form: {
@@ -48,7 +48,6 @@ const Filter = ({
     const {
       createTime,
       status,
-      // extension,
       option
     } = fields
     if (status === '0') {

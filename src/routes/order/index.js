@@ -219,7 +219,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     item: currentItem,
     visible: locusModalVisible,
     confirmLoading: loading.effects['order/update'],
-    title: 'dan',
+    title: '单号关联',
     wrapClassName: 'vertical-center-modal',
     onOk(data) {
       dispatch({

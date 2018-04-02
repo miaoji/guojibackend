@@ -61,7 +61,7 @@ const locusModal = ({
         </FormItem>
         <FormItem label="关联单号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('MCBDNo', {
-            initialValue: item.MCBDNo,
+            initialValue: item.MCBD_NO,
             rules: [
               {
                 required: true,

@@ -91,3 +91,13 @@ export function getLineTime() {
   }
   return date
 }
+
+export const handleFields = (fields) => {
+  const { createTime } = fields
+  if (createTime && createTime.length) {
+    fields.startDate = createTime[1].format('YYYY-MM-DD')
+    fields.endDate = createTime[1].format('YYYY-MM-DD')
+    delete fields.createTime
+  }
+  return fields
+}

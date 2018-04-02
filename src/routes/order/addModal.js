@@ -206,7 +206,7 @@ const addModal = ({
         </FormItem>
         <FormItem label="是否保价" hasFeedback {...formItemLayout}>
           {getFieldDecorator('insured', {
-            initialValue: item.INSURED,
+            initialValue: 0,
             rules: [
               {
                 required: false,
