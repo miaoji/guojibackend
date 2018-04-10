@@ -78,7 +78,12 @@ const Login = ({
   }
 
   return (
-    <div>
+    <div className={styles.login}>
+      {/* <div id="background">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+      </div> */}
       <canvas id="background"></canvas>
       <div className={styles.form}>
         <h3 className={styles.switch} onClick={switchLoginType}>

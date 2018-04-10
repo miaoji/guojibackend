@@ -16,7 +16,7 @@ export default {
   },
   subscriptions: {
 
-    setup ({ dispatch }) {
+    setup({ dispatch }) {
       dispatch({ type: 'query' })
       let tid
       window.onresize = () => {
@@ -30,7 +30,7 @@ export default {
   },
   effects: {
 
-    *query ({ payload }, { put }) {
+    *query({ payload }, { put }) {
       const token = storage({ key: 'token' })
       if (token && token.length > 0) {
         let user = storage({ key: 'user' })
@@ -45,18 +45,19 @@ export default {
       } else {
         if (config.openPages && config.openPages.indexOf(location.pathname) < 0) {
           let from = location.pathname
-          window.location = `${location.origin}/login?from=${from}`
+          window.location.href = `/login?from=${from}`
+          // yield put(routerRedux.push(`/login?from=${from}`))
         }
       }
     },
 
-    *logout ({ payload }, { put }) {
+    *logout({ payload }, { put }) {
       storage({ type: 'clear' })
       yield put({ type: 'query' })
     },
 
-    *changeNavbar ({ payload }, { put, select }) {
-      const { app } = yield(select(_ => _))
+    *changeNavbar({ payload }, { put, select }) {
+      const { app } = yield (select(_ => _))
       const isNavbar = document.body.clientWidth < 769
       if (isNavbar !== app.isNavbar) {
         yield put({ type: 'handleNavbar', payload: isNavbar })
@@ -65,14 +66,14 @@ export default {
 
   },
   reducers: {
-    querySuccess (state, { payload: user }) {
+    querySuccess(state, { payload: user }) {
       return {
         ...state,
         user,
       }
     },
 
-    switchSider (state) {
+    switchSider(state) {
       storage({
         key: 'siderFold',
         val: !state.siderFold,
@@ -84,7 +85,7 @@ export default {
       }
     },
 
-    switchTheme (state) {
+    switchTheme(state) {
       storage({
         key: 'darkTheme',
         val: !state.darkTheme,
@@ -96,21 +97,21 @@ export default {
       }
     },
 
-    switchMenuPopver (state) {
+    switchMenuPopver(state) {
       return {
         ...state,
         menuPopoverVisible: !state.menuPopoverVisible,
       }
     },
 
-    handleNavbar (state, { payload }) {
+    handleNavbar(state, { payload }) {
       return {
         ...state,
         isNavbar: payload,
       }
     },
 
-    handleNavOpenKeys (state, { payload: navOpenKeys }) {
+    handleNavOpenKeys(state, { payload: navOpenKeys }) {
       return {
         ...state,
         ...navOpenKeys,
