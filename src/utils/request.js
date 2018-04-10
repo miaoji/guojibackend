@@ -5,7 +5,7 @@ import jsonp from 'jsonp'
 import lodash from 'lodash'
 import pathToRegexp from 'path-to-regexp'
 import { message } from 'antd'
-import { browserHistory } from 'dva/router'
+// import { browserHistory } from 'dva/router'
 import { storage } from '../utils'
 
 const fetch = (options) => {
@@ -97,11 +97,11 @@ const fetch = (options) => {
   }
 }
 
-export default function request (options) {
+export default function request(options) {
   // 判断如果不是登陆页 在localStorage 中没有token的话  就跳转到login页面上
   if (window.location.pathname !== '/login') {
     const token = storage({ key: 'token' })
-    if (!token || token === '') { return browserHistory.push('/login') }
+    if (!token || token === '') { window.location.href = '/login' }
   }
   return fetch(options).then((response) => {
     const { statusText, status } = response

@@ -194,7 +194,8 @@ const List = ({
             <p>收件人:{record.RECEIVER_NAME || '暂无'}</p>
             <p>收件人证件号:{record.RECEIVER_ID || '暂无'}</p>
             <p>预付总金额:{record.TOTAL_FEE / 100}元</p>
-            <p>产品类型:{record.PRODUCT_TYPE || '暂无'}</p>
+            <p>包裹类型:{record.packageName || '暂无'}</p>
+            <p>产品类型:{record.productName || '暂无'}</p>
             <p>重量:{record.WEIGHT}kg</p>
             <p>寄件地址: {record.SENDER_ADDRESS || '暂无'}</p>
             <p>中转地址: {record.TRANSFER_ADDRESS || '暂无'}</p>
