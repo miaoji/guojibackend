@@ -264,7 +264,7 @@ const addModal = ({
                 message: '请选择寄件人省份!',
               },
             ],
-          })(<Select placeholder="请选择寄件人省份" onChange={provinceChange}>{selectProvince}</Select>)}
+          })(<Select showSearch placeholder="请选择寄件人省份" onChange={provinceChange}>{selectProvince}</Select>)}
         </FormItem>
         <FormItem label="寄件人市级" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderCity', {
@@ -275,7 +275,7 @@ const addModal = ({
                 message: '请选择寄件人市级!',
               },
             ],
-          })(<Select disabled={cityDis} placeholder="请选择寄件人市级" onChange={cityChange}>{selectCity}</Select>)}
+          })(<Select showSearch disabled={cityDis} placeholder="请选择寄件人市级" onChange={cityChange}>{selectCity}</Select>)}
         </FormItem>
         <FormItem label="寄件人县区" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderCounty', {
@@ -286,7 +286,7 @@ const addModal = ({
                 message: '请选择寄件人县区!',
               },
             ],
-          })(<Select disabled={districtDis} placeholder="请选择寄件人县区！">{selectCounty}</Select>)}
+          })(<Select showSearch disabled={districtDis} placeholder="请选择寄件人县区！">{selectCounty}</Select>)}
         </FormItem>
         <FormItem label="寄件人地址" hasFeedback {...formItemLayout}>
           {getFieldDecorator('senderAddress', {
@@ -342,7 +342,7 @@ const addModal = ({
                 message: '请选择收件人国家!',
               },
             ],
-          })(<Select onChange={receiverCountryChange} placeholder="请选择收件人国家">{selectNation}</Select>)}
+          })(<Select showSearch onChange={receiverCountryChange} placeholder="请选择收件人国家">{selectNation}</Select>)}
         </FormItem>
         <FormItem label="收件人地址" hasFeedback {...formItemLayout}>
           {getFieldDecorator('receiverAddress', {
