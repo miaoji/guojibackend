@@ -304,7 +304,7 @@ const addModal = ({
             initialValue: item.SENDER_POSTCODE,
             rules: [
               {
-                required: true,
+                required: type !== 'bengal',
                 message: '请输入寄件人邮编!',
               },
             ],
