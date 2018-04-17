@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { query, create, refuse, remove, update } from '../services/audit'
+import { query, create, remove, update } from '../services/audit'
 import { pageModel } from './common'
 import { storage } from '../utils'
 
