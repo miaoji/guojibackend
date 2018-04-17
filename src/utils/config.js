@@ -4,11 +4,11 @@ let APIV3 = ''
 
 // 重构API
 // 线下地址
-// APIV3 = 'http://192.168.231.239:8077'
+APIV3 = 'http://192.168.231.239:8077'
 // 线上地址(测试)
 // APIV3 = 'http://api.didalive.net/mzkd'
 // 正式地址(生产)
-APIV3 = 'http://api.mingz-tech.com'
+// APIV3 = 'http://api.mingz-tech.com'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -213,6 +213,7 @@ module.exports = {
       create: `${APIV3}/api/route/add`,
       update: `${APIV3}/api/route/modById`,
       hide: `${APIV3}/api/route/delById`,
-    }
+    },
+    websockt: 'ws://api.mingz-tech.com/webSocket/'
   }
 }

@@ -1,5 +1,6 @@
 import './index.html'
 import 'babel-polyfill'
+import orderWebsocket from './utils/notification'
 import dva from 'dva'
 import createLoading from 'dva-loading'
 import { browserHistory } from 'dva/router'
@@ -21,6 +22,8 @@ app.model(require('./models/app'))
 
 // 3. Router
 app.router(require('./router'))
+
+orderWebsocket();
 
 // 4. Start
 app.start('#root')
