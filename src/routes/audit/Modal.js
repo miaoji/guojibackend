@@ -44,6 +44,8 @@ const modal = ({
     onOk: handleOk,
   }
 
+  const statusOption = item.type === 2 ? [<Radio value={1}>允许提现</Radio>, <Radio value={2}>拒绝</Radio>] : [<Radio value={0}>未提现</Radio>, <Radio value={1}>提现成功</Radio>, <Radio value={2}>拒绝</Radio>]
+
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
@@ -57,11 +59,7 @@ const modal = ({
               },
             ],
           })(
-            <Radio.Group onChange={handleChange}>
-              <Radio value={0}>未提现</Radio>
-              <Radio value={1}>提现成功</Radio>
-              <Radio value={2}>拒绝</Radio>
-            </Radio.Group>
+            <Radio.Group onChange={handleChange}>{statusOption}</Radio.Group>
           )}
         </FormItem>
         <div style={{ display: disReasonInput ? 'none' : 'block' }}>

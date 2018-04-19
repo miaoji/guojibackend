@@ -51,6 +51,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         const realText = {
           0: '微信',
           1: '支付宝',
+          2: '银行卡'
         }
         return <span>{realText[text]}</span>
       },
