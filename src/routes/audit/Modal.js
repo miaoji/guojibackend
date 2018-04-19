@@ -51,7 +51,7 @@ const modal = ({
       <Form layout="horizontal">
         <FormItem label="状态" hasFeedback {...formItemLayout}>
           {getFieldDecorator('status', {
-            initialValue: item.status,
+            initialValue: item.status || 1,
             rules: [
               {
                 required: true,
