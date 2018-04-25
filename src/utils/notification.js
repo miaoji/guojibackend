@@ -1,7 +1,11 @@
 import { routerRedux } from 'dva/router';
 
 function orderWebsocket () {
-  const state = `admin1`
+  let user = window.localStorage.getItem('guojipc_user')
+  if (!user) return
+  let userid = JSON.parse(user).id
+  const state = `admin${userid}`
+  console.log('state', state)
   const webSocketUrl = `ws://api.mingz-tech.com/webSocket/${state}`
   // const webSocketUrl = `ws://192.168.231.239:8077/webSocket/${state}`
   const websocket = new WebSocket(webSocketUrl)
