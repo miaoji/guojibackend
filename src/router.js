@@ -288,6 +288,14 @@ const Routers = function ({ history, app }) {
             }, 'locus')
           },
         }, {
+          path: 'userinfo',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/userinfo'))
+              cb(null, require('./routes/userinfo/'))
+            }, 'userinfo')
+          },
+        }, {
           path: 'spreadqr',
           getComponent(nextState, cb) {
             require.ensure([], require => {
