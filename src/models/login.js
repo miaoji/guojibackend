@@ -2,6 +2,8 @@ import { accountLogin, getVerifyCodeByMobile, mobileLogin } from '../services/lo
 import { routerRedux } from 'dva/router'
 import { message } from 'antd'
 import { queryURL, storage } from '../utils'
+import orderWebsocket from '../utils/notification'
+
 // import md5 from 'js-md5'
 import { api } from '../utils/config'
 
@@ -64,6 +66,7 @@ export default {
         } else {
           yield put(routerRedux.push('/dashboard'))
         }
+        orderWebsocket();
       } else {
         yield put({
           type: 'handleRefreshImage',
@@ -129,6 +132,7 @@ export default {
         } else {
           yield put(routerRedux.push('/dashboard'))
         }
+        orderWebsocket();
       } else {
         throw data.msg || data
       }
