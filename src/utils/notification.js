@@ -12,7 +12,6 @@ function orderWebsocket () {
   websocket.onmessage = async function (event) {
     try {
       let eventData = event.data
-      // console.log('webSocket event data', event)
       console.log('webSocket event data sting', eventData)
       eventData = JSON.parse(eventData);
       console.log('webSocket event data', eventData)
