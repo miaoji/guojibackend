@@ -62,7 +62,7 @@ const modal = ({
             rules: [
               {
                 required: true,
-                pattern: /^[A-Za-z]{0,}([\s]{1}[A-Za-z]{1,}){0,}$/,
+                // pattern: /^[A-Za-z]{0,}([\s]{1}[A-Za-z]{1,}){0,}$/,
                 message: '请输入登录名(用于账号密码登陆)!',
               },
             ],
