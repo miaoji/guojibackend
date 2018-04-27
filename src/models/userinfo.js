@@ -1,4 +1,5 @@
 import modelExtend from 'dva-model-extend'
+import { routerRedux } from 'dva/router'
 import { message } from 'antd'
 import { create, update, remove, query } from '../services/userinfo'
 import { pageModel } from './common'
@@ -28,6 +29,11 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
+      let user = window.localStorage.guojipc_user
+      user = user ? JSON.parse(window.localStorage.guojipc_user) : ''
+      if (user.userName !== 'admin') {
+        yield put(routerRedux.push('/404'))
+      }
       const data = yield call(query, payload)
       if (data.code === 200) {
         yield put({
