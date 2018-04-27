@@ -50,7 +50,7 @@ const modal = ({
             rules: [
               {
                 required: true,
-                pattern: /^[\u4e00-\u9fa5]{0,}$/,
+                // pattern: /^[\u4e00-\u9fa5]{0,}$/,
                 message: '请输入昵称(中文汉字)!',
               },
             ],
@@ -84,7 +84,7 @@ const modal = ({
             initialValue: item.mobile,
             rules: [
               {
-                required: true,
+                // required: true,
                 pattern: /^1\d{10}$/,
                 message: '请输入手机号(用于手机号登陆)!',
               },

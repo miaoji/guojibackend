@@ -1,5 +1,5 @@
 import { accountLogin, getVerifyCodeByMobile, mobileLogin } from '../services/login'
-import { routerRedux } from 'dva/router'
+// import { routerRedux } from 'dva/router'
 import { message } from 'antd'
 import { queryURL, storage } from '../utils'
 import orderWebsocket from '../utils/notification'
@@ -21,7 +21,7 @@ export default {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/login') {
           const loginUUID = `mz_uuid${new Date().getTime()}`
@@ -41,7 +41,7 @@ export default {
     /**
      * 帐号登录
      */
-    *accountLogin ({ payload }, { put, call, select }) {
+    *accountLogin({ payload }, { put, call, select }) {
       yield put({ type: 'showLoginLoading' })
       const loginUUID = yield select(({ login }) => login.loginUUID)
       payload.uuid = loginUUID
@@ -62,11 +62,13 @@ export default {
         const from = queryURL('from')
         yield put({ type: 'app/query' })
         if (from) {
-          yield put(routerRedux.push(from))
+          // yield put(routerRedux.push(from))
+          window.location.href = from
         } else {
-          yield put(routerRedux.push('/dashboard'))
+          // yield put(routerRedux.push('/dashboard'))
+          window.location.href = '/'
         }
-        orderWebsocket();
+        orderWebsocket()
       } else {
         yield put({
           type: 'handleRefreshImage',
@@ -77,7 +79,7 @@ export default {
     /**
      * 刷新图片验证码
      */
-    *handleRefreshImage ({ payload }, { put }) {
+    *handleRefreshImage({ payload }, { put }) {
       const loginUUID = `mz_uuid${new Date().getTime()}`
       yield put({
         type: 'setVerifyImage',
@@ -90,7 +92,7 @@ export default {
     /**
      * 根据手机号获取验证码
      */
-    *getVerifyCodeByMobile ({ payload }, { put, call }) {
+    *getVerifyCodeByMobile({ payload }, { put, call }) {
       yield put({ type: 'showCodeLoading' })
       const data = yield call(getVerifyCodeByMobile, payload)
       yield put({ type: 'hideCodeLoading' })
@@ -109,7 +111,7 @@ export default {
     /**
      * 根据手机号验证码登录
      */
-    *mobileLogin ({ payload }, { put, call }) {
+    *mobileLogin({ payload }, { put, call }) {
       yield put({ type: 'showLoginLoading' })
       const data = yield call(mobileLogin, payload)
       yield put({ type: 'hideLoginLoading' })
@@ -128,51 +130,53 @@ export default {
         const from = queryURL('from')
         yield put({ type: 'app/query' })
         if (from) {
-          yield put(routerRedux.push(from))
+          // yield put(routerRedux.push(from))
+          window.location.href = from
         } else {
-          yield put(routerRedux.push('/dashboard'))
+          // yield put(routerRedux.push('/dashboard'))
+          window.location.href = '/'
         }
-        orderWebsocket();
+        orderWebsocket()
       } else {
         throw data.msg || data
       }
     },
   },
   reducers: {
-    showLoginLoading (state) {
+    showLoginLoading(state) {
       return {
         ...state,
         loginLoading: true,
       }
     },
-    hideLoginLoading (state) {
+    hideLoginLoading(state) {
       return {
         ...state,
         loginLoading: false,
       }
     },
-    showCodeLoading (state) {
+    showCodeLoading(state) {
       return {
         ...state,
         CodeLoading: true,
       }
     },
-    hideCodeLoading (state) {
+    hideCodeLoading(state) {
       return {
         ...state,
         loginLoading: false,
       }
     },
-    setVerifyImage (state, { payload }) {
+    setVerifyImage(state, { payload }) {
       const { loginUUID, verifyImage } = payload
       return { ...state, loginUUID, verifyImage }
     },
-    switchLoginType (state, { payload }) {
+    switchLoginType(state, { payload }) {
       let { loginType } = payload
       loginType = loginType === 'account' ? 'mobile' : 'account'
       return { ...state, loginType }
     },
-    setCodeAuth (state, { payload }) {
+    setCodeAuth(state, { payload }) {
       const getCodeAuth = payload.getCodeAuth
       return { ...state, getCodeAuth }
     },
