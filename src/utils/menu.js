@@ -1,3 +1,5 @@
+let user = window.localStorage.guojipc_user
+user = user ? JSON.parse(window.localStorage.guojipc_user) : ''
 module.exports = [
   {
     id: 1,
@@ -10,6 +12,13 @@ module.exports = [
     name: '微信用户',
     icon: 'message',
     router: '/wxuser',
+  }, {
+    id: 10,
+    bpid: 1,
+    mpid: user.userName === 'admin' ? 0 : -1,
+    name: '登陆用户管理',
+    icon: 'user',
+    router: '/userinfo',
   }, {
     id: 3,
     bpid: 1,
