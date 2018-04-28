@@ -79,12 +79,7 @@ const Login = ({
 
   return (
     <div className={styles.login}>
-      {/* <div id="background">
-        <div id="stars"></div>
-        <div id="stars2"></div>
-        <div id="stars3"></div>
-      </div> */}
-      <canvas id="background"></canvas>
+      <div className={styles.background}></div>
       <div className={styles.form}>
         <h3 className={styles.switch} onClick={switchLoginType}>
           {
@@ -125,7 +120,7 @@ const Login = ({
                     <img src={verifyImage} alt="验证码" className={styles.verifyimage} />
                   </Col>
                   <Col span={8}>
-                    <Button className={styles.button} type="primary" size="small" onClick={handleRefreshImage} >刷新</Button>
+                    <Button className={styles.button} type="primary" size="large" onClick={handleRefreshImage} >刷新</Button>
                   </Col>
                 </Row>
               </FormItem>
@@ -140,7 +135,7 @@ const Login = ({
                 })(<Input size="large" onPressEnter={handleOk} placeholder="验证码" />)}
               </FormItem>
               <Row>
-                <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>
+                <Button className={styles.button} type="primary" size="large" onClick={handleOk} loading={loginLoading}>
                   登录
                 </Button>
               </Row>
@@ -159,10 +154,9 @@ const Login = ({
               </FormItem>
               <FormItem
                 hasFeedback
-                extra="请输入获取到的验证码"
               >
                 <Row gutter={8}>
-                  <Col span={16}>
+                  <Col span={10}>
                     {getFieldDecorator('code', {
                       rules: [
                         {
@@ -170,17 +164,18 @@ const Login = ({
                           message: '请输入验证码',
                         },
                       ],
-                    })(<Input size="large" type="number" onPressEnter={handleOk} placeholder="验证码" />)}
+                    })(<Input size="large" onPressEnter={handleOk} placeholder="验证码" />)}
                   </Col>
-                  <Col span={8}>
-                    <Button size="large" onClick={handleGetCode} disabled={!getCodeAuth} loading={codeLoading}>
+                  <Col span={14}>
+                    <Button className={styles.codeButton} size="large" onClick={handleGetCode} disabled={!getCodeAuth} loading={codeLoading}>
                       {getCodeAuth ? '点击获取' : '30s后重新获取'}
                     </Button>
                   </Col>
                 </Row>
               </FormItem>
+              <div className={styles.textinfo}>请输入获取到的验证码后登陆</div>
               <Row>
-                <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>
+                <Button className={styles.button} type="primary" size="large" onClick={handleOk} loading={loginLoading}>
                   登录
                 </Button>
               </Row>
