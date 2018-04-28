@@ -251,16 +251,12 @@ const Order = ({ location, dispatch, order, loading }) => {
         }
       })
     },
-    onChange(page, filter) {
-      const value = {
-        status: filter.STATUS ? filter.STATUS[0] : undefined,
-      }
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
         query: {
           ...query,
-          ...value,
           page: page.current,
           pageSize: page.pageSize
         }
