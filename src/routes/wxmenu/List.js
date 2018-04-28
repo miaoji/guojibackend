@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message, Button } from 'antd'
+import { Table, Modal } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { time } from '../../utils'
 import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
@@ -20,7 +19,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       case '2':
         confirm({
           title: '确定要删除吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.id)
           },
         })
@@ -28,13 +27,6 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       default:
         break
     }
-  }
-
-  const copyUrl = (record, e) => {
-    const href = `http://www.mingz-tech.com/wechat/#/send?appid=${record.appid}`
-    let temp = window.prompt('使用Ctrl+C复制到剪切板', href)
-    temp.select()
-    document.execCommand('copy', false)
   }
 
   const columns = [

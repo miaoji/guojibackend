@@ -43,6 +43,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '产品类型',
       dataIndex: 'product_name',
       key: 'product_name',
+      width: 260
     }, {
       title: '首重价格',
       dataIndex: 'INIT_PRICE',
