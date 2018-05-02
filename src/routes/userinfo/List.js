@@ -49,7 +49,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       render: (text) => {
         const realText = {
           1: '男',
-          0: 'nv'
+          0: '女'
         }
         return <span>{realText[text]}</span>
       }
