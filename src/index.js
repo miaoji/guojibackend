@@ -23,7 +23,7 @@ app.model(require('./models/app'))
 // 3. Router
 app.router(require('./router'))
 
-orderWebsocket();
+orderWebsocket()
 
 // 4. Start
 app.start('#root')
