@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove, query } from '../services/locus'
+import { create, update, remove, query, pushMsg } from '../services/locus'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -101,6 +101,16 @@ export default modelExtend(pageModel, {
         yield put({ type: 'query' })
       } else {
         throw data.msg || data
+      }
+    },
+
+    *pushMsg({ payload }, { call }) {
+      console.log('payload', payload)
+      const data = yield call(pushMsg, payload)
+      if (data.code === 200) {
+        message.success('推送成功')
+      } else {
+        throw data.msg || '网络连接失败'
       }
     },
 

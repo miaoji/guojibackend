@@ -1,14 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-// import { FilterItem } from '../../components'
-import { Form, Button, Row, Col
-  // DatePicker, Input
-} from 'antd'
-// import city from '../../utils/city'
-
-// const Search = Input.Search
-// const { RangePicker } = DatePicker
+import { Form, Button, Row, Col } from 'antd'
 
 const ColProps = {
   xs: 24,
@@ -28,7 +21,6 @@ const Filter = ({
   onFilterChange,
   filter,
   form: {
-    // getFieldDecorator,
     getFieldsValue,
     setFieldsValue,
   },
@@ -62,14 +54,6 @@ const Filter = ({
     handleSubmit()
   }
 
-  // const handleChange = (key, values) => {
-  //   let fields = getFieldsValue()
-  //   fields[key] = values
-  //   fields = handleFields(fields)
-  //   onFilterChange(fields)
-  // }
-  // const { name } = filter
-
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
     initialCreateTime[0] = moment(filter.createTime[0])
@@ -80,22 +64,11 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      {/* <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按名称搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
-      <Col style={{ display: 'none' }} {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
-        <FilterItem label="创建时间">
-          {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
-          )}
-        </FilterItem>
-      </Col> */}
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            {/* <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button> */}
             <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
+            <Button size="large" type="primary" onClick={onAdd}>新增</Button>
           </div>
           <div style={{ display: 'block' }}>
           </div>

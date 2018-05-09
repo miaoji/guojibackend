@@ -131,20 +131,18 @@ const addModal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <div style={{ display: type === 'create' ? 'block' : 'none' }}>
-          <FormItem style={{ marginTop: '6px' }} label="微信用户" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('wxUserId', {
-              initialValue: item.wxUserId,
-              rules: [
-                {
-                  required: false,
-                  message: '请选择微信用户!',
-                },
-              ],
-            })(<Select showSearch placeholder="点击选择可按用户名和手机号码搜索">{selectWeChatUser}</Select>)}
-          </FormItem>
-          <hr className={classnames({ [styles.hr]: true })} />
-        </div>
+        <FormItem style={{ marginTop: '6px' }} label="微信用户" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('wxUserId', {
+            initialValue: item.wxUserId,
+            rules: [
+              {
+                required: false,
+                message: '请选择微信用户!',
+              },
+            ],
+          })(<Select showSearch placeholder="点击选择可按用户名和手机号码搜索">{selectWeChatUser}</Select>)}
+        </FormItem>
+        <hr className={classnames({ [styles.hr]: true })} />
         <FormItem label="包裹长度(cm)" hasFeedback {...formItemLayout}>
           {getFieldDecorator('length', {
             initialValue: item.LENGTH,

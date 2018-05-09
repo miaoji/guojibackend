@@ -543,9 +543,7 @@ export default modelExtend(pageModel, {
 
     *bindOrderNo({ payload }, { call, put, select }) {
       const id = yield select(({ order }) => order.currentItem.ID)
-      console.log('id', id)
       const data = yield call(update, { id, MCBDNo: payload.MCBDNo })
-      console.log('data', data)
       if (data.code === 200) {
         message.success('关联成功')
         yield put({

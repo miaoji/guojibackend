@@ -41,6 +41,15 @@ const Locus = ({ location, dispatch, locus, loading }) => {
     loading: loading.effects['locus/query'],
     pagination,
     location,
+    onPushMsg(data) {
+      dispatch({
+        type: 'locus/pushMsg',
+        payload: {
+          data,
+          orderId: location.query.orderId
+        }
+      })
+    },
     onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({

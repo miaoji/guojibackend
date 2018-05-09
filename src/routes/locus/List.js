@@ -10,7 +10,7 @@ import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ location, onEditItem, onPushMsg, onDeleteItem, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -19,7 +19,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       case '2':
         confirm({
           title: '确定要删除吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.id)
           },
         })
@@ -27,6 +27,15 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       default:
         break
     }
+  }
+
+  const lickClick = (record) => {
+    confirm({
+      title: `您确定要将 \`${record.route}\` 这条消息推送给用户吗?`,
+      onOk() {
+        onPushMsg(record.route)
+      },
+    })
   }
 
   const columns = [
@@ -40,6 +49,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'routeTime',
       render: (text) => {
         return <span>{time.formatTime(text)}</span>
+      }
+    }, {
+      title: '推送操作',
+      dataIndex: 'option',
+      key: 'option',
+      render: (text, record) => {
+        return <span onClick={() => lickClick(record)} className={classnames({ [styles.link]: true })}>推送模板消息</span>
       }
     }, {
       title: '操作',
@@ -77,6 +93,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
+  onPushMsg: PropTypes.func,
   location: PropTypes.object,
 }
 

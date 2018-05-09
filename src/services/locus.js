@@ -26,10 +26,18 @@ export async function update (params) {
   })
 }
 
-export async function remove (params) {
+export async function remove(params) {
   return request({
     url: locus.hide,
     method: 'delete',
+    params,
+  })
+}
+
+export async function pushMsg(params) {
+  return request({
+    url: locus.pushMsg,
+    method: 'post',
     params,
   })
 }
