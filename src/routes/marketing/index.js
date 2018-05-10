@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-// import { Row, Col, Button, Popconfirm } from 'antd'
+// import { Row, Col, Button } from 'antd'
 import List from './List'
 import Filter from './Filter'
-import Modal from './Modal'
+import Modals from './Modal'
 
 const Marketing = ({ location, dispatch, marketing, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType } = marketing
+  const { list, pagination, currentItem, modalVisible, modalType, selectedRowKeys } = marketing
   const { pageSize } = pagination
 
   const modalProps = {
@@ -18,24 +18,25 @@ const Marketing = ({ location, dispatch, marketing, loading }) => {
     confirmLoading: loading.effects['boot/update'],
     title: `${modalType === 'create' ? '向所有用户发送代金券' : '修改微信菜单配置'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: `marketing/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'marketing/hideModal',
       })
     },
   }
+
   const listProps = {
     dataSource: list,
     loading: loading.effects['marketing/query'],
     pagination,
     location,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -46,13 +47,13 @@ const Marketing = ({ location, dispatch, marketing, loading }) => {
         },
       }))
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'marketing/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'marketing/showModal',
         payload: {
@@ -61,13 +62,33 @@ const Marketing = ({ location, dispatch, marketing, loading }) => {
         },
       })
     },
+    rowSelection: {
+      selectedRowKeys,
+      onChange: (keys) => {
+        dispatch({
+          type: 'marketing/updateState',
+          payload: {
+            selectedRowKeys: keys,
+          },
+        })
+      },
+    },
   }
 
   const filterProps = {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    selectedRowKeys,
+    handlePush() {
+      dispatch({
+        type: 'marketing/showModal',
+        payload: {
+          modalType: 'sendVoucher',
+        },
+      })
+    },
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -77,7 +98,7 @@ const Marketing = ({ location, dispatch, marketing, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/marketing',
         query: {
@@ -88,7 +109,7 @@ const Marketing = ({ location, dispatch, marketing, loading }) => {
         pathname: '/marketing',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'marketing/showModal',
         payload: {
@@ -96,30 +117,21 @@ const Marketing = ({ location, dispatch, marketing, loading }) => {
         },
       })
     },
-    onSubmitWeChat () {
+    onSubmitWeChat() {
       dispatch({
         type: 'marketing/setmenu',
       })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'marketing/switchIsMotion' })
     },
   }
-
-  // const handleDeleteItems = () => {
-  //   dispatch({
-  //     type: 'marketing/multiDelete',
-  //     payload: {
-  //       ids: selectedRowKeys,
-  //     },
-  //   })
-  // }
 
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
       <List {...listProps} />
-      {modalVisible && <Modal {...modalProps} />}
+      {modalVisible && <Modals {...modalProps} />}
     </div>
   )
 }

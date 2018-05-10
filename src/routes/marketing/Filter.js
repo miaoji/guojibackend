@@ -1,22 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-// import moment from 'moment'
-// import { FilterItem } from '../../components'
 import {
   Form,
   Button,
   Row,
   Col,
-  // DatePicker,
   Input,
-  // Cascader,
-  // Switch,
   Modal
 } from 'antd'
-// import city from '../../utils/city'
 
 const Search = Input.Search
-// const { RangePicker } = DatePicker
 const confirm = Modal.confirm
 
 const ColProps = {
@@ -36,7 +29,9 @@ const Filter = ({
   onAdd,
   onSubmitWeChat,
   onFilterChange,
+  handlePush,
   filter,
+  selectedRowKeys,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -76,16 +71,7 @@ const Filter = ({
     handleSubmit()
   }
 
-  // const handleChange = (key, values) => {
-  //   let fields = getFieldsValue()
-  //   fields[key] = values
-  //   fields = handleFields(fields)
-  //   onFilterChange(fields)
-  // }
-  const {
-    name,
-    // address
-  } = filter
+  const { name } = filter
 
   return (
     <Row gutter={24}>
@@ -106,6 +92,17 @@ const Filter = ({
           </div>
         </div>
       </Col>
+      <Col>
+        {
+          selectedRowKeys.length > 0
+          && <div style={{ textAlign: 'right', fontSize: 13 }}>
+            <div>
+              {`选中 ${selectedRowKeys.length} 个用户 `}
+              <Button type="primary" size="large" onClick={handlePush} style={{ marginLeft: 8 }}>发送代金券</Button>
+            </div>
+          </div>
+        }
+      </Col>
     </Row>
   )
 }
@@ -117,6 +114,8 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  selectedRowKeys: PropTypes.array,
+  handlePush: PropTypes.func
 }
 
 export default Form.create()(Filter)

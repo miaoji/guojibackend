@@ -170,7 +170,8 @@ module.exports = {
       setmenu: `${APIV3}/api/wxMenu/setMenu`
     },
     marketing: {
-      setmenu: `${APIV3}/api/wxCoupon/sendCouponAll`
+      setmenu: `${APIV3}/api/wxCoupon/sendCouponAll`,
+      sendVoucher: `${APIV3}/api/wxCoupon/sendCouponOne`,
     },
     // 集运订单
     cargo: {

@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove, query, setmenu } from '../services/marketings'
+import { create, update, remove, query, setmenu, sendVoucher } from '../services/marketings'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -10,10 +10,11 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    selectedRowKeys: [],
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/marketing') {
           dispatch({
@@ -27,7 +28,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put }) {
       const parentId = '0'
       const newPayload = { ...payload, parentId }
       const data = yield call(query, newPayload)
@@ -48,7 +49,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
+    *create({ payload }, { call, put }) {
       const newPayload = {
         coupon_stock_id: payload.name,
       }
@@ -62,7 +63,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
+    *update({ payload }, { select, call, put }) {
       const id = yield select(({ marketing }) => marketing.currentItem.id)
       const newPayload = {
         url: payload.url,
@@ -79,7 +80,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put }) {
+    *'delete'({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')
@@ -89,7 +90,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *setmenu ({ payload }, { call, put }) {
+    *setmenu({ payload }, { call, put }) {
       const data = yield call(setmenu)
       if (data.code === 200) {
         message.success('发送优惠卷成功')
@@ -99,15 +100,36 @@ export default modelExtend(pageModel, {
       }
     },
 
+    *sendVoucher({ payload }, { call, put, select }) {
+      const wxUserIds = yield select(({ marketing }) => marketing.selectedRowKeys)
+      console.log('payload', payload)
+      const data = yield call(sendVoucher, {
+        wxUserIds: wxUserIds.toString(),
+        coupon_stock_id: payload.name,
+        couponMoney: payload.couponMoney
+      })
+      if (data.code === 200) {
+        message.success('发送优惠卷成功')
+        yield put({ type: 'query' })
+        yield put({
+          type: 'updateState', payload: {
+            selectedRowKeys: []
+          }
+        })
+      } else {
+        throw data.msg || data
+      }
+    },
+
   },
 
   reducers: {
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 

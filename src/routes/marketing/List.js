@@ -1,48 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  // Menu,
-  Table,
-  // Modal,
-  // Icon,
-  // message,
-  // Button
-} from 'antd'
+import { Table } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
-// import { DropOption } from '../../components'
-// import { time } from '../../utils'
-// import { Link } from 'dva/router'
-
-// const confirm = Modal.confirm
 
 const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
-  // const handleMenuClick = (record, e) => {
-  //   switch (e.key) {
-  //     case '1':
-  //       onEditItem(record)
-  //       break
-  //     case '2':
-  //       confirm({
-  //         title: '确定要删除吗?',
-  //         onOk() {
-  //           onDeleteItem(record.id)
-  //         },
-  //       })
-  //       break
-  //     default:
-  //       break
-  //   }
-  // }
-
-  // const copyUrl = (record, e) => {
-  //   const href = `http://www.mingz-tech.com/wechat/#/send?appid=${record.appid}`
-  //   let temp = window.prompt('使用Ctrl+C复制到剪切板', href)
-  //   temp.select()
-  //   document.execCommand('copy', false)
-  // }
-
   const columns = [
     {
       title: '头像',
@@ -82,14 +45,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       render: (text) => {
         return <span>{text || '无'}</span>
       },
-    }, /*{
-      title: '操作',
-      key: 'operation',
-      width: 100,
-      render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' },]} />
-      },
-    },*/
+    },
   ]
 
   const getBodyWrapperProps = {

@@ -19,7 +19,6 @@ export async function create(params) {
 }
 
 export async function update(params) {
-  return
   return request({
     url: wxmenu.update,
     method: 'post',
@@ -28,7 +27,6 @@ export async function update(params) {
 }
 
 export async function remove(params) {
-  return
   return request({
     url: wxmenu.hide,
     method: 'delete',
@@ -37,9 +35,16 @@ export async function remove(params) {
 }
 
 export async function setmenu(params) {
-  return
   return request({
     url: marketing.setmenu,
+    method: 'post',
+    params,
+  })
+}
+
+export async function sendVoucher(params) {
+  return request({
+    url: marketing.sendVoucher,
     method: 'post',
     params,
   })

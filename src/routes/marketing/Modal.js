@@ -3,15 +3,10 @@ import PropTypes from 'prop-types'
 import {
   Form,
   Input,
-  // InputNumber,
-  // Radio,
   Modal,
-  // Cascader
 } from 'antd'
-// import city from '../../utils/city'
 
 const FormItem = Form.Item
-// const TextArea = Input
 
 const formItemLayout = {
   labelCol: {
@@ -51,14 +46,13 @@ const modal = ({
     onOk: handleOk,
   }
 
-  // const paramDisabled = type === 'update'
+  console.log('type', type)
 
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
         <FormItem label="优惠券ID" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
-            initialValue: item.name,
             rules: [
               {
                 required: true,
@@ -68,6 +62,19 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
+        <div style={{ display: (type === 'sendVoucher' ? 'block' : 'none') }}>
+          <FormItem label="优惠券金额" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('couponMoney', {
+              rules: [
+                {
+                  required: true,
+                  // pattern: /^[\u4e00-\u9fa5]{0,}$/,
+                  message: '请输入优惠券金额!',
+                },
+              ],
+            })(<Input />)}
+          </FormItem>
+        </div>
       </Form>
     </Modal>
   )
