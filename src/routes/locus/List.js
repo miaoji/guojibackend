@@ -33,7 +33,7 @@ const List = ({ location, onEditItem, onPushMsg, onDeleteItem, ...tableProps }) 
     confirm({
       title: `您确定要将 \`${record.route}\` 这条消息推送给用户吗?`,
       onOk() {
-        onPushMsg(record.route)
+        onPushMsg({ data: record.route, routeId: record.id })
       },
     })
   }
@@ -49,6 +49,16 @@ const List = ({ location, onEditItem, onPushMsg, onDeleteItem, ...tableProps }) 
       key: 'routeTime',
       render: (text) => {
         return <span>{time.formatTime(text)}</span>
+      }
+    }, {
+      title: '推送状态',
+      dataIndex: 'operationNumber',
+      key: 'operationNumber',
+      render: (text) => {
+        if (text) {
+          return <span>已推送</span>
+        }
+        return <span>未推送</span>
       }
     }, {
       title: '推送操作',

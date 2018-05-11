@@ -121,6 +121,27 @@ export default modelExtend(pageModel, {
       }
     },
 
+    *pushMsgByUser({ payload }, { call, put, select }) {
+      const wxUserIds = yield select(({ marketing }) => marketing.currentItem.ID)
+      console.log('payload', payload)
+      const data = yield call(sendVoucher, {
+        wxUserIds: wxUserIds.toString(),
+        coupon_stock_id: payload.name,
+        couponMoney: payload.couponMoney
+      })
+      if (data.code === 200) {
+        message.success('发送优惠卷成功')
+        yield put({ type: 'query' })
+        yield put({
+          type: 'updateState', payload: {
+            selectedRowKeys: []
+          }
+        })
+      } else {
+        throw data.msg || data
+      }
+    },
+
   },
 
   reducers: {

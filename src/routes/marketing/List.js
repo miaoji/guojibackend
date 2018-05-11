@@ -5,7 +5,7 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ location, onPushMsgByUser, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
       title: '头像',
@@ -45,7 +45,14 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       render: (text) => {
         return <span>{text || '无'}</span>
       },
-    },
+    }, {
+      title: '操作',
+      dataIndex: 'option',
+      key: 'option',
+      render: (text, record) => {
+        return <span onClick={() => onPushMsgByUser(record)} className={classnames({ [styles.link]: true })}>发送优惠券</span>
+      }
+    }
   ]
 
   const getBodyWrapperProps = {
@@ -81,6 +88,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
+  onPushMsgByUser: PropTypes.func,
   location: PropTypes.object,
 }
 

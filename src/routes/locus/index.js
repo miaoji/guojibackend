@@ -45,7 +45,7 @@ const Locus = ({ location, dispatch, locus, loading }) => {
       dispatch({
         type: 'locus/pushMsg',
         payload: {
-          data,
+          ...data,
           orderId: location.query.orderId
         }
       })

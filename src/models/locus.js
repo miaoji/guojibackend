@@ -104,11 +104,11 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *pushMsg({ payload }, { call }) {
-      console.log('payload', payload)
+    *pushMsg({ payload }, { call, put }) {
       const data = yield call(pushMsg, payload)
       if (data.code === 200) {
         message.success('推送成功')
+        yield put({ type: 'query' })
       } else {
         throw data.msg || '网络连接失败'
       }

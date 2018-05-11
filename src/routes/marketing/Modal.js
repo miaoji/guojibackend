@@ -62,7 +62,7 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <div style={{ display: (type === 'sendVoucher' ? 'block' : 'none') }}>
+        <div style={{ display: ((type === 'sendVoucher' || type === 'pushMsgByUser') ? 'block' : 'none') }}>
           <FormItem label="优惠券金额" hasFeedback {...formItemLayout}>
             {getFieldDecorator('couponMoney', {
               rules: [

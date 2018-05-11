@@ -47,6 +47,15 @@ const Marketing = ({ location, dispatch, marketing, loading }) => {
         },
       }))
     },
+    onPushMsgByUser(item) {
+      dispatch({
+        type: 'marketing/showModal',
+        payload: {
+          modalType: 'pushMsgByUser',
+          currentItem: item,
+        },
+      })
+    },
     onDeleteItem(id) {
       dispatch({
         type: 'marketing/delete',
