@@ -16,8 +16,8 @@ APIV3 = 'http://192.168.231.239:8077'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
-  APIV3 = 'http://api.mingz-tech.com'
-  // APIV3 = 'http://api.didalive.net/mzkd'
+  // APIV3 = 'http://api.mingz-tech.com'
+  APIV3 = 'http://api.didalive.net/mzkd'
 }
 
 module.exports = {
