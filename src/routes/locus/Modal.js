@@ -104,9 +104,10 @@ const modal = ({
             </tr>
             {
               locusDate.map((val) => {
+                console.log('val', val)
                 return (<tr>
                   <td>{val.route}</td>
-                  <td>{val.routeTime._d.getTime()}</td>
+                  <td>{val.routeTime.format('YYYY-MM-DD HH:mm:ss')}</td>
                 </tr>)
               })
             }

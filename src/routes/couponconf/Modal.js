@@ -47,8 +47,8 @@ const modal = ({
     <Modal {...modalOpts}>
       <Form layout="horizontal">
         <FormItem label="优惠券名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('content', {
-            initialValue: item.content,
+          {getFieldDecorator('coupon_name', {
+            initialValue: item.coupon_name,
             rules: [
               {
                 required: true,
@@ -59,8 +59,8 @@ const modal = ({
           })(<Input autosize="true" placeholder="请输入优惠券名称" />)}
         </FormItem>
         <FormItem label="优惠金额" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('content', {
-            initialValue: item.content,
+          {getFieldDecorator('coupon_money', {
+            initialValue: item.coupon_money,
             rules: [
               {
                 required: true,
@@ -71,8 +71,8 @@ const modal = ({
           })(<InputNumber style={{ width: '100%' }} autosize="true" placeholder="请输入优惠金额" />)}
         </FormItem>
         <FormItem label="优惠卷截止时间" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('content', {
-            initialValue: item.content,
+          {getFieldDecorator('expiry_date', {
+            initialValue: item.expiry_date,
             rules: [
               {
                 required: true,
@@ -89,8 +89,8 @@ const modal = ({
           />)}
         </FormItem>
         <FormItem label="优惠券使用门槛" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('content', {
-            initialValue: item.content,
+          {getFieldDecorator('coupon_threshold', {
+            initialValue: item.coupon_threshold,
             rules: [
               {
                 required: true,
@@ -101,8 +101,8 @@ const modal = ({
           })(<InputNumber style={{ width: '100%' }} autosize="true" placeholder="请输入优惠券使用门槛" />)}
         </FormItem>
         <FormItem label="生成规则(前缀)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('content', {
-            initialValue: item.content,
+          {getFieldDecorator('coupon_prefix', {
+            initialValue: item.coupon_prefix,
             rules: [
               {
                 required: true,
@@ -113,8 +113,8 @@ const modal = ({
           })(<Input autosize="true" placeholder="请输入生成规则(前缀)" />)}
         </FormItem>
         <FormItem label="生成规则(位数)" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('content', {
-            initialValue: item.content,
+          {getFieldDecorator('coupon_digit', {
+            initialValue: item.coupon_digit,
             rules: [
               {
                 required: true,
@@ -124,9 +124,21 @@ const modal = ({
             ],
           })(<InputNumber style={{ width: '100%' }} autosize="true" placeholder="请输入生成规则(位数)" />)}
         </FormItem>
+        <FormItem label="优惠券数量" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('coupon_count', {
+            initialValue: item.coupon_count,
+            rules: [
+              {
+                required: true,
+                // pattern: /^[\u4e00-\u9fa5]{0,}$/,
+                message: '请输入优惠券数量!',
+              },
+            ],
+          })(<InputNumber style={{ width: '100%' }} autosize="true" placeholder="请输入优惠券数量" />)}
+        </FormItem>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('content', {
-            initialValue: item.content,
+          {getFieldDecorator('remark', {
+            initialValue: item.remark,
             rules: [
               {
                 required: false,

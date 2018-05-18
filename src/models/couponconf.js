@@ -47,6 +47,9 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
+      delete payload.key
+      payload.expiry_date = payload.expiry_date.unix()
+      console.log('payload', payload)
       const newPayload = {
         content: payload.parameter,
         name: payload.name,

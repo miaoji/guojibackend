@@ -43,20 +43,20 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'create_time',
     }, {
       title: '优惠金额',
-      dataIndex: 'create_time',
-      key: 'create_time',
+      dataIndex: 'create_time3',
+      key: 'create_time3',
     }, {
       title: '优惠卷状态',
-      dataIndex: 'create_time',
-      key: 'create_time',
+      dataIndex: 'create_time4',
+      key: 'create_time4',
     }, {
       title: '发放时间',
-      dataIndex: 'create_time',
-      key: 'create_time',
+      dataIndex: 'create_time2',
+      key: 'create_time2',
     }, {
       title: '截至时间',
-      dataIndex: 'create_time',
-      key: 'create_time',
+      dataIndex: 'create_time1',
+      key: 'create_time1',
     }, {
       title: '操作',
       key: 'operation',
