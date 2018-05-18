@@ -230,6 +230,21 @@ module.exports = {
       create: `${APIV3}/api/userInfo/add`,
       update: `${APIV3}/api/userInfo/modUserInfoById`,
       hide: `${APIV3}/api/userInfo/delUserInfoById`,
-    }
+    },
+
+    // 微信优惠券配置
+    couponconf: {
+      all: `${APIV3}/api/couponType/index`,
+      create: `${APIV3}/api/couponType/add`,
+      update: `${APIV3}/api/couponType/modcouponTypeById`,
+      hide: `${APIV3}/api/couponType/delcouponTypeById`,
+    },
+    // 微信优惠券配置
+    couponlog: {
+      all: `${APIV3}/api/userInfo/index`,
+      create: `${APIV3}/api/userInfo/add`,
+      update: `${APIV3}/api/userInfo/modUserInfoById`,
+      hide: `${APIV3}/api/userInfo/delUserInfoById`,
+    },
   }
 }

@@ -195,6 +195,22 @@ module.exports = [
     router: '/wxmenudetail',
   },
   {
+    id: 75,
+    bpid: 1,
+    mpid: 7,
+    name: '优惠券配置',
+    icon: 'setting',
+    router: '/couponconf',
+  },
+  {
+    id: 76,
+    bpid: 1,
+    mpid: 7,
+    name: '优惠券发放记录',
+    icon: 'setting',
+    router: '/couponlog',
+  },
+  {
     id: 8,
     name: '营销管理',
     icon: 'api',
