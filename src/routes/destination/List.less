@@ -1,0 +1,77 @@
+.p {
+  text-align: left;
+  padding-left: 22px;
+  p {
+    text-align: left;
+    color: lightcoral;
+    padding: 10px;
+    white-space: nowrap;
+    display: inline-block;
+    width: 28%;
+  }
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  li {
+    width: 210px;
+    text-align: center;
+    // cursor: pointer;
+    height: 45px;
+    transition: all 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: solid 1px transparent;
+    justify-content: center;
+    // &:hover {
+    // }
+    div {
+      position: relative;
+      font-size: 14px;
+      min-width: 100px;
+      height: 32px;
+      cursor: default;
+      border: 1px #e5e5e5 solid;
+      line-height: 30px;
+      border-radius: 3px;
+      a {
+        span {
+          display: inline-block;
+          width: 100px;
+          white-space:nowrap;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          padding: 0px 10px;
+        }
+        padding-right: 40px;
+      }
+      // padding: 0px 10px;
+      button{
+        position: absolute;
+        top: 1px;
+        right: 0px;
+        // padding: 0px 0px 0px 4px;
+      }
+    }
+  }
+
+  .name {
+    margin-top: 8px;
+  }
+
+  :global {
+    .colorful-icon {
+      font-size: 36px;
+    }
+
+    .antdadmin {
+      font-size: 32px;
+      line-height: 1;
+    }
+  }
+}

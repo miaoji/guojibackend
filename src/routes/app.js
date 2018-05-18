@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Layout } from '../components'
-import { classnames, config, menu } from '../utils'
+import { classnames, config, menu, storage } from '../utils'
 import { Helmet } from 'react-helmet'
 import '../themes/index.less'
 import './app.less'
 import NProgress from 'nprogress'
-const { prefix } = config
+// const { prefix } = config
 
 const { Header, Bread, Footer, Sider, styles } = Layout
 let lastHref
@@ -56,7 +56,11 @@ const App = ({ children, location, dispatch, app, loading }) => {
       dispatch({ type: 'app/switchTheme' })
     },
     changeOpenKeys (openKeys) {
-      localStorage.setItem(`${prefix}navOpenKeys`, JSON.stringify(openKeys))
+      storage({
+        key: 'navOpenKeys',
+        val: JSON.stringify(openKeys),
+        type: 'set',
+      })
       dispatch({ type: 'app/handleNavOpenKeys', payload: { navOpenKeys: openKeys } })
     },
   }
@@ -74,7 +78,7 @@ const App = ({ children, location, dispatch, app, loading }) => {
   return (
     <div>
       <Helmet>
-        <title>妙寄后台</title>
+        <title>国际快递后台</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href={logo} type="image/x-icon" />
         {iconFontJS && <script src={iconFontJS}></script>}

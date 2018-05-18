@@ -1,9 +1,14 @@
 import config from './config'
 import menu from './menu'
 import request from './request'
+import * as time from './time'
 import classnames from 'classnames'
 import { color } from './theme'
 import lodash from 'lodash'
+import screen from './filter'
+
+const localStorage = window.localStorage
+const { localPrefix } = config
 
 // 连字符转驼峰
 String.prototype.hyphenToHump = function () {
@@ -27,7 +32,7 @@ Date.prototype.format = function (format) {
     'm+': this.getMinutes(),
     's+': this.getSeconds(),
     'q+': Math.floor((this.getMonth() + 3) / 3),
-    S: this.getMilliseconds(),
+    S: this.getMilliseconds()
   }
   if (/(y+)/.test(format)) {
     format = format.replace(RegExp.$1, `${this.getFullYear()}`.substr(4 - RegExp.$1.length))
@@ -55,7 +60,7 @@ const queryURL = (name) => {
 
 /**
  * 数组内查询
- * @param   {array}      array
+ * @param   {array}     array
  * @param   {String}    id
  * @param   {String}    keyAlias
  * @return  {Array}
@@ -99,13 +104,83 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
   return result
 }
 
+/**
+ * 对网络请求的params做处理，针对分页
+ * @param   {params} Object
+ * @return  {params} Object
+ */
+const pageParams = function (params) {
+  params = params || {
+    page: 1,
+    rows: 10,
+  }
+  params.page = params.page || 1
+  params.rows = params.pageSize || 10
+  return params
+}
+
+/**
+ * [对localStorage操作进行封装]
+ * @param  {String}  key    [存储的字段名字]
+ * @param  {String}  val    [存储的字段值]
+ * @param  {Boolean} prefix [是否加前缀，默认为true]
+ * @param  {String}  type   [localStorage的操作方式 get、set、remove、clear]
+ * @return {String}  res    [localStorage.getItem(key)时返回的值]
+ */
+export const storage = function ({ key, val, prefix = true, type = 'get' }) {
+  let typeCheck = type === 'get'
+  if (prefix) {
+    key = localPrefix + key
+  }
+  let res = ''
+  switch (type) {
+    case 'get':
+      res = localStorage.getItem(key)
+      break
+    case 'set':
+      localStorage.setItem(key, val)
+      break
+    case 'remove':
+      localStorage.removeItem(key)
+      break
+    case 'clear':
+      localStorage.clear()
+      break
+    default:
+      break
+  }
+  if (typeCheck) {
+    return res
+  }
+  return false
+}
+
+/**
+ * [对含有 %20 的数据重新拼接]
+ * @param  {String}  key    [要转换的数据]
+ * @return {String}  res    [返回重新的拼接的值]
+ */
+export const rebuildVal = function (key) {
+  if (!key) {
+    return undefined
+  }
+  const newVal = key.split('%20')
+  return `${newVal[0]} ${newVal[1]} ${newVal[2]}`
+}
+
+
 module.exports = {
   config,
   menu,
+  rebuildVal,
   request,
+  screen,
+  storage,
+  time,
   color,
   classnames,
   queryURL,
   queryArray,
   arrayToTree,
+  pageParams,
 }

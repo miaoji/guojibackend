@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
-import city from '../../utils/city'
+import { Form, Input, Modal, Select } from 'antd'
 
 const FormItem = Form.Item
 
@@ -17,6 +16,7 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
+  selectKdCompany,
   form: {
     getFieldDecorator,
     validateFields,
@@ -33,9 +33,11 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      data.address = data.address.join(' ')
       onOk(data)
     })
+  }
+
+  const handleFocus = () => {
   }
 
   const modalOpts = {
@@ -46,95 +48,39 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="帐号" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('accounts', {
-            initialValue: item.accounts,
+        <FormItem label="中转地址" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('transferAddress', {
+            initialValue: item.TRANSFER_ADDRESS || '泰虹路168弄万科时一区1号楼302室',
             rules: [
               {
                 required: true,
-                pattern: /^1[34578]\d{9}$/,
-                message: '请输入帐号!',
+                message: '请输入中转地址!',
+              },
+            ],
+          })(<Input disabled />)}
+        </FormItem>
+        <FormItem label="国际段快递公司" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('kdCompanyCode', {
+            initialValue: item.KD_COMPANY_CODE,
+            rules: [
+              {
+                required: true,
+                message: '请选择快递公司名!',
+              },
+            ],
+          })(<Select showSearch placeholder="输入快递公司名称可搜索" onFocus={handleFocus} style={{ width: 286 }}>{selectKdCompany}</Select>)}
+        </FormItem>
+        <FormItem label="国际段单号" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('intlNo', {
+            initialValue: item.INTL_NO,
+            rules: [
+              {
+                required: true,
+                pattern: /^[A-Za-z0-9]{0,}$/,
+                message: '请输入国际段单号!',
               },
             ],
           })(<Input />)}
-        </FormItem>
-        <FormItem label="密码" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('pwd', {
-            initialValue: item.pwd,
-            rules: [
-              {
-                required: true,
-                pattern: /^1[34578]\d{9}$/,
-                message: '请输入密码!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="经营者姓名" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name', {
-            initialValue: item.name,
-            rules: [
-              {
-                required: true,
-                message: '请输入经营者姓名!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="店铺名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('storename', {
-            initialValue: item.storename,
-            rules: [
-              {
-                required: true,
-                message: '请输入店铺名称!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="店铺级别" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('level', {
-            initialValue: item.level,
-            rules: [
-              {
-                required: true,
-                type: 'number',
-                message: '请选择店铺级别!',
-              },
-            ],
-          })(
-            <Radio.Group>
-              <Radio value={1}>主张号</Radio>
-              <Radio value={0}>子帐号</Radio>
-            </Radio.Group>
-          )}
-        </FormItem>
-        <FormItem label="所属上级" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('superior', {
-            initialValue: item.superior,
-            rules: [
-              {
-                required: (Number(item.superior) === 1),
-                pattern: /^1[34578]\d{9}$/,
-                message: '请输入所属上级!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="地址" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('address', {
-            initialValue: item.address && item.address.split(' '),
-            rules: [
-              {
-                required: true,
-              },
-            ],
-          })(<Cascader
-            size="large"
-            style={{ width: '100%' }}
-            options={city}
-            placeholder="选择一个地址"
-          />)}
         </FormItem>
       </Form>
     </Modal>
@@ -146,6 +92,7 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  selectKdCompany: PropTypes.array
 }
 
 export default Form.create()(modal)

@@ -1,35 +1,114 @@
 import { request, config } from '../utils'
 const { api } = config
-const { order } = api
+const { order, locus } = api
 
-export async function query (params) {
+export async function query(params) {
   return request({
-    url: order,
+    url: order.show,
     method: 'get',
     data: params,
   })
 }
 
-export async function create (params) {
+export async function create(params) {
   return request({
-    url: order.replace('/:id', ''),
+    url: order.create,
     method: 'post',
     data: params,
   })
 }
 
-export async function remove (params) {
+export async function createOrder(params) {
   return request({
-    url: order,
-    method: 'delete',
-    data: params,
+    url: order.add,
+    method: 'post',
+    params,
   })
 }
 
-export async function update (params) {
+export async function remove(params) {
   return request({
-    url: order,
-    method: 'patch',
-    data: params,
+    url: order.hide,
+    method: 'delete',
+    params,
+  })
+}
+
+// 修改订单
+export async function update(params) {
+  return request({
+    url: order.mod,
+    method: 'post',
+    params,
+  })
+}
+
+// 修改国际快递信息
+export async function modIntlNoById(params) {
+  return request({
+    url: order.modIntlNoById,
+    method: 'post',
+    params,
+  })
+}
+
+// 新增国内(中通)订单
+export async function createChinaOrder(params) {
+  return request({
+    url: order.createChinaOrder,
+    method: 'post',
+    params,
+  })
+}
+
+// 动态获取国际段快递公司
+export async function getKdCompany(params) {
+  return request({
+    url: order.getKdCompany,
+    method: 'get',
+    params,
+  })
+}
+// 获取orderdetail页面信息
+export async function getOrderInfo(params) {
+  return request({
+    url: order.getOrderInfo,
+    method: 'get',
+    params,
+  })
+}
+
+// 根据订单号获取快件信息
+export async function getOrderInfoByOrderNo(params) {
+  return request({
+    url: order.getOrderInfoByOrderNo,
+    method: 'get',
+    params,
+  })
+}
+
+// 根据订单号获取快递信息
+export async function queryByCompany(params) {
+  return request({
+    url: order.queryByCompany,
+    method: 'get',
+    params,
+  })
+}
+
+// 根据传参查询预付款金额
+export async function getIntlPrice(params) {
+  return request({
+    url: order.getIntlPrice,
+    method: 'get',
+    params,
+  })
+}
+
+export async function getOrderXnLocus(params) {
+  return request({
+    url: locus.all,
+    method: 'get',
+    params
   })
 }

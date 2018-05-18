@@ -7,7 +7,13 @@
     "draftjs-to-markdown": "^0.4.0",
     "dva": "^1.2.0",
     "dva-loading": "^0.2.0",
+    "echarts": "^4.0.0",
+    "echarts-for-react": "^2.0.0",
+    "echarts-gl": "^1.0.0-beta.5",
+    "echarts-liquidfill": "^1.1.0",
     "fetch": "^1.1.0",
+    "js-base64": "^2.1.9",
+    "js-md5": "^0.6.0",
     "lodash": "^4.17.4",
     "nprogress": "^0.2.0",
     "qs": "^6.2.0",
@@ -26,6 +32,7 @@
     "babel-plugin-transform-runtime": "^6.9.0",
     "babel-polyfill": "^6.23.0",
     "babel-runtime": "^6.9.2",
+    "copy-to-clipboard": "^3.0.8",
     "draftjs-to-html": "^0.7.0",
     "dva-model-extend": "^0.1.1",
     "eslint": "^3.17.1",
@@ -46,7 +53,8 @@
     "lint"
   ],
   "scripts": {
-    "dev": "set BROWSER=none&&set HOST=0.0.0.0&&roadhog server",
+    "dev": "set BROWSER=none&&set HOST=127.0.0.1&&roadhog server",
+    "start": "set BROWSER=none&&set HOST=127.0.0.1&&roadhog server",
     "lint": "eslint --fix --ext .js src",
     "build": "roadhog build"
   }

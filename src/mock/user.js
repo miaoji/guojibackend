@@ -13,7 +13,7 @@ let usersListData = Mock.mock({
       'age|11-99': 1,
       address: '@county(true)',
       isMale: '@boolean',
-      email: '@email',  
+      email: '@email',
       createTime: '@datetime',
       avatar () {
         return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.nickName.substr(0, 1))

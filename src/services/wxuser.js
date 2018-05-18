@@ -4,16 +4,8 @@ const { wxuser } = api
 
 export async function query (params) {
   return request({
-    url: wxuser,
+    url: wxuser.all,
     method: 'get',
-    data: params,
-  })
-}
-
-export async function create (params) {
-  return request({
-    url: wxuser.replace('/:id', ''),
-    method: 'post',
     data: params,
   })
 }
@@ -28,8 +20,8 @@ export async function remove (params) {
 
 export async function update (params) {
   return request({
-    url: wxuser,
-    method: 'patch',
-    data: params,
+    url: wxuser.update,
+    method: 'post',
+    params,
   })
 }

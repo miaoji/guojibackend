@@ -12,10 +12,9 @@ const countUpProps = {
   separator: ',',
 }
 
-
 function User ({ avatar, name, email, sales, sold }) {
   const handleSelfPage = () => {
-    window.open('http://www.mijihome.cn/')
+    window.open('http://www.mingz-tech.com/')
   }
 
   return (<div className={styles.user}>
