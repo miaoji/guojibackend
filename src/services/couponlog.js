@@ -1,10 +1,10 @@
 import { request, config, pageParams } from '../utils'
-const { wxconfig } = config.api
+const { couponlog } = config.api
 
 export async function query (params) {
   params = pageParams(params)
   return request({
-    url: wxconfig.all,
+    url: couponlog.all,
     method: 'get',
     data: params,
   })
@@ -12,7 +12,7 @@ export async function query (params) {
 
 export async function create (params) {
   return request({
-    url: wxconfig.create,
+    url: couponlog.create,
     method: 'post',
     params,
   })
@@ -20,7 +20,7 @@ export async function create (params) {
 
 export async function update (params) {
   return request({
-    url: wxconfig.update,
+    url: couponlog.update,
     method: 'post',
     params,
   })
@@ -28,7 +28,7 @@ export async function update (params) {
 
 export async function remove (params) {
   return request({
-    url: wxconfig.hide,
+    url: couponlog.hide,
     method: 'delete',
     params,
   })

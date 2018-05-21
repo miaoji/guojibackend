@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
-import city from '../../utils/city'
+import { Form, Radio, Modal } from 'antd'
 
 const FormItem = Form.Item
-const { TextArea } = Input
+const RadioGroup = Radio.Group
 
 const formItemLayout = {
   labelCol: {
@@ -44,22 +43,22 @@ const modal = ({
     onOk: handleOk,
   }
 
-  const paramDisabled = type === 'update'
-
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="微信自动回复内容" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('content', {
-            initialValue: item.content,
+        <FormItem label="优惠券状态" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('status', {
+            initialValue: item.status,
             rules: [
               {
                 required: true,
-                // pattern: /^[\u4e00-\u9fa5]{0,}$/,
-                message: '请输入推广人姓名!',
+                message: '请选择优惠券状态!',
               },
             ],
-          })(<TextArea autosize="true" />)}
+          })(<RadioGroup>
+            <Radio value={0}>未使用</Radio>
+            <Radio value={1}>已使用</Radio>
+          </RadioGroup>)}
         </FormItem>
       </Form>
     </Modal>

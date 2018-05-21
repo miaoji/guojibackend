@@ -116,6 +116,7 @@ const pageParams = function (params) {
   }
   params.page = params.page || 1
   params.rows = params.pageSize || 10
+  delete params.pageSize
   return params
 }
 
@@ -183,4 +184,5 @@ module.exports = {
   queryArray,
   arrayToTree,
   pageParams,
+  filterTime: time.filterTime,
 }

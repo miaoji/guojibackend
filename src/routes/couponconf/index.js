@@ -53,6 +53,7 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
       })
     },
     onEditItem (item) {
+      console.log('item', item)
       dispatch({
         type: 'couponconf/showModal',
         payload: {

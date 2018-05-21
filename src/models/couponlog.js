@@ -2,6 +2,7 @@ import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import { create, update, remove, query } from '../services/couponlog'
 import { pageModel } from './common'
+import { filterTime } from '../utils'
 
 export default modelExtend(pageModel, {
   namespace: 'couponlog',
@@ -28,6 +29,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
+      payload = filterTime(payload)
       const data = yield call(query, payload)
       if (data.code === 200) {
         yield put({
@@ -62,12 +64,8 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ couponlog }) => couponlog.currentItem.id)
-      const newPayload = {
-        content: payload.content,
-        id,
-      }
-      const data = yield call(update, newPayload)
+      payload.id = yield select(({ couponlog }) => couponlog.currentItem.id)
+      const data = yield call(update, payload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')

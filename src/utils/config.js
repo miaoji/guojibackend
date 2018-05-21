@@ -2,17 +2,14 @@ const APIV1 = '/api/v1'
 // const APIV2 = '/api/v2'
 let APIV3 = ''
 
-// 仝周地址
-// APIV3 = 'http://192.168.231.239:8077'
+// 线下地址(开发)
+APIV3 = 'http://192.168.231.239:8077'
 
 // 线上地址(测试)
 // APIV3 = 'http://api.didalive.net/mzkd'
 
-// 张涛地址
-// APIV3 = 'http://192.168.231.237:8080'
-
 // 正式地址(生产)
-APIV3 = 'http://api.mingz-tech.com'
+// APIV3 = 'http://api.mingz-tech.com'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -236,15 +233,15 @@ module.exports = {
     couponconf: {
       all: `${APIV3}/api/couponType/index`,
       create: `${APIV3}/api/couponType/add`,
-      update: `${APIV3}/api/couponType/modcouponTypeById`,
-      hide: `${APIV3}/api/couponType/delcouponTypeById`,
+      update: `${APIV3}/api/couponType/modCouponTypeById`,
+      hide: `${APIV3}/api/couponType/delCouponTypeById`,
     },
     // 微信优惠券配置
     couponlog: {
-      all: `${APIV3}/api/userInfo/index`,
-      create: `${APIV3}/api/userInfo/add`,
-      update: `${APIV3}/api/userInfo/modUserInfoById`,
-      hide: `${APIV3}/api/userInfo/delUserInfoById`,
+      all: `${APIV3}/api/coupon/index`,
+      create: `${APIV3}/api/coupon/add`,
+      update: `${APIV3}/api/coupon/modCouponById`,
+      hide: `${APIV3}/api/coupon/delCouponById`,
     },
   }
 }

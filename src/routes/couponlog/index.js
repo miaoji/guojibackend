@@ -15,7 +15,7 @@ const Couponlog = ({ location, dispatch, couponlog, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增微信回复配置' : '修改微信回复配置'}`,
+    title: `${modalType === 'create' ? '新增优惠券状态' : '修改优惠券状态'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({

@@ -1,6 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import { create, update, remove, query } from '../services/couponconf'
+import { filterTime } from '../utils'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -13,7 +14,7 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/couponconf') {
           dispatch({
@@ -27,7 +28,9 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put }) {
+      payload = filterTime(payload)
+      console.log('payload', payload)
       const data = yield call(query, payload)
       if (data.code === 200) {
         yield put({
@@ -46,15 +49,16 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
-      delete payload.key
-      payload.expiry_date = payload.expiry_date.unix()
+    *create({ payload }, { call, put }) {
       console.log('payload', payload)
-      const newPayload = {
-        content: payload.parameter,
-        name: payload.name,
-      }
-      const data = yield call(create, newPayload)
+      delete payload.key
+      // 生效时间
+      payload.effectiveDate = `${payload.effectiveDate.format('YYYY-MM-DD')} 00:00:00`
+      // 截至时间
+      payload.expiryDate = `${payload.expiryDate.format('YYYY-MM-DD')} 23:59:59`
+      // payload.couponDigit = Number(payload.couponDigit)
+      // payload.couponCount = Number(payload.couponCount)
+      const data = yield call(create, payload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.msg)
@@ -64,13 +68,14 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ couponconf }) => couponconf.currentItem.id)
-      const newPayload = {
-        content: payload.content,
-        id,
-      }
-      const data = yield call(update, newPayload)
+    *update({ payload }, { select, call, put }) {
+      payload.id = yield select(({ couponconf }) => couponconf.currentItem.id)
+      delete payload.key
+      // 生效时间
+      payload.effectiveDate = `${payload.effectiveDate.format('YYYY-MM-DD')} 00:00:00`
+      // 截至时间
+      payload.expiryDate = `${payload.expiryDate.format('YYYY-MM-DD')} 23:59:59`
+      const data = yield call(update, payload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')
@@ -80,7 +85,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put }) {
+    *'delete'({ payload }, { call, put }) {
       const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')
@@ -94,11 +99,11 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 

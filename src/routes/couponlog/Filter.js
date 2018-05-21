@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch } from 'antd'
-import city from '../../utils/city'
+import { Form, Button, Row, Col, DatePicker, Input } from 'antd'
 
 const Search = Input.Search
 const { RangePicker } = DatePicker
@@ -66,7 +65,7 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-  const { name, address } = filter
+  const { couponCode } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -79,7 +78,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('couponCode', { initialValue: couponCode })(<Search placeholder="按优惠卷编码搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="创建时间">

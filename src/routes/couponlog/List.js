@@ -5,6 +5,7 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
+import moment from 'moment'
 
 const confirm = Modal.confirm
 // const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
@@ -18,7 +19,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       case '2':
         confirm({
           title: '确定要删除吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.id)
           },
         })
@@ -31,32 +32,59 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
       title: 'ID',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'id',
+      key: 'id',
     }, {
       title: '用户昵称',
-      dataIndex: 'content',
-      key: 'content',
+      dataIndex: 'nickName',
+      key: 'nickName',
+      render: (text, record) => {
+        return <span>{record.wxUserId.nickName}</span>
+      }
     }, {
       title: '优惠卷编码',
-      dataIndex: 'create_time',
-      key: 'create_time',
+      dataIndex: 'couponCode',
+      key: 'couponCode',
     }, {
       title: '优惠金额',
-      dataIndex: 'create_time3',
-      key: 'create_time3',
+      dataIndex: 'couponMoney',
+      key: 'couponMoney',
+      render: (text, record) => {
+        return <span>{record.couponType.couponMoney}</span>
+      }
     }, {
       title: '优惠卷状态',
-      dataIndex: 'create_time4',
-      key: 'create_time4',
+      dataIndex: 'status',
+      key: 'status',
+      render: (text) => {
+        const replText = {
+          0: '未使用',
+          1: '已使用',
+        }
+        return <span>{replText[text]}</span>
+      }
     }, {
-      title: '发放时间',
-      dataIndex: 'create_time2',
-      key: 'create_time2',
+      title: '生效时间',
+      dataIndex: 'effectiveDate',
+      key: 'effectiveDate',
+      render: (text, record) => {
+        return <span>{record.couponType.effectiveDate}</span>
+      }
     }, {
       title: '截至时间',
-      dataIndex: 'create_time1',
-      key: 'create_time1',
+      dataIndex: 'expiryDate',
+      key: 'expiryDate',
+      render: (text, record) => {
+        return <span>{record.couponType.expiryDate}</span>
+      }
+    }, {
+      title: '发放时间',
+      dataIndex: 'gmtCreate',
+      key: 'gmtCreate',
+      render: (text) => {
+        const time = text ? moment(text / 1).format('YYYY-MM-DD') : '未知时间'
+        return <span>{time}</span>
+      },
     }, {
       title: '操作',
       key: 'operation',

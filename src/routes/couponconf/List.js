@@ -45,11 +45,15 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         return <span>{text || 0} 元</span>
       }
     }, {
-      title: '优惠卷截止时间',
-      dataIndex: 'expiry_date',
-      key: 'expiry_date',
+      title: '发放方式',
+      dataIndex: 'coupon_type',
+      key: 'coupon_type',
       render: (text) => {
-        return <span>{text ? moment.unix(text / 1000).format('YYYY-MM-DD HH:mm:ss') : '未知时间'}</span>
+        const replText = {
+          0: '关注发放',
+          1: '下单支付发放',
+        }
+        return <span>{replText[text]}</span>
       }
     }, {
       title: '优惠券使用门槛',
@@ -74,8 +78,21 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'lssue_number',
       key: 'lssue_number',
       render: (text, record) => {
-        text = text || 1000
-        return <span>{text - record.coupon_count}</span>
+        return <span>{record.coupon_count - text}</span>
+      }
+    }, {
+      title: '生效时间',
+      dataIndex: 'effective_date',
+      key: 'effective_date',
+      render: (text) => {
+        return <span>{text ? moment.unix(text / 1000).format('YYYY-MM-DD HH:mm:ss') : '未知时间'}</span>
+      }
+    }, {
+      title: '失效时间',
+      dataIndex: 'expiry_date',
+      key: 'expiry_date',
+      render: (text) => {
+        return <span>{text ? moment.unix(text / 1000).format('YYYY-MM-DD HH:mm:ss') : '未知时间'}</span>
       }
     }, {
       title: '创建时间',

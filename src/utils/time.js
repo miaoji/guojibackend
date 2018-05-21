@@ -101,3 +101,13 @@ export const handleFields = (fields) => {
   }
   return fields
 }
+
+export const filterTime = (payload) => {
+  payload = { ...payload }
+  if (payload.createTime) {
+    payload.startDate = payload.createTime[0]
+    payload.endDate = payload.createTime[1]
+  }
+  delete payload.createTime
+  return payload
+}
