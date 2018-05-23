@@ -29,3 +29,34 @@ copyUrl = () => {
 import { routerRedux } from 'dva/router'
 // '/cargo' -- 你要跳转的路由
 yield put(routerRedux.push('/cargo'))
+
+# 项目部署到nginx 在nginx.conf中添加
+
+```
+location /api {
+			 proxy_pass http://localhost:8000/api;
+		}
+
+		location / {
+				index  index.html;
+				try_files $uri $uri/ /index.html;
+		}
+```
+## 示例
+```
+server
+	{
+		listen       666;
+		server_name 47.92.30.98;
+		root  /home/www/antd-admin/dist;
+
+		location /api {
+			 proxy_pass http://localhost:8000/api;
+		}
+
+		location / {
+				index  index.html;
+				try_files $uri $uri/ /index.html;
+		}
+	}
+```
