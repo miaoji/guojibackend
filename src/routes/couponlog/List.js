@@ -67,12 +67,12 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '叠加',
       dataIndex: 'superposition',
       key: 'superposition',
-      render: (text) => {
+      render: (text, record) => {
         const replText = {
-          0: '不允许',
-          1: '允许'
+          0: '允许',
+          1: '不允许'
         }
-        return <span>{(text || text === 0) ? replText[text] : '未知'}</span>
+        return <span>{(record.couponType.superposition || record.couponType.superposition === 0) ? replText[record.couponType.superposition] : '未知'}</span>
       }
     }, {
       title: '生效时间',
