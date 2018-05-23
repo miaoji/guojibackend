@@ -33,3 +33,11 @@ export async function remove (params) {
     params,
   })
 }
+
+export async function couponToWxUser (params) {
+  return request({
+    url: couponconf.couponToWxUser,
+    method: 'post',
+    params
+  })
+}

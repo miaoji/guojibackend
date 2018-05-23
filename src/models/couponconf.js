@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove, query } from '../services/couponconf'
+import { create, update, remove, query, couponToWxUser } from '../services/couponconf'
 import { filterTime } from '../utils'
 import { pageModel } from './common'
 
@@ -103,6 +103,18 @@ export default modelExtend(pageModel, {
         message.success('启用成功')
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
+      } else {
+        throw data.msg || data
+      }
+    },
+
+    *couponToWxUser({ payload }, { call, put, select }) {
+      payload.couponTypeId = yield select(({ couponconf }) => couponconf.currentItem.id)
+      const data = yield call(couponToWxUser, payload)
+      console.log('data', data)
+      if (data.code === 200) {
+        message.success('发送成功')
+        yield put({ type: 'hideModal' })
       } else {
         throw data.msg || data
       }

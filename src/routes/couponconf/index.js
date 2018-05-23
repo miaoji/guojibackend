@@ -17,13 +17,13 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
     confirmLoading: loading.effects['boot/update'],
     title: `${modalType === 'create' ? '创建优惠券' : '修改优惠券'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: `couponconf/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'couponconf/hideModal',
       })
@@ -35,7 +35,7 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
     loading: loading.effects['couponconf/query'],
     pagination,
     location,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -46,7 +46,7 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
         },
       }))
     },
-    onEnable (item) {
+    onEnable(item) {
       dispatch({
         type: 'couponconf/showModal',
         payload: {
@@ -55,13 +55,22 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
         },
       })
     },
-    onDeleteItem (id) {
+    onCouponToWxUser(item) {
+      dispatch({
+        type: 'couponconf/showModal',
+        payload: {
+          modalType: 'couponToWxUser',
+          currentItem: item,
+        },
+      })
+    },
+    onDeleteItem(id) {
       dispatch({
         type: 'couponconf/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'couponconf/showModal',
         payload: {
@@ -76,7 +85,7 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -86,7 +95,7 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/couponconf',
         query: {
@@ -97,7 +106,7 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
         pathname: '/couponconf',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'couponconf/showModal',
         payload: {
@@ -105,7 +114,7 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
         },
       })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'couponconf/switchIsMotion' })
     },
   }

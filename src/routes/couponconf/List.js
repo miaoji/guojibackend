@@ -9,7 +9,7 @@ import moment from 'moment'
 
 const confirm = Modal.confirm
 
-const List = ({ location, onEnable, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ location, onCouponToWxUser, onEnable, onEditItem, onDeleteItem, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -25,6 +25,9 @@ const List = ({ location, onEnable, onEditItem, onDeleteItem, ...tableProps }) =
         break
       case '3':
         onEnable(record)
+        break
+      case '4':
+        onCouponToWxUser(record)
         break
       default:
         break
@@ -99,7 +102,7 @@ const List = ({ location, onEnable, onEditItem, onDeleteItem, ...tableProps }) =
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '3', name: '启用' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '3', name: '启用' }, { key: '4', name: '发送给微信用户' }, { key: '2', name: '删除' }]} />
       },
     },
   ]
@@ -147,6 +150,7 @@ List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   onEnable: PropTypes.func,
+  onCouponToWxUser: PropTypes.func,
   location: PropTypes.object,
 }
 

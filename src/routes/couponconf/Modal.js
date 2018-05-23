@@ -51,6 +51,24 @@ const modal = ({
   if (item.expiry_date) {
     item.expiry_date = moment(item.expiry_date)
   }
+  if (type === 'couponToWxUser') {
+    return (
+      <Modal {...{ ...modalOpts, title: '发送优惠券给微信用户' }}>
+        <Form layout="horizontal">
+          <FormItem label="微信用户id" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('wxUserId', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入微信用户id!',
+                },
+              ],
+            })(<Input placeholder="请输入微信用户id" />)}
+          </FormItem>
+        </Form>
+      </Modal>
+    )
+  }
 
   if (type === 'enable') {
     return (
