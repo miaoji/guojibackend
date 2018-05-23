@@ -64,6 +64,17 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         return <span>{replText[text]}</span>
       }
     }, {
+      title: '叠加',
+      dataIndex: 'superposition',
+      key: 'superposition',
+      render: (text) => {
+        const replText = {
+          0: '不允许',
+          1: '允许'
+        }
+        return <span>{(text || text === 0) ? replText[text] : '未知'}</span>
+      }
+    }, {
       title: '生效时间',
       dataIndex: 'effectiveDate',
       key: 'effectiveDate',
