@@ -9,7 +9,7 @@ import moment from 'moment'
 
 const confirm = Modal.confirm
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ location, onEnable, onEditItem, onDeleteItem, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -22,6 +22,9 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
             onDeleteItem(record.id)
           },
         })
+        break
+      case '3':
+        onEnable(record)
         break
       default:
         break
@@ -63,36 +66,26 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         return <span>{text || 0} 元</span>
       }
     }, {
-      title: '生成规则',
-      dataIndex: 'coupon_prefix',
-      key: 'coupon_prefix',
-      render: (text, record) => {
-        return <span>{`前缀: ${text} 位数: ${record.coupon_digit}`}</span>
-      }
-    }, {
-      title: '发放数量',
-      dataIndex: 'coupon_count',
-      key: 'coupon_count',
-    }, {
-      title: '剩余数量',
-      dataIndex: 'lssue_number',
-      key: 'lssue_number',
-      render: (text, record) => {
-        return <span>{record.coupon_count - text}</span>
-      }
-    }, {
-      title: '生效时间',
-      dataIndex: 'effective_date',
-      key: 'effective_date',
+      title: '叠加',
+      dataIndex: 'superposition',
+      key: 'superposition',
       render: (text) => {
-        return <span>{text ? moment.unix(text / 1000).format('YYYY-MM-DD HH:mm:ss') : '未知时间'}</span>
+        const replText = {
+          0: '不允许',
+          1: '允许'
+        }
+        return <span>{(text || text === 0) ? replText[text] : '未知'}</span>
       }
     }, {
-      title: '失效时间',
-      dataIndex: 'expiry_date',
-      key: 'expiry_date',
+      title: '启用',
+      dataIndex: 'initiate_mode',
+      key: 'initiate_mode',
       render: (text) => {
-        return <span>{text ? moment.unix(text / 1000).format('YYYY-MM-DD HH:mm:ss') : '未知时间'}</span>
+        const replText = {
+          0: '未启用',
+          1: '已启用'
+        }
+        return <span>{(text || text === 0) ? replText[text] : '未知'}</span>
       }
     }, {
       title: '创建时间',
@@ -106,7 +99,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '3', name: '启用' }, { key: '2', name: '删除' }]} />
       },
     },
   ]
@@ -122,6 +115,22 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     <div>
       <Table
         {...tableProps}
+        expandedRowRender={record => {
+          return (
+            <div className={classnames({ [styles.open]: true })}>
+              <div className={classnames({ [styles.rows]: true })}>
+                <p>生效时间 : <span>{record.effective_date ? moment.unix(record.effective_date / 1000).format('YYYY-MM-DD HH:mm:ss') : '未知时间'}</span></p>
+                <p>发放数量 : <span>{record.coupon_count}</span></p>
+                <p>生成规则 : <span>{`前缀: ${record.coupon_prefix} 位数: ${record.coupon_digit}`}</span></p>
+              </div>
+              <div className={classnames({ [styles.rows]: true })}>
+                <p>失效时间 : <span>{record.expiry_date ? moment.unix(record.expiry_date / 1000).format('YYYY-MM-DD HH:mm:ss') : '未知时间'}</span></p>
+                <p>剩余数量 : <span>{record.coupon_count - record.lssue_number}</span></p>
+                <p></p>
+              </div>
+            </div>
+          )
+        }}
         className={classnames({ [styles.table]: true })}
         bordered
         scroll={{ x: 1250 }}
@@ -137,6 +146,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
+  onEnable: PropTypes.func,
   location: PropTypes.object,
 }
 

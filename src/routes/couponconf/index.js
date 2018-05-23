@@ -46,6 +46,15 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
         },
       }))
     },
+    onEnable (item) {
+      dispatch({
+        type: 'couponconf/showModal',
+        payload: {
+          modalType: 'enable',
+          currentItem: item,
+        },
+      })
+    },
     onDeleteItem (id) {
       dispatch({
         type: 'couponconf/delete',
@@ -53,7 +62,6 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
       })
     },
     onEditItem (item) {
-      console.log('item', item)
       dispatch({
         type: 'couponconf/showModal',
         payload: {

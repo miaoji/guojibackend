@@ -95,6 +95,19 @@ export default modelExtend(pageModel, {
       }
     },
 
+    *enable({ payload }, { call, put, select }) {
+      console.log('payload', payload)
+      payload.id = yield select(({ couponconf }) => couponconf.currentItem.id)
+      const data = yield call(update, payload)
+      if (data.code === 200) {
+        message.success('启用成功')
+        yield put({ type: 'hideModal' })
+        yield put({ type: 'query' })
+      } else {
+        throw data.msg || data
+      }
+    }
+
   },
 
   reducers: {
