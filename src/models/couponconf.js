@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove, query, couponToWxUser } from '../services/couponconf'
+import { create, update, remove, query, couponToWxUser, enable } from '../services/couponconf'
 import { filterTime } from '../utils'
 import { pageModel } from './common'
 
@@ -98,7 +98,7 @@ export default modelExtend(pageModel, {
     *enable({ payload }, { call, put, select }) {
       console.log('payload', payload)
       payload.id = yield select(({ couponconf }) => couponconf.currentItem.id)
-      const data = yield call(update, payload)
+      const data = yield call(enable, payload)
       if (data.code === 200) {
         message.success('启用成功')
         yield put({ type: 'hideModal' })

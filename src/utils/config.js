@@ -236,6 +236,7 @@ module.exports = {
       update: `${APIV3}/api/couponType/modCouponTypeById`,
       hide: `${APIV3}/api/couponType/delCouponTypeById`,
       couponToWxUser: `${APIV3}/api/coupon/add`,
+      enable: `${APIV3}/api/couponType/updateInitiateMode`,
     },
     // 微信优惠券配置
     couponlog: {

@@ -41,3 +41,11 @@ export async function couponToWxUser (params) {
     params
   })
 }
+
+export async function enable (params) {
+  return request({
+    url: couponconf.enable,
+    method: 'post',
+    params
+  })
+}
