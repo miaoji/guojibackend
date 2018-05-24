@@ -108,12 +108,13 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *couponToWxUser({ payload }, { call, put, select }) {
-      payload.couponTypeId = yield select(({ couponconf }) => couponconf.currentItem.id)
+    *couponToWxUser({ payload }, { call, put }) {
+      payload.type = 1
       const data = yield call(couponToWxUser, payload)
       console.log('data', data)
       if (data.code === 200) {
         message.success('发送成功')
+        yield put({ type: 'query' })
         yield put({ type: 'hideModal' })
       } else {
         throw data.msg || data

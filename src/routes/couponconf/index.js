@@ -55,15 +55,6 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
         },
       })
     },
-    onCouponToWxUser(item) {
-      dispatch({
-        type: 'couponconf/showModal',
-        payload: {
-          modalType: 'couponToWxUser',
-          currentItem: item,
-        },
-      })
-    },
     onDeleteItem(id) {
       dispatch({
         type: 'couponconf/delete',
@@ -84,6 +75,15 @@ const Couponconf = ({ location, dispatch, couponconf, loading }) => {
   const filterProps = {
     filter: {
       ...location.query,
+    },
+    onCouponToWxUser() {
+      dispatch({
+        type: 'couponconf/showModal',
+        payload: {
+          modalType: 'couponToWxUser',
+          currentItem: {},
+        },
+      })
     },
     onFilterChange(value) {
       dispatch(routerRedux.push({

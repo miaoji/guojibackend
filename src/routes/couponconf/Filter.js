@@ -23,6 +23,7 @@ const TwoColProps = {
 const Filter = ({
   onAdd,
   onFilterChange,
+  onCouponToWxUser,
   filter,
   form: {
     getFieldDecorator,
@@ -97,6 +98,7 @@ const Filter = ({
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
           <div style={{ display: 'block' }}>
+            <Button size="large" className="margin-right" onClick={onCouponToWxUser}>发送给微信用户</Button>
             <Button size="large" type="primary" onClick={onAdd}>新增</Button>
           </div>
         </div>
@@ -111,6 +113,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  onCouponToWxUser: PropTypes.func,
 }
 
 export default Form.create()(Filter)

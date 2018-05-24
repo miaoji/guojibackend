@@ -58,8 +58,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'status',
       render: (text) => {
         const replText = {
-          0: '未使用',
-          1: '已使用',
+          1: '未使用',
+          0: '已使用',
         }
         return <span>{replText[text]}</span>
       }
