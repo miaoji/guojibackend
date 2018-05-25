@@ -58,8 +58,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'status',
       render: (text) => {
         const replText = {
-          1: '未使用',
           0: '已使用',
+          1: '未使用',
         }
         return <span>{replText[text]}</span>
       }
@@ -69,8 +69,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'superposition',
       render: (text, record) => {
         const replText = {
-          0: '允许',
-          1: '不允许'
+          0: '不允许',
+          1: '允许',
         }
         return <span>{(record.couponType.superposition || record.couponType.superposition === 0) ? replText[record.couponType.superposition] : '未知'}</span>
       }
@@ -101,7 +101,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }/* , { key: '2', name: '删除' } */]} />
       },
     },
   ]

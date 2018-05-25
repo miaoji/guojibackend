@@ -56,8 +56,8 @@ const modal = ({
               },
             ],
           })(<RadioGroup>
-            <Radio value={0}>未使用</Radio>
-            <Radio value={1}>已使用</Radio>
+            <Radio value={0}>已使用</Radio>
+            <Radio value={1}>未使用</Radio>
           </RadioGroup>)}
         </FormItem>
       </Form>

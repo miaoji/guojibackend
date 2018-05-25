@@ -53,9 +53,9 @@ export default modelExtend(pageModel, {
       console.log('payload', payload)
       delete payload.key
       // 生效时间
-      payload.effectiveDate = `${payload.effectiveDate.format('YYYY-MM-DD')} 00:00:00`
+      payload.effectiveDate = `${payload.effectiveDate.format('YYYY-MM-DD')}`
       // 截至时间
-      payload.expiryDate = `${payload.expiryDate.format('YYYY-MM-DD')} 23:59:59`
+      payload.expiryDate = `${payload.expiryDate.format('YYYY-MM-DD')}`
       // payload.couponDigit = Number(payload.couponDigit)
       // payload.couponCount = Number(payload.couponCount)
       const data = yield call(create, payload)
@@ -72,9 +72,9 @@ export default modelExtend(pageModel, {
       payload.id = yield select(({ couponconf }) => couponconf.currentItem.id)
       delete payload.key
       // 生效时间
-      payload.effectiveDate = `${payload.effectiveDate.format('YYYY-MM-DD')} 00:00:00`
+      payload.effectiveDate = `${payload.effectiveDate.format('YYYY-MM-DD')}`
       // 截至时间
-      payload.expiryDate = `${payload.expiryDate.format('YYYY-MM-DD')} 23:59:59`
+      payload.expiryDate = `${payload.expiryDate.format('YYYY-MM-DD')}`
       const data = yield call(update, payload)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })

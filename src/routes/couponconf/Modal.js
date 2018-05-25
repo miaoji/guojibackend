@@ -76,7 +76,7 @@ const modal = ({
         <Form layout="horizontal">
           <FormItem label="启用优惠券" hasFeedback {...formItemLayout}>
             {getFieldDecorator('initiateMode', {
-              initialValue: item.initiate_mode || 0,
+              initialValue: item.initiate_mode ? 0 : 1,
               rules: [
                 {
                   required: true,
