@@ -8,6 +8,7 @@ import { DropOption } from '../../components'
 import moment from 'moment'
 
 const confirm = Modal.confirm
+const newDay = new Date().getTime()
 // const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
 
 const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
@@ -56,7 +57,11 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '优惠卷状态',
       dataIndex: 'status',
       key: 'status',
-      render: (text) => {
+      render: (text, record) => {
+        console.log('res', record)
+        if (newDay > record.couponType.expiryDate && text === 1) {
+          return <span style={{ color: '#87a1ff' }}>已过期</span>
+        }
         const replText = {
           0: '已使用',
           1: '未使用',
@@ -79,14 +84,14 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'effectiveDate',
       key: 'effectiveDate',
       render: (text, record) => {
-        return <span>{record.couponType.effectiveDate}</span>
+        return <span>{moment(record.couponType.effectiveDate / 1).format('YYYY-MM-DD')}</span>
       }
     }, {
       title: '截至时间',
       dataIndex: 'expiryDate',
       key: 'expiryDate',
       render: (text, record) => {
-        return <span>{record.couponType.expiryDate}</span>
+        return <span>{moment(record.couponType.expiryDate / 1).format('YYYY-MM-DD')}</span>
       }
     }, {
       title: '发放时间',
