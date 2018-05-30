@@ -3,7 +3,7 @@ const APIV1 = '/api/v1'
 let APIV3 = ''
 
 // 线下地址(开发)
-APIV3 = 'http://192.168.231.239:8077'
+APIV3 = 'http://192.168.231.239:8078'
 
 // 线上地址(测试)
 // APIV3 = 'http://api.didalive.net/mzkd'
