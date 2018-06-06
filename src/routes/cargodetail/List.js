@@ -168,6 +168,7 @@ const List = ({
         const realTexts = {
           0: '未到件',
           1: '已到件',
+          2: '已出库',
         }
         if (record.parentId < 0) {
           return <span style={{ color: realColor[text] }}>{realtext[text]}</span>
@@ -230,7 +231,8 @@ const List = ({
       width: 100,
       render: (text, record) => {
         if (record.parentId === 0) {
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '到件处理' }, { key: '2', name: '删除订单' }]} />
+          // return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '到件处理' }, { key: '2', name: '删除订单' }]} />
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '2', name: '删除订单' }]} />
         } else if (record.parentId < 0) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '4', name: '国际信息' }, { key: '6', name: '测量称重' }, { key: '1', name: '包裹定价' }, { key: '9', name: '状态修改' }, { key: '7', name: '补价处理' }, { key: '8', name: '补价记录' }]} />
         } else if (record.parentId > 0) {
