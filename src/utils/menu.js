@@ -37,18 +37,21 @@ module.exports = [
     mpid: -1,
     name: '订单轨迹管理',
     router: '/locus',
-  }, {
-    id: 32,
+  },
+  // {
+  //   id: 32,
+  //   bpid: 1,
+  //   mpid: 3,
+  //   name: '集运批次管理',
+  //   icon: 'tags',
+  //   router: '/cargo',
+  // },
+  {
+    id: 33,
     bpid: 1,
     mpid: 3,
-    name: '集运批次管理',
-    icon: 'tags',
-    router: '/cargo',
-  }, {
-    id: 33,
-    bpid: 32,
-    mpid: -1,
     name: '集运订单管理',
+    icon: 'tags',
     router: '/cargodetail',
   }, {
     id: 34,

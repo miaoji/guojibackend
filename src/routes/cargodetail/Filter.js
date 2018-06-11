@@ -64,7 +64,12 @@ const Filter = ({
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    onFilterChange({ ...fields, ...filter })
+    for (let key in fields) {
+      if (fields[key] === '') {
+        fields[key] = undefined
+      }
+    }
+    onFilterChange({ ...filter, ...fields })
   }
 
   const handleReset = () => {
@@ -103,7 +108,7 @@ const Filter = ({
   //   onFilterChange(fields)
   // }
 
-  const { orderNo } = filter
+  const { orderNo, customerNo } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -127,6 +132,9 @@ const Filter = ({
       }
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('orderNo', { initialValue: orderNo })(<Search placeholder="按订单号搜索" size="large" onSearch={handleSubmit} />)}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('customerNo', { initialValue: customerNo })(<Search placeholder="按客户编码搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="创建时间">

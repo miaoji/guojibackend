@@ -1,7 +1,6 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { routerRedux } from 'dva/router'
 import { query, merge, cancel, freight, getOrderInfo, parentOrder, getShelfCountByshelfNo } from '../services/cargodetails'
 import { remove, update as status, getKdCompany } from '../services/order'
 import { create as addBoot } from '../services/boot'
@@ -64,11 +63,11 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      if (payload.batch) {
-        window.sessionStorage.cargoBatch = payload.batch
-      } else {
-        payload.batch = window.sessionStorage.cargoBatch
-      }
+      // if (payload.batch) {
+      //   window.sessionStorage.cargoBatch = payload.batch
+      // } else {
+      //   payload.batch = window.sessionStorage.cargoBatch
+      // }
       const data = yield call(query, payload)
       if (data.code === 200 && data.obj) {
         for (let i = 0; i < data.obj.length; i++) {
@@ -98,9 +97,6 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      } else if (data.code === 200 && !data.obj) {
-        message.warn('该批次号下已经没有可用子订单!!!')
-        yield put(routerRedux.push('/cargo'))
       } else {
         if (data.msg === '暂未查询到信息') return
         throw data.msg || '无法跟服务器建立有效连接'

@@ -123,6 +123,13 @@ const List = ({
       dataIndex: 'receiverName',
       key: 'receiverName',
     }, {
+      title: '客户编码',
+      dataIndex: 'customerNo',
+      key: 'customerNo',
+      render: (text, record) => {
+        return <span>{record.wxUser.customerNo}</span>
+      },
+    }, {
       title: '收件人手机',
       dataIndex: 'receiverMobile',
       key: 'receiverMobile',
