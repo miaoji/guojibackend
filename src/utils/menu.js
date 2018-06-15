@@ -171,11 +171,22 @@ module.exports = [
     icon: 'api',
   }, {
     id: 71,
-    bpid: 1,
-    mpid: 7,
     name: '微信回复配置',
     icon: 'setting',
+    bpid: 1,
+    mpid: 7,
+  }, {
+    id: 701,
+    bpid: 1,
+    mpid: 71,
+    name: '自动回复配置',
     router: '/wxconfig',
+  }, {
+    id: 702,
+    bpid: 1,
+    mpid: 71,
+    name: '关键字回复配置',
+    router: '/wxreply',
   }, {
     id: 72,
     bpid: 1,

@@ -320,6 +320,14 @@ const Routers = function ({ history, app }) {
             }, 'qr-detail')
           },
         }, {
+          path: 'wxreply',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/wxreply'))
+              cb(null, require('./routes/wxreply'))
+            }, 'wxreply')
+          },
+        }, {
           path: '*',
           getComponent(nextState, cb) {
             require.ensure([], require => {
